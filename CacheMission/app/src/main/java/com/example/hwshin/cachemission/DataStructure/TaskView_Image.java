@@ -1,5 +1,6 @@
 package com.example.hwshin.cachemission.DataStructure;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -11,11 +12,11 @@ public class TaskView_Image extends TaskView {
     public TaskView_Image() {
         taskViewID = R.layout.taskview_image;
 
-    }
+}
 
     //protected int taskViewID = R.layout.taskview_image;
     @Override
-    protected void setContent(String ContentURI, View parentView, View view) {
-       Glide.with(parentView).load(ContentURI).into((ImageView) view);
+    public void setContent(String contentURI, Context context, View view) {
+        Glide.with(context).load(contentURI).into((ImageView) view);
     }
 }

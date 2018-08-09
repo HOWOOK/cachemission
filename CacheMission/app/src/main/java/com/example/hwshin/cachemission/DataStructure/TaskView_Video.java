@@ -1,5 +1,6 @@
 package com.example.hwshin.cachemission.DataStructure;
 
+import android.content.Context;
 import android.view.View;
 
 import com.example.hwshin.cachemission.R;
@@ -11,7 +12,7 @@ public class TaskView_Video extends TaskView {
     }
 
     @Override
-    protected void setContent(String ContentURI, View parentView, View view) {
+    public void setContent(String ContentURI, Context context, View view) {
 
     }
 }
