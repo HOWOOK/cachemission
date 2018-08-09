@@ -68,6 +68,11 @@ public class TaskActivity extends AppCompatActivity {
         //TaskView에 source설정
         View srcTaskView = (View) findViewById(R.id.srcview);
         mTaskView.setContent(tempsrcURI, this, srcTaskView);
+
+        //TODO: Controller에 입력된 데이터를 받아오는거 일명<getanswer>
+
+
+        //TODO: 서버로 값을 보내는거
     }
 
 }
