@@ -70,6 +70,9 @@ public class TaskActivity extends AppCompatActivity {
         mTaskView.setContent(tempsrcURI, this, srcTaskView);
 
         //TODO: Controller에 입력된 데이터를 받아오는거 일명<getanswer>
+        View view = findViewById(R.id.controller);
+        mController.setLayout(view,getApplicationContext());
+
 
 
         //TODO: 서버로 값을 보내는거

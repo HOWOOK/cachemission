@@ -52,9 +52,14 @@ public class TaskListActivity extends AppCompatActivity {
                 //각 리스트를 클릭하여 TaskActivity로 넘어가게 되는데 거기에 intent될 데이터들을 구분해서 넘겨줘야합니다.
                 //지금은 모든 리스트들이 OCR task를 할수있도록 taskview는 image를 controller는 edittext
                 Intent intent_lv = new Intent(TaskListActivity.this, TaskActivity.class);
+
                 intent_lv.putExtra("taskview", uiHashmap.taskViewHashMap.get(0));
-                intent_lv.putExtra("controller", uiHashmap.controllerHashMap.get(0));
+                intent_lv.putExtra("controller", uiHashmap.controllerHashMap.get(1));
                 intent_lv.putExtra("parameters", uiHashmap.taskHashMap.get(0));
+
+
+
+
 
                 TaskListActivity.this.startActivity(intent_lv);
 

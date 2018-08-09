@@ -7,7 +7,7 @@
     android:id="@+id/taskConstLayout"
     tools:context=".Activity.TaskListActivity">
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/taskview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -18,7 +18,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_weight="10" />
 
-    <LinearLayout
+
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/controller"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -26,6 +27,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/taskview"
-        app:layout_constraintVertical_weight="10" />
+        app:layout_constraintVertical_weight="10" >
+
+
+
+
+
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

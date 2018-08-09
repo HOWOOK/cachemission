@@ -27,7 +27,7 @@ public class UIHashmap {
 
         //Controller hashmap 종류들
         controllerHashMap.put(0, new Controller_EditText());
-
+        controllerHashMap.put(1, new Controller_Buttons());
         //OCR view-controller connect
         parameters[0][0] = 5;
         parameters[1][0] = R.id.taskConstLayout; parameters[1][1] = 3;
