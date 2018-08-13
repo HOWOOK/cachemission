@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.hwshin.cachemission.DataStructure.TaskListItem;
+import com.example.hwshin.cachemission.R;
 
 import java.util.ArrayList;
 
@@ -57,7 +58,7 @@ public class ListviewAdapter extends BaseAdapter {
 
         convertView = inflater.inflate(layout, parent, false);
 
-//        TaskListItem taskItem = mTaskList.get(position);
+        TaskListItem taskItem = mTaskList.get(position);
 //
 //
 //        ImageView taskIv = (ImageView) convertView.findViewById(R.id.taskType);
@@ -71,8 +72,10 @@ public class ListviewAdapter extends BaseAdapter {
 //        else
 //            Glide.with(convertView).load(R.drawable.userc_3d69b).into(taskIv);
 //
-//        TextView taskTv = (TextView) convertView.findViewById(R.id.taskTitle);
-//        taskTv.setText(taskItem.getTaskName());
+        TextView taskTv = (TextView) convertView.findViewById(R.id.taskTitle);
+        taskTv.setText(taskItem.getTaskName());
+        TextView gold=(TextView) convertView.findViewById(R.id.gold);
+        gold.setText(taskItem.getGold());
 
         return convertView;
     }

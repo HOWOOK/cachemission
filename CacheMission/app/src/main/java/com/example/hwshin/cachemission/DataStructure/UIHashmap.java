@@ -14,27 +14,37 @@ public class UIHashmap {
     * parameters[3] -> Controller의 Top을 어떤 Constraintlayout에 연결할지
     * parameters[4] -> Controller의 Bottom을 어떤 Constraintlayout에 연결할지
     */
-    int[][] parameters = new int[5][2];
+    int[][] parameters_OCR = new int[5][2];
+    int[][] parameters_VIDEO = new int[5][2];
 
-    public HashMap<Integer, TaskView> taskViewHashMap = new HashMap();
-    public HashMap<Integer, Controller> controllerHashMap = new HashMap();
-    public HashMap<Integer, int[][]> taskHashMap = new HashMap();
+    public HashMap<String, TaskView> taskViewHashMap = new HashMap();
+    public HashMap<String, Controller> controllerHashMap = new HashMap();
+    public HashMap<String, int[][]> taskHashMap = new HashMap();
 
     public UIHashmap() {
         //TaskView hashmap 종류들
-        taskViewHashMap.put(0, new TaskView_Image());
-        taskViewHashMap.put(1, new TaskView_Video());
+        taskViewHashMap.put("image", new TaskView_Image());
+        taskViewHashMap.put("video", new TaskView_Video());
 
         //Controller hashmap 종류들
-        controllerHashMap.put(0, new Controller_EditText());
-        controllerHashMap.put(1, new Controller_Buttons());
+        controllerHashMap.put("edittext", new Controller_EditText());
+        controllerHashMap.put("buttons", new Controller_Buttons());
+        controllerHashMap.put("record", new Controller_Voice());
         //OCR view-controller connect
-        parameters[0][0] = 5;
-        parameters[1][0] = R.id.taskConstLayout; parameters[1][1] = 3;
-        parameters[2][0] = R.id.controller; parameters[2][1] = 3;
-        parameters[3][0] = R.id.taskview; parameters[3][1] = 4;
-        parameters[4][0] = R.id.taskConstLayout; parameters[4][1] = 4;
-        taskHashMap.put(0, parameters);
+        parameters_OCR[0][0] = 5;
+        parameters_OCR[1][0] = R.id.tasktitle; parameters_OCR[1][1] = 4;
+        parameters_OCR[2][0] = R.id.controller; parameters_OCR[2][1] = 3;
+        parameters_OCR[3][0] = R.id.taskview; parameters_OCR[3][1] = 4;
+        parameters_OCR[4][0] = R.id.taskConstLayout; parameters_OCR[4][1] = 4;
+        taskHashMap.put("OCR", parameters_OCR);
+
+        parameters_VIDEO[0][0] = 5;
+        parameters_VIDEO[1][0] = R.id.tasktitle; parameters_VIDEO[1][1] = 4;
+        parameters_VIDEO[2][0] = R.id.controller; parameters_VIDEO[2][1] = 3;
+        parameters_VIDEO[3][0] = R.id.taskview; parameters_VIDEO[3][1] = 4;
+        parameters_VIDEO[4][0] = R.id.taskConstLayout; parameters_VIDEO[4][1] = 4;
+        taskHashMap.put("VIDEO", parameters_VIDEO);
+
     }
 
 }

@@ -34,4 +34,13 @@
         android:layout_alignTop="@+id/taskTitle"
          />
 
+    <TextView
+        android:id="@+id/gold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/taskTitle"
+        android:layout_marginEnd="117dp"
+        android:text="gold" />
+
 </RelativeLayout>

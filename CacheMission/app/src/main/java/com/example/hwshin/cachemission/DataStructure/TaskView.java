@@ -10,5 +10,11 @@ import java.io.Serializable;
 public abstract class TaskView implements Serializable{
     //why Serializable??? 나중에 공부해봅시다.
     public int taskViewID;
-    public abstract void setContent(String contentURI, Context context, View view);
+    private   int taskID;
+    public void setID(int id){
+
+
+
+    }
+    public abstract void setContent(String id, String contentURI, Context context, View view);
 }

@@ -8,14 +8,37 @@
     tools:context=".Activity.TaskListActivity">
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/tasktitle"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/taskview"
+        >
+
+        <TextView
+            android:id="@+id/tasktitletext"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:paddingLeft="15dp"
+            android:background="@color/colorPrimaryDark"
+            android:text="테스크 제목"
+            android:textColor="#ffffff"
+            android:gravity="center_vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/taskview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/controller"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tasktitle"
         app:layout_constraintVertical_weight="10" />
 
 

@@ -16,7 +16,8 @@ public class TaskView_Image extends TaskView {
 
     //protected int taskViewID = R.layout.taskview_image;
     @Override
-    public void setContent(String contentURI, Context context, View view) {
+    public void setContent(String id, String contentURI, Context context, View view) {
         Glide.with(context).load(contentURI).into((ImageView) view);
+
     }
 }

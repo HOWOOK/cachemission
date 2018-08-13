@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.hwshin.cachemission.DataStructure.Controller;
 import com.example.hwshin.cachemission.DataStructure.TaskView;
@@ -21,10 +22,12 @@ public class TaskActivity extends AppCompatActivity {
 
     Intent intent;
     int controllerID, taskViewID;
+    String mId;
     TaskView mTaskView;
     Controller mController;
     int[][] mParameter;
     String tempsrcURI;
+    String tasktitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +39,13 @@ public class TaskActivity extends AppCompatActivity {
         * 2. 어떤 taskview를 사용하는지  3. 두개의 constraint 관계는 어떤지
         */
         intent = getIntent();
+        mId=(String)intent.getStringExtra("taskid");
         mTaskView = (TaskView) intent.getSerializableExtra("taskview");
         mController = (Controller) intent.getSerializableExtra("controller");
-        mParameter =  (int[][]) intent.getSerializableExtra("parameters");
+        mParameter =  (int[][]) intent.getSerializableExtra("tasktype");
+        tasktitle = intent.getStringExtra("tasktitle");
+        TextView mtasktitle = findViewById(R.id.tasktitletext);
+        mtasktitle.setText(tasktitle);
         taskViewID = mTaskView.taskViewID;
         controllerID = mController.controllerID;
 
@@ -67,15 +74,17 @@ public class TaskActivity extends AppCompatActivity {
 
         //TaskView에 source설정
         View srcTaskView = (View) findViewById(R.id.srcview);
-        mTaskView.setContent(tempsrcURI, this, srcTaskView);
+        mTaskView.setContent(mId, tempsrcURI, this, srcTaskView);
 
         //TODO: Controller에 입력된 데이터를 받아오는거 일명<getanswer>
         View view = findViewById(R.id.controller);
-        mController.setLayout(view,getApplicationContext());
+        mController.setLayout(mId,view,getApplicationContext(),intent);
+        mController.setParent(this,intent);
 
 
+        //TODO: 서버로 값을 보내는거, 일단 getanswer() 구현
 
-        //TODO: 서버로 값을 보내는거
+
     }
 
 }
