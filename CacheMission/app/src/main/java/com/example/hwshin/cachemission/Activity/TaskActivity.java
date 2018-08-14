@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.hwshin.cachemission.DataStructure.Controller;
 import com.example.hwshin.cachemission.DataStructure.TaskView;
+import com.example.hwshin.cachemission.DataStructure.UIHashmap;
 import com.example.hwshin.cachemission.R;
 
 import java.util.ArrayList;
@@ -28,6 +30,8 @@ public class TaskActivity extends AppCompatActivity {
     int[][] mParameter;
     String tempsrcURI;
     String tasktitle;
+    String buttons;
+    private UIHashmap uiHashmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +43,14 @@ public class TaskActivity extends AppCompatActivity {
         * 2. 어떤 taskview를 사용하는지  3. 두개의 constraint 관계는 어떤지
         */
         intent = getIntent();
+        uiHashmap = new UIHashmap();
         mId=(String)intent.getStringExtra("taskid");
-        mTaskView = (TaskView) intent.getSerializableExtra("taskview");
-        mController = (Controller) intent.getSerializableExtra("controller");
-        mParameter =  (int[][]) intent.getSerializableExtra("tasktype");
+        mTaskView = (TaskView) uiHashmap.taskViewHashMap.get(intent.getStringExtra("taskview"));
+        mController = (Controller) uiHashmap.controllerHashMap.get(intent.getStringExtra("controller"));
+        mParameter =  (int[][]) uiHashmap.taskHashMap.get(intent.getStringExtra("tasktype"));
         tasktitle = intent.getStringExtra("tasktitle");
+        buttons= intent.getStringExtra("buttons");
+
         TextView mtasktitle = findViewById(R.id.tasktitletext);
         mtasktitle.setText(tasktitle);
         taskViewID = mTaskView.taskViewID;
@@ -78,8 +85,12 @@ public class TaskActivity extends AppCompatActivity {
 
         //TODO: Controller에 입력된 데이터를 받아오는거 일명<getanswer>
         View view = findViewById(R.id.controller);
-        mController.setLayout(mId,view,getApplicationContext(),intent);
+        mTaskView.setParent(this,intent);
         mController.setParent(this,intent);
+        mController.mtaskview=mTaskView;
+        Log.d("finalval",String.valueOf(mTaskView.gettaskID()));
+        mController.setLayout(mId,view,getApplicationContext(),intent,buttons);
+
 
 
         //TODO: 서버로 값을 보내는거, 일단 getanswer() 구현

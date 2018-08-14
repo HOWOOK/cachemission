@@ -81,7 +81,7 @@ public class TaskListActivity extends AppCompatActivity {
                             tv.setText("진행 가능한 작업");
 
 
-                            mTaskList.add(new TaskListItem(String.valueOf(temp.get("id")), (String) temp.get("taskName"), (String) temp.get("taskType"), (String) temp.get("taskView"), (String) temp.get("controller"), String.valueOf(temp.get("gold"))));
+                            mTaskList.add(new TaskListItem(String.valueOf(temp.get("id")), (String) temp.get("taskName"), (String) temp.get("taskType"), (String) temp.get("taskView"), (String) temp.get("controller"), String.valueOf(temp.get("gold")),(JSONArray)temp.get("buttons")));
 
                         }
                         Log.d("mtask", mTaskList.get(0).getController());
@@ -103,13 +103,16 @@ public class TaskListActivity extends AppCompatActivity {
                                 String tasktype = ((TaskListItem) adapterView.getItemAtPosition(position)).getTaskType();
                                 String taskview = ((TaskListItem) adapterView.getItemAtPosition(position)).getTaskView();
                                 String controller = ((TaskListItem) adapterView.getItemAtPosition(position)).getController();
+                                String buttons=((TaskListItem) adapterView.getItemAtPosition(position)).getButtons().toString();
+
 
                                 String taskid = ((TaskListItem) adapterView.getItemAtPosition(position)).getId();
 
                                 intent_lv.putExtra("tasktitle", tasktitle);
-                                intent_lv.putExtra("tasktype", uiHashmap.taskHashMap.get(tasktype));
-                                intent_lv.putExtra("taskview", uiHashmap.taskViewHashMap.get(taskview));
-                                intent_lv.putExtra("controller", uiHashmap.controllerHashMap.get(controller));
+                                intent_lv.putExtra("tasktype", tasktype);
+                                intent_lv.putExtra("taskview", taskview);
+                                intent_lv.putExtra("controller", controller);
+                                intent_lv.putExtra("buttons", buttons);
 
                                 intent_lv.putExtra("taskid", taskid);
 

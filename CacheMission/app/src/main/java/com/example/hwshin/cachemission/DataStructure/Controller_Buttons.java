@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Message;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.example.hwshin.cachemission.Activity.LoginActivity;
 import com.example.hwshin.cachemission.Activity.TaskActivity;
 import com.example.hwshin.cachemission.Activity.TaskListActivity;
 import com.example.hwshin.cachemission.Adapter.ButtonListAdapter;
@@ -27,9 +30,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import android.os.Handler;
+import android.widget.Toast;
 
 public class Controller_Buttons extends Controller {
     Context cont=null;
+    int highlightflag=-1;
+
 
 
     public Controller_Buttons() {
@@ -45,30 +51,15 @@ public class Controller_Buttons extends Controller {
     }
 
     @Override
-    public void setLayout(final String id, final View view, final Context c, final Intent in) {
+    public void setLayout(final String id, View view, final Context c, final Intent in, String buttons) {
+        SharedPreferences token = parentActivity.getSharedPreferences("token",Context.MODE_PRIVATE);
+        final String logintoken = token.getString("logintoken",null);
         cont=c;
+
         ArrayList<String> textarray=new ArrayList<String>();
-        textarray.add("천사다");
-        textarray.add("천사당");
-        textarray.add("천사담");
-/*
-        final Handler handler2 = new Handler() {
-            @Override
-            public void handleMessage(Message msg)
-            {
-
-            }
-        };
-
-        final Handler handler = new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                ArrayList<String> textarray=new ArrayList<String>();
-                String result = msg.obj.toString();
-                if(msg.what == 0){   // Message id 가 0 이면
                     try {
-                        JSONObject resulttemp = new JSONObject(result);
-                        JSONArray res = (JSONArray) resulttemp.get("options");
+
+                        JSONArray res = new JSONArray(buttons);
                         for(int i=0;i<res.length();i++) {
 
                             String temp =  res.get(i).toString();
@@ -80,14 +71,20 @@ public class Controller_Buttons extends Controller {
                         ListView lv = templayout.findViewById(R.id.buttons_list);
                         ButtonListAdapter adapter= new ButtonListAdapter(c, R.layout.controller_buttons_item, textarray);
                         lv.setAdapter(adapter);
+
                         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> adapterView, View view, int position, long ids) {
 
-                                String submit= adapterView.getItemAtPosition(position).toString();
+                                if (position != highlightflag) {
+                                    view.setBackgroundColor(Color.RED);
+                                    highlightflag=position;
+                                } else{
+                                    String submit = adapterView.getItemAtPosition(position).toString();
                                 JSONObject param2 = new JSONObject();
                                 try {
-                                    param2.put("id", Integer.parseInt(id));
+                                    Log.d("idinfo",String.valueOf(mtaskview.gettaskID()));
+                                    param2.put("id", mtaskview.gettaskID());
                                     param2.put("submit", submit);
 
 
@@ -96,95 +93,43 @@ public class Controller_Buttons extends Controller {
                                         protected void onPostExecute(Object o) {
                                             super.onPostExecute(o);
 
+                                            try {
+                                                JSONObject resulttemp = new JSONObject(result);
+                                                if(resulttemp.get("success").toString().equals("false")){
+                                                    if(resulttemp.get("message").toString().equals("login")){
+                                                        Intent in = new Intent(parentActivity, LoginActivity.class);
+                                                        parentActivity.startActivity(in);
+                                                        Toast.makeText(parentActivity,"로그인이 만료되었습니다. 다시 로그인해주세요",Toast.LENGTH_SHORT);
+                                                    }
+                                                    else if(resulttemp.get("message").toString().equals("task")){
+                                                        Intent in = new Intent(parentActivity, TaskListActivity.class);
+                                                        parentActivity.startActivity(in);
+                                                        Toast.makeText(parentActivity,"테스크가 만료되었습니다. 다른 테스크를 선택해주세요",Toast.LENGTH_SHORT);
+
+                                                    }
+
+                                                }
+                                                else{
+                                                    parentActivity.startActivity(parentIntent);
+                                                    parentActivity.finish();
+
+                                                }
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+
+
+
 
                                         }
-                                    }.execute("http://18.222.204.84/videoSubmit", param2);
+                                    }.execute("http://18.222.204.84/videoSubmit", param2,logintoken);
 
-                                }
-                                catch (JSONException e) {
+                                } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
 
                                 //Intent nextvideo=new Intent(c, TaskActivity.class);
-                                cont.startActivity(in);
                             }
-                        });
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        };
-*/
-
-
-       // ArrayList<String> textarray=new ArrayList<String>();
-        JSONObject param = new JSONObject();
-        try {
-            param.put("id", Integer.parseInt(id));
-            param.put("requestOption", "buttons");
-
-
-            new HttpRequest() {
-                @Override
-                protected void onPostExecute(Object o) {
-                    super.onPostExecute(o);
-                    ArrayList<String> textarray=new ArrayList<String>();
-                    try {
-                        JSONObject resulttemp = new JSONObject(result);
-                        JSONArray res = (JSONArray) resulttemp.get("options");
-                        for(int i=0;i<res.length();i++) {
-
-                            String temp =  res.get(i).toString();
-                            Log.d("dataget", temp.toString());
-                            textarray.add(temp);
-
-                        }
-                        ConstraintLayout templayout = (ConstraintLayout) view;
-                        ListView lv = templayout.findViewById(R.id.buttons_list);
-                        ButtonListAdapter adapter= new ButtonListAdapter(c, R.layout.controller_buttons_item, textarray);
-                        lv.setAdapter(adapter);
-                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> adapterView, View view, int position, long ids) {
-
-                                String submit= adapterView.getItemAtPosition(position).toString();
-                                JSONObject param2 = new JSONObject();
-                                try {
-                                    param2.put("id", Integer.parseInt(id));
-                                    param2.put("submit", submit);
-
-
-                                    new HttpRequest() {
-                                        @Override
-                                        protected void onPostExecute(Object o) {
-                                            super.onPostExecute(o);
-                                            Intent x = new Intent();
-                                            String mId=(String)in.getStringExtra("taskid");
-                                            TaskView mTaskView = (TaskView) in.getSerializableExtra("taskview");
-                                            Controller mController = (Controller) in.getSerializableExtra("controller");
-                                            int[][] mParameter =  (int[][]) in.getSerializableExtra("tasktype");
-                                            String tasktitle = in.getStringExtra("tasktitle");
-                                            x.putExtra("taskid",mId);
-                                            x.putExtra("taskview",mTaskView);
-                                            x.putExtra("controller",mController);
-                                            x.putExtra("tasktype",mParameter);
-                                            x.putExtra("tasktitle",tasktitle);
-
-                                            parentActivity.startActivity(parentIntent);
-
-
-                                        }
-                                    }.execute("http://18.222.204.84/videoSubmit", param2);
-
-                                }
-                                catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
-                                //Intent nextvideo=new Intent(c, TaskActivity.class);
-
                             }
                         });
 
@@ -197,13 +142,11 @@ public class Controller_Buttons extends Controller {
                     msg.obj=result;
                     handler.sendMessage(msg);
 */
-                }
-            }.execute("http://18.222.204.84/video", param);
 
-        }
-         catch (JSONException e) {
-            e.printStackTrace();
-        }
+
+
+
+
 
 
 

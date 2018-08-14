@@ -1,6 +1,7 @@
 package com.example.hwshin.cachemission.DataStructure;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Message;
@@ -24,6 +25,8 @@ public class TaskView_Video extends TaskView {
     public TaskView_Video() {
         taskViewID = R.layout.taskview_video;
     }
+    //SharedPreferences token = parentActivity.getSharedPreferences("token",Context.MODE_PRIVATE);
+    //String logintoken = token.getString("logintoken",null);
 
     @Override
     public void setContent(String id, String ContentURI, final Context context, final View view) {
@@ -32,7 +35,7 @@ public class TaskView_Video extends TaskView {
         JSONObject param = new JSONObject();
         try {
             param.put("id", id);
-            param.put("requestOption", "video");
+
 
 
             new HttpRequest() {
@@ -53,7 +56,9 @@ public class TaskView_Video extends TaskView {
                             videoView.setMediaController(mc);
                             videoView.setVideoURI(Uri.parse("http://18.222.204.84"+((String)resulttemp.get("url")).substring(3)));
                             videoView.start();
-                            //taskID = resulttemp.get("id");
+                            String taskID = resulttemp.get("baseID").toString();
+                            Log.d("baseid",taskID);
+                            settaskID(Integer.parseInt(taskID));
 
                         }
                     } catch (JSONException e) {
@@ -65,7 +70,7 @@ public class TaskView_Video extends TaskView {
 
 
                 }
-            }.execute("http://18.222.204.84/video", param);
+            }.execute("http://18.222.204.84/taskURI", param);
 
         }
         catch (JSONException e) {

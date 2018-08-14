@@ -16,7 +16,7 @@ public class Controller_EditText extends Controller {
 
 
     @Override
-    public void setLayout(String id, View view, Context c, Intent in) {
+    public void setLayout(String id, View view, Context c, Intent in, String buttons) {
 
 
     }
