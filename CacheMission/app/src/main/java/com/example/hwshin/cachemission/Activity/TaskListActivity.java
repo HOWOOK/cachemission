@@ -2,7 +2,9 @@ package com.example.hwshin.cachemission.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,8 +27,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class TaskListActivity extends AppCompatActivity {
+import static android.Manifest.permission.RECORD_AUDIO;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
+public class TaskListActivity extends AppCompatActivity {
+    final int P_RECORD_AUDIO=77;
     private ListView lv_main;
     final static ArrayList<TaskListItem> mTaskList = new ArrayList<TaskListItem>();
     static ListviewAdapter adapter;
@@ -37,6 +42,12 @@ public class TaskListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tasklist);
         uiHashmap = new UIHashmap();
+        if ((ActivityCompat.checkSelfPermission(getApplicationContext(), RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED)||(ActivityCompat.checkSelfPermission(getApplicationContext(), WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)  ){
+
+            ActivityCompat.requestPermissions(this, new String[]{RECORD_AUDIO,WRITE_EXTERNAL_STORAGE},
+                    P_RECORD_AUDIO);
+
+        }
     }
 
     @Override

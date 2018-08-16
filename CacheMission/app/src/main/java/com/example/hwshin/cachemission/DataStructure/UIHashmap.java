@@ -16,6 +16,8 @@ public class UIHashmap {
     */
     int[][] parameters_OCR = new int[5][2];
     int[][] parameters_VIDEO = new int[5][2];
+    int[][] parameters_VOICE = new int[5][2];
+    int[][] parameters_DICTATION = new int[5][2];
 
     public HashMap<String, TaskView> taskViewHashMap = new HashMap();
     public HashMap<String, Controller> controllerHashMap = new HashMap();
@@ -25,6 +27,8 @@ public class UIHashmap {
         //TaskView hashmap 종류들
         taskViewHashMap.put("image", new TaskView_Image());
         taskViewHashMap.put("video", new TaskView_Video());
+        taskViewHashMap.put("text", new TaskView_Text());
+        taskViewHashMap.put("voice", new TaskView_Voice());
 
         //Controller hashmap 종류들
         controllerHashMap.put("edittext", new Controller_EditText());
@@ -44,6 +48,20 @@ public class UIHashmap {
         parameters_VIDEO[3][0] = R.id.taskview; parameters_VIDEO[3][1] = 4;
         parameters_VIDEO[4][0] = R.id.taskConstLayout; parameters_VIDEO[4][1] = 4;
         taskHashMap.put("VIDEO", parameters_VIDEO);
+
+        parameters_VOICE[0][0] = 5;
+        parameters_VOICE[1][0] = R.id.tasktitle; parameters_VOICE[1][1] = 4;
+        parameters_VOICE[2][0] = R.id.controller; parameters_VOICE[2][1] = 3;
+        parameters_VOICE[3][0] = R.id.taskview; parameters_VOICE[3][1] = 4;
+        parameters_VOICE[4][0] = R.id.taskConstLayout; parameters_VOICE[4][1] = 4;
+        taskHashMap.put("RECORD", parameters_VOICE);
+
+        parameters_DICTATION[0][0] = 5;
+        parameters_DICTATION[1][0] = R.id.tasktitle; parameters_DICTATION[1][1] = 4;
+        parameters_DICTATION[2][0] = R.id.controller; parameters_DICTATION[2][1] = 3;
+        parameters_DICTATION[3][0] = R.id.taskview; parameters_DICTATION[3][1] = 4;
+        parameters_DICTATION[4][0] = R.id.taskConstLayout; parameters_DICTATION[4][1] = 4;
+        taskHashMap.put("DICTATION", parameters_DICTATION);
 
     }
 

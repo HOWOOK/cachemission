@@ -25,6 +25,9 @@ public class SignUpActivity extends AppCompatActivity {
     EditText idText;
     EditText pwText;
     EditText pw2Text;
+    EditText nameText;
+    EditText regionText;
+    EditText ageText;
     Button checkButton;
     Button okButton;
     Button noButton;
@@ -36,6 +39,9 @@ public class SignUpActivity extends AppCompatActivity {
         idText = findViewById(R.id.idvalue);
         pwText = findViewById(R.id.pwvalue);
         pw2Text = findViewById(R.id.pw2value);
+        nameText = findViewById(R.id.namevalue);
+        regionText = findViewById(R.id.wherevalue);
+        ageText = findViewById(R.id.agevalue);
         okButton = findViewById(R.id.okbutton);
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,13 +49,18 @@ public class SignUpActivity extends AppCompatActivity {
                 String idVal = idText.getText().toString();
                 String pwVal = pwText.getText().toString();
                 String pw2Val = pw2Text.getText().toString();
-                if(errorCheck(idVal,pwVal,pw2Val))
+                String nameVal = nameText.getText().toString();
+                String regionVal = regionText.getText().toString();
+                String ageVal = ageText.getText().toString();
+                if(errorCheck(idVal,pwVal,pw2Val,nameVal,regionVal,ageVal))
                     return;
                 try {
                     JSONObject param = new JSONObject();
                     param.put("id", validId);
                     param.put("pw", pwVal);
-
+                    param.put("age", ageVal);
+                    param.put("nickname",nameVal);
+                    param.put("region",regionVal);
                     new HttpRequest(){
                         @Override
                         protected void onPostExecute(Object o) {
@@ -148,7 +159,7 @@ public class SignUpActivity extends AppCompatActivity {
         alertDialogBuilder.setMessage(value);
         alertDialogBuilder.show();
     }
-    private Boolean errorCheck(String id1, String pw1, String pw2)
+    private Boolean errorCheck(String id1, String pw1, String pw2,String name, String region, String age)
     {
         if(validId.equals(""))
         {
@@ -171,6 +182,21 @@ public class SignUpActivity extends AppCompatActivity {
         {
 
             getDialog("확인좀","비번 4자 이상으로 해주셔야 해요");
+            return true;
+        }
+        if(name.equals(""))
+        {
+            getDialog("확인좀","이름이뭐에요");
+            return true;
+        }
+        if(region.equals(""))
+        {
+            getDialog("확인좀","어디사시나요");
+            return true;
+        }
+        if(age.equals(""))
+        {
+            getDialog("확인좀","몇살이세요");
             return true;
         }
         return false;
