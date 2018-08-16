@@ -4,11 +4,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Message;
-<<<<<<< HEAD
+
 import android.support.v4.widget.DrawerLayout;
-=======
+
 import android.support.v4.app.ActivityCompat;
->>>>>>> temp1
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -118,17 +118,9 @@ public class TaskListActivity extends AppCompatActivity {
                             JSONObject temp = (JSONObject) res.get(i);
                             Log.d("dataget", temp.toString());
 
-<<<<<<< HEAD
-
-                            TextView tv = findViewById(R.id.possibleTask);
-                            tv.setText("진행 가능한 작업");
-
-
-                            mTaskList.add(new TaskListItem(String.valueOf(temp.get("id")), (String) temp.get("taskName"), (String) temp.get("taskType"), (String) temp.get("taskView"), (String) temp.get("controller"), String.valueOf(temp.get("gold")),(JSONArray)temp.get("buttons")));
-=======
                             mTaskList.add(new TaskListItem(String.valueOf(temp.get("id")), (String) temp.get("taskName"), (String) temp.get("taskType"),
-                                    (String) temp.get("taskView"), (String) temp.get("controller"), String.valueOf(temp.get("gold"))+" p"));
->>>>>>> design
+                                    (String) temp.get("taskView"), (String) temp.get("controller"), String.valueOf(temp.get("gold"))+" p",(JSONArray)temp.get("buttons")));
+
 
                         }
                         Log.d("mtask", mTaskList.get(0).getController());
