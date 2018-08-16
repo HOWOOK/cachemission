@@ -37,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         String loginId = auto.getString("inputId",null);
         String loginPw = auto.getString("inputPw",null);
         */
+
         idText = findViewById(R.id.edit_id);
         pwText = findViewById(R.id.edit_pw);
         loginButton = findViewById(R.id.button_in);

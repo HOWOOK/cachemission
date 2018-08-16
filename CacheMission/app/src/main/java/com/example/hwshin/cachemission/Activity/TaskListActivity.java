@@ -3,11 +3,17 @@ package com.example.hwshin.cachemission.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Message;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -42,6 +48,16 @@ public class TaskListActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        //애니매이션 시작
+        final ImageView hexagon1 = findViewById(R.id.hexagon1);
+        final ImageView hexagon2 = findViewById(R.id.hexagon2);
+        Animation anim_cw = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.cwrotate);
+        Animation anim_ccw = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.ccwrotate);
+        hexagon1.startAnimation(anim_cw);
+        hexagon2.startAnimation(anim_ccw);
+
+
         //시작하면 일단 토큰을 받아옴
         SharedPreferences token = getSharedPreferences("token",MODE_PRIVATE);
         String stringtoken="";
@@ -69,6 +85,18 @@ public class TaskListActivity extends AppCompatActivity {
                         }
                         else{
 
+                            //유저정보세팅
+                            JSONObject user = (JSONObject) resulttemp.get("user");
+                            TextView username = findViewById(R.id.username);
+                            TextView usernamedrawer = findViewById(R.id.usernamedrawer);
+                            TextView money = findViewById(R.id.money);
+                            TextView maybemoney = findViewById(R.id.maybemoney);
+                            money.setText("\\ "+String.valueOf(user.get("gold")));
+                            maybemoney.setText("\\ "+String.valueOf(user.get("maybe")));
+                            username.setText(String.valueOf(user.get("name")));
+                            usernamedrawer.setText(String.valueOf(user.get("name")));
+
+
                         JSONArray res = (JSONArray) resulttemp.get("data");
                         mTaskList.clear();
                         for (int i = 0; i < res.length(); i++) {
@@ -76,12 +104,17 @@ public class TaskListActivity extends AppCompatActivity {
                             JSONObject temp = (JSONObject) res.get(i);
                             Log.d("dataget", temp.toString());
 
+<<<<<<< HEAD
 
                             TextView tv = findViewById(R.id.possibleTask);
                             tv.setText("진행 가능한 작업");
 
 
                             mTaskList.add(new TaskListItem(String.valueOf(temp.get("id")), (String) temp.get("taskName"), (String) temp.get("taskType"), (String) temp.get("taskView"), (String) temp.get("controller"), String.valueOf(temp.get("gold")),(JSONArray)temp.get("buttons")));
+=======
+                            mTaskList.add(new TaskListItem(String.valueOf(temp.get("id")), (String) temp.get("taskName"), (String) temp.get("taskType"),
+                                    (String) temp.get("taskView"), (String) temp.get("controller"), String.valueOf(temp.get("gold"))+" p"));
+>>>>>>> design
 
                         }
                         Log.d("mtask", mTaskList.get(0).getController());
@@ -120,6 +153,28 @@ public class TaskListActivity extends AppCompatActivity {
 
                             }
                         });
+
+
+                        //메뉴버튼
+                            Button menubtn = findViewById(R.id.drawviewbtn);
+                            menubtn.setOnClickListener(new View.OnClickListener(){
+                                @Override
+                                public void onClick(View v) {
+                                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer) ;
+                                    if (!drawer.isDrawerOpen(Gravity.LEFT)) {
+                                        drawer.openDrawer(Gravity.LEFT) ;
+                                    }
+                                }
+                            });
+
+                            ImageView settingbtn = findViewById(R.id.settingbtn);
+                            settingbtn.setOnClickListener(new View.OnClickListener(){
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent_setting = new Intent(TaskListActivity.this, SettingActivity.class);
+                                    TaskListActivity.this.startActivity(intent_setting);
+                                }
+                            });
 
                     }
                     } catch (JSONException e) {
