@@ -1,27 +1,21 @@
-package com.example.hwshin.cachemission.DataStructure;
+package com.example.hwshin.cachemission.DataStructure.Controller;
 
 import android.app.AlertDialog;
-import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.Message;
 import android.support.constraint.ConstraintLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.hwshin.cachemission.Activity.LoginActivity;
-import com.example.hwshin.cachemission.Activity.TaskActivity;
 import com.example.hwshin.cachemission.Activity.TaskListActivity;
 import com.example.hwshin.cachemission.Adapter.ButtonListAdapter;
-import com.example.hwshin.cachemission.Adapter.ListviewAdapter;
+import com.example.hwshin.cachemission.DataStructure.Controller.Controller;
+import com.example.hwshin.cachemission.DataStructure.HttpRequest;
 import com.example.hwshin.cachemission.R;
 
 import org.json.JSONArray;
@@ -29,7 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import android.os.Handler;
+
 import android.widget.Toast;
 
 public class Controller_Buttons extends Controller {

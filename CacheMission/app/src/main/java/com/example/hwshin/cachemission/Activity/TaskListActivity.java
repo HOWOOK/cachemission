@@ -3,7 +3,6 @@ package com.example.hwshin.cachemission.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.os.Message;
 
 import android.support.v4.widget.DrawerLayout;
 
@@ -22,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.hwshin.cachemission.Adapter.ButtonListAdapter;
 import com.example.hwshin.cachemission.Adapter.ListviewAdapter;
 import com.example.hwshin.cachemission.DataStructure.HttpRequest;
 import com.example.hwshin.cachemission.DataStructure.TaskListItem;
@@ -34,7 +32,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import static android.Manifest.permission.RECORD_AUDIO;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -109,20 +106,29 @@ public class TaskListActivity extends AppCompatActivity {
                             maybemoney.setText("\\ "+String.valueOf(user.get("maybe")));
                             username.setText(String.valueOf(user.get("name")));
                             usernamedrawer.setText(String.valueOf(user.get("name")));
+                            mTaskList.clear();
+                            JSONArray exam_res = (JSONArray) resulttemp.get("exam_data");
+                            JSONArray task_res = (JSONArray) resulttemp.get("task_data");
+                            for (int i = 0; i < exam_res.length(); i++) {
+
+                                JSONObject temp = (JSONObject) exam_res.get(i);
+                                Log.d("dataget", temp.toString());
+
+                                mTaskList.add(new TaskListItem(String.valueOf(temp.get("id")), (String) temp.get("taskName"), (String) temp.get("taskType"),
+                                        (String) temp.get("taskView"), (String) temp.get("controller"), String.valueOf(temp.get("gold"))+" p",(JSONArray)temp.get("buttons"), 1));
 
 
-                        JSONArray res = (JSONArray) resulttemp.get("data");
-                        mTaskList.clear();
-                        for (int i = 0; i < res.length(); i++) {
+                            }
+                            for (int i = 0; i < task_res.length(); i++) {
 
-                            JSONObject temp = (JSONObject) res.get(i);
-                            Log.d("dataget", temp.toString());
+                                JSONObject temp = (JSONObject) task_res.get(i);
+                                Log.d("dataget", temp.toString());
 
-                            mTaskList.add(new TaskListItem(String.valueOf(temp.get("id")), (String) temp.get("taskName"), (String) temp.get("taskType"),
-                                    (String) temp.get("taskView"), (String) temp.get("controller"), String.valueOf(temp.get("gold"))+" p",(JSONArray)temp.get("buttons")));
+                                mTaskList.add(new TaskListItem(String.valueOf(temp.get("id")), (String) temp.get("taskName"), (String) temp.get("taskType"),
+                                        (String) temp.get("taskView"), (String) temp.get("controller"), String.valueOf(temp.get("gold"))+" p",(JSONArray)temp.get("buttons"), 0));
 
 
-                        }
+                            }
                         Log.d("mtask", mTaskList.get(0).getController());
                         Log.d("mtask", mTaskList.get(1).getController());
 
@@ -136,7 +142,10 @@ public class TaskListActivity extends AppCompatActivity {
                                 //각 리스트를 클릭하여 TaskActivity로 넘어가게 되는데 거기에 intent될 데이터들을 구분해서 넘겨줘야합니다.
                                 //지금은 모든 리스트들이 OCR task를 할수있도록 taskview는 image를 controller는 edittext
 
-                                Intent intent_lv = new Intent(TaskListActivity.this, TaskActivity.class);
+                                Intent intent_task = new Intent(TaskListActivity.this, TaskActivity.class);
+                                Intent intent_exam = new Intent(TaskListActivity.this, ExamActivity.class);
+
+                                int flag=((TaskListItem)adapterView.getItemAtPosition(position)).getTaskFlag();
 
                                 String tasktitle = ((TaskListItem) adapterView.getItemAtPosition(position)).getTaskName();
                                 String tasktype = ((TaskListItem) adapterView.getItemAtPosition(position)).getTaskType();
@@ -147,15 +156,28 @@ public class TaskListActivity extends AppCompatActivity {
 
                                 String taskid = ((TaskListItem) adapterView.getItemAtPosition(position)).getId();
 
-                                intent_lv.putExtra("tasktitle", tasktitle);
-                                intent_lv.putExtra("tasktype", tasktype);
-                                intent_lv.putExtra("taskview", taskview);
-                                intent_lv.putExtra("controller", controller);
-                                intent_lv.putExtra("buttons", buttons);
+                                if(flag==0) {
+                                    intent_task.putExtra("tasktitle", tasktitle);
+                                    intent_task.putExtra("tasktype", tasktype);
+                                    intent_task.putExtra("taskview", taskview);
+                                    intent_task.putExtra("controller", controller);
+                                    intent_task.putExtra("buttons", buttons);
 
-                                intent_lv.putExtra("taskid", taskid);
+                                    intent_task.putExtra("taskid", taskid);
 
-                                TaskListActivity.this.startActivity(intent_lv);
+                                    TaskListActivity.this.startActivity(intent_task);
+                                }
+                                else if(flag==1) {
+                                    intent_exam.putExtra("tasktitle", tasktitle);
+                                    intent_exam.putExtra("tasktype", tasktype);
+                                    intent_exam.putExtra("taskview", taskview);
+                                    intent_exam.putExtra("examview", controller);
+                                    intent_exam.putExtra("buttons", buttons);
+
+                                    intent_exam.putExtra("taskid", taskid);
+
+                                    TaskListActivity.this.startActivity(intent_exam);
+                                }
 
                             }
                         });

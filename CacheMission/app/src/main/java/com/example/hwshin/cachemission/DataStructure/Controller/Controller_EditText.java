@@ -1,4 +1,4 @@
-package com.example.hwshin.cachemission.DataStructure;
+package com.example.hwshin.cachemission.DataStructure.Controller;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import com.example.hwshin.cachemission.Activity.LoginActivity;
 import com.example.hwshin.cachemission.Activity.TaskListActivity;
+import com.example.hwshin.cachemission.DataStructure.Controller.Controller;
+import com.example.hwshin.cachemission.DataStructure.HttpRequest;
 import com.example.hwshin.cachemission.R;
 
 import org.json.JSONException;

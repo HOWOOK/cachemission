@@ -1,4 +1,4 @@
-package com.example.hwshin.cachemission.DataStructure;
+package com.example.hwshin.cachemission.DataStructure.TaskView;
 
 import android.content.Context;
 import android.content.Intent;

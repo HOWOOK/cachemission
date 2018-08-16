@@ -11,6 +11,7 @@ public class TaskListItem {
     private String controller;
     private String gold;
     private JSONArray buttons;
+    private int taskFlag;
 
     public String getId(){return id;}
     public String getTaskName() {
@@ -29,6 +30,9 @@ public class TaskListItem {
         return gold;
     }
     public JSONArray getButtons(){return buttons;}
+    public int getTaskFlag(){
+        return taskFlag;
+    }
 
     public String setId(String id){
         return this.id = id;
@@ -47,9 +51,12 @@ public class TaskListItem {
         return this.gold = gold;
     }
     public JSONArray setButtons(JSONArray buttons){return this.buttons=buttons;}
+    public int setTaskFlag(int taskFlag){
+        return this.taskFlag = taskFlag;
+    }
 
 
-    public TaskListItem(String id, String taskName, String taskType, String taskView,  String controller, String gold, JSONArray buttons ){
+    public TaskListItem(String id, String taskName, String taskType, String taskView, String controller, String gold, JSONArray buttons, int taskFlag){
 
         this.id=id;
         this.taskName = taskName;
@@ -58,6 +65,7 @@ public class TaskListItem {
         this.controller = controller;
         this.gold = gold;
         this.buttons=buttons;
+        this.taskFlag = taskFlag;
     }
 
 }

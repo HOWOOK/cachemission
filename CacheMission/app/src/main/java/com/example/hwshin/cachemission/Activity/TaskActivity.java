@@ -10,15 +10,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.hwshin.cachemission.DataStructure.Controller;
-import com.example.hwshin.cachemission.DataStructure.TaskView;
+import com.example.hwshin.cachemission.DataStructure.Controller.Controller;
+import com.example.hwshin.cachemission.DataStructure.TaskView.TaskView;
 import com.example.hwshin.cachemission.DataStructure.UIHashmap;
 import com.example.hwshin.cachemission.R;
-
-import java.util.ArrayList;
 
 public class TaskActivity extends AppCompatActivity {
 
