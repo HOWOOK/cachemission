@@ -87,6 +87,7 @@ public class TaskActivity extends AppCompatActivity {
         View view = findViewById(R.id.controller);
         mTaskView.setParent(this,intent);
         mController.setParent(this,intent);
+        mController.usingactivity=this;
         mController.mtaskview=mTaskView;
         Log.d("finalval",String.valueOf(mTaskView.gettaskID()));
         mController.setLayout(mId,view,getApplicationContext(),intent,buttons);

@@ -8,67 +8,118 @@
 
     <TextView
         android:id="@+id/idtag"
-        android:layout_width="65dp"
+        android:layout_width="100dp"
         android:layout_height="39dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="116dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="16dp"
         android:gravity="center_vertical|center"
         android:text="ID(이메일)"
+        app:layout_constraintEnd_toStartOf="@+id/idvalue"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/pwtag"
-        android:layout_width="65dp"
+        android:layout_width="100dp"
         android:layout_height="39dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="18dp"
         android:gravity="center_vertical|center"
         android:text="비밀번호"
+        app:layout_constraintEnd_toStartOf="@+id/pwvalue"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/idtag" />
 
     <TextView
-        android:id="@+id/pw2tag"
-        android:layout_width="65dp"
+        android:id="@+id/nametag"
+        android:layout_width="100dp"
         android:layout_height="39dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="18dp"
+        android:gravity="center_vertical|center"
+        android:text="이름이뭐에요"
+        app:layout_constraintEnd_toStartOf="@+id/namevalue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wheretag" />
+
+    <TextView
+        android:id="@+id/wheretag"
+        android:layout_width="100dp"
+        android:layout_height="39dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="18dp"
+        android:gravity="center_vertical|center"
+        android:text="어디사세요"
+        app:layout_constraintEnd_toStartOf="@+id/wherevalue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/agetag" />
+
+    <TextView
+        android:id="@+id/agetag"
+        android:layout_width="100dp"
+        android:layout_height="39dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="18dp"
+        android:gravity="center_vertical|center"
+        android:text="몇살이세요"
+        app:layout_constraintEnd_toStartOf="@+id/agevalue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pw2tag" />
+
+    <TextView
+        android:id="@+id/pw2tag"
+        android:layout_width="100dp"
+        android:layout_height="39dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="18dp"
         android:gravity="center_vertical|center"
         android:text="함더 ㄱ"
+        app:layout_constraintEnd_toStartOf="@+id/pw2value"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pwtag" />
 
     <EditText
         android:id="@+id/idvalue"
-        android:layout_width="186dp"
+        android:layout_width="0dp"
         android:layout_height="39dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="116dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="textPersonName"
+        app:layout_constraintEnd_toStartOf="@+id/idcheck"
         app:layout_constraintStart_toEndOf="@+id/idtag"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/pwvalue"
-        android:layout_width="186dp"
+        android:layout_width="0dp"
         android:layout_height="39dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="18dp"
         android:ems="10"
         android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/pwtag"
         app:layout_constraintTop_toBottomOf="@+id/idvalue" />
 
     <EditText
         android:id="@+id/pw2value"
-        android:layout_width="186dp"
+        android:layout_width="0dp"
         android:layout_height="39dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="18dp"
         android:ems="10"
         android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/pw2tag"
         app:layout_constraintTop_toBottomOf="@+id/pwvalue" />
 
@@ -103,11 +154,50 @@
         android:id="@+id/idcheck"
         android:layout_width="60dp"
         android:layout_height="36dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="116dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="16dp"
         android:background="#ffff00"
         android:text="되나"
-        app:layout_constraintStart_toEndOf="@+id/idvalue"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/namevalue"
+        android:layout_width="0dp"
+        android:layout_height="39dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="18dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/nametag"
+        app:layout_constraintTop_toBottomOf="@+id/wherevalue" />
+
+    <EditText
+        android:id="@+id/wherevalue"
+        android:layout_width="0dp"
+        android:layout_height="39dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="18dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/wheretag"
+        app:layout_constraintTop_toBottomOf="@+id/agevalue" />
+
+    <EditText
+        android:id="@+id/agevalue"
+        android:layout_width="0dp"
+        android:layout_height="39dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="18dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/agetag"
+        app:layout_constraintTop_toBottomOf="@+id/pw2value" />
 
 </android.support.constraint.ConstraintLayout>

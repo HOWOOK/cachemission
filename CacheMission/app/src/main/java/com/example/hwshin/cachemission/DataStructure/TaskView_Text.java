@@ -1,38 +1,31 @@
 package com.example.hwshin.cachemission.DataStructure;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Message;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.widget.MediaController;
-import android.widget.VideoView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.hwshin.cachemission.R;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+public class TaskView_Text extends TaskView{
+    public TaskView_Text() {
+        taskViewID = R.layout.taskview_text;
 
-public class TaskView_Video extends TaskView {
-
-    public TaskView_Video() {
-        taskViewID = R.layout.taskview_video;
     }
 
-
     @Override
-    public void setContent(String id, String ContentURI, final Context context, final View view) {
-
+    public void setContent(String id, String contentURI, Context context, final View view) {
         JSONObject param = new JSONObject();
         try {
             param.put("id", id);
+
+
 
             new HttpRequest() {
                 @Override
@@ -44,14 +37,12 @@ public class TaskView_Video extends TaskView {
                         resulttemp = new JSONObject(result);
                         Log.d("hey2",resulttemp.toString());
                         if((boolean)resulttemp.get("success")){
+                           //Log.d("hey","http://18.222.204.84/"+resulttemp.get("url"));
+                            TextView textView= (TextView) view;
+                           // Glide.with(context).load(Uri.parse("http://18.222.204.84"+((String)resulttemp.get("url")).substring(3))).into((ImageView) view);
+                            textView.setText(resulttemp.get("text").toString());
 
-                            VideoView videoView= (VideoView) view;
-                            Log.d("hey","http://18.222.204.84/"+resulttemp.get("url"));
 
-                            MediaController mc=new MediaController(context);
-                            videoView.setMediaController(mc);
-                            videoView.setVideoURI(Uri.parse("http://18.222.204.84"+((String)resulttemp.get("url")).substring(3)));
-                            videoView.start();
                             String taskID = resulttemp.get("baseID").toString();
                             Log.d("baseid",taskID);
                             settaskID(Integer.parseInt(taskID));
@@ -60,14 +51,17 @@ public class TaskView_Video extends TaskView {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+
+
+
+
+
                 }
-            }.execute("http://18.222.204.84/taskURI", param);
+            }.execute("http://18.222.204.84/taskText", param);
 
         }
         catch (JSONException e) {
             e.printStackTrace();
         }
-
-
     }
 }

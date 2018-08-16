@@ -1,5 +1,6 @@
 package com.example.hwshin.cachemission.DataStructure;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ public abstract class Controller  {
     public TaskView mtaskview;
     protected AppCompatActivity parentActivity;
     protected Intent parentIntent;
+    public Activity usingactivity;
     //public abstract String getAnswer();
     public abstract void setLayout(String id, View view, Context c, Intent in, String buttons);
     public void setTaskID(int taskID){
