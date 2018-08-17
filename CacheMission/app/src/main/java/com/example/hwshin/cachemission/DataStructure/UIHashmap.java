@@ -83,7 +83,7 @@ public class UIHashmap {
         parameters_VIDEOEXAM[2][0] = R.id.examview; parameters_VIDEOEXAM[2][1] = 3;
         parameters_VIDEOEXAM[3][0] = R.id.taskviewexam; parameters_VIDEOEXAM[3][1] = 4;
         parameters_VIDEOEXAM[4][0] = R.id.taskConstLayoutexam; parameters_VIDEOEXAM[4][1] = 4;
-        taskHashMap.put("VIDEOEXAM", parameters_VIDEO);
+        taskHashMap.put("VIDEOEXAM", parameters_VIDEOEXAM);
 
         parameters_VOICE[0][0] = 5;
         parameters_VOICE[1][0] = R.id.tasktitle; parameters_VOICE[1][1] = 4;

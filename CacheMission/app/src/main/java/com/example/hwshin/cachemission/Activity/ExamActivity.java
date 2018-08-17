@@ -108,6 +108,7 @@ public class ExamActivity extends AppCompatActivity {
                         Log.d("hey2",resulttemp.toString());
                         if((boolean)resulttemp.get("success")){
                             tempsrcURI=resulttemp.get("url").toString();
+                            
                             baseID = resulttemp.get("baseID").toString();
                             Log.d("baseid",baseID);
                             mTaskView.setContent(mId, tempsrcURI, context, srcTaskView);
@@ -126,12 +127,14 @@ public class ExamActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-            }.execute("http://18.222.204.84/examURI", param,logintoken);
+            }.execute("http://18.222.204.84/examGet", param,logintoken);
 
         }
         catch (JSONException e) {
             e.printStackTrace();
         }
+
+
 
         //TODO: Controller에 입력된 데이터를 받아오는거 일명<getanswer>
         Button confirm=findViewById(R.id.confirmbutton);

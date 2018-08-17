@@ -39,7 +39,7 @@ public class ExamView_Buttons extends ExamView {
         }catch (JSONException e){
             e.printStackTrace();
         }
-        ButtonListAdapter adapter= new ButtonListAdapter(c, R.layout.examview_buttons_item, textarray);
+        ButtonListAdapter adapter= new ButtonListAdapter(c, R.layout.examview_buttons_item, textarray,answer);
         lv.setAdapter(adapter);
     }
 }
