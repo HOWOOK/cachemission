@@ -140,26 +140,20 @@ public class TaskListActivity extends AppCompatActivity {
                                 JSONObject temp = (JSONObject) exam_res.get(i);
                                 Log.d("dataget", temp.toString());
 
-<<<<<<< HEAD
+
                                 mTaskList.add(new TaskListItem(String.valueOf(temp.get("id")), (String) temp.get("taskName"), (String) temp.get("taskType"),
-                                        (String) temp.get("taskView"), (String) temp.get("controller"), String.valueOf(temp.get("gold"))+" p",(JSONArray)temp.get("buttons"), 1));
-=======
-                        JSONArray res = (JSONArray) resulttemp.get("task_data");
-                        Log.d("td",res.toString());
-                        JSONArray res2 = (JSONArray) resulttemp.get("exam_data");
-                        Log.d("gd",res2.toString());
-                        mTaskList.clear();
-                        for (int i = 0; i < res.length(); i++) {
->>>>>>> design
-
-
+                                        (String) temp.get("taskView"), (String) temp.get("controller"), String.valueOf(temp.get("gold")) + " p", (JSONArray) temp.get("buttons"), 1));
                             }
+
+
+                        mTaskList.clear();
+
                             for (int i = 0; i < task_res.length(); i++) {
 
                                 JSONObject temp = (JSONObject) task_res.get(i);
                                 Log.d("dataget", temp.toString());
 
-<<<<<<< HEAD
+
                                 mTaskList.add(new TaskListItem(String.valueOf(temp.get("id")), (String) temp.get("taskName"), (String) temp.get("taskType"),
                                         (String) temp.get("taskView"), (String) temp.get("controller"), String.valueOf(temp.get("gold"))+" p",(JSONArray)temp.get("buttons"), 0));
 
@@ -167,11 +161,11 @@ public class TaskListActivity extends AppCompatActivity {
                             }
                         Log.d("mtask", mTaskList.get(0).getController());
                         Log.d("mtask", mTaskList.get(1).getController());
-=======
+
                         }
                         //Log.d("mtask", mTaskList.get(0).getController());
                         //Log.d("mtask", mTaskList.get(1).getController());
->>>>>>> design
+
 
                         lv_main = (ListView) findViewById(R.id.taskList);
                         adapter = new ListviewAdapter(getApplicationContext(), R.layout.task_lv, TaskListActivity.mTaskList);
@@ -225,7 +219,7 @@ public class TaskListActivity extends AppCompatActivity {
 
 
 
-                    }
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

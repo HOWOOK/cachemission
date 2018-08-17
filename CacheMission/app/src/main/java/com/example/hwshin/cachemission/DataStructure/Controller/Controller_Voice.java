@@ -8,21 +8,11 @@ import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.constraint.ConstraintLayout;
-<<<<<<< HEAD:CacheMission/app/src/main/java/com/example/hwshin/cachemission/DataStructure/Controller/Controller_Voice.java
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-=======
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
->>>>>>> design:CacheMission/app/src/main/java/com/example/hwshin/cachemission/DataStructure/Controller_Voice.java
-
-import com.example.hwshin.cachemission.DataStructure.Controller.Controller;
 import com.example.hwshin.cachemission.R;
 
 import java.io.DataOutputStream;

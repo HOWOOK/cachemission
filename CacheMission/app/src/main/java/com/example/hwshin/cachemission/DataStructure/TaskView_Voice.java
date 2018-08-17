@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
+import com.example.hwshin.cachemission.DataStructure.TaskView.TaskView;
 import com.example.hwshin.cachemission.R;
 
 import org.json.JSONException;
@@ -19,7 +20,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class TaskView_Voice extends TaskView{
+public class TaskView_Voice extends TaskView {
     boolean isPlaying=false;
 
     public TaskView_Voice() {
