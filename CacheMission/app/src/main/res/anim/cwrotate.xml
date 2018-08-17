@@ -2,11 +2,11 @@
 <rotate xmlns:android="http://schemas.android.com/apk/res/android"
     android:interpolator="@android:anim/linear_interpolator"
     android:repeatCount="infinite"
-    android:duration="40000"
+    android:duration="5000"
     android:pivotX="50%"
     android:pivotY="50%"
     android:fromDegrees="0"
-    android:toDegrees="360">
+    android:toDegrees="60">
 </rotate>
 
 

@@ -89,6 +89,31 @@ public class TaskListActivity extends AppCompatActivity {
                 protected void onPostExecute(Object o) {
                     super.onPostExecute(o);
                     try {
+                        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer) ;
+
+                        //메뉴버튼
+                        Button menubtn = findViewById(R.id.drawviewbtn);
+                        menubtn.setOnClickListener(new View.OnClickListener(){
+                            @Override
+                            public void onClick(View v) {
+
+                                if (!drawer.isDrawerOpen(Gravity.LEFT)) {
+                                    drawer.openDrawer(Gravity.LEFT) ;
+                                }
+                            }
+                        });
+
+                        ImageView settingbtn = findViewById(R.id.settingbtn);
+                        settingbtn.setOnClickListener(new View.OnClickListener(){
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent_setting = new Intent(TaskListActivity.this, SettingActivity.class);
+                                TaskListActivity.this.startActivity(intent_setting);
+                                if (drawer.isDrawerOpen(Gravity.LEFT)) {
+                                    drawer.closeDrawer(Gravity.LEFT) ;
+                                }
+                            }
+                        });
 
 
                         JSONObject resulttemp = new JSONObject(result);
@@ -96,6 +121,7 @@ public class TaskListActivity extends AppCompatActivity {
                         if (resulttemp.get("success").toString().equals("login")) {
                             Intent gotologin = new Intent(TaskListActivity.this,LoginActivity.class);
                             startActivity(gotologin);
+                            finish();
                         }
                         else{
 
@@ -105,13 +131,16 @@ public class TaskListActivity extends AppCompatActivity {
                             TextView usernamedrawer = findViewById(R.id.usernamedrawer);
                             TextView money = findViewById(R.id.money);
                             TextView maybemoney = findViewById(R.id.maybemoney);
-                            money.setText("\\ "+String.valueOf(user.get("gold")));
-                            maybemoney.setText("\\ "+String.valueOf(user.get("maybe")));
+                            money.setText("\uFFE6 "+String.valueOf(user.get("gold")));
+                            maybemoney.setText("\uFFE6 "+String.valueOf(user.get("maybe")));
                             username.setText(String.valueOf(user.get("name")));
                             usernamedrawer.setText(String.valueOf(user.get("name")));
 
 
-                        JSONArray res = (JSONArray) resulttemp.get("data");
+                        JSONArray res = (JSONArray) resulttemp.get("task_data");
+                        Log.d("td",res.toString());
+                        JSONArray res2 = (JSONArray) resulttemp.get("exam_data");
+                        Log.d("gd",res2.toString());
                         mTaskList.clear();
                         for (int i = 0; i < res.length(); i++) {
 
@@ -123,8 +152,8 @@ public class TaskListActivity extends AppCompatActivity {
 
 
                         }
-                        Log.d("mtask", mTaskList.get(0).getController());
-                        Log.d("mtask", mTaskList.get(1).getController());
+                        //Log.d("mtask", mTaskList.get(0).getController());
+                        //Log.d("mtask", mTaskList.get(1).getController());
 
                         lv_main = (ListView) findViewById(R.id.taskList);
                         adapter = new ListviewAdapter(getApplicationContext(), R.layout.task_lv, TaskListActivity.mTaskList);
@@ -161,26 +190,6 @@ public class TaskListActivity extends AppCompatActivity {
                         });
 
 
-                        //메뉴버튼
-                            Button menubtn = findViewById(R.id.drawviewbtn);
-                            menubtn.setOnClickListener(new View.OnClickListener(){
-                                @Override
-                                public void onClick(View v) {
-                                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer) ;
-                                    if (!drawer.isDrawerOpen(Gravity.LEFT)) {
-                                        drawer.openDrawer(Gravity.LEFT) ;
-                                    }
-                                }
-                            });
-
-                            ImageView settingbtn = findViewById(R.id.settingbtn);
-                            settingbtn.setOnClickListener(new View.OnClickListener(){
-                                @Override
-                                public void onClick(View v) {
-                                    Intent intent_setting = new Intent(TaskListActivity.this, SettingActivity.class);
-                                    TaskListActivity.this.startActivity(intent_setting);
-                                }
-                            });
 
                     }
                     } catch (JSONException e) {

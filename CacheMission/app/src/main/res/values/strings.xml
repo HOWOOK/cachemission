@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">CashMission</string>
+    <string name="app_name">캐시미션</string>
+    <string name="textnotload">텍스트가 로딩되지 않았습니다.</string>
+    <string name="none">default</string>
 </resources>

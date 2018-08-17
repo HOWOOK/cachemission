@@ -48,6 +48,7 @@ public class TaskActivity extends AppCompatActivity {
         mTaskView = (TaskView) uiHashmap.taskViewHashMap.get(intent.getStringExtra("taskview"));
         mController = (Controller) uiHashmap.controllerHashMap.get(intent.getStringExtra("controller"));
         mParameter =  (int[][]) uiHashmap.taskHashMap.get(intent.getStringExtra("tasktype"));
+        System.out.println("ㅁㄴㅇㅁㄴㅇ"+intent.getStringExtra("tasktype"));
         tasktitle = intent.getStringExtra("tasktitle");
         buttons= intent.getStringExtra("buttons");
 
@@ -68,6 +69,7 @@ public class TaskActivity extends AppCompatActivity {
         ConstraintSet constraintSet = new ConstraintSet();
         ConstraintLayout constraintLayout =  (ConstraintLayout) findViewById(R.id.taskConstLayout);
         constraintSet.clone(constraintLayout);
+        System.out.println(mParameter[1][0]+" & "+mParameter[1][1]);
         constraintSet.connect(R.id.taskview, ConstraintSet.TOP, mParameter[1][0], mParameter[1][1]);
         constraintSet.connect(R.id.taskview, ConstraintSet.BOTTOM, mParameter[2][0], mParameter[2][1] );
         constraintSet.connect(R.id.controller, ConstraintSet.TOP, mParameter[3][0], mParameter[3][1] );

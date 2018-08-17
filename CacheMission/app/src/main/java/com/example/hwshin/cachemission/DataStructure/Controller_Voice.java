@@ -12,9 +12,11 @@ import android.os.Build;
 import android.os.Environment;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.hwshin.cachemission.R;
@@ -96,12 +98,11 @@ public class Controller_Voice extends Controller {
 
 
 
-
+        final Context c_ = c;
         ConstraintLayout templayout = (ConstraintLayout) view;
         Button post=templayout.findViewById(R.id.post);
-        final Button recb =templayout.findViewById(R.id.recb);
-
-        final Button mBtPlay=templayout.findViewById(R.id.stream);
+        final ImageView recb =templayout.findViewById(R.id.recb);
+        final ImageView mBtPlay = templayout.findViewById(R.id.stream);
 
 
 
@@ -112,12 +113,15 @@ public class Controller_Voice extends Controller {
                     startRec();
                     //recorder.start();
                     isRecording=true;
-                    recb.setText("녹음그만");
+                    recb.setImageDrawable(ContextCompat.getDrawable(c_, R.drawable.recordstopbtn));
+                    //recb.setText("녹음그만");
                 }
                 else{
                     stopRec();
                     isRecording=false;
-                    recb.setText("다시녹음하기");}
+                    recb.setImageDrawable(ContextCompat.getDrawable(c_, R.drawable.recordstartbtn));
+                    //recb.setText("다시녹음하기");
+                    }
 
             }
         });
@@ -135,13 +139,15 @@ public class Controller_Voice extends Controller {
                     mPlayer.start();
 
                     isPlaying = true;
-                    mBtPlay.setText("듣기중지");
+                    mBtPlay.setImageDrawable(ContextCompat.getDrawable(c_, R.drawable.recordpausebtn));
+                    //mBtPlay.setText("듣기중지");
                 }
                 else {
                     mPlayer.reset();
 
                     isPlaying = false;
-                    mBtPlay.setText("들어보기");
+                    mBtPlay.setImageDrawable(ContextCompat.getDrawable(c_, R.drawable.recordplaybtn));
+                    //mBtPlay.setText("들어보기");
                 }
             }
         });
@@ -164,15 +170,14 @@ public class Controller_Voice extends Controller {
         });
 
 
-
-
         mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 
             @Override
             public void onCompletion(MediaPlayer mp) {
                 mPlayer.reset();
                 isPlaying = false;
-                mBtPlay.setText("들어보기");
+                mBtPlay.setImageDrawable(ContextCompat.getDrawable(c_, R.drawable.recordplaybtn));
+                //mBtPlay.setText("들어보기");
             }
         });
 

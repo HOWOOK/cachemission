@@ -62,8 +62,10 @@ public class LoginActivity extends AppCompatActivity {
                                 if (res.get("success").toString() == "true"){
                                     getDialog("로그인 되었음", "축하폭하");
 
+
                                     SharedPreferences token = getSharedPreferences("token", MODE_PRIVATE);
                                     SharedPreferences.Editor editor = token.edit();
+                                    //logintoken이라는 key값으로 token을 저장한다.
                                     editor.putString("logintoken", res.get("token").toString());
                                     editor.commit();
 

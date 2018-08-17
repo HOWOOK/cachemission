@@ -26,15 +26,16 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/hexagon2" />
+            app:srcCompat="@drawable/imagenotload" />
 
         <TextView
             android:id="@+id/taskTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:text="테스크 이름"
+            android:text="@string/none"
             android:textColor="@color/colorSecondary"
+            android:fontFamily="@font/nanumsquareb_"
             app:layout_constraintStart_toEndOf="@id/taskType"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -43,8 +44,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:text="gold"
+            android:text="@string/none"
             android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            android:fontFamily="@font/nanumsquareeb_"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/taskType" />
 

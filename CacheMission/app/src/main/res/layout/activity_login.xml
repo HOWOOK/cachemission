@@ -6,59 +6,159 @@
     android:layout_height="match_parent"
     tools:context=".activity_login">
 
-    <EditText
-        android:id="@+id/edit_id"
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
         android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="100dp"
-        android:ems="10"
-        android:hint="ID(이메일)"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintGuide_percent="0.5"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/edit_pw"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:hint="비밀번호"
-        android:inputType="textPassword"
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/CC1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_id" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/guideline2"
+        >
 
-    <Button
-        android:id="@+id/button_in"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
-        android:background="#ffff00"
-        android:text="로그인"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.463"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_pw" />
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_percent="0.2"
+            android:orientation="horizontal" />
 
-    <Button
-        android:id="@+id/button_up"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="15dp"
-        android:background="#ffff00"
-        android:text="회원가입"
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/cashmissionlogo1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/guideline_logo"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/CC2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_in" />
+        app:layout_constraintTop_toBottomOf="@id/guideline2">
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.85" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.15" />
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline4"
+            app:layout_constraintStart_toStartOf="@id/guideline3"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <EditText
+                android:id="@+id/edit_id"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:fontFamily="@font/nanumsquareb_"
+                android:hint="ID (이메일)"
+                android:inputType="textPersonName"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/edit_pw"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:fontFamily="@font/nanumsquareb_"
+                android:hint="비밀번호"
+                android:inputType="textPassword"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_id" />
+
+            <Button
+                android:id="@+id/button_in"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="3dp"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorAccent"
+                android:fontFamily="@font/nanumsquareeb_"
+                android:text="로그인"
+                android:textColor="#ffffff"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_pw" />
+
+            <Button
+                android:id="@+id/button_findid"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/btn_custom1"
+                android:fontFamily="@font/nanumsquareeb_"
+                android:text="아이디 찾기"
+                android:textColor="@color/colorAccent"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button_in" />
+
+            <Button
+                android:id="@+id/button_findpw"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/btn_custom1"
+                android:fontFamily="@font/nanumsquareeb_"
+                android:text="비밀번호 찾기"
+                android:textColor="@color/colorAccent"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@+id/button_findid"
+                app:layout_constraintTop_toBottomOf="@+id/button_in" />
+
+            <Button
+                android:id="@+id/button_up"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/colorAccent"
+                android:fontFamily="@font/nanumsquareeb_"
+                android:text="회원가입"
+                android:textColor="#ffffff"
+                app:layout_constraintEnd_toEndOf="@+id/button_in"
+                app:layout_constraintStart_toEndOf="@+id/button_findpw"
+                app:layout_constraintTop_toBottomOf="@+id/button_in" />
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

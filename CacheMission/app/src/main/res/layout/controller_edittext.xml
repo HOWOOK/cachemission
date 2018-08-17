@@ -8,28 +8,33 @@
 
     <Button
         android:id="@+id/sendbtn"
-        android:layout_width="85dp"
-        android:layout_height="94dp"
-        android:layout_margin="3dp"
+        android:layout_width="70dp"
+        android:layout_height="45dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="15dp"
         android:background="@color/colorAccent"
         android:text="전송"
         android:textColor="#ffffff"
+        android:textSize="15dp"
+        android:fontFamily="@font/nanumsquareeb_"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/editText"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.326" />
+        />
 
     <EditText
         android:id="@+id/editText"
         android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
         android:ems="10"
-        android:hint="어디한번입력해보시지"
+        android:hint="텍스트를 입력해 주세요."
         android:inputType="textPersonName"
+        android:fontFamily="@font/nanumsquareb_"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/sendbtn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.338" />
+        />
 </android.support.constraint.ConstraintLayout>
