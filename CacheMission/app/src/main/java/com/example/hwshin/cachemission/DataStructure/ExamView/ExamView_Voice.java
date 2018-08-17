@@ -8,8 +8,12 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.hwshin.cachemission.DataStructure.ExamView.ExamView;
+import com.example.hwshin.cachemission.R;
 
 public class ExamView_Voice extends ExamView {
+    public ExamView_Voice() {
+        ExamViewID = R.layout.examview_voice;
+    }
     boolean isPlaying=false;
     @Override
     public void setLayout(String id, View view, final Context c, Intent in, String buttons, final String answer) {

@@ -69,6 +69,7 @@ public class ExamActivity extends AppCompatActivity {
         ViewGroup parent1 = (ViewGroup) findViewById(R.id.taskviewexam);
         inflater.inflate(taskViewID, parent1);
         ViewGroup parent2 = (ViewGroup) findViewById(R.id.examview);
+        Log.d("examview",String.valueOf(controllerID));
         inflater.inflate(controllerID, parent2);
 
         //TaskView와 Controller의 constraint 설정
@@ -116,6 +117,7 @@ public class ExamActivity extends AppCompatActivity {
                             mExamView.usingactivity=activity;
                             mExamView.mtaskview=mTaskView;
                             Log.d("finalval",String.valueOf(mTaskView.gettaskID()));
+                            Log.d("answer",resulttemp.get("answer").toString());
                             mExamView.setLayout(mId,view,getApplicationContext(),intent,buttons,resulttemp.get("answer").toString());
 
 
@@ -124,7 +126,7 @@ public class ExamActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-            }.execute("http://18.222.204.84/taskURI", param,logintoken);
+            }.execute("http://18.222.204.84/examURI", param,logintoken);
 
         }
         catch (JSONException e) {
@@ -141,7 +143,7 @@ public class ExamActivity extends AppCompatActivity {
                 try {
                     param.put("taskID", Integer.parseInt(mId));
                     param.put("baseID", baseID);
-                    param.put("submit","confirm");
+                    param.put("submit",true);
                     new HttpRequest() {
                         @Override
                         protected void onPostExecute(Object o) {
@@ -150,7 +152,7 @@ public class ExamActivity extends AppCompatActivity {
                             finish();
 
                         }
-                    }.execute("http://18.222.204.84/taskURI", param,logintoken);
+                    }.execute("http://18.222.204.84/examSubmit", param,logintoken);
 
                 }
                 catch (JSONException e) {
@@ -165,7 +167,7 @@ public class ExamActivity extends AppCompatActivity {
                 try {
                     param.put("taskID", Integer.parseInt(mId));
                     param.put("baseID", baseID);
-                    param.put("submit","confirm");
+                    param.put("submit",false);
                     new HttpRequest() {
                         @Override
                         protected void onPostExecute(Object o) {
@@ -174,7 +176,7 @@ public class ExamActivity extends AppCompatActivity {
                             finish();
 
                         }
-                    }.execute("http://18.222.204.84/taskURI", param,logintoken);
+                    }.execute("http://18.222.204.84/examSubmit", param,logintoken);
 
                 }
                 catch (JSONException e) {

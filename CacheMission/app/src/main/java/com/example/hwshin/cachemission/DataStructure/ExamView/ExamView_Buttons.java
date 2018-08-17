@@ -17,11 +17,15 @@ import org.json.JSONException;
 import java.util.ArrayList;
 
 public class ExamView_Buttons extends ExamView {
+    public ExamView_Buttons() {
+        ExamViewID = R.layout.examview_buttons;
+    }
     @Override
     public void setLayout(String id, View view, Context c, Intent in, String buttons, String answer) {
         ConstraintLayout templayout = (ConstraintLayout) view;
-        ListView lv = templayout.findViewById(R.id.buttons_list);
+        ListView lv = templayout.findViewById(R.id.buttons_list_exam);
         ArrayList<String> textarray=new ArrayList<String>();
+        Log.d("answer",buttons);
         try {
 
             JSONArray res = new JSONArray(buttons);
@@ -35,7 +39,7 @@ public class ExamView_Buttons extends ExamView {
         }catch (JSONException e){
             e.printStackTrace();
         }
-        ButtonListAdapter adapter= new ButtonListAdapter(c, R.layout.controller_buttons_item, textarray);
+        ButtonListAdapter adapter= new ButtonListAdapter(c, R.layout.examview_buttons_item, textarray);
         lv.setAdapter(adapter);
     }
 }

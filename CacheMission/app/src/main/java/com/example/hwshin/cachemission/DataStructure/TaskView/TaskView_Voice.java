@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -62,12 +63,14 @@ public class TaskView_Voice extends TaskView {
                                             mPlayer.start();
 
                                             isPlaying = true;
-                                            mBtPlay.setText("듣기중지");
+                                            mBtPlay.setBackground(ContextCompat.getDrawable(context, R.drawable.voicestopbtn));
+                                            //mBtPlay.setText("듣기중지");
                                         } else {
                                             mPlayer.reset();
 
                                             isPlaying = false;
-                                            mBtPlay.setText("들어보기");
+                                            mBtPlay.setBackground(ContextCompat.getDrawable(context, R.drawable.voiceplaybtn));
+                                            //mBtPlay.setText("들어보기");
                                         }
                                     }
                                 });
@@ -77,7 +80,8 @@ public class TaskView_Voice extends TaskView {
                                     public void onCompletion(MediaPlayer mp) {
                                         mPlayer.reset();
                                         isPlaying = false;
-                                        mBtPlay.setText("들어보기");
+                                        mBtPlay.setBackground(ContextCompat.getDrawable(context, R.drawable.voiceplaybtn));
+                                        //mBtPlay.setText("들어보기");
                                     }
                                 });
                                 String taskID = resulttemp.get("baseID").toString();

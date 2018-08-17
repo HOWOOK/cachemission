@@ -25,7 +25,7 @@ public class TaskActivity extends AppCompatActivity {
     TaskView mTaskView;
     Controller mController;
     int[][] mParameter;
-    String tempsrcURI;
+    String tempsrcURI="foobar";
     String tasktitle;
     String buttons;
     private UIHashmap uiHashmap;

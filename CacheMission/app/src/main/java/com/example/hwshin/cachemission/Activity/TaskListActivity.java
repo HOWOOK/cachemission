@@ -75,7 +75,8 @@ public class TaskListActivity extends AppCompatActivity {
         stringtoken=token.getString("logintoken",null);
         if(stringtoken==null){
             stringtoken="";
-        Log.d("tokkk",stringtoken);}
+        Log.d("tokkk",stringtoken);
+        }
         JSONObject param = new JSONObject();
         try {
             param.put("requestlist", "tasklist");
@@ -112,7 +113,14 @@ public class TaskListActivity extends AppCompatActivity {
                             }
                         });
 
+                        Log.d("good",result.toString());
+/*
+                        if(result!=){
+                            Intent gotologin = new Intent(TaskListActivity.this,LoginActivity.class);
+                            startActivity(gotologin);
+                            finish();
 
+                        }*/
                         JSONObject resulttemp = new JSONObject(result);
 
                         if (resulttemp.get("success").toString().equals("login")) {
@@ -146,7 +154,7 @@ public class TaskListActivity extends AppCompatActivity {
                             }
 
 
-                        mTaskList.clear();
+
 
                             for (int i = 0; i < task_res.length(); i++) {
 
