@@ -1,6 +1,7 @@
 package com.example.hwshin.cachemission.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,39 +40,47 @@ public class ListviewAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        String type;
-        type =  mTaskList.get(position).getTaskType();
-
-//        if (type.equals("labeling"))
-//            return 1000;
-//        else if (type.equals("examining"))
-//            return 1001;
-//        else if (type.equals("recording"))
-//            return 1002;
-//        else
-//            return 0;
-        return 0;
+        return position;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
         convertView = inflater.inflate(layout, parent, false);
-
         TaskListItem taskItem = mTaskList.get(position);
-//
-//
-//        ImageView taskIv = (ImageView) convertView.findViewById(R.id.taskType);
-//
-//        if(taskItem.getTaskType().equals("labeling"))
-//            Glide.with(convertView).load(R.drawable.picture_95b3d7).into(taskIv);
-//        else if (taskItem.getTaskType().equals("recording"))
-//            Glide.with(convertView).load(R.drawable.microphone_d99694).into(taskIv);
-//        else if (taskItem.getTaskType().equals("examining"))
-//            Glide.with(convertView).load(R.drawable.picture_b3a2c7).into(taskIv);
-//        else
-//            Glide.with(convertView).load(R.drawable.userc_3d69b).into(taskIv);
-//
+        ImageView taskIv = (ImageView) convertView.findViewById(R.id.taskType);
+        ImageView tasklv_check = (ImageView) convertView.findViewById(R.id.taskTypeCheck);
+
+        String taskType = taskItem.getTaskType().toString();
+
+
+        if(taskType.equals("OCR"))
+            Glide.with(convertView).load(R.drawable.tasktype_ocr).into(taskIv);
+        else if(taskType.equals("OCREXAM")) {
+            Glide.with(convertView).load(R.drawable.tasktype_ocr).into(taskIv);
+            Glide.with(convertView).load(R.drawable.tasktypeadd).into(tasklv_check);
+        }
+        else if(taskType.equals("VIDEO"))
+            Glide.with(convertView).load(R.drawable.tasktype_video).into(taskIv);
+        else if(taskType.equals("VIDEOEXAM")) {
+            Glide.with(convertView).load(R.drawable.tasktype_video).into(taskIv);
+            Glide.with(convertView).load(R.drawable.tasktypeadd).into(tasklv_check);
+        }
+        else if(taskType.equals("DICTATION"))
+            Glide.with(convertView).load(R.drawable.tasktype_dictation).into(taskIv);
+        else if(taskType.equals("DICTATIONEXAM")) {
+            Glide.with(convertView).load(R.drawable.tasktype_dictation).into(taskIv);
+            Glide.with(convertView).load(R.drawable.tasktypeadd).into(tasklv_check);
+        }
+        else if(taskType.equals("RECORD"))
+            Glide.with(convertView).load(R.drawable.tasktype_voice).into(taskIv);
+        else if(taskType.equals("RECORDEXAM")) {
+            Glide.with(convertView).load(R.drawable.tasktype_voice).into(taskIv);
+            Glide.with(convertView).load(R.drawable.tasktypeadd).into(tasklv_check);
+        }
+        else
+            Glide.with(convertView).load(R.drawable.imagenotload).into(taskIv);
+
         TextView taskTv = (TextView) convertView.findViewById(R.id.taskTitle);
         taskTv.setText(taskItem.getTaskName());
         TextView gold=(TextView) convertView.findViewById(R.id.gold);
