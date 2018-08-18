@@ -1,203 +1,271 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/idtag"
-        android:layout_width="100dp"
-        android:layout_height="39dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="16dp"
-        android:gravity="center_vertical|center"
-        android:text="ID(이메일)"
-        app:layout_constraintEnd_toStartOf="@+id/idvalue"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
 
-    <TextView
-        android:id="@+id/pwtag"
-        android:layout_width="100dp"
-        android:layout_height="39dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="18dp"
-        android:gravity="center_vertical|center"
-        android:text="비밀번호"
-        app:layout_constraintEnd_toStartOf="@+id/pwvalue"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/idtag" />
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/nametag"
-        android:layout_width="100dp"
-        android:layout_height="39dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="18dp"
-        android:gravity="center_vertical|center"
-        android:text="이름이뭐에요"
-        app:layout_constraintEnd_toStartOf="@+id/namevalue"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wheretag" />
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline_signupright"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.9" />
 
-    <TextView
-        android:id="@+id/wheretag"
-        android:layout_width="100dp"
-        android:layout_height="39dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="18dp"
-        android:gravity="center_vertical|center"
-        android:text="어디사세요"
-        app:layout_constraintEnd_toStartOf="@+id/wherevalue"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/agetag" />
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline_signupleft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.1" />
 
-    <TextView
-        android:id="@+id/agetag"
-        android:layout_width="100dp"
-        android:layout_height="39dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="18dp"
-        android:gravity="center_vertical|center"
-        android:text="몇살이세요"
-        app:layout_constraintEnd_toStartOf="@+id/agevalue"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pw2tag" />
+            <TextView
+                android:id="@+id/idtag"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:gravity="center_vertical|center"
+                android:text="ID(이메일)"
+                android:textSize="15dp"
+                android:textColor="@color/fontColorActive"
+                android:fontFamily="@font/nanumsquarer_"
+                app:layout_constraintEnd_toStartOf="@+id/idvalue"
+                app:layout_constraintStart_toStartOf="@+id/guideline_signupleft"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/pw2tag"
-        android:layout_width="100dp"
-        android:layout_height="39dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="18dp"
-        android:gravity="center_vertical|center"
-        android:text="함더 ㄱ"
-        app:layout_constraintEnd_toStartOf="@+id/pw2value"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pwtag" />
+            <TextView
+                android:id="@+id/pwtag"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:gravity="center_vertical|center"
+                android:textColor="@color/fontColorActive"
+                android:text="비밀번호"
+                android:textSize="15dp"
+                android:fontFamily="@font/nanumsquarer_"
+                app:layout_constraintEnd_toStartOf="@+id/pwvalue"
+                app:layout_constraintStart_toStartOf="@+id/guideline_signupleft"
+                app:layout_constraintTop_toBottomOf="@+id/idtag" />
 
-    <EditText
-        android:id="@+id/idvalue"
-        android:layout_width="0dp"
-        android:layout_height="39dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toStartOf="@+id/idcheck"
-        app:layout_constraintStart_toEndOf="@+id/idtag"
-        app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/pw2tag"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:gravity="center_vertical|center"
+                android:text="비밀번호확인"
+                android:textSize="15dp"
+                android:textColor="@color/fontColorActive"
+                android:fontFamily="@font/nanumsquarer_"
+                app:layout_constraintEnd_toStartOf="@+id/pw2value"
+                app:layout_constraintStart_toStartOf="@+id/guideline_signupleft"
+                app:layout_constraintTop_toBottomOf="@+id/pwtag" />
 
-    <EditText
-        android:id="@+id/pwvalue"
-        android:layout_width="0dp"
-        android:layout_height="39dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="18dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/pwtag"
-        app:layout_constraintTop_toBottomOf="@+id/idvalue" />
+            <TextView
+                android:id="@+id/gendertag"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:gravity="center_vertical|center"
+                android:text="성별"
+                android:textSize="15dp"
+                android:textColor="@color/fontColorActive"
+                android:fontFamily="@font/nanumsquarer_"
+                app:layout_constraintEnd_toStartOf="@+id/pw2value"
+                app:layout_constraintStart_toStartOf="@+id/guideline_signupleft"
+                app:layout_constraintTop_toBottomOf="@+id/pw2tag" />
 
-    <EditText
-        android:id="@+id/pw2value"
-        android:layout_width="0dp"
-        android:layout_height="39dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="18dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/pw2tag"
-        app:layout_constraintTop_toBottomOf="@+id/pwvalue" />
+            <TextView
+                android:id="@+id/agetag"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:gravity="center_vertical|center"
+                android:text="출생년도"
+                android:textSize="15dp"
+                android:textColor="@color/fontColorActive"
+                android:fontFamily="@font/nanumsquarer_"
+                app:layout_constraintEnd_toStartOf="@+id/agevalue"
+                app:layout_constraintStart_toStartOf="@+id/guideline_signupleft"
+                app:layout_constraintTop_toBottomOf="@+id/gendertag" />
 
-    <Button
-        android:id="@+id/okbutton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="128dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginStart="30dp"
-        android:background="#ffff00"
-        android:text="가입하기"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/wheretag"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:gravity="center_vertical|center"
+                android:text="거주지역"
+                android:textSize="15dp"
+                android:textColor="@color/fontColorActive"
+                android:fontFamily="@font/nanumsquarer_"
+                app:layout_constraintEnd_toStartOf="@+id/wherevalue"
+                app:layout_constraintStart_toStartOf="@+id/guideline_signupleft"
+                app:layout_constraintTop_toBottomOf="@+id/agetag" />
 
-    <Button
-        android:id="@+id/nobutton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="68dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginStart="30dp"
-        android:background="#ffff00"
-        android:text="안함"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/nametag"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:gravity="center_vertical|center"
+                android:text="이름"
+                android:textSize="15dp"
+                android:textColor="@color/fontColorActive"
+                android:fontFamily="@font/nanumsquarer_"
+                app:layout_constraintEnd_toStartOf="@+id/namevalue"
+                app:layout_constraintStart_toStartOf="@+id/guideline_signupleft"
+                app:layout_constraintTop_toBottomOf="@+id/wheretag" />
 
-    <Button
-        android:id="@+id/idcheck"
-        android:layout_width="60dp"
-        android:layout_height="36dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="16dp"
-        android:background="#ffff00"
-        android:text="되나"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/descriptiontag"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:gravity="center_vertical|center"
+                android:text="알게된경로"
+                android:textSize="15dp"
+                android:textColor="@color/fontColorActive"
+                android:fontFamily="@font/nanumsquarer_"
+                app:layout_constraintStart_toStartOf="@+id/guideline_signupleft"
+                app:layout_constraintTop_toBottomOf="@+id/nametag" />
 
-    <EditText
-        android:id="@+id/namevalue"
-        android:layout_width="0dp"
-        android:layout_height="39dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="18dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/nametag"
-        app:layout_constraintTop_toBottomOf="@+id/wherevalue" />
+            <EditText
+                android:id="@+id/idvalue"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:ems="10"
+                android:inputType="textEmailAddress"
+                android:textSize="15dp"
+                android:textColor="#000000"
+                android:fontFamily="@font/nanumsquarer_"
+                app:layout_constraintEnd_toStartOf="@+id/idcheck"
+                app:layout_constraintStart_toEndOf="@+id/idtag"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/wherevalue"
-        android:layout_width="0dp"
-        android:layout_height="39dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="18dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/wheretag"
-        app:layout_constraintTop_toBottomOf="@+id/agevalue" />
+            <Button
+                android:id="@+id/idcheck"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:background="@color/colorAccent"
+                android:text="중복확인"
+                android:textSize="12dp"
+                android:textColor="#FFFFFF"
+                android:fontFamily="@font/nanumsquareb_"
+                app:layout_constraintEnd_toEndOf="@+id/guideline_signupright"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/agevalue"
-        android:layout_width="0dp"
-        android:layout_height="39dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="18dp"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/agetag"
-        app:layout_constraintTop_toBottomOf="@+id/pw2value" />
+            <EditText
+                android:id="@+id/pwvalue"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:textSize="15dp"
+                android:textColor="#000000"
+                android:fontFamily="@font/nanumsquarer_"
+                app:layout_constraintEnd_toEndOf="@+id/guideline_signupright"
+                app:layout_constraintStart_toEndOf="@+id/pwtag"
+                app:layout_constraintTop_toBottomOf="@+id/idvalue" />
 
-</android.support.constraint.ConstraintLayout>
+            <EditText
+                android:id="@+id/pw2value"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:textSize="15dp"
+                android:textColor="#000000"
+                android:fontFamily="@font/nanumsquarer_"
+                app:layout_constraintEnd_toEndOf="@+id/guideline_signupright"
+                app:layout_constraintStart_toEndOf="@+id/pw2tag"
+                app:layout_constraintTop_toBottomOf="@+id/pwvalue" />
+
+            <Spinner
+                android:id="@+id/gendervalue"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                app:layout_constraintEnd_toEndOf="@+id/guideline_signupright"
+                app:layout_constraintStart_toEndOf="@+id/gendertag"
+                app:layout_constraintTop_toBottomOf="@+id/pw2value" />
+
+            <Spinner
+                android:id="@+id/agevalue"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                app:layout_constraintEnd_toEndOf="@+id/guideline_signupright"
+                app:layout_constraintStart_toEndOf="@+id/agetag"
+                app:layout_constraintTop_toBottomOf="@+id/gendervalue" />
+
+            <Spinner
+                android:id="@+id/wherevalue"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                app:layout_constraintEnd_toEndOf="@+id/guideline_signupright"
+                app:layout_constraintStart_toEndOf="@+id/wheretag"
+                app:layout_constraintTop_toBottomOf="@+id/agevalue" />
+
+            <EditText
+                android:id="@+id/namevalue"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:textSize="15dp"
+                android:textColor="#000000"
+                android:fontFamily="@font/nanumsquarer_"
+                app:layout_constraintEnd_toEndOf="@+id/guideline_signupright"
+                app:layout_constraintStart_toEndOf="@+id/nametag"
+                app:layout_constraintTop_toBottomOf="@+id/wherevalue" />
+
+            <EditText
+                android:id="@+id/descriptionvalue"
+                android:inputType="textMultiLine"
+                android:lines="5"
+                android:scrollbars="vertical"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:ems="10"
+                android:textSize="15dp"
+                android:textColor="#000000"
+                android:fontFamily="@font/nanumsquarer_"
+                android:hint="최대한 자세하게 적어주세요."
+                android:gravity="top"
+                app:layout_constraintEnd_toEndOf="@+id/guideline_signupright"
+                app:layout_constraintStart_toEndOf="@+id/guideline_signupleft"
+                app:layout_constraintTop_toBottomOf="@+id/descriptiontag" />
+
+            <Button
+                android:id="@+id/okbutton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/colorAccent"
+                android:text="가입하기"
+                android:textColor="#FFFFFF"
+                android:textSize="15dp"
+                android:fontFamily="@font/nanumsquareb_"
+                app:layout_constraintTop_toBottomOf="@+id/descriptionvalue"
+                app:layout_constraintBottom_toTopOf="@+id/nobutton"
+                app:layout_constraintEnd_toEndOf="@+id/guideline_signupright"
+                app:layout_constraintStart_toStartOf="@+id/guideline_signupleft" />
+
+            <Button
+                android:id="@+id/nobutton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/colorAccent"
+                android:text="가입취소"
+                android:textColor="#FFFFFF"
+                android:textSize="15dp"
+                android:fontFamily="@font/nanumsquareb_"
+                app:layout_constraintTop_toBottomOf="@+id/okbutton"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/guideline_signupright"
+                app:layout_constraintStart_toStartOf="@+id/guideline_signupleft" />
+
+        </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+
+</ScrollView>

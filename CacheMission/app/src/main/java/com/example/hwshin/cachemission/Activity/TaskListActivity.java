@@ -72,7 +72,7 @@ public class TaskListActivity extends AppCompatActivity {
         //시작하면 일단 토큰을 받아옴
         SharedPreferences token = getSharedPreferences("token",MODE_PRIVATE);
         String stringtoken="";
-        stringtoken=token.getString("logintoken",null);
+        stringtoken = token.getString("logintoken",null);
         if(stringtoken==null){
             stringtoken="";
         Log.d("tokkk",stringtoken);
@@ -196,7 +196,6 @@ public class TaskListActivity extends AppCompatActivity {
                                 String controller = ((TaskListItem) adapterView.getItemAtPosition(position)).getController();
                                 String buttons=((TaskListItem) adapterView.getItemAtPosition(position)).getButtons().toString();
 
-
                                 String taskid = ((TaskListItem) adapterView.getItemAtPosition(position)).getId();
 
                                 if(flag==0) {
@@ -205,7 +204,6 @@ public class TaskListActivity extends AppCompatActivity {
                                     intent_task.putExtra("taskview", taskview);
                                     intent_task.putExtra("controller", controller);
                                     intent_task.putExtra("buttons", buttons);
-
                                     intent_task.putExtra("taskid", taskid);
 
                                     TaskListActivity.this.startActivity(intent_task);
@@ -216,7 +214,6 @@ public class TaskListActivity extends AppCompatActivity {
                                     intent_exam.putExtra("taskview", taskview);
                                     intent_exam.putExtra("examview", controller);
                                     intent_exam.putExtra("buttons", buttons);
-
                                     intent_exam.putExtra("taskid", taskid);
 
                                     TaskListActivity.this.startActivity(intent_exam);
@@ -232,7 +229,7 @@ public class TaskListActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-            }.execute("http://18.222.204.84/main", param,stringtoken);
+            }.execute("http://18.222.204.84/main", param, stringtoken);
             //new HttpRequest().execute("http://18.222.204.84/ocr",param);
         }
         catch (JSONException e) {
