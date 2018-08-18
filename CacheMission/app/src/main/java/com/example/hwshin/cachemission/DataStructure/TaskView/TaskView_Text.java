@@ -2,6 +2,7 @@ package com.example.hwshin.cachemission.DataStructure.TaskView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -23,6 +24,8 @@ public class TaskView_Text extends TaskView {
 
     @Override
     public void setContent(String id, String contentURI, Context context, final View view) {
+        SharedPreferences token = parentActivity.getSharedPreferences("token",Context.MODE_PRIVATE);
+        final String logintoken = token.getString("logintoken",null);
 
         if (contentURI.equals("foobar")) {
             JSONObject param = new JSONObject();
@@ -63,7 +66,7 @@ public class TaskView_Text extends TaskView {
 
 
                     }
-                }.execute("http://18.222.204.84/taskText", param);
+                }.execute("http://18.222.204.84/taskText", param,logintoken);
 
             } catch (JSONException e) {
                 e.printStackTrace();

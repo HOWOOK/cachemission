@@ -2,6 +2,7 @@ package com.example.hwshin.cachemission.DataStructure.TaskView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.v4.content.ContextCompat;
@@ -26,6 +27,8 @@ public class TaskView_Voice extends TaskView {
     }
     @Override
     public void setContent(String id, final String contentURI, final Context context, final View view) {
+        SharedPreferences token = parentActivity.getSharedPreferences("token",Context.MODE_PRIVATE);
+        final String logintoken = token.getString("logintoken",null);
 
 
         final Button mBtPlay=(Button) view;
@@ -99,7 +102,7 @@ public class TaskView_Voice extends TaskView {
                             e.printStackTrace();
                         }
                     }
-                }.execute("http://18.222.204.84/taskURI", param);
+                }.execute("http://18.222.204.84/taskURI", param,logintoken);
 
             } catch (JSONException e) {
                 e.printStackTrace();

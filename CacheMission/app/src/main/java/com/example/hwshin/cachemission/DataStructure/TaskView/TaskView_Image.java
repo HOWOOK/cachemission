@@ -2,6 +2,7 @@ package com.example.hwshin.cachemission.DataStructure.TaskView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +28,8 @@ public class TaskView_Image extends TaskView {
     //protected int taskViewID = R.layout.taskview_image;
     @Override
     public void setContent(String id, String contentURI, final Context context, final View view) {
+        SharedPreferences token = parentActivity.getSharedPreferences("token",Context.MODE_PRIVATE);
+        final String logintoken = token.getString("logintoken",null);
 
         if (contentURI.equals("foobar")) {
 
@@ -68,7 +71,7 @@ public class TaskView_Image extends TaskView {
 
 
                     }
-                }.execute("http://18.222.204.84/taskURI", param);
+                }.execute("http://18.222.204.84/taskURI", param,logintoken);
 
             } catch (JSONException e) {
                 e.printStackTrace();

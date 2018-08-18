@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.hwshin.cachemission.DataStructure.ExamView.ExamView;
 import com.example.hwshin.cachemission.R;
@@ -17,7 +19,9 @@ public class ExamView_Voice extends ExamView {
     boolean isPlaying=false;
     @Override
     public void setLayout(String id, View view, final Context c, Intent in, String buttons, final String answer) {
-        final Button mBtPlay=(Button) view;
+        ConstraintLayout voicelayout=(ConstraintLayout) view;
+
+        final Button mBtPlay=(Button)voicelayout.findViewById(R.id.examviewvoicebutton) ;
         final MediaPlayer mPlayer=new MediaPlayer();
         mBtPlay.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -107,20 +107,40 @@ public class ExamActivity extends AppCompatActivity {
                         resulttemp = new JSONObject(result);
                         Log.d("hey2",resulttemp.toString());
                         if((boolean)resulttemp.get("success")){
-                            tempsrcURI=resulttemp.get("url").toString();
-                            
+
+                            if(mTaskView.taskViewID == R.layout.taskview_text){
+                                tempsrcURI = resulttemp.get("content_text").toString();
+
+                            }else {
+                                tempsrcURI = resulttemp.get("content_url").toString();
+                            }
                             baseID = resulttemp.get("baseID").toString();
                             Log.d("baseid",baseID);
-                            mTaskView.setContent(mId, tempsrcURI, context, srcTaskView);
-                            View view = findViewById(R.id.examview);
                             mTaskView.setParent(activity,intent);
                             mExamView.setParent(activity,intent);
                             mExamView.usingactivity=activity;
                             mExamView.mtaskview=mTaskView;
-                            Log.d("finalval",String.valueOf(mTaskView.gettaskID()));
-                            Log.d("answer",resulttemp.get("answer").toString());
-                            mExamView.setLayout(mId,view,getApplicationContext(),intent,buttons,resulttemp.get("answer").toString());
+                            mTaskView.setContent(mId, tempsrcURI, context, srcTaskView);
+                            View view = findViewById(R.id.examview);
 
+                            Log.d("finalval",String.valueOf(mTaskView.gettaskID()));
+                           // Log.d("answer",resulttemp.get("answer_url").toString());
+                            String answer="";
+                            if(mExamView.ExamViewID == R.layout.examview_voice){
+                                answer = resulttemp.get("answer_url").toString();
+
+                            }else {
+                                answer = resulttemp.get("answer_text").toString();
+                            }
+
+                            mExamView.setLayout(mId,view,getApplicationContext(),intent,buttons,answer);
+
+
+                        }
+                        else{
+                            Intent in=new Intent(getApplicationContext(),TaskListActivity.class);
+                            startActivity(in);
+                            finish();
 
                         }
                     } catch (JSONException e) {
@@ -151,9 +171,23 @@ public class ExamActivity extends AppCompatActivity {
                         @Override
                         protected void onPostExecute(Object o) {
                             super.onPostExecute(o);
-                            startActivity(intent);
-                            finish();
+                            JSONObject resulttemp = null;
+                            try {
+                                resulttemp = new JSONObject(result);
+                                Log.d("hey2good",resulttemp.toString());
+                                if((boolean)resulttemp.get("success")){
 
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                else{
+                                    Intent notaskanymore=new Intent(getApplicationContext(),TaskListActivity.class);
+                                    startActivity(notaskanymore);
+
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }.execute("http://18.222.204.84/examSubmit", param,logintoken);
 
@@ -175,8 +209,25 @@ public class ExamActivity extends AppCompatActivity {
                         @Override
                         protected void onPostExecute(Object o) {
                             super.onPostExecute(o);
-                            startActivity(intent);
-                            finish();
+                            JSONObject resulttemp = null;
+                            try {
+                                resulttemp = new JSONObject(result);
+                                Log.d("hey2bad",resulttemp.toString());
+                                if((boolean)resulttemp.get("success")){
+
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                else{
+                                    Intent notaskanymore=new Intent(getApplicationContext(),TaskListActivity.class);
+                                    startActivity(notaskanymore);
+
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
 
                         }
                     }.execute("http://18.222.204.84/examSubmit", param,logintoken);

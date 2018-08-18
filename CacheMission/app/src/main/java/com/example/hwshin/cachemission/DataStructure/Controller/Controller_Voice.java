@@ -151,7 +151,10 @@ public class Controller_Voice extends Controller {
                         uploadFile(path,id);
                     }
                 }.start();
+                if(serverResponseCode==200){
 
+
+                }
                 parentActivity.startActivity(parentIntent);
                 parentActivity.finish();
 

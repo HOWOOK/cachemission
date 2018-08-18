@@ -77,17 +77,17 @@ public class TaskActivity extends AppCompatActivity {
         ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) parent1.getLayoutParams();
         params.verticalWeight = mParameter[0][0];
         parent1.setLayoutParams(params);
-
+        mTaskView.setParent(this,intent);
+        mController.setParent(this,intent);
+        mController.usingactivity=this;
+        mController.mtaskview=mTaskView;
         //TaskView에 source설정
         View srcTaskView = (View) findViewById(R.id.srcview);
         mTaskView.setContent(mId, tempsrcURI, this, srcTaskView);
 
         //TODO: Controller에 입력된 데이터를 받아오는거 일명<getanswer>
         View view = findViewById(R.id.controller);
-        mTaskView.setParent(this,intent);
-        mController.setParent(this,intent);
-        mController.usingactivity=this;
-        mController.mtaskview=mTaskView;
+
         Log.d("finalval",String.valueOf(mTaskView.gettaskID()));
         mController.setLayout(mId,view,getApplicationContext(),intent,buttons);
 

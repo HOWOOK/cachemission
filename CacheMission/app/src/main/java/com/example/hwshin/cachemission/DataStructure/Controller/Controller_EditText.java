@@ -61,6 +61,12 @@ public class Controller_EditText extends Controller {
                                         Toast.makeText(parentActivity, "테스크가 만료되었습니다. 다른 테스크를 선택해주세요", Toast.LENGTH_SHORT);
 
                                     }
+                                    else{
+                                        Intent in = new Intent(parentActivity, TaskListActivity.class);
+                                        parentActivity.startActivity(in);
+                                        Toast.makeText(parentActivity,"남은 테스크가 없습니다.",Toast.LENGTH_SHORT);
+
+                                    }
 
                                 } else {
                                     parentActivity.startActivity(parentIntent);
