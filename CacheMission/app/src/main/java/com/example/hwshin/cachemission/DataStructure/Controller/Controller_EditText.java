@@ -55,16 +55,18 @@ public class Controller_EditText extends Controller {
                                         Intent in = new Intent(parentActivity, LoginActivity.class);
                                         parentActivity.startActivity(in);
                                         Toast.makeText(parentActivity, "로그인이 만료되었습니다. 다시 로그인해주세요", Toast.LENGTH_SHORT);
+                                        parentActivity.finish();
                                     } else if (resulttemp.get("message").toString().equals("task")) {
                                         Intent in = new Intent(parentActivity, TaskListActivity.class);
                                         parentActivity.startActivity(in);
                                         Toast.makeText(parentActivity, "테스크가 만료되었습니다. 다른 테스크를 선택해주세요", Toast.LENGTH_SHORT);
-
+                                        parentActivity.finish();
                                     }
                                     else{
                                         Intent in = new Intent(parentActivity, TaskListActivity.class);
                                         parentActivity.startActivity(in);
                                         Toast.makeText(parentActivity,"남은 테스크가 없습니다.",Toast.LENGTH_SHORT);
+                                        parentActivity.finish();
 
                                     }
 

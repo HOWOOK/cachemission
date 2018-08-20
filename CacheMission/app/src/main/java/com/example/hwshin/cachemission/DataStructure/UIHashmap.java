@@ -30,10 +30,16 @@ public class UIHashmap {
     int[][] parameters_VIDEO = new int[5][2];
     int[][] parameters_VOICE = new int[5][2];
     int[][] parameters_DICTATION = new int[5][2];
+    int[][] parameters_NUMBERING = new int[5][2];
+    int[][] parameters_DIALECT = new int[5][2];
+
+
     int[][] parameters_OCREXAM = new int[5][2];
     int[][] parameters_VIDEOEXAM = new int[5][2];
     int[][] parameters_VOICEEXAM = new int[5][2];
     int[][] parameters_DICTATIONEXAM = new int[5][2];
+    int[][] parameters_NUMBERINGEXAM = new int[5][2];
+    int[][] parameters_DIALECTEXAM = new int[5][2];
 
     public HashMap<String, TaskView> taskViewHashMap = new HashMap();
     public HashMap<String, Controller> controllerHashMap = new HashMap();
@@ -112,6 +118,34 @@ public class UIHashmap {
         parameters_DICTATIONEXAM[3][0] = R.id.taskviewexam; parameters_DICTATIONEXAM[3][1] = 4;
         parameters_DICTATIONEXAM[4][0] = R.id.taskConstLayoutexam; parameters_DICTATIONEXAM[4][1] = 4;
         taskHashMap.put("DICTATIONEXAM", parameters_DICTATIONEXAM);
+
+        parameters_NUMBERING[0][0] = 5;
+        parameters_NUMBERING[1][0] = R.id.tasktitle; parameters_NUMBERING[1][1] = 4;
+        parameters_NUMBERING[2][0] = R.id.controller; parameters_NUMBERING[2][1] = 3;
+        parameters_NUMBERING[3][0] = R.id.taskview; parameters_NUMBERING[3][1] = 4;
+        parameters_NUMBERING[4][0] = R.id.taskConstLayout; parameters_NUMBERING[4][1] = 4;
+        taskHashMap.put("NUMBERING", parameters_NUMBERING);
+
+        parameters_NUMBERINGEXAM[0][0] = 5;
+        parameters_NUMBERINGEXAM[1][0] = R.id.tasktitleexam; parameters_NUMBERINGEXAM[1][1] = 4;
+        parameters_NUMBERINGEXAM[2][0] = R.id.examview; parameters_NUMBERINGEXAM[2][1] = 3;
+        parameters_NUMBERINGEXAM[3][0] = R.id.taskviewexam; parameters_NUMBERINGEXAM[3][1] = 4;
+        parameters_NUMBERINGEXAM[4][0] = R.id.taskConstLayoutexam; parameters_NUMBERINGEXAM[4][1] = 4;
+        taskHashMap.put("NUMBERINGEXAM", parameters_NUMBERINGEXAM);
+
+        parameters_DIALECT[0][0] = 5;
+        parameters_DIALECT[1][0] = R.id.tasktitle; parameters_DIALECT[1][1] = 4;
+        parameters_DIALECT[2][0] = R.id.controller; parameters_DIALECT[2][1] = 3;
+        parameters_DIALECT[3][0] = R.id.taskview; parameters_DIALECT[3][1] = 4;
+        parameters_DIALECT[4][0] = R.id.taskConstLayout; parameters_DIALECT[4][1] = 4;
+        taskHashMap.put("DIALECT", parameters_DIALECT);
+
+        parameters_DIALECTEXAM[0][0] = 5;
+        parameters_DIALECTEXAM[1][0] = R.id.tasktitleexam; parameters_DIALECTEXAM[1][1] = 4;
+        parameters_DIALECTEXAM[2][0] = R.id.examview; parameters_DIALECTEXAM[2][1] = 3;
+        parameters_DIALECTEXAM[3][0] = R.id.taskviewexam; parameters_DIALECTEXAM[3][1] = 4;
+        parameters_DIALECTEXAM[4][0] = R.id.taskConstLayoutexam; parameters_DIALECTEXAM[4][1] = 4;
+        taskHashMap.put("DIALECTEXAM", parameters_DIALECTEXAM);
 
     }
 
