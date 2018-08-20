@@ -70,7 +70,6 @@ public class TaskActivity extends AppCompatActivity {
         ConstraintSet constraintSet = new ConstraintSet();
         ConstraintLayout constraintLayout =  (ConstraintLayout) findViewById(R.id.taskConstLayout);
         constraintSet.clone(constraintLayout);
-        System.out.println(mParameter[1][0]+" & "+mParameter[1][1]);
         constraintSet.connect(R.id.taskview, ConstraintSet.TOP, mParameter[1][0], mParameter[1][1]);
         constraintSet.connect(R.id.taskview, ConstraintSet.BOTTOM, mParameter[2][0], mParameter[2][1] );
         constraintSet.connect(R.id.controller, ConstraintSet.TOP, mParameter[3][0], mParameter[3][1] );
@@ -78,13 +77,17 @@ public class TaskActivity extends AppCompatActivity {
         constraintSet.applyTo(constraintLayout);
 
         //TaskView의 weight설정 (default == 10)
-        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) parent1.getLayoutParams();
-        params.verticalWeight = mParameter[0][0];
-        parent1.setLayoutParams(params);
+        ConstraintLayout.LayoutParams params1 = (ConstraintLayout.LayoutParams) parent1.getLayoutParams();
+        params1.verticalWeight = mParameter[0][0];
+        parent1.setLayoutParams(params1);
+        ConstraintLayout.LayoutParams params2 = (ConstraintLayout.LayoutParams) parent2.getLayoutParams();
+        params2.verticalWeight = mParameter[5][0];
+        parent2.setLayoutParams(params2);
         mTaskView.setParent(this,intent);
         mController.setParent(this,intent);
         mController.usingactivity=this;
         mController.mtaskview=mTaskView;
+
         //TaskView에 source설정
         View srcTaskView = (View) findViewById(R.id.srcview);
         mTaskView.setContent(mId, tempsrcURI, this, srcTaskView);

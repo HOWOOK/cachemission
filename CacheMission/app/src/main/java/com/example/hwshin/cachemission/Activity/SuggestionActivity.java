@@ -72,7 +72,7 @@ public class SuggestionActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 JSONObject param = new JSONObject();
-                String suggestionVal = suggestionmain.getText().toString();
+                final String suggestionVal = suggestionmain.getText().toString();
                 try {
                     param.put("suggestion", suggestionVal);
 
@@ -82,10 +82,10 @@ public class SuggestionActivity extends AppCompatActivity {
                             super.onPostExecute(o);
                             try {
                                 JSONObject res = new JSONObject(result);
-
-                                Log.d("성공?", res.get("success").toString());
-                                if(res.get("success").toString().equals("true"))
-                                    getDialog("전송되었습니다.", "관심 가져주셔서 감사합니다♡", "확인");
+                                if(suggestionVal.equals(""))
+                                    getDialog("입력 된 문장이 없습니다.", "글을 입력해 주세요.", "확인");
+                                else if(res.get("success").toString().equals("true"))
+                                    getDialog("전송 되었습니다.", "관심 가져주셔서 감사합니다♡", "확인");
                                 else
                                     getDialog("전송에 실패 하였습니다.", "서버에 문제가 있나보네요ㅠㅠ 다음에 다시 시도해주세요!", "확인");
 
