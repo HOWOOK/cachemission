@@ -20,8 +20,7 @@ public class SettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-        Button logout = findViewById(R.id.logoutbtn);
-
+        TextView logout = findViewById(R.id.logoutbtn);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,27 +47,18 @@ public class SettingActivity extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 });
-
                 sure.show();
-
             }
         });
 
-
-        TextView tt = findViewById(R.id.textViewtt);
-
-        tt.setOnClickListener(new View.OnClickListener() {
+        TextView exchange = findViewById(R.id.exchangebtn);
+        exchange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SettingActivity.this, SignUpActivity.class);
-                startActivity(intent);
-                finish();
+                Intent intent_exchange = new Intent(SettingActivity.this, ExchangeActivity.class);
+                startActivity(intent_exchange);
             }
         });
-
-
-
-
     }
 
 }
