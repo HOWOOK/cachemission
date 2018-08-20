@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/suggestiontitle"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+
+        <TextView
+            android:id="@+id/tasktitletext"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:paddingLeft="15dp"
+            android:background="@color/colorPrimaryDark"
+            android:text="@string/suggestiontitle"
+            android:textColor="#ffffff"
+            android:fontFamily="@font/nanumsquareb_"
+            android:gravity="center_vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+    <EditText
+        android:id="@+id/suggestionmain"
+        android:inputType="textMultiLine"
+        android:lines="50"
+        android:scrollbars="vertical"
+        android:layout_margin="20dp"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        android:ems="10"
+        android:textSize="15dp"
+        android:textColor="#000000"
+        android:fontFamily="@font/nanumsquarer_"
+        android:hint="@string/suggestionhint"
+        android:gravity="top"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/suggestiontitle" />
+
+    <Button
+        android:id="@+id/sendbtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:text="건의사항 보내기"
+        android:background="@color/colorAccent"
+        android:textColor="#FFFFFF"
+        android:fontFamily="@font/nanumsquareeb_"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/suggestionmain"
+        app:layout_constraintEnd_toEndOf="@+id/suggestionmain"
+        app:layout_constraintTop_toBottomOf="@+id/suggestionmain" />
+</android.support.constraint.ConstraintLayout>

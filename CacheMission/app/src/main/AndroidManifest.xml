@@ -39,6 +39,9 @@
         <activity android:name=".Activity.ExamActivity"
             android:theme="@style/AppTheme.NoActionBar"
             ></activity>
+        <activity android:name=".Activity.SuggestionActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            ></activity>
     </application>
 
 </manifest>

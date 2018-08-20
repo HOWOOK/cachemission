@@ -30,6 +30,7 @@ import com.example.hwshin.cachemission.R;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -75,7 +76,6 @@ public class TaskListActivity extends AppCompatActivity {
         stringtoken = token.getString("logintoken",null);
         if(stringtoken==null){
             stringtoken="";
-        Log.d("tokkk",stringtoken);
         }
         JSONObject param = new JSONObject();
         try {
@@ -106,10 +106,22 @@ public class TaskListActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 Intent intent_setting = new Intent(TaskListActivity.this, SettingActivity.class);
-                                TaskListActivity.this.startActivity(intent_setting);
                                 if (drawer.isDrawerOpen(Gravity.LEFT)) {
                                     drawer.closeDrawer(Gravity.LEFT) ;
                                 }
+                                TaskListActivity.this.startActivity(intent_setting);
+                            }
+                        });
+
+                        TextView suggestionbtn = findViewById(R.id.suggestion);
+                        suggestionbtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent_suggestion = new Intent(TaskListActivity.this, SuggestionActivity.class);
+                                if (drawer.isDrawerOpen(Gravity.LEFT)) {
+                                    drawer.closeDrawer(Gravity.LEFT) ;
+                                }
+                                startActivity(intent_suggestion);
                             }
                         });
 
@@ -167,8 +179,6 @@ public class TaskListActivity extends AppCompatActivity {
 
 
                             }
-                        Log.d("mtask", mTaskList.get(0).getController());
-                        Log.d("mtask", mTaskList.get(1).getController());
 
                         }
                         //Log.d("mtask", mTaskList.get(0).getController());
@@ -230,14 +240,10 @@ public class TaskListActivity extends AppCompatActivity {
                     }
                 }
             }.execute("http://18.222.204.84/main", param, stringtoken);
-            //new HttpRequest().execute("http://18.222.204.84/ocr",param);
         }
         catch (JSONException e) {
             e.printStackTrace();
         }
-        //mTaskList에 현재 진행가능한 테스트들을 넣어줘야합니다. 현재는 테스트로 넣어봤습니다.
-        //mTaskList.add(new TaskListItem("labeling", "테스트입니다."));
-
 
     }
 }

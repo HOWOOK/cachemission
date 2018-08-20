@@ -188,33 +188,48 @@
         >
 
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLayout2"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:background="#F3F3F3"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/usernamedrawer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/none"
                 android:layout_margin="20dp"
+                android:text="@string/none"
+                android:textSize="15sp"
+                android:textColor="@color/fontColorActive"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/settingbtn"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_margin="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/ic_menu_directions" />
+                app:srcCompat="@drawable/setting" />
+
         </android.support.constraint.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/suggestion"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="건의사항"
+            android:textColor="@color/fontColorActive"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
 
     </android.support.constraint.ConstraintLayout>
 

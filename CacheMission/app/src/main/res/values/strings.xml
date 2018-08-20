@@ -2,4 +2,6 @@
     <string name="app_name">캐시미션</string>
     <string name="textnotload">텍스트가 로딩되지 않았습니다.</string>
     <string name="none">default</string>
+    <string name="suggestiontitle">캐시미션이 발전할 수 있도록 도와주세요!</string>
+    <string name="suggestionhint">어떠한 점이 불편했나요?&#10;어떠한 점을 발전시키면 좋을까요?&#10;&#10;소중한 의견 기다립니다.</string>
 </resources>
