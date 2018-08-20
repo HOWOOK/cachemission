@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.hwshin.cachemission.DataStructure.ExamView.ExamView;
@@ -38,6 +39,7 @@ public class ExamActivity extends AppCompatActivity {
     String buttons;
     private UIHashmap uiHashmap;
     String baseID;
+    String tasktype;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,8 @@ public class ExamActivity extends AppCompatActivity {
         mtasktitle.setText(tasktitle);
         taskViewID = mTaskView.taskViewID;
         controllerID = mExamView.ExamViewID;
+
+        tasktype = intent.getStringExtra("tasktype");
 
         // TaskView Inflating
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -156,7 +160,6 @@ public class ExamActivity extends AppCompatActivity {
 
 
 
-        //TODO: Controller에 입력된 데이터를 받아오는거 일명<getanswer>
         Button confirm=findViewById(R.id.confirmbutton);
         Button reject=findViewById(R.id.rejectbutton);
         confirm.setOnClickListener(new View.OnClickListener() {
@@ -239,9 +242,29 @@ public class ExamActivity extends AppCompatActivity {
             }
         });
 
+        //해당 task가 처음이라면 설명서 띄워주는 것
+        SharedPreferences tasktoken = getSharedPreferences("tasktoken", MODE_PRIVATE);
+        if(tasktoken.getInt(tasktype+"tasktoken",0) == 1){
+            //do nothing
+        }else{
+            Intent intent_taskExplain = new Intent(ExamActivity.this, TaskExplainActivity.class);
+            SharedPreferences.Editor editor = tasktoken.edit();
+            editor.putInt(tasktype+"tasktoken", 1);
+            editor.commit();
+            intent_taskExplain.putExtra("tasktype", tasktype);
+            startActivity(intent_taskExplain);
+        }
 
-
-        //TODO: 서버로 값을 보내는거, 일단 getanswer() 구현
+        //물음표버튼누르면 설명서 띄워주는것
+        ImageView howbtn = findViewById(R.id.howbtn);
+        howbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent_taskExplain = new Intent(ExamActivity.this, TaskExplainActivity.class);
+                intent_taskExplain.putExtra("tasktype", tasktype);
+                startActivity(intent_taskExplain);
+            }
+        });
 
 
     }

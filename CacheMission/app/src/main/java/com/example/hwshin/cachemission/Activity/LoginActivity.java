@@ -32,11 +32,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        /*
-        SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
-        String loginId = auto.getString("inputId",null);
-        String loginPw = auto.getString("inputPw",null);
-        */
 
         idText = findViewById(R.id.edit_id);
         pwText = findViewById(R.id.edit_pw);

@@ -42,6 +42,9 @@
         <activity android:name=".Activity.SuggestionActivity"
             android:theme="@style/AppTheme.NoActionBar"
             ></activity>
+        <activity android:name=".Activity.TaskExplainActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            ></activity>
     </application>
 
 </manifest>

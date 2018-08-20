@@ -2,6 +2,7 @@ package com.example.hwshin.cachemission.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.hwshin.cachemission.DataStructure.Controller.Controller;
@@ -29,6 +31,7 @@ public class TaskActivity extends AppCompatActivity {
     String tasktitle;
     String buttons;
     private UIHashmap uiHashmap;
+    String tasktype;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,6 @@ public class TaskActivity extends AppCompatActivity {
         mTaskView = (TaskView) uiHashmap.taskViewHashMap.get(intent.getStringExtra("taskview"));
         mController = (Controller) uiHashmap.controllerHashMap.get(intent.getStringExtra("controller"));
         mParameter =  (int[][]) uiHashmap.taskHashMap.get(intent.getStringExtra("tasktype"));
-        System.out.println("ㅁㄴㅇㅁㄴㅇ"+intent.getStringExtra("tasktype"));
         tasktitle = intent.getStringExtra("tasktitle");
         buttons= intent.getStringExtra("buttons");
 
@@ -53,6 +55,8 @@ public class TaskActivity extends AppCompatActivity {
         mtasktitle.setText(tasktitle);
         taskViewID = mTaskView.taskViewID;
         controllerID = mController.controllerID;
+
+        tasktype = intent.getStringExtra("tasktype");
 
         // TaskView Inflating
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -85,16 +89,33 @@ public class TaskActivity extends AppCompatActivity {
         View srcTaskView = (View) findViewById(R.id.srcview);
         mTaskView.setContent(mId, tempsrcURI, this, srcTaskView);
 
-        //TODO: Controller에 입력된 데이터를 받아오는거 일명<getanswer>
+        //Controller에 source설정
         View view = findViewById(R.id.controller);
-
-        Log.d("finalval",String.valueOf(mTaskView.gettaskID()));
         mController.setLayout(mId,view,getApplicationContext(),intent,buttons);
 
+        //해당 task가 처음이라면 설명서 띄워주는 것
+        SharedPreferences tasktoken = getSharedPreferences("tasktoken", MODE_PRIVATE);
+        if(tasktoken.getInt(tasktype+"tasktoken",0) == 1){
+            //do nothing
+        }else{
+            Intent intent_taskExplain = new Intent(TaskActivity.this, TaskExplainActivity.class);
+            SharedPreferences.Editor editor = tasktoken.edit();
+            editor.putInt(tasktype+"tasktoken", 1);
+            editor.commit();
+            intent_taskExplain.putExtra("tasktype", tasktype);
+            startActivity(intent_taskExplain);
+        }
 
-
-        //TODO: 서버로 값을 보내는거, 일단 getanswer() 구현
-
+        //물음표버튼누르면 설명서 띄워주는것
+        ImageView howbtn = findViewById(R.id.howbtn);
+        howbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent_taskExplain = new Intent(TaskActivity.this, TaskExplainActivity.class);
+                intent_taskExplain.putExtra("tasktype", tasktype);
+                startActivity(intent_taskExplain);
+            }
+        });
 
     }
 
