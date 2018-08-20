@@ -3,6 +3,7 @@ package com.example.hwshin.cachemission.DataStructure;
 import com.example.hwshin.cachemission.DataStructure.Controller.Controller;
 import com.example.hwshin.cachemission.DataStructure.Controller.Controller_Buttons;
 import com.example.hwshin.cachemission.DataStructure.Controller.Controller_EditText;
+import com.example.hwshin.cachemission.DataStructure.Controller.Controller_Numbers;
 import com.example.hwshin.cachemission.DataStructure.Controller.Controller_Voice;
 import com.example.hwshin.cachemission.DataStructure.ExamView.ExamView;
 import com.example.hwshin.cachemission.DataStructure.ExamView.ExamView_Buttons;
@@ -57,6 +58,7 @@ public class UIHashmap {
         controllerHashMap.put("edittext", new Controller_EditText());
         controllerHashMap.put("buttons", new Controller_Buttons());
         controllerHashMap.put("record", new Controller_Voice());
+        controllerHashMap.put("numbers", new Controller_Numbers());
 
 
         examviewHashMap.put("edittext", new ExamView_EditText());
