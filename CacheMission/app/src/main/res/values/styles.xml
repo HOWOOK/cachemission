@@ -13,5 +13,19 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="appfontultralight" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">@font/nanumbarungothicultralight_</item>
+    </style>
 
+    <style name="appfontlight" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">@font/nanumbarungothiclight_</item>
+    </style>
+
+    <style name="appfontregular" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">@font/nanumbarungothicregular_</item>
+    </style>
+
+    <style name="appfontbold" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">@font/nanumbarungothicbold_</item>
+    </style>
 </resources>
