@@ -18,14 +18,8 @@
 
         <TextView
             android:id="@+id/tasktitletext"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:paddingLeft="15dp"
-            android:background="@color/colorPrimaryDark"
+            style="@style/normalTitle"
             android:text="@string/textnotload"
-            android:textColor="#ffffff"
-            android:fontFamily="@font/nanumsquareb_"
-            android:gravity="center_vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -14,14 +14,8 @@
 
         <TextView
             android:id="@+id/tasktitletext"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:paddingLeft="15dp"
-            android:background="@color/colorPrimaryDark"
+            style="@style/normalTitle"
             android:text="@string/exchangetitle"
-            android:textColor="#ffffff"
-            android:fontFamily="@font/nanumsquareb_"
-            android:gravity="center_vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,6 +24,7 @@
 
     <EditText
         android:id="@+id/exchangemain"
+        style="@style/normalEditText"
         android:inputType="textMultiLine"
         android:lines="50"
         android:scrollbars="vertical"
@@ -37,9 +32,6 @@
         android:layout_width="0dp"
         android:layout_height="250dp"
         android:ems="10"
-        android:textSize="15dp"
-        android:textColor="#000000"
-        android:fontFamily="@font/nanumsquarer_"
         android:hint="@string/exchangehint"
         android:gravity="top"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,14 +40,10 @@
 
     <Button
         android:id="@+id/sendbtn"
+        style="@style/normalbtn1"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
         android:layout_margin="3dp"
         android:text="환전요청 보내기"
-        android:background="@color/colorAccent"
-        android:textColor="#FFFFFF"
-        android:fontFamily="@font/nanumsquareeb_"
-        android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@+id/exchangemain"
         app:layout_constraintEnd_toEndOf="@+id/exchangemain"
         app:layout_constraintTop_toBottomOf="@+id/exchangemain" />
