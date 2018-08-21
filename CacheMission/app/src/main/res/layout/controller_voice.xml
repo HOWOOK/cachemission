@@ -31,9 +31,9 @@
 
     <Button
         android:id="@+id/post"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
+        style="@style/normalbtn1"
+        android:layout_width="70dp"
+        android:text="보내기"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/stream"
         app:layout_constraintTop_toTopOf="parent"

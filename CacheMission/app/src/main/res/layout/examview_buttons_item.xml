@@ -22,7 +22,7 @@
             android:layout_alignParentTop="true"
             android:gravity="center"
             android:text="@string/textnotload"
-            android:textSize="25sp"
+            android:textSize="25dp"
             android:textColor="@color/fontColorActive"
             android:fontFamily="@font/nanumsquareb_"
             app:layout_constraintBottom_toBottomOf="parent"

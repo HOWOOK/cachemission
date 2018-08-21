@@ -135,53 +135,44 @@
 
             <EditText
                 android:id="@+id/idvalue"
+                style="@style/normalEditText"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="20dp"
                 android:ems="10"
                 android:inputType="textEmailAddress"
-                android:textSize="15dp"
-                android:textColor="#000000"
-                android:fontFamily="@font/nanumsquarer_"
                 app:layout_constraintEnd_toStartOf="@+id/idcheck"
                 app:layout_constraintStart_toEndOf="@+id/idtag"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/idcheck"
+                style="@style/normalbtn1"
                 android:layout_width="70dp"
-                android:layout_height="40dp"
                 android:layout_marginTop="20dp"
-                android:background="@color/colorAccent"
                 android:text="중복확인"
                 android:textSize="12dp"
-                android:textColor="#FFFFFF"
-                android:fontFamily="@font/nanumsquareb_"
                 app:layout_constraintEnd_toEndOf="@+id/guideline_signupright"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
                 android:id="@+id/pwvalue"
+                style="@style/normalEditText"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:ems="10"
                 android:inputType="textPassword"
-                android:textSize="15dp"
-                android:textColor="#000000"
-                android:fontFamily="@font/nanumsquarer_"
                 app:layout_constraintEnd_toEndOf="@+id/guideline_signupright"
                 app:layout_constraintStart_toEndOf="@+id/pwtag"
                 app:layout_constraintTop_toBottomOf="@+id/idvalue" />
 
             <EditText
                 android:id="@+id/pw2value"
+                style="@style/normalEditText"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:ems="10"
                 android:inputType="textPassword"
-                android:textSize="15dp"
-                android:textColor="#000000"
-                android:fontFamily="@font/nanumsquarer_"
                 app:layout_constraintEnd_toEndOf="@+id/guideline_signupright"
                 app:layout_constraintStart_toEndOf="@+id/pw2tag"
                 app:layout_constraintTop_toBottomOf="@+id/pwvalue" />
@@ -212,13 +203,11 @@
 
             <EditText
                 android:id="@+id/namevalue"
+                style="@style/normalEditText"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:textSize="15dp"
-                android:textColor="#000000"
-                android:fontFamily="@font/nanumsquarer_"
                 android:hint="본인 이름을 사용해 주세요."
                 app:layout_constraintEnd_toEndOf="@+id/guideline_signupright"
                 app:layout_constraintStart_toEndOf="@+id/nametag"
@@ -226,15 +215,13 @@
 
             <EditText
                 android:id="@+id/descriptionvalue"
+                style="@style/normalEditText"
                 android:inputType="textMultiLine"
                 android:lines="5"
                 android:scrollbars="vertical"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:ems="10"
-                android:textSize="15dp"
-                android:textColor="#000000"
-                android:fontFamily="@font/nanumsquarer_"
                 android:hint="이 앱을 소개해준 지인은 누구인가요?"
                 android:gravity="top"
                 app:layout_constraintEnd_toEndOf="@+id/guideline_signupright"
@@ -243,13 +230,9 @@
 
             <Button
                 android:id="@+id/okbutton"
+                style="@style/normalbtn1"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@color/colorAccent"
                 android:text="가입하기"
-                android:textColor="#FFFFFF"
-                android:textSize="15dp"
-                android:fontFamily="@font/nanumsquareb_"
                 app:layout_constraintTop_toBottomOf="@+id/descriptionvalue"
                 app:layout_constraintBottom_toTopOf="@+id/nobutton"
                 app:layout_constraintEnd_toEndOf="@+id/guideline_signupright"
@@ -257,13 +240,10 @@
 
             <Button
                 android:id="@+id/nobutton"
+                style="@style/normalbtn1"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@color/colorAccent"
+                android:layout_marginTop="3dp"
                 android:text="가입취소"
-                android:textColor="#FFFFFF"
-                android:textSize="15dp"
-                android:fontFamily="@font/nanumsquareb_"
                 app:layout_constraintTop_toBottomOf="@+id/okbutton"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/guideline_signupright"

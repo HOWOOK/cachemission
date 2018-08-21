@@ -4,7 +4,5 @@
 <font
     android:fontStyle="normal"
     android:font="@font/exo2semibold"
-    app:fontStyle="normal"
-    app:font="@font/exo2semibold"
     />
 </font-family>
