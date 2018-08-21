@@ -59,6 +59,15 @@ public class SettingActivity extends AppCompatActivity {
                 startActivity(intent_exchange);
             }
         });
+
+        TextView suggestion = findViewById(R.id.suggestionbtn);
+        exchange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent_suggestion = new Intent(SettingActivity.this, SuggestionActivity.class);
+                startActivity(intent_suggestion);
+            }
+        });
     }
 
 }

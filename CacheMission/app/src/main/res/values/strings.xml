@@ -4,4 +4,6 @@
     <string name="none">default</string>
     <string name="suggestiontitle">캐시미션이 발전할 수 있도록 도와주세요!</string>
     <string name="suggestionhint">어떠한 점이 불편했나요?&#10;어떠한 점을 발전시키면 좋을까요?&#10;&#10;소중한 의견 기다립니다.</string>
+    <string name="exchangetitle">두근두근 환전신청</string>
+    <string name="exchangehint">--환전신청양식--&#10;&#10;원하는상품 : &#10;(이모티콘/기프티콘/현금 중 택1)&#10;&#10;전화번호or계좌번호 : &#10;(이모티콘/기프티콘)은 전화번호 &#10;(현금)은 계좌번호</string>
 </resources>

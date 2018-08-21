@@ -113,6 +113,18 @@ public class TaskListActivity extends AppCompatActivity {
                             }
                         });
 
+                        TextView exchangebtn = findViewById(R.id.exchange);
+                        exchangebtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent_exchange= new Intent(TaskListActivity.this, ExchangeActivity.class);
+                                if (drawer.isDrawerOpen(Gravity.LEFT)) {
+                                    drawer.closeDrawer(Gravity.LEFT) ;
+                                }
+                                startActivity(intent_exchange);
+                            }
+                        });
+
                         TextView suggestionbtn = findViewById(R.id.suggestion);
                         suggestionbtn.setOnClickListener(new View.OnClickListener() {
                             @Override

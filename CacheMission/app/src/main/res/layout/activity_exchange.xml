@@ -1,11 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <Switch
-        android:id="@+id/switch2"
-        android:layout_width="wrap_content"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/exchangetitle"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+
+        <TextView
+            android:id="@+id/tasktitletext"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:paddingLeft="15dp"
+            android:background="@color/colorPrimaryDark"
+            android:text="@string/exchangetitle"
+            android:textColor="#ffffff"
+            android:fontFamily="@font/nanumsquareb_"
+            android:gravity="center_vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+    <EditText
+        android:id="@+id/exchangemain"
+        android:inputType="textMultiLine"
+        android:lines="50"
+        android:scrollbars="vertical"
+        android:layout_margin="20dp"
+        android:layout_width="0dp"
+        android:layout_height="250dp"
+        android:ems="10"
+        android:textSize="15dp"
+        android:textColor="#000000"
+        android:fontFamily="@font/nanumsquarer_"
+        android:hint="@string/exchangehint"
+        android:gravity="top"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/exchangetitle" />
+
+    <Button
+        android:id="@+id/sendbtn"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Switch" />
+        android:layout_margin="3dp"
+        android:text="환전요청 보내기"
+        android:background="@color/colorAccent"
+        android:textColor="#FFFFFF"
+        android:fontFamily="@font/nanumsquareeb_"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/exchangemain"
+        app:layout_constraintEnd_toEndOf="@+id/exchangemain"
+        app:layout_constraintTop_toBottomOf="@+id/exchangemain" />
+
 </android.support.constraint.ConstraintLayout>

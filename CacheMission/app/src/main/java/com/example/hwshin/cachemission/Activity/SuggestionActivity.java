@@ -21,7 +21,6 @@ import org.json.JSONObject;
 
 public class SuggestionActivity extends AppCompatActivity {
 
-
     EditText suggestionmain;
     Button send_btn;
 

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -37,6 +38,8 @@ public class TaskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
+        //캡쳐방지
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
 
         /*
         *intent로 부터 받아와야할 것 :   1. 어떤 controller를 사용하는지
