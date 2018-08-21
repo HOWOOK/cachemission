@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.Button;
 import android.support.v4.content.ContextCompat;
 import android.widget.ImageView;
+import android.widget.Toast;
+
 import com.example.hwshin.cachemission.R;
 
 import java.io.DataOutputStream;
@@ -153,10 +155,13 @@ public class Controller_Voice extends Controller {
                 }.start();
                 if(serverResponseCode==200){
 
-
+                    parentActivity.startActivity(parentIntent);
+                    parentActivity.finish();
                 }
-                parentActivity.startActivity(parentIntent);
-                parentActivity.finish();
+                else{
+                    Toast.makeText(parentActivity,"남은 테스크가 없습니다.",Toast.LENGTH_SHORT).show();
+                    parentActivity.finish();
+                }
 
             }
         });

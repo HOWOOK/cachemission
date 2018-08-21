@@ -38,7 +38,7 @@ import static android.Manifest.permission.RECORD_AUDIO;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class TaskListActivity extends AppCompatActivity {
-    final int P_RECORD_AUDIO=77;
+
     private ListView lv_main;
     final static ArrayList<TaskListItem> mTaskList = new ArrayList<TaskListItem>();
     static ListviewAdapter adapter;
@@ -49,12 +49,7 @@ public class TaskListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tasklist);
         uiHashmap = new UIHashmap();
-        if ((ActivityCompat.checkSelfPermission(getApplicationContext(), RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED)||(ActivityCompat.checkSelfPermission(getApplicationContext(), WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)  ){
 
-            ActivityCompat.requestPermissions(this, new String[]{RECORD_AUDIO,WRITE_EXTERNAL_STORAGE},
-                    P_RECORD_AUDIO);
-
-        }
     }
 
     @Override

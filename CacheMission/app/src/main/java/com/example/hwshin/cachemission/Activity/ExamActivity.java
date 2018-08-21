@@ -3,6 +3,7 @@ package com.example.hwshin.cachemission.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.hwshin.cachemission.DataStructure.ExamView.ExamView;
 import com.example.hwshin.cachemission.DataStructure.HttpRequest;
@@ -40,6 +42,8 @@ public class ExamActivity extends AppCompatActivity {
     private UIHashmap uiHashmap;
     String baseID;
     String tasktype;
+    String colorflag="";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,8 +146,8 @@ public class ExamActivity extends AppCompatActivity {
 
                         }
                         else{
-                            Intent in=new Intent(getApplicationContext(),TaskListActivity.class);
-                            startActivity(in);
+                            Toast.makeText(getApplicationContext(),"남은 테스크가 없습니다",Toast.LENGTH_SHORT).show();
+
                             finish();
 
                         }
@@ -160,80 +164,103 @@ public class ExamActivity extends AppCompatActivity {
 
 
 
-        Button confirm=findViewById(R.id.confirmbutton);
-        Button reject=findViewById(R.id.rejectbutton);
+        final Button confirm=findViewById(R.id.confirmbutton);
+        final Button reject=findViewById(R.id.rejectbutton);
+        Button sendexam=findViewById(R.id.examsend);
+
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                JSONObject param = new JSONObject();
-                try {
-                    param.put("taskID", Integer.parseInt(mId));
-                    param.put("baseID", baseID);
-                    param.put("submit",true);
-                    new HttpRequest() {
-                        @Override
-                        protected void onPostExecute(Object o) {
-                            super.onPostExecute(o);
-                            JSONObject resulttemp = null;
-                            try {
-                                resulttemp = new JSONObject(result);
-                                Log.d("hey2good",resulttemp.toString());
-                                if((boolean)resulttemp.get("success")){
+                if(colorflag.equals("confirm")){
 
-                                    startActivity(intent);
-                                    finish();
-                                }
-                                else{
-                                    Intent notaskanymore=new Intent(getApplicationContext(),TaskListActivity.class);
-                                    startActivity(notaskanymore);
-
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }.execute("http://18.222.204.84/examSubmit", param,logintoken);
 
                 }
-                catch (JSONException e) {
-                    e.printStackTrace();
+                else {
+                    colorflag="confirm";
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+                        confirm.setBackground(getDrawable(R.drawable.btn_custom1));
+                        confirm.setTextColor(getColor(R.color.colorAccent));
+                        confirm.setText("작업잘됨(선택됨)");
+
+                        reject.setBackgroundColor(getColor(R.color.colorAccent));
+                        reject.setTextColor(getColor(R.color.colorwhite));
+                        reject.setText("그지같음");
+
+                    }
                 }
+
             }
         });
         reject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(colorflag.equals("reject")){
+
+
+                }
+                else {
+                    colorflag="reject";
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+                        reject.setBackground(getDrawable(R.drawable.btn_custom1));
+                        reject.setTextColor(getColor(R.color.colorAccent));
+                        reject.setText("그지같음(선택됨)");
+
+                        confirm.setBackgroundColor(getColor(R.color.colorAccent));
+                        confirm.setTextColor(getColor(R.color.colorwhite));
+                        confirm.setText("작업잘됨");
+                    }
+                }
+
+            }
+        });
+        sendexam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 JSONObject param = new JSONObject();
                 try {
                     param.put("taskID", Integer.parseInt(mId));
                     param.put("baseID", baseID);
-                    param.put("submit",false);
-                    new HttpRequest() {
-                        @Override
-                        protected void onPostExecute(Object o) {
-                            super.onPostExecute(o);
-                            JSONObject resulttemp = null;
-                            try {
-                                resulttemp = new JSONObject(result);
-                                Log.d("hey2bad",resulttemp.toString());
-                                if((boolean)resulttemp.get("success")){
+                    boolean exam=false;
+                    if(colorflag.equals("confirm")){
+                        exam=true;
+                    }
+                    if(colorflag.equals("")){
+                        Toast.makeText(getApplicationContext(),"테스크가 잘 되었는지 여부를 먼저 선택해 주세요",Toast.LENGTH_SHORT).show();
 
-                                    startActivity(intent);
-                                    finish();
-                                }
-                                else{
-                                    Intent notaskanymore=new Intent(getApplicationContext(),TaskListActivity.class);
-                                    startActivity(notaskanymore);
 
+                    }else {
+                        Log.d("examwhat",String.valueOf(exam));
+                        param.put("submit", exam);
+                        new HttpRequest() {
+                            @Override
+                            protected void onPostExecute(Object o) {
+                                super.onPostExecute(o);
+                                JSONObject resulttemp = null;
+                                try {
+                                    resulttemp = new JSONObject(result);
+                                    Log.d("hey2bad", resulttemp.toString());
+                                    if ((boolean) resulttemp.get("success")) {
+
+                                        startActivity(intent);
+                                        finish();
+                                    } else {
+                                        Intent notaskanymore = new Intent(getApplicationContext(), TaskListActivity.class);
+                                        startActivity(notaskanymore);
+
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+
+
                             }
+                        }.execute("http://18.222.204.84/examSubmit", param, logintoken);
 
 
+                    }
 
-                        }
-                    }.execute("http://18.222.204.84/examSubmit", param,logintoken);
 
                 }
                 catch (JSONException e) {
