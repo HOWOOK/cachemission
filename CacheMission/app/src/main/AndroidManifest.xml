@@ -15,6 +15,8 @@
         <activity
             android:name=".Activity.TaskListActivity"
             android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+
             >
 
             <intent-filter>
@@ -26,27 +28,35 @@
         <activity android:name=".Activity.TaskActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait"
             ></activity>
         <activity android:name=".Activity.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
             ></activity>
         <activity android:name=".Activity.SignUpActivity"
             android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
             ></activity>
         <activity android:name=".Activity.SettingActivity"
             android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
             ></activity>
         <activity android:name=".Activity.ExamActivity"
             android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
             ></activity>
         <activity android:name=".Activity.SuggestionActivity"
             android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
             ></activity>
         <activity android:name=".Activity.TaskExplainActivity"
             android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
             ></activity>
         <activity android:name=".Activity.ExchangeActivity"
             android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
             ></activity>
     </application>
 
