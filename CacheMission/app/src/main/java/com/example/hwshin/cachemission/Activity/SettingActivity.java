@@ -61,7 +61,7 @@ public class SettingActivity extends AppCompatActivity {
         });
 
         TextView suggestion = findViewById(R.id.suggestionbtn);
-        exchange.setOnClickListener(new View.OnClickListener() {
+        suggestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent_suggestion = new Intent(SettingActivity.this, SuggestionActivity.class);

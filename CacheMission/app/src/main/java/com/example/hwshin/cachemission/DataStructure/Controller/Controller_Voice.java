@@ -67,10 +67,8 @@ public class Controller_Voice extends Controller {
 //시작하면된다.
 
         } catch (IllegalStateException e) {
-// TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
-// TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
