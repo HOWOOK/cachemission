@@ -116,7 +116,7 @@ public class ExamActivity extends AppCompatActivity {
                     JSONObject resulttemp = null;
                     try {
                         resulttemp = new JSONObject(result);
-                        Log.d("hey2",resulttemp.toString());
+                        Log.d("hey2forinter",resulttemp.toString());
                         if((boolean)resulttemp.get("success")){
 
                             if(mTaskView.taskViewID == R.layout.taskview_text){

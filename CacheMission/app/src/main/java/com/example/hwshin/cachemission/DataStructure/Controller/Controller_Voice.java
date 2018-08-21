@@ -151,17 +151,20 @@ public class Controller_Voice extends Controller {
                 new Thread(){
                     public void run() {
                         uploadFile(path,id);
+                        Log.d("serverres",String.valueOf(serverResponseCode));
+                        if(serverResponseCode==200){
+
+                            parentActivity.startActivity(parentIntent);
+                            parentActivity.finish();
+                        }
+                        else{
+                            Toast.makeText(parentActivity,"남은 테스크가 없습니다.",Toast.LENGTH_SHORT).show();
+                            parentActivity.finish();
+                        }
                     }
                 }.start();
-                if(serverResponseCode==200){
 
-                    parentActivity.startActivity(parentIntent);
-                    parentActivity.finish();
-                }
-                else{
-                    Toast.makeText(parentActivity,"남은 테스크가 없습니다.",Toast.LENGTH_SHORT).show();
-                    parentActivity.finish();
-                }
+
 
             }
         });
