@@ -2,6 +2,7 @@ package com.example.hwshin.cachemission.Activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -67,20 +68,16 @@ public class LoginActivity extends AppCompatActivity {
                                 System.out.println(res);
                                 Intent in=new Intent(LoginActivity.this, TaskListActivity.class);
                                 if (res.get("success").toString() == "true"){
-                                    getDialog("로그인 되었음", "축하폭하");
-
-
                                     SharedPreferences token = getSharedPreferences("token", MODE_PRIVATE);
                                     SharedPreferences.Editor editor = token.edit();
                                     //logintoken이라는 key값으로 token을 저장한다.
                                     editor.putString("logintoken", res.get("token").toString());
                                     editor.commit();
-
                                     startActivity(in);
                                     finish();
                                 }
                                 else
-                                    getDialog("안됨",res.get("success").toString());
+                                    getDialog("로그인에 실패하였습니다.","아이디와 비밀번호를 확인해주세요.");
                             }catch(JSONException e)
                             {
                                 e.printStackTrace();
@@ -110,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
         {
             if(resultCode == Activity.RESULT_OK)
             {
-                getDialog("성공했어요","추카포카설포카");
+                getDialog("회원가입에 성공하였습니다.","가입한 아이디로 로그인해 주세요.");
             }
         }
     }
@@ -120,6 +117,12 @@ public class LoginActivity extends AppCompatActivity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(LoginActivity.this);
         alertDialogBuilder.setTitle(title);
         alertDialogBuilder.setMessage(value);
+        alertDialogBuilder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
         alertDialogBuilder.show();
     }
 }

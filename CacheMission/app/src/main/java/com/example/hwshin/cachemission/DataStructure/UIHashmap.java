@@ -21,26 +21,27 @@ import java.util.HashMap;
 public class UIHashmap {
 
     /* int[][] parameters 설명
-    * parameters[0] -> TaskView의 Weight  (Defualt Weight : TaskView = 10, Controller = 10)
+    * parameters[0] -> TaskView의 Weight  (Default Weight : TaskView = 10)
     * parameters[1] -> TaskView의 Top을 어떤 Constraintlayout에 연결할지
     * parameters[2] -> TaskView의 Bottom을 어떤 Constraintlayout에 연결할지
     * parameters[3] -> Controller의 Top을 어떤 Constraintlayout에 연결할지
     * parameters[4] -> Controller의 Bottom을 어떤 Constraintlayout에 연결할지
+    * parameters[5] -> Controller의 Weight  (Default Weight : Controller = 10)
     */
-    int[][] parameters_OCR = new int[5][2];
-    int[][] parameters_VIDEO = new int[5][2];
-    int[][] parameters_VOICE = new int[5][2];
-    int[][] parameters_DICTATION = new int[5][2];
-    int[][] parameters_NUMBERING = new int[5][2];
-    int[][] parameters_DIALECT = new int[5][2];
+    int[][] parameters_OCR = new int[6][2];
+    int[][] parameters_VIDEO = new int[6][2];
+    int[][] parameters_VOICE = new int[6][2];
+    int[][] parameters_DICTATION = new int[6][2];
+    int[][] parameters_NUMBERING = new int[6][2];
+    int[][] parameters_DIALECT = new int[6][2];
 
 
-    int[][] parameters_OCREXAM = new int[5][2];
-    int[][] parameters_VIDEOEXAM = new int[5][2];
-    int[][] parameters_VOICEEXAM = new int[5][2];
-    int[][] parameters_DICTATIONEXAM = new int[5][2];
-    int[][] parameters_NUMBERINGEXAM = new int[5][2];
-    int[][] parameters_DIALECTEXAM = new int[5][2];
+    int[][] parameters_OCREXAM = new int[6][2];
+    int[][] parameters_VIDEOEXAM = new int[6][2];
+    int[][] parameters_VOICEEXAM = new int[6][2];
+    int[][] parameters_DICTATIONEXAM = new int[6][2];
+    int[][] parameters_NUMBERINGEXAM = new int[6][2];
+    int[][] parameters_DIALECTEXAM = new int[6][2];
 
     public HashMap<String, TaskView> taskViewHashMap = new HashMap();
     public HashMap<String, Controller> controllerHashMap = new HashMap();
@@ -64,12 +65,14 @@ public class UIHashmap {
         examviewHashMap.put("edittext", new ExamView_EditText());
         examviewHashMap.put("buttons", new ExamView_Buttons());
         examviewHashMap.put("record", new ExamView_Voice());
+
         //OCR view-controller connect
-        parameters_OCR[0][0] = 5;
+        parameters_OCR[0][0] = 10;
         parameters_OCR[1][0] = R.id.tasktitle; parameters_OCR[1][1] = 4;
-        parameters_OCR[2][0] = R.id.controller; parameters_OCR[2][1] = 3;
-        parameters_OCR[3][0] = R.id.taskview; parameters_OCR[3][1] = 4;
+        parameters_OCR[2][0] = R.id.taskConstLayout; parameters_OCR[2][1] = 4;
+        parameters_OCR[3][0] = R.id.taskConstLayout; parameters_OCR[3][1] = 3;
         parameters_OCR[4][0] = R.id.taskConstLayout; parameters_OCR[4][1] = 4;
+        parameters_OCR[5][0] = 0;
         taskHashMap.put("OCR", parameters_OCR);
 
         parameters_OCREXAM[0][0] = 5;
@@ -77,6 +80,7 @@ public class UIHashmap {
         parameters_OCREXAM[2][0] = R.id.examview; parameters_OCREXAM[2][1] = 3;
         parameters_OCREXAM[3][0] = R.id.taskviewexam; parameters_OCREXAM[3][1] = 4;
         parameters_OCREXAM[4][0] = R.id.taskConstLayoutexam; parameters_OCREXAM[4][1] = 4;
+        parameters_OCR[5][0] = 10;
         taskHashMap.put("OCREXAM", parameters_OCREXAM);
 
         parameters_VIDEO[0][0] = 5;
@@ -84,6 +88,7 @@ public class UIHashmap {
         parameters_VIDEO[2][0] = R.id.controller; parameters_VIDEO[2][1] = 3;
         parameters_VIDEO[3][0] = R.id.taskview; parameters_VIDEO[3][1] = 4;
         parameters_VIDEO[4][0] = R.id.taskConstLayout; parameters_VIDEO[4][1] = 4;
+        parameters_OCR[5][0] = 10;
         taskHashMap.put("VIDEO", parameters_VIDEO);
 
         parameters_VIDEOEXAM[0][0] = 5;
@@ -91,6 +96,7 @@ public class UIHashmap {
         parameters_VIDEOEXAM[2][0] = R.id.examview; parameters_VIDEOEXAM[2][1] = 3;
         parameters_VIDEOEXAM[3][0] = R.id.taskviewexam; parameters_VIDEOEXAM[3][1] = 4;
         parameters_VIDEOEXAM[4][0] = R.id.taskConstLayoutexam; parameters_VIDEOEXAM[4][1] = 4;
+        parameters_OCR[5][0] = 10;
         taskHashMap.put("VIDEOEXAM", parameters_VIDEOEXAM);
 
         parameters_VOICE[0][0] = 5;
@@ -98,6 +104,7 @@ public class UIHashmap {
         parameters_VOICE[2][0] = R.id.controller; parameters_VOICE[2][1] = 3;
         parameters_VOICE[3][0] = R.id.taskview; parameters_VOICE[3][1] = 4;
         parameters_VOICE[4][0] = R.id.taskConstLayout; parameters_VOICE[4][1] = 4;
+        parameters_OCR[5][0] = 10;
         taskHashMap.put("RECORD", parameters_VOICE);
 
         parameters_VOICEEXAM[0][0] = 5;
@@ -105,6 +112,7 @@ public class UIHashmap {
         parameters_VOICEEXAM[2][0] = R.id.examview; parameters_VOICEEXAM[2][1] = 3;
         parameters_VOICEEXAM[3][0] = R.id.taskviewexam; parameters_VOICEEXAM[3][1] = 4;
         parameters_VOICEEXAM[4][0] = R.id.taskConstLayoutexam; parameters_VOICEEXAM[4][1] = 4;
+        parameters_OCR[5][0] = 10;
         taskHashMap.put("RECORDEXAM", parameters_VOICEEXAM);
 
         parameters_DICTATION[0][0] = 5;
@@ -112,6 +120,7 @@ public class UIHashmap {
         parameters_DICTATION[2][0] = R.id.controller; parameters_DICTATION[2][1] = 3;
         parameters_DICTATION[3][0] = R.id.taskview; parameters_DICTATION[3][1] = 4;
         parameters_DICTATION[4][0] = R.id.taskConstLayout; parameters_DICTATION[4][1] = 4;
+        parameters_OCR[5][0] = 10;
         taskHashMap.put("DICTATION", parameters_DICTATION);
 
         parameters_DICTATIONEXAM[0][0] = 5;
@@ -119,6 +128,7 @@ public class UIHashmap {
         parameters_DICTATIONEXAM[2][0] = R.id.examview; parameters_DICTATIONEXAM[2][1] = 3;
         parameters_DICTATIONEXAM[3][0] = R.id.taskviewexam; parameters_DICTATIONEXAM[3][1] = 4;
         parameters_DICTATIONEXAM[4][0] = R.id.taskConstLayoutexam; parameters_DICTATIONEXAM[4][1] = 4;
+        parameters_OCR[5][0] = 10;
         taskHashMap.put("DICTATIONEXAM", parameters_DICTATIONEXAM);
 
         parameters_NUMBERING[0][0] = 5;
@@ -126,6 +136,7 @@ public class UIHashmap {
         parameters_NUMBERING[2][0] = R.id.controller; parameters_NUMBERING[2][1] = 3;
         parameters_NUMBERING[3][0] = R.id.taskview; parameters_NUMBERING[3][1] = 4;
         parameters_NUMBERING[4][0] = R.id.taskConstLayout; parameters_NUMBERING[4][1] = 4;
+        parameters_OCR[5][0] = 10;
         taskHashMap.put("NUMBERING", parameters_NUMBERING);
 
         parameters_NUMBERINGEXAM[0][0] = 5;
@@ -133,6 +144,7 @@ public class UIHashmap {
         parameters_NUMBERINGEXAM[2][0] = R.id.examview; parameters_NUMBERINGEXAM[2][1] = 3;
         parameters_NUMBERINGEXAM[3][0] = R.id.taskviewexam; parameters_NUMBERINGEXAM[3][1] = 4;
         parameters_NUMBERINGEXAM[4][0] = R.id.taskConstLayoutexam; parameters_NUMBERINGEXAM[4][1] = 4;
+        parameters_OCR[5][0] = 10;
         taskHashMap.put("NUMBERINGEXAM", parameters_NUMBERINGEXAM);
 
         parameters_DIALECT[0][0] = 5;
@@ -140,6 +152,7 @@ public class UIHashmap {
         parameters_DIALECT[2][0] = R.id.controller; parameters_DIALECT[2][1] = 3;
         parameters_DIALECT[3][0] = R.id.taskview; parameters_DIALECT[3][1] = 4;
         parameters_DIALECT[4][0] = R.id.taskConstLayout; parameters_DIALECT[4][1] = 4;
+        parameters_OCR[5][0] = 10;
         taskHashMap.put("DIALECT", parameters_DIALECT);
 
         parameters_DIALECTEXAM[0][0] = 5;
@@ -147,6 +160,7 @@ public class UIHashmap {
         parameters_DIALECTEXAM[2][0] = R.id.examview; parameters_DIALECTEXAM[2][1] = 3;
         parameters_DIALECTEXAM[3][0] = R.id.taskviewexam; parameters_DIALECTEXAM[3][1] = 4;
         parameters_DIALECTEXAM[4][0] = R.id.taskConstLayoutexam; parameters_DIALECTEXAM[4][1] = 4;
+        parameters_OCR[5][0] = 10;
         taskHashMap.put("DIALECTEXAM", parameters_DIALECTEXAM);
 
     }

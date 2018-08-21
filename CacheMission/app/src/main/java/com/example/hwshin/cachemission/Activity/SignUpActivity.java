@@ -3,6 +3,7 @@ package com.example.hwshin.cachemission.Activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import org.json.JSONObject;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 public class SignUpActivity extends AppCompatActivity {
     EditText idText;
@@ -100,12 +102,11 @@ public class SignUpActivity extends AppCompatActivity {
                                 JSONObject res = new JSONObject(result);
                                 if (res.get("success").toString() == "true") {
                                     Intent returnIntent = new Intent();
-                                    //returnIntent.putExtra("result", result);
                                     setResult(Activity.RESULT_OK, returnIntent);
                                     finish();
                                 }
                                 else
-                                    getDialog("안됨",res.get("success").toString());
+                                    getDialog("회원가입 실패",res.get("success").toString());
                             }catch(JSONException e)
                             {
                                 e.printStackTrace();
@@ -124,7 +125,6 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 final String idVal = idText.getText().toString();
-                System.out.println("가자");
                 try {
                     JSONObject param = new JSONObject();
                     param.put("id", idVal);
@@ -136,11 +136,11 @@ public class SignUpActivity extends AppCompatActivity {
                             try {
                                 JSONObject res = new JSONObject(result);
                                 if (res.get("success").toString() == "true") {
-                                    getDialog("굳 ID", "비번 치3");
+                                    getDialog("사용가능한 아이디 입니다.", "비밀번호를 지정해주세요.");
                                     validId = idVal;
                                 }
                                 else
-                                    getDialog("이미 있음",res.get("success").toString());
+                                    getDialog("이미 존재하는 아이디 입니다.", res.get("success").toString());
                             }catch(JSONException e)
                             {
                                 e.printStackTrace();
@@ -168,55 +168,62 @@ public class SignUpActivity extends AppCompatActivity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(SignUpActivity.this);
         alertDialogBuilder.setTitle(title);
         alertDialogBuilder.setMessage(value);
+        alertDialogBuilder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
         alertDialogBuilder.show();
     }
     private Boolean errorCheck(String id1, String pw1, String pw2, String gender, String name, String region, String description)
     {
-        if(!id1.contains("@"))
+        boolean checkisemailformat = Pattern.matches("^(.+)(@)(.+)(\\.)(.+)$", id1);
+        //TODO : 비밀번호 문자와 숫자 조합인건 어떻게 확인할 수 있을까..
+        if(!checkisemailformat)
         {
-            getDialog("확인좀","ID가 이메일 형식이 아닙니다.");
+            getDialog("회원가입 양식에 문제가 있습니다.","ID가 이메일 형식이 아닙니다.");
             return true;
         }
         if(validId.equals(""))
         {
-            getDialog("확인좀","아이디 중복인지 확인 plz");
+            getDialog("회원가입 양식에 문제가 있습니다.","아이디 중복체크를 해주세요.");
             return true;
         }
         if(!validId.equals(id1))
         {
-            getDialog("확인좀","님이 지금 친 ID 다시 체크 고고");
+            getDialog("회원가입 양식에 문제가 있습니다.","아이디 중복체크를 해주세요.");
             return true;
         }
         if(!pw1.equals(pw2))
         {
 
-            getDialog("확인좀","비번 두 개 다른데?");
+            getDialog("회원가입 양식에 문제가 있습니다.","비밀번호확인이 일치하지 않습니다.");
             return true;
         }
         if(gender.equals("[ 선택 ]"))
         {
-            getDialog("확인좀","성별 선택 안됨");
+            getDialog("회원가입 양식에 문제가 있습니다.","성별을 선택해주세요.");
             return true;
         }
         if(pw1.length() < 4)
         {
-
-            getDialog("확인좀","비번 4자 이상으로 해주셔야 해요");
+            getDialog("회원가입 양식에 문제가 있습니다.","4자 이상의 비밀번호를 설정해주세요.");
             return true;
         }
         if(name.equals(""))
         {
-            getDialog("확인좀","이름이뭐에요");
+            getDialog("회원가입 양식에 문제가 있습니다.","이름란을 채워주세요.");
             return true;
         }
         if(region.equals("[ 선택 ]"))
         {
-            getDialog("확인좀","어디사시나요");
+            getDialog("회원가입 양식에 문제가 있습니다.","출신지역을 선택해주세요.");
             return true;
         }
         if(description.equals(""))
         {
-            getDialog("확인좀","누구의 소개로...?");
+            getDialog("회원가입 양식에 문제가 있습니다.","추천지인란을 채워주세요.");
             return true;
         }
         return false;

@@ -1,14 +1,11 @@
 package com.example.hwshin.cachemission.Activity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,17 +16,17 @@ import com.example.hwshin.cachemission.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class SuggestionActivity extends AppCompatActivity {
+public class ExchangeActivity extends AppCompatActivity {
 
-    EditText suggestionmain;
+    EditText exchangemain;
     Button send_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_suggestion);
+        setContentView(R.layout.activity_exchange);
 
-        suggestionmain = findViewById(R.id.suggestionmain);
+        exchangemain = findViewById(R.id.exchangemain);
         send_btn = findViewById(R.id.sendbtn);
 
         send_btn.setOnClickListener(new View.OnClickListener() {
@@ -42,7 +39,7 @@ public class SuggestionActivity extends AppCompatActivity {
 
     private void getDialog(String title, String value, String positive)
     {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(SuggestionActivity.this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ExchangeActivity.this);
         alertDialogBuilder.setTitle(title);
         alertDialogBuilder.setMessage(value);
         alertDialogBuilder.setPositiveButton(positive, new DialogInterface.OnClickListener() {
@@ -63,17 +60,17 @@ public class SuggestionActivity extends AppCompatActivity {
         stringtoken = token.getString("logintoken",null);
         final String finalStringtoken = stringtoken;
 
-        android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(SuggestionActivity.this);
-        alertDialogBuilder.setTitle("건의사항 전송");
+        android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(ExchangeActivity.this);
+        alertDialogBuilder.setTitle("환전요청 전송");
         alertDialogBuilder.setMessage("입력사항을 보내시겠습니까?");
 
         alertDialogBuilder.setPositiveButton("네", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 JSONObject param = new JSONObject();
-                final String suggestionVal = suggestionmain.getText().toString();
+                final String exchangeVal = exchangemain.getText().toString();
                 try {
-                    param.put("suggestion", suggestionVal);
+                    param.put("suggestion", exchangeVal);
 
                     new HttpRequest(){
                         @Override
@@ -81,10 +78,10 @@ public class SuggestionActivity extends AppCompatActivity {
                             super.onPostExecute(o);
                             try {
                                 JSONObject res = new JSONObject(result);
-                                if(suggestionVal.equals(""))
+                                if(exchangeVal.equals(""))
                                     getDialog("입력 된 문장이 없습니다.", "글을 입력해 주세요.", "확인");
                                 else if(res.get("success").toString().equals("true"))
-                                    getDialog("전송 되었습니다.", "관심 가져주셔서 감사합니다♡", "확인");
+                                    getDialog("전송 되었습니다.", "요청이 처리되면 포인트가 차감됩니다.", "확인");
                                 else
                                     getDialog("전송에 실패 하였습니다.", "서버에 문제가 있나보네요ㅠㅠ 다음에 다시 시도해주세요!", "확인");
 
@@ -92,7 +89,7 @@ public class SuggestionActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                         }
-                    }.execute("http://18.222.204.84/suggestion",param, finalStringtoken);
+                    }.execute("http://18.222.204.84/exchange",param, finalStringtoken);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
