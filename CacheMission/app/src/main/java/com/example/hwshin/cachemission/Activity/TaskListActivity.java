@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.hwshin.cachemission.Adapter.ListviewAdapter;
 import com.example.hwshin.cachemission.DataStructure.HttpRequest;
 import com.example.hwshin.cachemission.DataStructure.TaskListItem;
@@ -132,14 +133,6 @@ public class TaskListActivity extends AppCompatActivity {
                             }
                         });
 
-                        Log.d("good",result.toString());
-/*
-                        if(result!=){
-                            Intent gotologin = new Intent(TaskListActivity.this,LoginActivity.class);
-                            startActivity(gotologin);
-                            finish();
-
-                        }*/
                         JSONObject resulttemp = new JSONObject(result);
 
                         if (resulttemp.get("success").toString().equals("login")) {
@@ -153,12 +146,15 @@ public class TaskListActivity extends AppCompatActivity {
                             JSONObject user = (JSONObject) resulttemp.get("user");
                             TextView username = findViewById(R.id.username);
                             TextView usernamedrawer = findViewById(R.id.usernamedrawer);
+                            ImageView userrank = findViewById(R.id.userrank);
                             TextView money = findViewById(R.id.money);
                             TextView maybemoney = findViewById(R.id.maybemoney);
                             money.setText("\uFFE6 "+String.valueOf(user.get("gold")));
                             maybemoney.setText("\uFFE6 "+String.valueOf(user.get("maybe")));
                             username.setText(String.valueOf(user.get("name")));
                             usernamedrawer.setText(String.valueOf(user.get("name")));
+                            setuserrankImage(userrank, Integer.parseInt(user.get("rank").toString()));
+                            System.out.println("지금 랭크는 "+user.get("rank"));
                             mTaskList.clear();
                             JSONArray exam_res = (JSONArray) resulttemp.get("exam_data");
                             JSONArray task_res = (JSONArray) resulttemp.get("task_data");
@@ -169,7 +165,7 @@ public class TaskListActivity extends AppCompatActivity {
 
 
                                 mTaskList.add(new TaskListItem(String.valueOf(temp.get("id")), (String) temp.get("taskName"), (String) temp.get("taskType"),
-                                        (String) temp.get("taskView"), (String) temp.get("controller"), String.valueOf(temp.get("gold")) + " p", (JSONArray) temp.get("buttons"), 1));
+                                        (String) temp.get("taskView"), (String) temp.get("controller"), String.valueOf(temp.get("gold")) + " \uFFE6", (JSONArray) temp.get("buttons"), 1));
                             }
 
 
@@ -188,9 +184,6 @@ public class TaskListActivity extends AppCompatActivity {
                             }
 
                         }
-                        //Log.d("mtask", mTaskList.get(0).getController());
-                        //Log.d("mtask", mTaskList.get(1).getController());
-
 
                         lv_main = (ListView) findViewById(R.id.taskList);
                         adapter = new ListviewAdapter(getApplicationContext(), R.layout.task_lv, TaskListActivity.mTaskList);
@@ -198,9 +191,6 @@ public class TaskListActivity extends AppCompatActivity {
                         lv_main.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-
-                                //각 리스트를 클릭하여 TaskActivity로 넘어가게 되는데 거기에 intent될 데이터들을 구분해서 넘겨줘야합니다.
-                                //지금은 모든 리스트들이 OCR task를 할수있도록 taskview는 image를 controller는 edittext
 
                                 Intent intent_task = new Intent(TaskListActivity.this, TaskActivity.class);
                                 Intent intent_exam = new Intent(TaskListActivity.this, ExamActivity.class);
@@ -252,5 +242,19 @@ public class TaskListActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+    }
+
+    private void setuserrankImage(ImageView userrank, int rank) {
+
+        if(rank==1)
+            Glide.with(this).load(R.drawable.imagenotload).into(userrank);
+        else if(rank==2)
+            Glide.with(this).load(R.drawable.imagenotload).into(userrank);
+        else if(rank==3)
+            Glide.with(this).load(R.drawable.imagenotload).into(userrank);
+        else if(rank==4)
+            Glide.with(this).load(R.drawable.imagenotload).into(userrank);
+        else if(rank==151)
+            Glide.with(this).load(R.drawable.voicestop).into(userrank);
     }
 }

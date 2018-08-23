@@ -70,7 +70,7 @@ public class ExchangeActivity extends AppCompatActivity {
                 JSONObject param = new JSONObject();
                 final String exchangeVal = exchangemain.getText().toString();
                 try {
-                    param.put("suggestion", exchangeVal);
+                    param.put("exchange", exchangeVal);
 
                     new HttpRequest(){
                         @Override

@@ -38,13 +38,17 @@
 
         <TextView
             android:id="@+id/taskTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
+            android:maxLines="2"
+            android:ellipsize="end"
             android:text="@string/none"
             android:textColor="@color/colorSecondary"
+            android:textSize="13dp"
             android:fontFamily="@font/nanumsquareb_"
             app:layout_constraintStart_toEndOf="@id/taskType"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -54,7 +58,7 @@
             android:layout_margin="20dp"
             android:text="@string/none"
             android:textColor="@color/colorPrimary"
-            android:textSize="18sp"
+            android:textSize="18dp"
             android:fontFamily="@font/nanumsquareeb_"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/taskType" />

@@ -60,7 +60,7 @@ public class Controller_Numbers extends Controller {
                 rb.setButtonDrawable(null);
 
                 //Drawable d=parentActivity.getDrawable(R.drawable.recordstart);
-rb.setBackground(parentActivity.getDrawable(R.drawable.radiobutton));
+            rb.setBackground(parentActivity.getDrawable(R.drawable.radiobutton));
                 //rb.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.radiobutton,0,0);
             }
 
