@@ -30,18 +30,51 @@
             app:layout_constraintBottom_toBottomOf="@+id/guideline5">
 
             <android.support.constraint.Guideline
-                android:id="@+id/guideline_hexagon"
+                android:id="@+id/guideline_progressbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.85" />
+
+            <ImageView
+                android:id="@+id/userrank"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginBottom="3dp"
+                app:layout_constraintBottom_toTopOf="@+id/guideline_progressbar"
+                app:layout_constraintStart_toStartOf="@+id/guideline_rankImage"
+                app:srcCompat="@drawable/rank_begginner" />
+
+            <ProgressBar
+                android:id="@+id/mainProgressBar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:progressDrawable="@drawable/progress_main_background"
+                android:indeterminateDrawable="@drawable/progress_main_upground"
+                android:minHeight="3dp"
+                android:maxHeight="3dp"
+                android:progress="25"
+                android:max="100"
+                app:layout_constraintBottom_toBottomOf="@+id/guideline_progressbar"
+                app:layout_constraintLeft_toRightOf="@+id/guideline_rankImage"
+                app:layout_constraintRight_toLeftOf="@+id/guideline_money"
+                />
+
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline_rankImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.50" />
+                app:layout_constraintGuide_percent="0.1" />
 
             <android.support.constraint.Guideline
                 android:id="@+id/guideline_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.6" />
+                app:layout_constraintGuide_percent="0.9" />
 
             <Button
                 android:id="@+id/drawviewbtn"
@@ -52,117 +85,97 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/hexagon1"
-                android:layout_width="160dp"
-                android:layout_height="160dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/guideline_hexagon"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/hexagon1" />
 
-            <ImageView
-                android:id="@+id/hexagon2"
-                android:layout_width="130dp"
-                android:layout_height="130dp"
-                app:layout_constraintBottom_toBottomOf="@id/hexagon1"
-                app:layout_constraintEnd_toEndOf="@id/hexagon1"
-                app:layout_constraintStart_toStartOf="@id/hexagon1"
-                app:layout_constraintTop_toTopOf="@id/hexagon1"
-                app:srcCompat="@drawable/hexagon2" />
 
             <android.support.constraint.ConstraintLayout
-                android:layout_width="80dp"
+                android:id="@+id/userinfo"
+                android:layout_width="150dp"
                 android:layout_height="match_parent"
-                app:layout_constraintStart_toStartOf="@id/guideline_money"
+                app:layout_constraintEnd_toStartOf="@id/guideline_money"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <android.support.constraint.Guideline
-                    android:id="@+id/guideline_money2"
+                    android:id="@+id/guideline_userinfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layout_constraintGuide_percent="0.5" />
+                    app:layout_constraintGuide_percent="0.7" />
 
                 <TextView
-                    android:id="@+id/money"
+                    android:id="@+id/username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="12dp"
                     android:text="@string/none"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp"
-                    android:fontFamily="@font/exo2semibold_"
+                    android:textSize="25dp"
+                    android:fontFamily="@font/lee_m_"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toTopOf="@id/guideline_money2" />
+                    app:layout_constraintBottom_toTopOf="@+id/textView1"
+                    />
 
                 <TextView
                     android:id="@+id/textView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/maincard"
+                    android:layout_marginRight="3dp"
                     android:layout_marginBottom="3dp"
-                    android:text="내 통장 적립금"
-                    android:textColor="#AAFFFFFF"
-                    android:textSize="10sp"
-                    android:fontFamily="@font/nanumsquarer_"
+                    android:text="누적 적립금"
+                    app:layout_constraintEnd_toStartOf="@+id/money"
+                    app:layout_constraintBottom_toTopOf="@+id/textView2"
+                    />
+
+                <TextView
+                    android:id="@+id/money"
+                    style="@style/maincard"
+                    android:layout_width="50dp"
+                    android:layout_marginBottom="3dp"
+                    android:text="@string/none"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toTopOf="@id/money" />
+                    app:layout_constraintBottom_toTopOf="@+id/textView2"
+                    />
 
                 <TextView
                     android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="적립 예정 금액"
-                    android:textColor="#AAFFFFFF"
-                    android:textSize="10sp"
-                    android:fontFamily="@font/nanumsquarer_"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/guideline_money2" />
+                    style="@style/maincard"
+                    android:layout_marginRight="3dp"
+                    android:layout_marginBottom="3dp"
+                    android:text="적립 예정금"
+                    app:layout_constraintEnd_toStartOf="@+id/maybemoney"
+                    app:layout_constraintBottom_toTopOf="@+id/textView3"
+                    />
 
                 <TextView
                     android:id="@+id/maybemoney"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
+                    style="@style/maincard"
+                    android:layout_width="50dp"
+                    android:layout_marginBottom="3dp"
                     android:text="@string/none"
-                    android:textColor="#AAFFFFFF"
-                    android:textSize="20sp"
-                    android:fontFamily="@font/exo2semibold_"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textView2" />
+                    app:layout_constraintBottom_toTopOf="@+id/textView3"
+                    />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    style="@style/maincard"
+                    android:text="수행 신뢰도"
+                    android:layout_marginRight="3dp"
+                    android:layout_marginBottom="3dp"
+                    app:layout_constraintEnd_toStartOf="@+id/reliability"
+                    app:layout_constraintBottom_toBottomOf="@+id/guideline_userinfo"
+                    />
+
+                <TextView
+                    android:id="@+id/reliability"
+                    style="@style/maincard"
+                    android:layout_width="50dp"
+                    android:layout_marginBottom="3dp"
+                    android:text="@string/none"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@+id/guideline_userinfo"
+                    />
+
+
             </android.support.constraint.ConstraintLayout>
-
-            <ImageView
-                android:id="@+id/userrank"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_marginBottom="22dp"
-                app:layout_constraintBottom_toBottomOf="@id/hexagon2"
-                app:layout_constraintEnd_toEndOf="@id/hexagon2"
-                app:layout_constraintStart_toStartOf="@id/hexagon2"
-                app:layout_constraintTop_toTopOf="@id/hexagon2"
-                app:srcCompat="@drawable/recordstartbtn"
-                />
-
-
-            <TextView
-                android:id="@+id/username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="@string/none"
-                android:textColor="#FFFFFF"
-                android:textSize="18dp"
-                android:fontFamily="@font/lee_m_"
-                app:layout_constraintBottom_toBottomOf="@id/hexagon2"
-                app:layout_constraintEnd_toEndOf="@id/hexagon2"
-                app:layout_constraintStart_toStartOf="@id/hexagon2"
-                app:layout_constraintTop_toTopOf="@id/hexagon2" />
 
 
         </android.support.constraint.ConstraintLayout>
