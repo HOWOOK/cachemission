@@ -66,7 +66,7 @@ public class TaskView_Text extends TaskView {
 
 
                     }
-                }.execute("http://18.222.204.84/taskText", param,logintoken);
+                }.execute("http://18.222.204.84/taskGet", param,logintoken);
 
             } catch (JSONException e) {
                 e.printStackTrace();

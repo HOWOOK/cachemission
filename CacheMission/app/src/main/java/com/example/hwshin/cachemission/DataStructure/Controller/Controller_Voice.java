@@ -92,6 +92,8 @@ private String oldpath="init";
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+
                 new Thread(){
                     public void run() {
                         uploadFile(mPath+".wav",id);
@@ -99,10 +101,10 @@ private String oldpath="init";
                         Log.d("serverres",mPath+".wav");
                         Uri i= Uri.parse(mPath+".pcm");
                         File f=new File(i.getPath());
-                        f.delete();
+                        //f.delete();
                         Uri i2= Uri.parse(mPath+".wav");
                         File f2=new File(i2.getPath());
-                        f2.delete();
+                        //f2.delete();
                         if(serverResponseCode==200){
 
                             parentActivity.startActivity(parentIntent);
@@ -189,7 +191,7 @@ private String oldpath="init";
 
         String sd = Environment.getExternalStorageDirectory().getAbsolutePath();
 
-        mPath = sd + "/voice_"+System.currentTimeMillis();
+        mPath = sd + "/voice2_"+System.currentTimeMillis();
         if(oldpath!="init"){
             Uri i= Uri.parse(oldpath);
             File f=new File(i.getPath());
@@ -477,7 +479,7 @@ private String oldpath="init";
                 conn.setRequestProperty("uploaded_file", fileName);
                 conn.setRequestProperty("TOKEN",logintoken);
                 conn.setRequestProperty("BASEID",String.valueOf(mtaskview.gettaskID()));
-                conn.setRequestProperty("TASKID",id);
+                conn.setRequestProperty("answerID",id);
 
                 dos = new DataOutputStream(conn.getOutputStream());
 

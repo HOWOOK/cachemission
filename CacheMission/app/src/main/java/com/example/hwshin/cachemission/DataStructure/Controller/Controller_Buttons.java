@@ -79,7 +79,7 @@ public class Controller_Buttons extends Controller {
                                 try {
                                     Log.d("idinfo",String.valueOf(mtaskview.gettaskID()));
                                     param2.put("baseID", mtaskview.gettaskID());
-                                    param2.put("taskID", id);
+                                    param2.put("answerID", id);
                                     param2.put("submit", submit);
 
 

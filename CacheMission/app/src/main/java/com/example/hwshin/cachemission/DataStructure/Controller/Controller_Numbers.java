@@ -82,7 +82,7 @@ public class Controller_Numbers extends Controller {
                try {
                    Log.d("idinfo", String.valueOf(mtaskview.gettaskID()));
                    param2.put("baseID", mtaskview.gettaskID());
-                   param2.put("taskID", id);
+                   param2.put("answerID", id);
                    param2.put("submit", radioGroup.getCheckedRadioButtonId());
                    new HttpRequest() {
                        @Override

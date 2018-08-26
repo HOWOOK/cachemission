@@ -71,7 +71,7 @@ public class TaskView_Image extends TaskView {
 
 
                     }
-                }.execute("http://18.222.204.84/taskURI", param,logintoken);
+                }.execute("http://18.222.204.84/taskGet", param,logintoken);
 
             } catch (JSONException e) {
                 e.printStackTrace();
