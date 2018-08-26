@@ -81,8 +81,8 @@ public class Controller_Numbers extends Controller {
                Log.d("subsub",String.valueOf(radioGroup.getCheckedRadioButtonId()));
                try {
                    Log.d("idinfo", String.valueOf(mtaskview.gettaskID()));
-                   param2.put("baseID", mtaskview.gettaskID());
-                   param2.put("answerID", id);
+                   param2.put("answerID", mtaskview.gettaskID());
+                   param2.put("taskID", id);
                    param2.put("submit", radioGroup.getCheckedRadioButtonId());
                    new HttpRequest() {
                        @Override
@@ -120,7 +120,7 @@ public class Controller_Numbers extends Controller {
 
 
                        }
-                   }.execute("http://18.222.204.84/textSubmit", param2, logintoken);
+                   }.execute("http://18.222.204.84/taskSubmit", param2, logintoken);
                }catch (JSONException e){
                    e.printStackTrace();
 

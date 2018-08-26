@@ -78,8 +78,8 @@ public class Controller_Buttons extends Controller {
                                 JSONObject param2 = new JSONObject();
                                 try {
                                     Log.d("idinfo",String.valueOf(mtaskview.gettaskID()));
-                                    param2.put("baseID", mtaskview.gettaskID());
-                                    param2.put("answerID", id);
+                                    param2.put("answerID", mtaskview.gettaskID());
+                                    param2.put("taskID", id);
                                     param2.put("submit", submit);
 
 
@@ -121,7 +121,7 @@ public class Controller_Buttons extends Controller {
 
 
                                         }
-                                    }.execute("http://18.222.204.84/textSubmit", param2,logintoken);
+                                    }.execute("http://18.222.204.84/taskSubmit", param2,logintoken);
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();

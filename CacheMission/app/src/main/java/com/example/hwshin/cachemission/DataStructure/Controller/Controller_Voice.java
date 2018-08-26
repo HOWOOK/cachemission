@@ -111,7 +111,7 @@ private String oldpath="init";
                             parentActivity.finish();
                         }
                         else{
-                            Toast.makeText(parentActivity,"남은 테스크가 없습니다.",Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(parentActivity,"남은 테스크가 없습니다.",Toast.LENGTH_SHORT).show();
                             parentActivity.finish();
                         }
                     }
@@ -465,7 +465,7 @@ private String oldpath="init";
 
                 // open a URL connection to the Servlet
                 FileInputStream fileInputStream = new FileInputStream(sourceFile);
-                URL url = new URL("http://18.222.204.84/voiceSubmit");
+                URL url = new URL("http://18.222.204.84/taskSubmit");
 
                 // Open a HTTP  connection to  the URL
                 conn = (HttpURLConnection) url.openConnection();
@@ -478,8 +478,8 @@ private String oldpath="init";
                 conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
                 conn.setRequestProperty("uploaded_file", fileName);
                 conn.setRequestProperty("TOKEN",logintoken);
-                conn.setRequestProperty("BASEID",String.valueOf(mtaskview.gettaskID()));
-                conn.setRequestProperty("answerID",id);
+                conn.setRequestProperty("ANSWERID",String.valueOf(mtaskview.gettaskID()));
+                conn.setRequestProperty("TASKID",id);
 
                 dos = new DataOutputStream(conn.getOutputStream());
 
