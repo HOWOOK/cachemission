@@ -159,7 +159,7 @@ public class TaskListActivity extends AppCompatActivity {
                             usernamedrawer.setText(String.valueOf(user.get("name")));
                             setuserrankImage(userrank, Integer.parseInt(user.get("rank").toString()));
                             reliability.setText(String.valueOf(user.get("reliability"))+" %");
-
+                            System.out.println("테스크성공횟수"+Integer.parseInt(user.get("success_count").toString()));
                             //progress bar setting
                             setuserprogressbar(progress, Integer.parseInt(user.get("rank").toString()), Integer.parseInt(user.get("success_count").toString()));
 
@@ -269,14 +269,17 @@ public class TaskListActivity extends AppCompatActivity {
     }
 
     private void setuserprogressbar(ProgressBar progressBar, int rank, int count) {
-        int percent = 0;
+        float percent = 0;
+        float count_f = (float)count;
+
+        System.out.println("들어온 랭크 "+ rank + " 들어온 테스크 성공수 "+ count);
 
         if(rank == 1)
             //50회 이상 진행시 레벨업
-            percent = (count/50)*100;
+            percent = (count_f/50)*100;
         else if(rank == 2)
             //300회 이상 진행시 레벨업 (50+250)
-            percent = (count-50/250)*100;
+            percent = (count_f-50/250)*100;
         else if(rank == 3)
             //현재 최고레벨
             percent = 0;
@@ -284,7 +287,10 @@ public class TaskListActivity extends AppCompatActivity {
             //관리자
             percent = 100;
 
-        progressBar.setProgress(percent);
+
+        percent=80;
+        System.out.println("계산된 퍼센트 "+ percent);
+        progressBar.setProgress((int)percent);
 
     }
 }
