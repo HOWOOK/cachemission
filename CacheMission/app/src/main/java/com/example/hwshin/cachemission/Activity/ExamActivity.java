@@ -107,6 +107,7 @@ public class ExamActivity extends AppCompatActivity {
         JSONObject param = new JSONObject();
         try {
             param.put("taskID", Integer.parseInt(mId));
+            Log.d("examshibal",String.valueOf(intent.getIntExtra("examtype",0)));
             param.put("examType", intent.getIntExtra("examtype",0));
 
             new HttpRequest() {
@@ -126,7 +127,7 @@ public class ExamActivity extends AppCompatActivity {
                             }else {
                                 tempsrcURI = resulttemp.get("content_url").toString();
                             }
-                            baseID = resulttemp.get("baseID").toString();
+                            baseID = resulttemp.get("answerID").toString();
                             Log.d("baseid",baseID);
                             mTaskView.setParent(activity,intent);
                             mExamView.setParent(activity,intent);
@@ -225,7 +226,8 @@ public class ExamActivity extends AppCompatActivity {
                 JSONObject param = new JSONObject();
                 try {
                     param.put("taskID", Integer.parseInt(mId));
-                    param.put("baseID", baseID);
+                    param.put("answerID", baseID);
+                    Log.d("examshibal",String.valueOf(intent.getIntExtra("examtype",0)));
                     param.put("examType", intent.getIntExtra("examtype",0));
 
                     boolean exam=false;

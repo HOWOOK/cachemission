@@ -232,7 +232,7 @@ public class TaskListActivity extends AppCompatActivity {
                                     intent_exam.putExtra("examview", controller);
                                     intent_exam.putExtra("buttons", buttons);
                                     intent_exam.putExtra("taskid", taskid);
-                                    intent_exam.putExtra("examid", ((TaskListItem)adapterView.getItemAtPosition(position)).getExamType());
+                                    intent_exam.putExtra("examtype", ((TaskListItem)adapterView.getItemAtPosition(position)).getExamType());
 
                                     TaskListActivity.this.startActivity(intent_exam);
                                 }
