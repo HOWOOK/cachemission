@@ -287,7 +287,6 @@ public class TaskListActivity extends AppCompatActivity {
             //관리자
             percent = 100;
 
-
         percent=80;
         System.out.println("계산된 퍼센트 "+ percent);
         progressBar.setProgress((int)percent);

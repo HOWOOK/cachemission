@@ -1,5 +1,6 @@
 package com.example.hwshin.cachemission.Activity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -33,6 +34,7 @@ public class TaskActivity extends AppCompatActivity {
     String buttons;
     private UIHashmap uiHashmap;
     String tasktype;
+    Dialog explainDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,7 @@ public class TaskActivity extends AppCompatActivity {
         *intent로 부터 받아와야할 것 :   1. 어떤 controller를 사용하는지
         * 2. 어떤 taskview를 사용하는지  3. 두개의 constraint 관계는 어떤지
         */
+        explainDialog = new Dialog(this);
         intent = getIntent();
         uiHashmap = new UIHashmap();
         mId=(String)intent.getStringExtra("taskid");
@@ -122,6 +125,7 @@ public class TaskActivity extends AppCompatActivity {
                 startActivity(intent_taskExplain);
             }
         });
+
 
     }
 
