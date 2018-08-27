@@ -1,4 +1,4 @@
-package com.example.hwshin.cachemission.Adapter;
+package com.example.hwshin.cachemission.Adapter.Explain;
 
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
@@ -13,11 +13,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.hwshin.cachemission.R;
 
-public class SlideAdapter extends PagerAdapter {
+public class SlideAdapter_ExplainMain extends PagerAdapter {
     Context context;
     LayoutInflater inflater;
 
-    public SlideAdapter(Context context){
+    public SlideAdapter_ExplainMain(Context context){
         this.context=context;
     }
 

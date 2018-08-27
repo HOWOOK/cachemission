@@ -51,8 +51,7 @@
             android:screenOrientation="portrait"
             ></activity>
         <activity android:name=".Activity.TaskExplainActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent.NoActionBar"
             ></activity>
         <activity android:name=".Activity.ExchangeActivity"
             android:theme="@style/AppTheme.NoActionBar"
