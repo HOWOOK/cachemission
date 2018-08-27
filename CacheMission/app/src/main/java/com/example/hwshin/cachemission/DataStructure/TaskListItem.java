@@ -12,6 +12,7 @@ public class TaskListItem {
     private String gold;
     private JSONArray buttons;
     private int taskFlag;
+    private int examType;
 
     public String getId(){return id;}
     public String getTaskName() {
@@ -33,6 +34,7 @@ public class TaskListItem {
     public int getTaskFlag(){
         return taskFlag;
     }
+    public int getExamType(){return examType;}
 
     public String setId(String id){
         return this.id = id;
@@ -54,6 +56,7 @@ public class TaskListItem {
     public int setTaskFlag(int taskFlag){
         return this.taskFlag = taskFlag;
     }
+    public int setExamType(int examType){return this.examType=examType;}
 
 
     public TaskListItem(String id, String taskName, String taskType, String taskView, String controller, String gold, JSONArray buttons, int taskFlag){
@@ -66,6 +69,18 @@ public class TaskListItem {
         this.gold = gold;
         this.buttons=buttons;
         this.taskFlag = taskFlag;
+    }
+    public TaskListItem(String id, String taskName, String taskType, String taskView, String controller, String gold, JSONArray buttons, int taskFlag, int examType){
+
+        this.id=id;
+        this.taskName = taskName;
+        this.taskType = taskType;
+        this.taskView = taskView;
+        this.controller = controller;
+        this.gold = gold;
+        this.buttons=buttons;
+        this.taskFlag = taskFlag;
+        this.examType = examType;
     }
 
 }

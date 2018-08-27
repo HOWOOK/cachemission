@@ -165,7 +165,7 @@ public class TaskListActivity extends AppCompatActivity {
 
 
                                 mTaskList.add(new TaskListItem(String.valueOf(temp.get("id")), (String) temp.get("taskName"), (String) temp.get("taskType"),
-                                        (String) temp.get("taskView"), (String) temp.get("controller"), String.valueOf(temp.get("gold")) + " \uFFE6", (JSONArray) temp.get("buttons"), 1));
+                                        (String) temp.get("taskView"), (String) temp.get("controller"), String.valueOf(temp.get("gold")) + " \uFFE6", (JSONArray) temp.get("buttons"), 1,Integer.parseInt(String.valueOf(temp.get("examType")))));
                             }
 
 
@@ -222,6 +222,7 @@ public class TaskListActivity extends AppCompatActivity {
                                     intent_exam.putExtra("examview", controller);
                                     intent_exam.putExtra("buttons", buttons);
                                     intent_exam.putExtra("taskid", taskid);
+                                    intent_exam.putExtra("examid", ((TaskListItem)adapterView.getItemAtPosition(position)).getExamType());
 
                                     TaskListActivity.this.startActivity(intent_exam);
                                 }

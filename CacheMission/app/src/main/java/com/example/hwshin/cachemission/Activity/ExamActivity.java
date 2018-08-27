@@ -107,6 +107,7 @@ public class ExamActivity extends AppCompatActivity {
         JSONObject param = new JSONObject();
         try {
             param.put("taskID", Integer.parseInt(mId));
+            param.put("examType", intent.getIntExtra("examtype",0));
 
             new HttpRequest() {
                 @Override
@@ -225,6 +226,8 @@ public class ExamActivity extends AppCompatActivity {
                 try {
                     param.put("taskID", Integer.parseInt(mId));
                     param.put("baseID", baseID);
+                    param.put("examType", intent.getIntExtra("examtype",0));
+
                     boolean exam=false;
                     if(colorflag.equals("confirm")){
                         exam=true;
