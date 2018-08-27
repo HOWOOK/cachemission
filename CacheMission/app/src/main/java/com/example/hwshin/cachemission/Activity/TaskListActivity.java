@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -58,12 +59,12 @@ public class TaskListActivity extends AppCompatActivity {
         super.onStart();
 
         //애니매이션 시작
-        final ImageView hexagon1 = findViewById(R.id.hexagon1);
-        final ImageView hexagon2 = findViewById(R.id.hexagon2);
-        Animation anim_cw = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.cwrotate);
-        Animation anim_ccw = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.ccwrotate);
-        hexagon1.startAnimation(anim_cw);
-        hexagon2.startAnimation(anim_ccw);
+//        final ImageView hexagon1 = findViewById(R.id.hexagon1);
+//        final ImageView hexagon2 = findViewById(R.id.hexagon2);
+//        Animation anim_cw = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.cwrotate);
+//        Animation anim_ccw = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.ccwrotate);
+//        hexagon1.startAnimation(anim_cw);
+//        hexagon2.startAnimation(anim_ccw);
 
 
         //시작하면 일단 토큰을 받아옴
@@ -113,7 +114,8 @@ public class TaskListActivity extends AppCompatActivity {
                         exchangebtn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent intent_exchange= new Intent(TaskListActivity.this, ExchangeActivity.class);
+                                //테스트위해 잠시 변경
+                                Intent intent_exchange= new Intent(TaskListActivity.this, ExplainActivity.class);
                                 if (drawer.isDrawerOpen(Gravity.LEFT)) {
                                     drawer.closeDrawer(Gravity.LEFT) ;
                                 }
@@ -149,12 +151,20 @@ public class TaskListActivity extends AppCompatActivity {
                             ImageView userrank = findViewById(R.id.userrank);
                             TextView money = findViewById(R.id.money);
                             TextView maybemoney = findViewById(R.id.maybemoney);
+                            TextView reliability = findViewById(R.id.reliability);
+                            ProgressBar progress = (ProgressBar) findViewById(R.id.mainProgressBar);
                             money.setText("\uFFE6 "+String.valueOf(user.get("gold")));
                             maybemoney.setText("\uFFE6 "+String.valueOf(user.get("maybe")));
                             username.setText(String.valueOf(user.get("name")));
                             usernamedrawer.setText(String.valueOf(user.get("name")));
                             setuserrankImage(userrank, Integer.parseInt(user.get("rank").toString()));
-                            System.out.println("지금 랭크는 "+user.get("rank"));
+                            reliability.setText(String.valueOf(user.get("reliability"))+" %");
+                            System.out.println("테스크성공횟수"+Integer.parseInt(user.get("success_count").toString()));
+                            //progress bar setting
+                            setuserprogressbar(progress, Integer.parseInt(user.get("rank").toString()), Integer.parseInt(user.get("success_count").toString()));
+
+
+                            //Task 리스트 띄우기
                             mTaskList.clear();
                             JSONArray exam_res = (JSONArray) resulttemp.get("exam_data");
                             JSONArray task_res = (JSONArray) resulttemp.get("task_data");
@@ -178,7 +188,7 @@ public class TaskListActivity extends AppCompatActivity {
 
 
                                 mTaskList.add(new TaskListItem(String.valueOf(temp.get("id")), (String) temp.get("taskName"), (String) temp.get("taskType"),
-                                        (String) temp.get("taskView"), (String) temp.get("controller"), String.valueOf(temp.get("gold"))+" p",(JSONArray)temp.get("buttons"), 0));
+                                        (String) temp.get("taskView"), (String) temp.get("controller"), String.valueOf(temp.get("gold"))+" \uFFE6",(JSONArray)temp.get("buttons"), 0));
 
 
                             }
@@ -248,7 +258,7 @@ public class TaskListActivity extends AppCompatActivity {
     private void setuserrankImage(ImageView userrank, int rank) {
 
         if(rank==1)
-            Glide.with(this).load(R.drawable.imagenotload).into(userrank);
+            Glide.with(this).load(R.drawable.rank_begginner).into(userrank);
         else if(rank==2)
             Glide.with(this).load(R.drawable.imagenotload).into(userrank);
         else if(rank==3)
@@ -256,6 +266,32 @@ public class TaskListActivity extends AppCompatActivity {
         else if(rank==4)
             Glide.with(this).load(R.drawable.imagenotload).into(userrank);
         else if(rank==151)
-            Glide.with(this).load(R.drawable.voicestop).into(userrank);
+            Glide.with(this).load(R.drawable.rank_admin).into(userrank);
+    }
+
+    private void setuserprogressbar(ProgressBar progressBar, int rank, int count) {
+        float percent = 0;
+        float count_f = (float)count;
+
+        System.out.println("들어온 랭크 "+ rank + " 들어온 테스크 성공수 "+ count);
+
+        if(rank == 1)
+            //50회 이상 진행시 레벨업
+            percent = (count_f/50)*100;
+        else if(rank == 2)
+            //300회 이상 진행시 레벨업 (50+250)
+            percent = (count_f-50/250)*100;
+        else if(rank == 3)
+            //현재 최고레벨
+            percent = 0;
+        else if(rank == 151)
+            //관리자
+            percent = 100;
+
+
+        percent=80;
+        System.out.println("계산된 퍼센트 "+ percent);
+        progressBar.setProgress((int)percent);
+
     }
 }

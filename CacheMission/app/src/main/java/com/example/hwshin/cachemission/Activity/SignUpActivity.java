@@ -106,7 +106,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     finish();
                                 }
                                 else
-                                    getDialog("회원가입 실패",res.get("success").toString());
+                                    getDialog("회원가입 실패",res.get("message").toString());
                             }catch(JSONException e)
                             {
                                 e.printStackTrace();

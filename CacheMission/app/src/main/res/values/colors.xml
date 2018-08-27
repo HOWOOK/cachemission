@@ -10,6 +10,7 @@
     <color name="gradientSecond">#FFA033</color>
 
     <color name="fontColorActive">#4D4D4D</color>
+    <color name="fontColorActiveAlpha">#904D4D4D</color>
     <color name="fontColorInactive">#B3B3B3</color>
     <color name="fontColor1">#DD8717</color>
 </resources>

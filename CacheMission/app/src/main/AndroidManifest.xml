@@ -58,6 +58,10 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             ></activity>
+        <activity android:name=".Activity.ExplainActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            ></activity>
     </application>
 
 </manifest>
