@@ -184,14 +184,8 @@ public class ExamActivity extends AppCompatActivity {
                     colorflag="confirm";
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
-                        confirm.setBackground(getDrawable(R.drawable.btn_custom1));
-                        confirm.setTextColor(getColor(R.color.colorAccent));
-                        confirm.setText("작업잘됨(선택됨)");
-
-                        reject.setBackgroundColor(getColor(R.color.colorAccent));
-                        reject.setTextColor(getColor(R.color.colorwhite));
-                        reject.setText("그지같음");
-
+                        confirm.setBackground(getDrawable(R.drawable.examining_truepush));
+                        reject.setBackground(getDrawable(R.drawable.examining_false));
                     }
                 }
 
@@ -208,13 +202,8 @@ public class ExamActivity extends AppCompatActivity {
                     colorflag="reject";
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
-                        reject.setBackground(getDrawable(R.drawable.btn_custom1));
-                        reject.setTextColor(getColor(R.color.colorAccent));
-                        reject.setText("그지같음(선택됨)");
-
-                        confirm.setBackgroundColor(getColor(R.color.colorAccent));
-                        confirm.setTextColor(getColor(R.color.colorwhite));
-                        confirm.setText("작업잘됨");
+                        reject.setBackground(getDrawable(R.drawable.examining_falsepush));
+                        confirm.setBackground(getDrawable(R.drawable.examining_true));
                     }
                 }
 
@@ -297,6 +286,7 @@ public class ExamActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent_taskExplain = new Intent(ExamActivity.this, TaskExplainActivity.class);
                 intent_taskExplain.putExtra("tasktype", tasktype);
+                intent_taskExplain.putExtra("examType", intent.getIntExtra("examtype",0));
                 startActivity(intent_taskExplain);
             }
         });
