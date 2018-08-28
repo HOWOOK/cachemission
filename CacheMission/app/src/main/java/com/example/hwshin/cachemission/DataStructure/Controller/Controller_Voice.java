@@ -69,9 +69,10 @@ public class Controller_Voice extends Controller {
 
     private boolean isPlaying = false;
     MediaPlayer mPlayer = new MediaPlayer();
-private String oldpath="init";
+    private String oldpath="init";
     int serverResponseCode = 0;
 
+    private boolean isrecordstarted=false;
 
     @Override
     public void setLayout(final String id, View view, Context c, Intent in, String buttons) {
@@ -85,40 +86,43 @@ private String oldpath="init";
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                File f1 = new File(mPath+".pcm"); // The location of your PCM file
-                File f2 = new File(mPath+".wav"); // The location where you want your WAV file
-                try {
-                    rawToWave(f1, f2);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                if (isrecordstarted == false) {
+                    Toast.makeText(parentActivity,"먼저 음성을 녹음해 주세요",Toast.LENGTH_SHORT).show();
 
-
-                new Thread(){
-                    public void run() {
-                        uploadFile(mPath+".wav",id);
-                        Log.d("serverres",String.valueOf(serverResponseCode));
-                        Log.d("serverres",mPath+".wav");
-                        Uri i= Uri.parse(mPath+".pcm");
-                        File f=new File(i.getPath());
-                        //f.delete();
-                        Uri i2= Uri.parse(mPath+".wav");
-                        File f2=new File(i2.getPath());
-                        //f2.delete();
-                        if(serverResponseCode==200){
-
-                            parentActivity.startActivity(parentIntent);
-                            parentActivity.finish();
-                        }
-                        else{
-                            //Toast.makeText(parentActivity,"남은 테스크가 없습니다.",Toast.LENGTH_SHORT).show();
-                            parentActivity.finish();
-                        }
+                } else {
+                    File f1 = new File(mPath + ".pcm"); // The location of your PCM file
+                    File f2 = new File(mPath + ".wav"); // The location where you want your WAV file
+                    try {
+                        rawToWave(f1, f2);
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                }.start();
 
 
+                    new Thread() {
+                        public void run() {
+                            uploadFile(mPath + ".wav", id);
+                            Log.d("serverres", String.valueOf(serverResponseCode));
+                            Log.d("serverres", mPath + ".wav");
+                            Uri i = Uri.parse(mPath + ".pcm");
+                            File f = new File(i.getPath());
+                            //f.delete();
+                            Uri i2 = Uri.parse(mPath + ".wav");
+                            File f2 = new File(i2.getPath());
+                            //f2.delete();
+                            if (serverResponseCode == 200) {
 
+                                parentActivity.startActivity(parentIntent);
+                                parentActivity.finish();
+                            } else {
+                                //Toast.makeText(parentActivity,"남은 테스크가 없습니다.",Toast.LENGTH_SHORT).show();
+                                parentActivity.finish();
+                            }
+                        }
+                    }.start();
+
+
+                }
             }
         });
     }
@@ -303,10 +307,10 @@ private String oldpath="init";
 
     private View.OnClickListener btnClick = new View.OnClickListener() {
 
-
         @Override
 
         public void onClick(View v) {
+            isrecordstarted=true;
             switch (v.getId()) {
 
 // 녹음 버튼일 경우 녹음 중이지 않을 때는 녹음 시작, 녹음 중일 때는 녹음 중지로 텍스트 변경
