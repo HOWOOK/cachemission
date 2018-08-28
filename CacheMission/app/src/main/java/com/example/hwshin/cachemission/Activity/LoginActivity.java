@@ -46,6 +46,18 @@ public class LoginActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_login);
 
+        //앱을 처음깔았다면 앱 설명띄워주는 것
+        SharedPreferences explain = getSharedPreferences("explain", MODE_PRIVATE);
+        if(explain.getString("first", null)!=null){
+            //do nothing
+        }else{
+            Intent intent_mainExplain = new Intent(LoginActivity.this, ExplainActivity.class);
+            SharedPreferences.Editor editor = explain.edit();
+            editor.putString("first", "done");
+            editor.commit();
+            startActivity(intent_mainExplain);
+        }
+
         idText = findViewById(R.id.edit_id);
         pwText = findViewById(R.id.edit_pw);
         loginButton = findViewById(R.id.button_in);
