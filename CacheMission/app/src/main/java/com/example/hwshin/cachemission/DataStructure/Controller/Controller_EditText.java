@@ -39,10 +39,16 @@ public class Controller_EditText extends Controller {
             public void onClick(View v) {
                 JSONObject param2 = new JSONObject();
                 try {
-                    Log.d("idinfo", String.valueOf(mtaskview.gettaskID()));
                     param2.put("answerID", mtaskview.gettaskID());
                     param2.put("taskID", id);
-                    param2.put("submit", edit.getText().toString());
+                    String submit = edit.getText().toString();
+                    if(id.equals("4")) {//if task is dialect
+                        String region;
+                        SharedPreferences explain = parentActivity.getSharedPreferences("region", Context.MODE_PRIVATE);
+                        region = explain.getString("region",null);
+                        submit = "("+region+")"+submit;
+                    }
+                    param2.put("submit", submit);
                     new HttpRequest() {
                         @Override
                         protected void onPostExecute(Object o) {
@@ -76,7 +82,6 @@ public class Controller_EditText extends Controller {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
 
                         }
                     }.execute("http://18.222.204.84/taskSubmit", param2, logintoken);
