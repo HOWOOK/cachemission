@@ -64,6 +64,7 @@ public class Controller_Voice extends Controller {
     private AudioRecord mRecorder = null;
     private Thread mRecordingThread = null;
     private Button mRecordBtn, mPlayBtn;
+    private boolean mIsPlaying=false;
     private boolean mIsRecording = false;           // 녹음 중인지에 대한 상태값
     private String mPath = "";                      // 녹음한 파일을 저장할 경로
 
@@ -71,7 +72,7 @@ public class Controller_Voice extends Controller {
     MediaPlayer mPlayer = new MediaPlayer();
     private String oldpath="init";
     int serverResponseCode = 0;
-
+    MediaPlayer mp=new MediaPlayer();
     private boolean isrecordstarted=false;
 
     @Override
@@ -82,7 +83,16 @@ public class Controller_Voice extends Controller {
         mRecordBtn.setOnClickListener(btnClick);
         mPlayBtn.setOnClickListener(btnClick);
         Button post=temp.findViewById(R.id.post);
+        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                mp.reset();
+                mIsPlaying = false;
+                mPlayBtn.setBackground(ContextCompat.getDrawable(parentActivity, R.drawable.voiceplaybtn));
+                //mBtPlay.setText("들어보기");
+            }
+        });
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,13 +100,7 @@ public class Controller_Voice extends Controller {
                     Toast.makeText(parentActivity,"먼저 음성을 녹음해 주세요",Toast.LENGTH_SHORT).show();
 
                 } else {
-                    File f1 = new File(mPath + ".pcm"); // The location of your PCM file
-                    File f2 = new File(mPath + ".wav"); // The location where you want your WAV file
-                    try {
-                        rawToWave(f1, f2);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+
 
 
                     new Thread() {
@@ -275,7 +279,7 @@ public class Controller_Voice extends Controller {
 
         try {
 
-            FileInputStream fis = new FileInputStream(mPath+".pcm");
+            FileInputStream fis = new FileInputStream(mPath+".wav");
             DataInputStream dis = new DataInputStream(fis);
             audioTrack.play();
 
@@ -284,7 +288,7 @@ public class Controller_Voice extends Controller {
                 audioTrack.write(data, 0, count);
 
             }
-
+mIsPlaying=false;
             audioTrack.stop();
             audioTrack.release();
             dis.close();
@@ -304,12 +308,12 @@ public class Controller_Voice extends Controller {
         @Override
 
         public void onClick(View v) {
-            isrecordstarted=true;
+
             switch (v.getId()) {
 
                 // 녹음 버튼일 경우 녹음 중이지 않을 때는 녹음 시작, 녹음 중일 때는 녹음 중지로 이미지 변경
                 case R.id.recb:
-
+                    isrecordstarted=true;
                     if (mIsRecording == false) {
                         startRecording();
                         mIsRecording = true;
@@ -318,18 +322,54 @@ public class Controller_Voice extends Controller {
                         stopRecording();
                         mIsRecording = false;
                         mRecordBtn.setBackground(ContextCompat.getDrawable(parentActivity, R.drawable.recordstart));
+                        File f1 = new File(mPath + ".pcm"); // The location of your PCM file
+                        File f2 = new File(mPath + ".wav"); // The location where you want your WAV file
+                        try {
+                            rawToWave(f1, f2);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
 
                     }
                     break;
 
                 case R.id.stream:
                     // 녹음 파일이 없는 상태에서 재생 버튼 클릭 시, 우선 녹음부터 하도록 Toast 표시
-                    if ((mPath+".pcm").length() == 0 || mIsRecording) {
+                    if (isrecordstarted==false) {
                         Toast.makeText(parentActivity, "Please record, first.", Toast.LENGTH_SHORT).show();
                         return;
+                    }else {
+
+
+                        Uri myUri = Uri.parse(mPath + ".wav");
+
+
+                        //mp = MediaPlayer.create(parentActivity,myUri);   // this에 해당 노래 설정
+
+                        if (mIsPlaying) {
+                            mIsPlaying = false;
+                            mPlayBtn.setBackground(ContextCompat.getDrawable(parentActivity, R.drawable.voiceplaybtn));
+
+                            mp.reset();
+
+
+
+                        } else {
+                            mIsPlaying = true;
+                            //mPlayBtn.setBackground(ContextCompat.getDrawable(parentActivity, R.drawable.voiceplaybtn));
+                            mPlayBtn.setBackground(ContextCompat.getDrawable(parentActivity, R.drawable.voicestopbtn));
+                            try {
+                                mp.setDataSource(mPath + ".wav");
+                                mp.prepare();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            mp.start();
+
+                            //playWaveFile();
+                        }
+                        // 녹음된 파일이 있는 경우 해당 파일 재생
                     }
-                    // 녹음된 파일이 있는 경우 해당 파일 재생
-                    playWaveFile();
                     break;
             }
         }
