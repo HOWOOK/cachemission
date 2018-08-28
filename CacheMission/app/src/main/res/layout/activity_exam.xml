@@ -7,11 +7,18 @@
     android:id="@+id/fullexam"
     tools:context=".Activity.TaskListActivity">
 
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_examining"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.75" />
+
     <android.support.constraint.ConstraintLayout
         android:id="@+id/taskConstLayoutexam"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/exambuttons"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_examining"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -79,33 +86,42 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskConstLayoutexam">
-
-        <Button
-            android:id="@+id/confirmbutton"
-            style="@style/normalbtn1"
-            android:layout_marginStart="8dp"
-            android:text="작업잘됨"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/guideline_examining">
 
         <Button
             android:id="@+id/rejectbutton"
-            style="@style/normalbtn1"
-            android:layout_marginEnd="8dp"
-            android:text="그지같음"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/examining_false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/confirmbutton"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            />
+
+        <Button
+            android:id="@+id/confirmbutton"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/examining_true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/rejectbutton"
+            app:layout_constraintEnd_toStartOf="@+id/examsend"
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
         <Button
             android:id="@+id/examsend"
             style="@style/normalbtn1"
-            android:text="검수결과보내기"
-            app:layout_constraintEnd_toStartOf="@+id/rejectbutton"
+            android:text="제출하기"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/confirmbutton"
-            tools:layout_editor_absoluteY="0dp" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
     </android.support.constraint.ConstraintLayout>
 
 

@@ -14,12 +14,16 @@ import android.widget.TextView;
 import com.example.hwshin.cachemission.Adapter.Explain.SlideAdapter_ExplainTask_Dialect;
 import com.example.hwshin.cachemission.Adapter.Explain.SlideAdapter_ExplainTask_None;
 import com.example.hwshin.cachemission.Adapter.Explain.SlideAdapter_ExplainTask_Numbering;
+import com.example.hwshin.cachemission.Adapter.Explain.SlideAdapter_ExplainTask_Record;
+import com.example.hwshin.cachemission.Adapter.Explain.SlideAdapter_ExplainTask_Record_ExamType1;
+import com.example.hwshin.cachemission.Adapter.Explain.SlideAdapter_ExplainTask_Record_ExamType2;
 import com.example.hwshin.cachemission.R;
 
 public class TaskExplainActivity extends AppCompatActivity {
 
     Intent intent;
     String tasktype="";
+    int examType = 0;
 
     private ViewPager viewpager;
     private PagerAdapter myadapter;
@@ -37,6 +41,8 @@ public class TaskExplainActivity extends AppCompatActivity {
         viewpager=(ViewPager)findViewById(R.id.explainViewpager);
         intent = getIntent();
         tasktype = intent.getStringExtra("tasktype");
+        if(tasktype.equals("RECORDEXAM"))
+            examType = intent.getIntExtra("examType",0);
 
         myadapter= findAdaptingTaskExplain(tasktype);
         viewpager.setAdapter(myadapter);
@@ -70,9 +76,11 @@ public class TaskExplainActivity extends AppCompatActivity {
         else if (tasktype.equals("VIDEOEXAM"))
             return new SlideAdapter_ExplainTask_None(this);
         else if (tasktype.equals("RECORD"))
-            return new SlideAdapter_ExplainTask_None(this);
-        else if (tasktype.equals("RECORDEXAM"))
-            return new SlideAdapter_ExplainTask_None(this);
+            return new SlideAdapter_ExplainTask_Record(this);
+        else if (tasktype.equals("RECORDEXAM") && examType == 1)
+            return new SlideAdapter_ExplainTask_Record_ExamType1(this);
+        else if (tasktype.equals("RECORDEXAM") && examType == 2)
+            return new SlideAdapter_ExplainTask_Record_ExamType2(this);
         else if (tasktype.equals("DICTATION"))
             return new SlideAdapter_ExplainTask_None(this);
         else if (tasktype.equals("DICTATIONEXAM"))
