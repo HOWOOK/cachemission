@@ -32,9 +32,15 @@ public class HttpRequest extends AsyncTask{
     protected Object doInBackground(Object[] objects) {
         String url;
         InputStream is = null;
+
+
         //inputstream  = 바이트 단위로 데이터를 읽는다. 외부로부터 읽어 들이는기능관련 클래스들
         //outputstream = 외부로 데이터를 전송합니다. 외부로 데이터를 전송하는 기능 관련 클래스들
+
+
         try {
+
+
             String token="";
             URL urlCon = new URL(objects[0].toString());
             HttpURLConnection httpCon = (HttpURLConnection) urlCon.openConnection();
@@ -47,6 +53,7 @@ public class HttpRequest extends AsyncTask{
             httpCon.setRequestProperty("X-Requested-With", "XMLHttpRequest");
             httpCon.setRequestProperty("X-CSRF-Token","Fetch");
             httpCon.setRequestProperty("Content-Type", "application/xml");
+
             httpCon.setRequestProperty("TOKEN", token);//"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MzQxODU4MjEsImVtYWlsIjoiIiwidXNlcl9pZCI6MSwidXNlcm5hbWUiOiJhc2RmIn0.oGIBuWPo2qw0wciDqGqo3MCoiGNZFP7zX5lqpU3xPyM");
 
             // OutputStream으로 POST 데이터를 넘겨주겠다는 옵션.
@@ -58,10 +65,8 @@ public class HttpRequest extends AsyncTask{
             os.write(json.getBytes("utf-8"));
             os.flush();
 
-            if(httpCon.getResponseCode() != HttpURLConnection.HTTP_OK)
-                return null;
-
             try {
+
                 is = httpCon.getInputStream();
                 // convert inputstream to string
                 if (is != null)

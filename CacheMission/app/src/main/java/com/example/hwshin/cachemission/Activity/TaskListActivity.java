@@ -58,9 +58,18 @@ public class TaskListActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        //애니매이션 시작
+//        final ImageView hexagon1 = findViewById(R.id.hexagon1);
+//        final ImageView hexagon2 = findViewById(R.id.hexagon2);
+//        Animation anim_cw = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.cwrotate);
+//        Animation anim_ccw = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.ccwrotate);
+//        hexagon1.startAnimation(anim_cw);
+//        hexagon2.startAnimation(anim_ccw);
+
+
         //시작하면 일단 토큰을 받아옴
         SharedPreferences token = getSharedPreferences("token",MODE_PRIVATE);
-        String stringtoken;
+        String stringtoken="";
         stringtoken = token.getString("logintoken",null);
         if(stringtoken==null){
             stringtoken="";
@@ -105,7 +114,8 @@ public class TaskListActivity extends AppCompatActivity {
                         exchangebtn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent intent_exchange= new Intent(TaskListActivity.this, ExchangeActivity.class);
+                                //테스트위해 잠시 변경
+                                Intent intent_exchange= new Intent(TaskListActivity.this, ExplainActivity.class);
                                 if (drawer.isDrawerOpen(Gravity.LEFT)) {
                                     drawer.closeDrawer(Gravity.LEFT) ;
                                 }
@@ -124,8 +134,9 @@ public class TaskListActivity extends AppCompatActivity {
                                 startActivity(intent_suggestion);
                             }
                         });
+
                         JSONObject resulttemp = new JSONObject(result);
-                        System.out.println("통신실패하면 "+resulttemp);
+
                         if (resulttemp.get("success").toString().equals("login")) {
                             Intent gotologin = new Intent(TaskListActivity.this,LoginActivity.class);
                             startActivity(gotologin);
@@ -228,6 +239,9 @@ public class TaskListActivity extends AppCompatActivity {
 
                             }
                         });
+
+
+
 
                     } catch (JSONException e) {
                         e.printStackTrace();

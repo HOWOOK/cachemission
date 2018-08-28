@@ -36,33 +36,6 @@ public class TaskActivity extends AppCompatActivity {
     String tasktype;
     Dialog explainDialog;
 
-    //사투리특별전용옵션
-    static String region_dialect;
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        //지역 재 선택을 위한 인터페이스
-        if(tasktype.equals("DIALECT") || tasktype.equals("RECORD")) {
-            String region;
-            TextView regionText = findViewById(R.id.regionText);
-            SharedPreferences explain = getSharedPreferences("region", MODE_PRIVATE);
-            region = explain.getString("region", null);
-
-            if (region != null)
-                regionText.setText("선택지역 : " + region);
-
-            regionText.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent_region = new Intent(TaskActivity.this, RegionActivity.class);
-                    startActivity(intent_region);
-                }
-            });
-        }
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,19 +63,6 @@ public class TaskActivity extends AppCompatActivity {
         controllerID = mController.controllerID;
 
         tasktype = intent.getStringExtra("tasktype");
-
-        //사투리선택해야하는 테스크면 선택하게 만들어야함
-        if(tasktype.equals("DIALECT") || tasktype.equals("RECORD")){
-            String region;
-            SharedPreferences explain = getSharedPreferences("region", MODE_PRIVATE);
-            region = explain.getString("region",null);
-
-            //지역 값이 선택 되어있지 않으면 선택하도록 함
-            if(region == null){
-                Intent intent_region = new Intent(TaskActivity.this, RegionActivity.class);
-                startActivity(intent_region);
-            }
-        }
 
         // TaskView Inflating
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -165,8 +125,6 @@ public class TaskActivity extends AppCompatActivity {
                 startActivity(intent_taskExplain);
             }
         });
-
-
 
 
     }

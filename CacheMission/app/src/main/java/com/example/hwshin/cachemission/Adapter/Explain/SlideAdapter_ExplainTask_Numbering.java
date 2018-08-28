@@ -56,17 +56,13 @@ public class SlideAdapter_ExplainTask_Numbering extends PagerAdapter {
         TextView txt1 = (TextView)view.findViewById(R.id.explainTaskText);
         TextView txt2 = (TextView)view.findViewById(R.id.explainTaskPage);
 
-        ConstraintLayout cl = (ConstraintLayout) view.findViewById(R.id.taskExplainContLayout);
-
         ConstraintSet constraintSet = new ConstraintSet();
-        constraintSet.clone(cl);
-        constraintSet.connect(R.id.explainTaskText, ConstraintSet.TOP, R.id.taskExplainContLayout, ConstraintSet.TOP);
-        constraintSet.connect(R.id.explainTaskText, ConstraintSet.START, R.id.taskExplainContLayout,ConstraintSet.START);
-        constraintSet.connect(R.id.explainTaskText, ConstraintSet.END, R.id.taskExplainContLayout,ConstraintSet.END);
-        constraintSet.connect(R.id.explainTaskText, ConstraintSet.BOTTOM, R.id.taskExplainContLayout, ConstraintSet.BOTTOM);
+        constraintSet.connect(R.id.explainTaskText, ConstraintSet.TOP, R.id.explainConstLayout, ConstraintSet.TOP);
+        constraintSet.connect(R.id.explainTaskText, ConstraintSet.BOTTOM, R.id.explainConstLayout, ConstraintSet.BOTTOM);
+        ConstraintLayout cl = view.findViewById(R.id.explainTaskText);
 
 
-        if(position==1)
+        if(position==2)
             Glide.with(context).load(list_images[position]).into(img1);
         img2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +71,7 @@ public class SlideAdapter_ExplainTask_Numbering extends PagerAdapter {
             }
         });
 
-        if(position==0)
+        if(position==2)
             constraintSet.applyTo(cl);
         txt1.setText(list_description[position]);
 

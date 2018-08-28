@@ -32,12 +32,6 @@ public class TaskView_Text extends TaskView {
             try {
                 param.put("id", id);
 
-                if(id.equals("3")){//RECORD일때는 지역을 같이 넣어서 요청해야함
-                    String region;
-                    SharedPreferences explain = parentActivity.getSharedPreferences("region", Context.MODE_PRIVATE);
-                    region = explain.getString("region",null);
-                    param.put("region", region);
-                }
 
                 new HttpRequest() {
                     @Override
