@@ -227,10 +227,7 @@ private String oldpath="init";
 
 
 // short array형태의 data를 byte array형태로 변환하여 반환하는 함수
-
-
     private byte[] short2byte(short[] sData) {
-
         int shortArrsize = sData.length;
         byte[] bytes = new byte[shortArrsize * 2];
 
@@ -257,7 +254,6 @@ private String oldpath="init";
             mRecorder.release();
             mRecorder = null;
             mRecordingThread = null;
-
         }
     }
 
@@ -299,8 +295,6 @@ private String oldpath="init";
     }
 
 
-
-
     private View.OnClickListener btnClick = new View.OnClickListener() {
 
 
@@ -309,34 +303,28 @@ private String oldpath="init";
         public void onClick(View v) {
             switch (v.getId()) {
 
-// 녹음 버튼일 경우 녹음 중이지 않을 때는 녹음 시작, 녹음 중일 때는 녹음 중지로 텍스트 변경
+                // 녹음 버튼일 경우 녹음 중이지 않을 때는 녹음 시작, 녹음 중일 때는 녹음 중지로 이미지 변경
                 case R.id.recb:
 
                     if (mIsRecording == false) {
-
                         startRecording();
                         mIsRecording = true;
-                        mRecordBtn.setText("Stop Recording");
-
+                        mRecordBtn.setBackground(ContextCompat.getDrawable(parentActivity, R.drawable.recordstop));
                     } else {
-
                         stopRecording();
                         mIsRecording = false;
-                        mRecordBtn.setText("Start Recording");
+                        mRecordBtn.setBackground(ContextCompat.getDrawable(parentActivity, R.drawable.recordstart));
 
                     }
                     break;
 
                 case R.id.stream:
-
-// 녹음 파일이 없는 상태에서 재생 버튼 클릭 시, 우선 녹음부터 하도록 Toast 표시
-
+                    // 녹음 파일이 없는 상태에서 재생 버튼 클릭 시, 우선 녹음부터 하도록 Toast 표시
                     if ((mPath+".pcm").length() == 0 || mIsRecording) {
                         Toast.makeText(parentActivity, "Please record, first.", Toast.LENGTH_SHORT).show();
                         return;
-
                     }
-// 녹음된 파일이 있는 경우 해당 파일 재생
+                    // 녹음된 파일이 있는 경우 해당 파일 재생
                     playWaveFile();
                     break;
             }
