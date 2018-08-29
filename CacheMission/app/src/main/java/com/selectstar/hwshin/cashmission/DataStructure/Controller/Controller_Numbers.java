@@ -43,12 +43,12 @@ public class Controller_Numbers extends Controller {
         for(int i=0; i<Integer.parseInt(res.get(0).toString());i++){
             RadioButton rb= new RadioButton(parentActivity);
             rb.setText(String.valueOf(i+1));
-            rb.setTextSize(40);
-            rb.setPadding(20,0,20,0);
+            rb.setTextSize(15);
+            rb.setPadding(0,0,0,20);
             rb.setGravity(Gravity.CENTER);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 rb.setButtonDrawable(null);
-                rb.setBackground(parentActivity.getDrawable(R.drawable.radiobutton));
+                rb.setBackground(parentActivity.getDrawable(R.drawable.radiobuttonup));
             }
             params=new RadioGroup.LayoutParams(RadioGroup.LayoutParams.MATCH_PARENT,RadioGroup.LayoutParams.MATCH_PARENT);
             radioGroup.addView(rb,params);
