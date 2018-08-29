@@ -272,9 +272,6 @@ public class ExamActivity extends AppCompatActivity {
             //do nothing
         }else{
             Intent intent_taskExplain = new Intent(ExamActivity.this, TaskExplainActivity.class);
-            SharedPreferences.Editor editor = tasktoken.edit();
-            editor.putInt(tasktype+"tasktoken", 100);
-            editor.commit();
             intent_taskExplain.putExtra("tasktype", tasktype);
             startActivity(intent_taskExplain);
         }

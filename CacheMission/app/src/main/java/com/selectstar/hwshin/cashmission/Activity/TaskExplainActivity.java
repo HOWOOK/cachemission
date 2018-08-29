@@ -1,6 +1,7 @@
 package com.selectstar.hwshin.cashmission.Activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -38,6 +39,12 @@ public class TaskExplainActivity extends AppCompatActivity {
         viewpager=(ViewPager)findViewById(R.id.explainViewpager);
         intent = getIntent();
         tasktype = intent.getStringExtra("tasktype");
+
+        SharedPreferences tasktoken = getSharedPreferences("tasktoken", MODE_PRIVATE);
+        SharedPreferences.Editor editor = tasktoken.edit();
+        editor.putInt(tasktype + "tasktoken", 100);
+        editor.commit();
+
         if(tasktype.equals("RECORDEXAM"))
             examType = intent.getIntExtra("examType",0);
 
