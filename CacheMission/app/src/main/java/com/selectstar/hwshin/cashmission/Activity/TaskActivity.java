@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.selectstar.hwshin.cashmission.DataStructure.Controller.Controller;
 import com.selectstar.hwshin.cashmission.DataStructure.TaskView.TaskView;
 import com.selectstar.hwshin.cashmission.DataStructure.UIHashmap;
-import com.example.hwshin.cachemission.R;
+import com.selectstar.hwshin.cashmission.R;
 
 public class TaskActivity extends AppCompatActivity {
 
@@ -39,9 +39,24 @@ public class TaskActivity extends AppCompatActivity {
     static String region_dialect;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        //사투리선택해야하는 테스크면 선택하게 만들어야함
+        String region;
+        SharedPreferences tasktoken = getSharedPreferences("tasktoken", MODE_PRIVATE);
+        SharedPreferences explain = getSharedPreferences("region", MODE_PRIVATE);
+        region = explain.getString("region",null);
+        if((tasktype.equals("DIALECT") || tasktype.equals("RECORD"))&& tasktoken.getInt(tasktype + "tasktoken",0) == 100 && region==null){
+            Intent intent_region = new Intent(TaskActivity.this, RegionActivity.class);
+            intent_region.putExtra("wanttochange","false");
+            startActivity(intent_region);
+        }
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
-
 
         //지역 재 선택을 위한 인터페이스
         if(tasktype.equals("DIALECT") || tasktype.equals("RECORD")) {
@@ -50,9 +65,6 @@ public class TaskActivity extends AppCompatActivity {
             SharedPreferences explain = getSharedPreferences("region", MODE_PRIVATE);
             region = explain.getString("region", null);
 
-            if( region==null)
-                finish();
-
             if (region != null)
                 regionText.setText("선택지역 : " + region);
 
@@ -60,6 +72,7 @@ public class TaskActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent_region = new Intent(TaskActivity.this, RegionActivity.class);
+                    intent_region.putExtra("wanttochange","true");
                     startActivity(intent_region);
                 }
             });
@@ -140,27 +153,9 @@ public class TaskActivity extends AppCompatActivity {
             //do nothing
         }else{
             Intent intent_taskExplain = new Intent(TaskActivity.this, TaskExplainActivity.class);
-            SharedPreferences.Editor editor = tasktoken.edit();
-            editor.putInt(tasktype + "tasktoken", 100);
-            editor.commit();
             intent_taskExplain.putExtra("tasktype", tasktype);
             startActivity(intent_taskExplain);
         }
-
-        //사투리선택해야하는 테스크면 선택하게 만들어야함
-        if((tasktype.equals("DIALECT") || tasktype.equals("RECORD"))&& tasktoken.getInt(tasktype + "tasktoken",0) == 100){
-            String region;
-            SharedPreferences explain = getSharedPreferences("region", MODE_PRIVATE);
-            region = explain.getString("region",null);
-
-            //지역 값이 선택 되어있지 않으면 선택하도록 함
-            if(region == null){
-                Intent intent_region = new Intent(TaskActivity.this, RegionActivity.class);
-                startActivity(intent_region);
-            }
-        }
-
-
 
         //물음표버튼누르면 설명서 띄워주는것
         ImageView howbtn = findViewById(R.id.howbtn);

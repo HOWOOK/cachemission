@@ -22,7 +22,7 @@ import com.selectstar.hwshin.cashmission.DataStructure.ExamView.ExamView;
 import com.selectstar.hwshin.cashmission.DataStructure.HttpRequest;
 import com.selectstar.hwshin.cashmission.DataStructure.TaskView.TaskView;
 import com.selectstar.hwshin.cashmission.DataStructure.UIHashmap;
-import com.example.hwshin.cachemission.R;
+import com.selectstar.hwshin.cashmission.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -272,9 +272,6 @@ public class ExamActivity extends AppCompatActivity {
             //do nothing
         }else{
             Intent intent_taskExplain = new Intent(ExamActivity.this, TaskExplainActivity.class);
-            SharedPreferences.Editor editor = tasktoken.edit();
-            editor.putInt(tasktype+"tasktoken", 100);
-            editor.commit();
             intent_taskExplain.putExtra("tasktype", tasktype);
             startActivity(intent_taskExplain);
         }

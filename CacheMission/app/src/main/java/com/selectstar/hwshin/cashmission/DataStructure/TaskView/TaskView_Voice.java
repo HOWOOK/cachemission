@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.selectstar.hwshin.cashmission.Activity.TaskListActivity;
 import com.selectstar.hwshin.cashmission.DataStructure.HttpRequest;
-import com.example.hwshin.cachemission.R;
+import com.selectstar.hwshin.cashmission.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -92,9 +92,8 @@ public class TaskView_Voice extends TaskView {
 
                             }
                             else{
-                                Toast.makeText(parentActivity,"테스크를 모두 완료했습니다. 테스크 리스트로 돌아갑니다.",Toast.LENGTH_SHORT);
-                                Intent in = new Intent(parentActivity,TaskListActivity.class);
-                                parentActivity.startActivity(in);
+                                Toast.makeText(parentActivity,"테스크를 모두 완료했습니다. 테스크 리스트로 돌아갑니다.",Toast.LENGTH_SHORT).show();
+
                                 parentActivity.finish();
                             }
                         } catch (JSONException e) {

@@ -1,5 +1,7 @@
 package com.selectstar.hwshin.cashmission.Activity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -12,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.selectstar.hwshin.cashmission.Adapter.Explain.SlideAdapter_ExplainMain;
-import com.example.hwshin.cachemission.R;
+import com.selectstar.hwshin.cashmission.R;
 
 public class ExplainActivity extends AppCompatActivity {
 

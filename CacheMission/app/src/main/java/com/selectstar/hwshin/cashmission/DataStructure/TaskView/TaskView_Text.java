@@ -8,7 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.selectstar.hwshin.cashmission.DataStructure.HttpRequest;
-import com.example.hwshin.cachemission.R;
+import com.selectstar.hwshin.cashmission.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,7 +44,7 @@ public class TaskView_Text extends TaskView {
                         JSONObject resulttemp = null;
                         try {
                             resulttemp = new JSONObject(result);
-                            Log.d("hey2", resulttemp.toString());
+                            Log.d("hey22", resulttemp.toString());
                             if ((boolean) resulttemp.get("success")) {
                                 //Log.d("hey","http://18.222.204.84/"+resulttemp.get("url"));
                                 TextView textView = (TextView) view;
@@ -58,7 +58,7 @@ public class TaskView_Text extends TaskView {
 
                             }
                             else{
-                                Toast.makeText(parentActivity,"테스크를 모두 완료했습니다. 테스크 리스트로 돌아갑니다.",Toast.LENGTH_SHORT);
+                                Toast.makeText(parentActivity,"테스크를 모두 완료했습니다. 테스크 리스트로 돌아갑니다.",Toast.LENGTH_SHORT).show();
                                 //Intent in = new Intent(parentActivity,TaskListActivity.class);
                                 //parentActivity.startActivity(in);
                                 parentActivity.finish();

@@ -1,5 +1,6 @@
 package com.selectstar.hwshin.cashmission.Activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.example.hwshin.cachemission.R;
+import com.selectstar.hwshin.cashmission.R;
 
 public class RegionActivity extends AppCompatActivity {
     @Override
@@ -23,6 +24,14 @@ public class RegionActivity extends AppCompatActivity {
         ImageView iv6 = findViewById(R.id.region6);
         ImageView iv7 = findViewById(R.id.region7);
         ImageView iv8 = findViewById(R.id.region8);
+        String region;
+        SharedPreferences explain = getSharedPreferences("region", MODE_PRIVATE);
+        region = explain.getString("region",null);
+
+        Intent intent;
+        intent=getIntent();
+        if(intent.getStringExtra("wanttochange").toString().equals("false") && region != null)
+            finish();
 
         iv1.setOnClickListener(new View.OnClickListener() {
             @Override

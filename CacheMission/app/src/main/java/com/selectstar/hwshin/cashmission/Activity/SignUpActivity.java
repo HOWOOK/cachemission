@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.selectstar.hwshin.cashmission.DataStructure.HttpRequest;
-import com.example.hwshin.cachemission.R;
+import com.selectstar.hwshin.cashmission.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;

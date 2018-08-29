@@ -5,10 +5,11 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.hwshin.cachemission.R;
+import com.selectstar.hwshin.cashmission.R;
 
 public class ExamView_Voice extends ExamView {
     public ExamView_Voice() {
@@ -25,6 +26,8 @@ public class ExamView_Voice extends ExamView {
             @Override
             public void onClick(View view) {
                 if (isPlaying == false) {
+                    mBtPlay.setBackground(ContextCompat.getDrawable(parentActivity, R.drawable.voicestopbtn));
+                    isPlaying = true;
                     try {
                         mPlayer.setDataSource(c, Uri.parse("http://18.222.204.84" + answer.substring(3)));
                         mPlayer.prepare();
@@ -33,13 +36,14 @@ public class ExamView_Voice extends ExamView {
                     }
                     mPlayer.start();
 
-                    isPlaying = true;
-                    mBtPlay.setText("듣기중지");
+
+
                 } else {
+                    isPlaying = false;
+                    mBtPlay.setBackground(ContextCompat.getDrawable(parentActivity, R.drawable.voiceplaybtn));
                     mPlayer.reset();
 
-                    isPlaying = false;
-                    mBtPlay.setText("들어보기");
+
                 }
             }
         });
@@ -47,9 +51,10 @@ public class ExamView_Voice extends ExamView {
 
             @Override
             public void onCompletion(MediaPlayer mp) {
+                mBtPlay.setBackground(ContextCompat.getDrawable(parentActivity, R.drawable.voiceplaybtn));
                 mPlayer.reset();
                 isPlaying = false;
-                mBtPlay.setText("들어보기");
+
             }
         });
 

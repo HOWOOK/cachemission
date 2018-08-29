@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.selectstar.hwshin.cashmission.DataStructure.RecyclerItem;
-import com.example.hwshin.cachemission.R;
+import com.selectstar.hwshin.cashmission.R;
 
 import java.util.ArrayList;
 
