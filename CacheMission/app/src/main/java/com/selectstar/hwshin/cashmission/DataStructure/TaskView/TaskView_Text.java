@@ -20,7 +20,7 @@ public class TaskView_Text extends TaskView {
     }
 
     @Override
-    public void setContent(String id, String contentURI, Context context, final View view) {
+    public void setContent(String id, String contentURI, Context context, final View... view) {
         SharedPreferences token = parentActivity.getSharedPreferences("token",Context.MODE_PRIVATE);
         final String logintoken = token.getString("logintoken",null);
 
@@ -44,11 +44,29 @@ public class TaskView_Text extends TaskView {
                         JSONObject resulttemp = null;
                         try {
                             resulttemp = new JSONObject(result);
-Log.d("hahaha",result);
                             if ((boolean) resulttemp.get("success")) {
+                                String responeText;
+                                responeText = resulttemp.get("text").toString();
 
-                                TextView textView = (TextView) view;
-                                textView.setText(resulttemp.get("text").toString());
+                                //Text parsing /를 기준으로 나눠서 TextVIew에 넣어준다.
+
+                                String[] array = responeText.split("/");
+                                String[] array2 = array[1].split("\\(");
+                                String[] array3 =null;
+                                if(array2.length!=1)//tasktype record
+                                    array3 = array2[1].split("\\)");
+
+                                TextView textView1 = (TextView) view[0];
+                                TextView textView2 = (TextView) view[1];
+
+                                if(array2.length!=1) {//tasktype record
+                                    textView1.setText("<"+array[0]+">"+"\n"+array2[0]);
+                                    textView2.setText("(" + array3[0] + ")" + "\n" + array3[1]);
+                                }
+                                else //tasktype dialect
+                                    textView2.setText("<"+array[0]+">"+"\n"+array[1]);
+
+
 
                                 String taskID = resulttemp.get("baseID").toString();
                                 settaskID(Integer.parseInt(taskID));
@@ -69,9 +87,16 @@ Log.d("hahaha",result);
                 e.printStackTrace();
             }
         }
-        else{
-            TextView textView = (TextView) view;
-            textView.setText(contentURI);
+        else{//examining
+            //text를 /와 (와 )를 기준으로 나눠서 각각 텍스트뷰에 넣어준다.
+            String[] array = contentURI.split("/");
+            String[] array2 = array[1].split("\\(");
+            String[] array3 = array2[1].split("\\)");
+
+            TextView textView1 = (TextView) view[0];
+            TextView textView2 = (TextView) view[1];
+            textView1.setText("<"+array[0]+">"+"\n"+array2[0]);
+            textView2.setText("("+array3[0]+")"+"\n"+array3[1]);
 
         }
     }

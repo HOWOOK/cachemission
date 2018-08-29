@@ -18,16 +18,31 @@
 
         <TextView
             android:id="@+id/srcview"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/textnotload"
-            android:textColor="@color/fontColorActive"
-            android:textSize="18dp"
+            android:gravity="center"
+            android:lineSpacingExtra="5dp"
+            android:textColor="@color/colorAccent"
+            android:textSize="15dp"
             android:fontFamily="@font/nanumsquareb_"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="50dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/srcview2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="5dp"
+            android:gravity="center"
+            android:textColor="@color/fontColorActive"
+            android:textSize="23dp"
+            android:fontFamily="@font/nanumsquareeb_"
+            android:layout_marginTop="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/srcview" />
     </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>
