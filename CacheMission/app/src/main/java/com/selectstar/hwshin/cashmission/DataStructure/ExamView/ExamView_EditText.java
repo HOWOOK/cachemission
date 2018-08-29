@@ -6,7 +6,7 @@ import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.hwshin.cachemission.R;
+import com.selectstar.hwshin.cachemission.R;
 
 public class ExamView_EditText extends ExamView {
     public ExamView_EditText() {

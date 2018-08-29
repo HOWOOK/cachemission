@@ -9,7 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.hwshin.cachemission.R;
+import com.selectstar.hwshin.cachemission.R;
 
 public class ExamView_Voice extends ExamView {
     public ExamView_Voice() {

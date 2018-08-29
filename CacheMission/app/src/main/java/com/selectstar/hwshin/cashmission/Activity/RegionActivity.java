@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.example.hwshin.cachemission.R;
+import com.selectstar.hwshin.cachemission.R;
 
 public class RegionActivity extends AppCompatActivity {
     @Override

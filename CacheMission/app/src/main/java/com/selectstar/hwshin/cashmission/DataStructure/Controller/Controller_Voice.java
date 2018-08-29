@@ -18,7 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.hwshin.cachemission.R;
+import com.selectstar.hwshin.cachemission.R;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

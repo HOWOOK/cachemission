@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.selectstar.hwshin.cashmission.DataStructure.Controller.Controller;
 import com.selectstar.hwshin.cashmission.DataStructure.TaskView.TaskView;
 import com.selectstar.hwshin.cashmission.DataStructure.UIHashmap;
-import com.example.hwshin.cachemission.R;
+import com.selectstar.hwshin.cachemission.R;
 
 public class TaskActivity extends AppCompatActivity {
 
