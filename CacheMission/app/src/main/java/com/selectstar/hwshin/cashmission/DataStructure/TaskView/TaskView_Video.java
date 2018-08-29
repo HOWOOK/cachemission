@@ -44,18 +44,17 @@ public class TaskView_Video extends TaskView {
                         JSONObject resulttemp = null;
                         try {
                             resulttemp = new JSONObject(result);
-                            Log.d("hey2", resulttemp.toString());
+
                             if ((boolean) resulttemp.get("success")) {
 
                                 VideoView videoView = (VideoView) view;
-                                Log.d("hey", "http://18.222.204.84/" + resulttemp.get("url"));
+
 
                                 MediaController mc = new MediaController(context);
                                 videoView.setMediaController(mc);
-                                videoView.setVideoURI(Uri.parse("http://18.222.204.84" + ((String) resulttemp.get("url")).substring(3)));
+                                videoView.setVideoURI(Uri.parse(parentActivity.getString(R.string.mainurl)+ ((String) resulttemp.get("url")).substring(3)));
                                 videoView.start();
                                 String taskID = resulttemp.get("baseID").toString();
-                                Log.d("baseid", taskID);
                                 settaskID(Integer.parseInt(taskID));
 
                             }else{
@@ -68,7 +67,7 @@ public class TaskView_Video extends TaskView {
                         }
 
                     }
-                }.execute("http://18.222.204.84/taskGet", param,logintoken);
+                }.execute(parentActivity.getString(R.string.mainurl)+"/taskGet", param,logintoken);
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -79,7 +78,7 @@ public class TaskView_Video extends TaskView {
             VideoView videoView = (VideoView) view;
             MediaController mc = new MediaController(context);
             videoView.setMediaController(mc);
-            videoView.setVideoURI(Uri.parse("http://18.222.204.84" + ContentURI.substring(3)));
+            videoView.setVideoURI(Uri.parse(parentActivity.getString(R.string.mainurl) + ContentURI.substring(3)));
             videoView.start();
 
         }

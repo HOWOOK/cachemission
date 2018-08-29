@@ -55,7 +55,7 @@ public class Controller_Buttons extends Controller {
                         for(int i=0;i<res.length();i++) {
 
                             String temp =  res.get(i).toString();
-                            Log.d("dataget", temp.toString());
+
                             textarray.add(temp);
 
                         }
@@ -75,7 +75,7 @@ public class Controller_Buttons extends Controller {
                                     String submit = adapterView.getItemAtPosition(position).toString();
                                 JSONObject param2 = new JSONObject();
                                 try {
-                                    Log.d("idinfo",String.valueOf(mtaskview.gettaskID()));
+
                                     param2.put("answerID", mtaskview.gettaskID());
                                     param2.put("taskID", id);
                                     param2.put("submit", submit);
@@ -119,7 +119,7 @@ public class Controller_Buttons extends Controller {
 
 
                                         }
-                                    }.execute("http://18.222.204.84/taskSubmit", param2,logintoken);
+                                    }.execute(parentActivity.getString(R.string.mainurl)+"/taskSubmit", param2,logintoken);
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();

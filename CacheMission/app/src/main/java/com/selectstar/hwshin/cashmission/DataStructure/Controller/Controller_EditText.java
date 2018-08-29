@@ -81,7 +81,7 @@ public class Controller_EditText extends Controller {
                             }
 
                         }
-                    }.execute("http://18.222.204.84/taskSubmit", param2, logintoken);
+                    }.execute(parentActivity.getString(R.string.mainurl)+"/taskSubmit", param2, logintoken);
                 }catch (JSONException e){
                     e.printStackTrace();
 

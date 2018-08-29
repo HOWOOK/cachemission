@@ -29,7 +29,7 @@ public class ExamView_Voice extends ExamView {
                     mBtPlay.setBackground(ContextCompat.getDrawable(parentActivity, R.drawable.voicestopbtn));
                     isPlaying = true;
                     try {
-                        mPlayer.setDataSource(c, Uri.parse("http://18.222.204.84" + answer.substring(3)));
+                        mPlayer.setDataSource(c, Uri.parse(parentActivity.getString(R.string.mainurl) + answer.substring(3)));
                         mPlayer.prepare();
                     } catch (Exception e) {
                         e.printStackTrace();

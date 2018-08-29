@@ -88,7 +88,7 @@ public class SuggestionActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                         }
-                    }.execute("http://18.222.204.84/suggestion",param, finalStringtoken);
+                    }.execute(getString(R.string.mainurl)+"/suggestion",param, finalStringtoken);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

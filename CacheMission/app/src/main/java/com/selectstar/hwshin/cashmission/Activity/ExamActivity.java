@@ -107,7 +107,6 @@ public class ExamActivity extends AppCompatActivity {
         JSONObject param = new JSONObject();
         try {
             param.put("taskID", Integer.parseInt(mId));
-            Log.d("examshibal",String.valueOf(intent.getIntExtra("examtype",0)));
             param.put("examType", intent.getIntExtra("examtype",0));
 
             new HttpRequest() {
@@ -118,7 +117,7 @@ public class ExamActivity extends AppCompatActivity {
                     JSONObject resulttemp = null;
                     try {
                         resulttemp = new JSONObject(result);
-                        Log.d("hey2forinter",resulttemp.toString());
+
                         if((boolean)resulttemp.get("success")){
 
                             if(mTaskView.taskViewID == R.layout.taskview_text){
@@ -128,7 +127,7 @@ public class ExamActivity extends AppCompatActivity {
                                 tempsrcURI = resulttemp.get("content_url").toString();
                             }
                             baseID = resulttemp.get("answerID").toString();
-                            Log.d("baseid",baseID);
+
                             mTaskView.setParent(activity,intent);
                             mExamView.setParent(activity,intent);
                             mExamView.usingactivity=activity;
@@ -136,18 +135,17 @@ public class ExamActivity extends AppCompatActivity {
                             mTaskView.setContent(mId, tempsrcURI, context, srcTaskView);
                             View view = findViewById(R.id.examview);
 
-                            Log.d("finalval",String.valueOf(mTaskView.gettaskID()));
-                           // Log.d("answer",resulttemp.get("answer_url").toString());
+
                             String answer="";
                             if(mExamView.ExamViewID == R.layout.examview_voice){
                                 answer = resulttemp.get("answer_url").toString();
 
-                            }else {
+                            }
+                            else{
                                 answer = resulttemp.get("answer_text").toString();
                             }
 
                             mExamView.setLayout(mId,view,getApplicationContext(),intent,buttons,answer);
-
 
                         }
                         else{
@@ -160,13 +158,12 @@ public class ExamActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-            }.execute("http://18.222.204.84/examGet", param,logintoken);
+            }.execute(getString(R.string.mainurl)+"/examGet", param,logintoken);
 
         }
         catch (JSONException e) {
             e.printStackTrace();
         }
-
 
 
         final Button confirm=findViewById(R.id.confirmbutton);
@@ -253,11 +250,9 @@ public class ExamActivity extends AppCompatActivity {
 
 
                             }
-                        }.execute("http://18.222.204.84/examSubmit", param, logintoken);
-
+                        }.execute(getString(R.string.mainurl)+"/examSubmit", param, logintoken);
 
                     }
-
 
                 }
                 catch (JSONException e) {
@@ -287,7 +282,6 @@ public class ExamActivity extends AppCompatActivity {
                 startActivity(intent_taskExplain);
             }
         });
-
 
     }
 
