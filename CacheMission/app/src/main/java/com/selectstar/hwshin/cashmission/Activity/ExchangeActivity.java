@@ -88,7 +88,7 @@ public class ExchangeActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                         }
-                    }.execute("http://18.222.204.84/exchange",param, finalStringtoken);
+                    }.execute(getString(R.string.mainurl)+"/exchange",param, finalStringtoken);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

@@ -45,17 +45,16 @@ public class TaskView_Voice extends TaskView {
                         JSONObject resulttemp = null;
                         try {
                             resulttemp = new JSONObject(result);
-                            Log.d("hey2", resulttemp.toString());
+
                             if ((boolean) resulttemp.get("success")) {
-
-
-                                Log.d("hey", "http://18.222.204.84/" + resulttemp.get("url"));
-                                final String url = "http://18.222.204.84" + ((String) resulttemp.get("url")).substring(3);
+                                final String url = parentActivity.getString(R.string.mainurl) + ((String) resulttemp.get("url")).substring(3);
 
                                 mBtPlay.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
                                         if (isPlaying == false) {
+                                            isPlaying = true;
+                                            mBtPlay.setBackground(ContextCompat.getDrawable(context, R.drawable.voicestopbtn));
                                             try {
                                                 mPlayer.setDataSource(context, Uri.parse(url));
                                                 mPlayer.prepare();
@@ -64,15 +63,15 @@ public class TaskView_Voice extends TaskView {
                                             }
                                             mPlayer.start();
 
-                                            isPlaying = true;
-                                            mBtPlay.setBackground(ContextCompat.getDrawable(context, R.drawable.voicestopbtn));
-                                            //mBtPlay.setText("듣기중지");
+
+
                                         } else {
-                                            mPlayer.reset();
 
                                             isPlaying = false;
                                             mBtPlay.setBackground(ContextCompat.getDrawable(context, R.drawable.voiceplaybtn));
-                                            //mBtPlay.setText("들어보기");
+                                            mPlayer.reset();
+
+
                                         }
                                     }
                                 });
@@ -80,14 +79,15 @@ public class TaskView_Voice extends TaskView {
 
                                     @Override
                                     public void onCompletion(MediaPlayer mp) {
-                                        mPlayer.reset();
                                         isPlaying = false;
                                         mBtPlay.setBackground(ContextCompat.getDrawable(context, R.drawable.voiceplaybtn));
-                                        //mBtPlay.setText("들어보기");
+                                        mPlayer.reset();
+
+
                                     }
                                 });
                                 String taskID = resulttemp.get("baseID").toString();
-                                Log.d("baseid", taskID);
+
                                 settaskID(Integer.parseInt(taskID));
 
                             }
@@ -100,7 +100,7 @@ public class TaskView_Voice extends TaskView {
                             e.printStackTrace();
                         }
                     }
-                }.execute("http://18.222.204.84/taskGet", param,logintoken);
+                }.execute(parentActivity.getString(R.string.mainurl)+"/taskGet", param,logintoken);
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -111,21 +111,23 @@ public class TaskView_Voice extends TaskView {
                 @Override
                 public void onClick(View view) {
                     if (isPlaying == false) {
+
+                        isPlaying = true;
+                        mBtPlay.setBackground(ContextCompat.getDrawable(context, R.drawable.voicestopbtn));
                         try {
-                            mPlayer.setDataSource(context, Uri.parse("http://18.222.204.84" + contentURI.substring(3)));
+                            mPlayer.setDataSource(context, Uri.parse(parentActivity.getString(R.string.mainurl) + contentURI.substring(3)));
                             mPlayer.prepare();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                         mPlayer.start();
 
-                        isPlaying = true;
-                        mBtPlay.setText("듣기중지");
                     } else {
+                        isPlaying = false;
+                        mBtPlay.setBackground(ContextCompat.getDrawable(context, R.drawable.voiceplaybtn));
                         mPlayer.reset();
 
-                        isPlaying = false;
-                        mBtPlay.setText("들어보기");
+
                     }
                 }
             });
@@ -133,9 +135,10 @@ public class TaskView_Voice extends TaskView {
 
                 @Override
                 public void onCompletion(MediaPlayer mp) {
-                    mPlayer.reset();
                     isPlaying = false;
-                    mBtPlay.setText("들어보기");
+                    mBtPlay.setBackground(ContextCompat.getDrawable(context, R.drawable.voiceplaybtn));
+                    mPlayer.reset();
+
                 }
             });
 

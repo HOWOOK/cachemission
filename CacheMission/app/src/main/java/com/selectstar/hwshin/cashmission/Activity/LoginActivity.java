@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                         }
-                    }.execute("http://18.222.204.84/signin",param);
+                    }.execute(getString(R.string.mainurl)+"/signin",param);
                 }catch(JSONException e)
                 {
                     e.printStackTrace();

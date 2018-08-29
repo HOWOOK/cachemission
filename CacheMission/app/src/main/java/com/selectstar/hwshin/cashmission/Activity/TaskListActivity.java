@@ -43,6 +43,7 @@ public class TaskListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tasklist);
         uiHashmap = new UIHashmap();
 
+
     }
 
     @Override
@@ -150,7 +151,7 @@ public class TaskListActivity extends AppCompatActivity {
                             for (int i = 0; i < exam_res.length(); i++) {
 
                                 JSONObject temp = (JSONObject) exam_res.get(i);
-                                Log.d("dataget", temp.toString());
+
 
 
                                 mTaskList.add(new TaskListItem(String.valueOf(temp.get("id")), (String) temp.get("taskName"), (String) temp.get("taskType"),
@@ -163,7 +164,7 @@ public class TaskListActivity extends AppCompatActivity {
                             for (int i = 0; i < task_res.length(); i++) {
 
                                 JSONObject temp = (JSONObject) task_res.get(i);
-                                Log.d("dataget", temp.toString());
+
 
 
                                 mTaskList.add(new TaskListItem(String.valueOf(temp.get("id")), (String) temp.get("taskName"), (String) temp.get("taskType"),
@@ -223,7 +224,7 @@ public class TaskListActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-            }.execute("http://18.222.204.84/main", param, stringtoken);
+            }.execute(getString(R.string.mainurl)+"/main", param, stringtoken);
         }
         catch (JSONException e) {
             e.printStackTrace();

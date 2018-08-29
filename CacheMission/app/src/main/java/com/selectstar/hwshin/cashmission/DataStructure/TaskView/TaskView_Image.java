@@ -46,15 +46,15 @@ public class TaskView_Image extends TaskView {
                         JSONObject resulttemp = null;
                         try {
                             resulttemp = new JSONObject(result);
-                            Log.d("hey2", resulttemp.toString());
+
                             if ((boolean) resulttemp.get("success")) {
-                                Log.d("hey", "http://18.222.204.84/" + resulttemp.get("url"));
+
                                 ImageView imageView = (ImageView) view;
-                                Glide.with(context).load(Uri.parse("http://18.222.204.84" + ((String) resulttemp.get("url")).substring(3))).into((ImageView) view);
+                                Glide.with(context).load(Uri.parse(parentActivity.getString(R.string.mainurl)+ ((String) resulttemp.get("url")).substring(3))).into((ImageView) view);
 
 
                                 String taskID = resulttemp.get("baseID").toString();
-                                Log.d("baseid", taskID);
+
                                 settaskID(Integer.parseInt(taskID));
 
                             }
@@ -70,7 +70,7 @@ public class TaskView_Image extends TaskView {
 
 
                     }
-                }.execute("http://18.222.204.84/taskGet", param,logintoken);
+                }.execute(parentActivity.getString(R.string.mainurl)+"/taskGet", param,logintoken);
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -80,7 +80,7 @@ public class TaskView_Image extends TaskView {
         }
         else{
             ImageView imageView = (ImageView) view;
-            Glide.with(context).load(Uri.parse("http://18.222.204.84" + contentURI.substring(3))).into((ImageView) view);
+            Glide.with(context).load(Uri.parse(parentActivity.getString(R.string.mainurl) + contentURI.substring(3))).into((ImageView) view);
 
 
         }

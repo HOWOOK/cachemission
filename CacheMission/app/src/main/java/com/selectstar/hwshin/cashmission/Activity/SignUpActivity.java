@@ -108,7 +108,7 @@ public class SignUpActivity extends AppCompatActivity {
                             }
                         }
 
-                    }.execute("http://18.222.204.84/signup",param);
+                    }.execute(getString(R.string.mainurl)+"/signup",param);
                 }catch(JSONException e)
                 {
                     e.printStackTrace();
@@ -142,7 +142,7 @@ public class SignUpActivity extends AppCompatActivity {
                             }
                         }
 
-                    }.execute("http://18.222.204.84/signupCheckId",param);
+                    }.execute(getString(R.string.mainurl)+"/signupCheckId",param);
 
                 }catch(JSONException e)
                 {

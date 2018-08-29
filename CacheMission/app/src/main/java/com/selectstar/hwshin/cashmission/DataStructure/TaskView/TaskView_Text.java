@@ -44,32 +44,26 @@ public class TaskView_Text extends TaskView {
                         JSONObject resulttemp = null;
                         try {
                             resulttemp = new JSONObject(result);
-                            Log.d("hey22", resulttemp.toString());
+
                             if ((boolean) resulttemp.get("success")) {
-                                //Log.d("hey","http://18.222.204.84/"+resulttemp.get("url"));
+
                                 TextView textView = (TextView) view;
-                                // Glide.with(context).load(Uri.parse("http://18.222.204.84"+((String)resulttemp.get("url")).substring(3))).into((ImageView) view);
                                 textView.setText(resulttemp.get("text").toString());
 
-
                                 String taskID = resulttemp.get("baseID").toString();
-                                Log.d("baseid", taskID);
                                 settaskID(Integer.parseInt(taskID));
 
                             }
                             else{
                                 Toast.makeText(parentActivity,"테스크를 모두 완료했습니다. 테스크 리스트로 돌아갑니다.",Toast.LENGTH_SHORT).show();
-                                //Intent in = new Intent(parentActivity,TaskListActivity.class);
-                                //parentActivity.startActivity(in);
                                 parentActivity.finish();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
-
                     }
-                }.execute("http://18.222.204.84/taskGet", param,logintoken);
+                }.execute(parentActivity.getString(R.string.mainurl)+"/taskGet", param,logintoken);
 
             } catch (JSONException e) {
                 e.printStackTrace();

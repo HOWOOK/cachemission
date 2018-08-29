@@ -98,8 +98,7 @@ public class Controller_Voice extends Controller {
                     new Thread() {
                         public void run() {
                             uploadFile(mPath + ".wav", id);
-                            Log.d("serverres", String.valueOf(serverResponseCode));
-                            Log.d("serverres", mPath + ".wav");
+
                             Uri i = Uri.parse(mPath + ".pcm");
                             File f = new File(i.getPath());
                             //f.delete();
@@ -489,7 +488,7 @@ mIsPlaying=false;
 
                 // open a URL connection to the Servlet
                 FileInputStream fileInputStream = new FileInputStream(sourceFile);
-                URL url = new URL("http://18.222.204.84/taskSubmit");
+                URL url = new URL(parentActivity.getString(R.string.mainurl)+"/taskSubmit");
 
                 // Open a HTTP  connection to  the URL
                 conn = (HttpURLConnection) url.openConnection();

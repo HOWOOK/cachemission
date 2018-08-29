@@ -62,9 +62,9 @@ public class Controller_Numbers extends Controller {
            @Override
            public void onClick(View v) {
                JSONObject param2 = new JSONObject();
-               Log.d("subsub",String.valueOf(radioGroup.getCheckedRadioButtonId()));
+
                try {
-                   Log.d("idinfo", String.valueOf(mtaskview.gettaskID()));
+
                    param2.put("answerID", mtaskview.gettaskID());
                    param2.put("taskID", id);
                    param2.put("submit", radioGroup.getCheckedRadioButtonId());
@@ -104,7 +104,7 @@ public class Controller_Numbers extends Controller {
 
 
                        }
-                   }.execute("http://18.222.204.84/taskSubmit", param2, logintoken);
+                   }.execute(parentActivity.getString(R.string.mainurl)+"/taskSubmit", param2, logintoken);
                }catch (JSONException e){
                    e.printStackTrace();
 

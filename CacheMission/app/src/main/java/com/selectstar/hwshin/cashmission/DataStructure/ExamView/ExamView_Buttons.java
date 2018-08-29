@@ -24,14 +24,13 @@ public class ExamView_Buttons extends ExamView {
         ConstraintLayout templayout = (ConstraintLayout) view;
         ListView lv = templayout.findViewById(R.id.buttons_list_exam);
         ArrayList<String> textarray=new ArrayList<String>();
-        Log.d("answer",buttons);
+
         try {
 
             JSONArray res = new JSONArray(buttons);
             for (int i = 0; i < res.length(); i++) {
 
                 String temp = res.get(i).toString();
-                Log.d("dataget", temp.toString());
                 textarray.add(temp);
 
             }

@@ -58,8 +58,7 @@ public class ButtonListAdapter extends BaseAdapter {
         TextView tv=(TextView) convertView.findViewById(R.id.buttontext);
         tv.setText(temp);
         if(answer.equals("")==false){
-            Log.d("temp",temp);
-            Log.d("temp",answer);
+
             if(answer.equals(temp)){
 
                 tv.setTextColor(convertView.getResources().getColor(R.color.colorAccent));
