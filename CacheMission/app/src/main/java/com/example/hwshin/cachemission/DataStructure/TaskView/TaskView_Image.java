@@ -60,9 +60,8 @@ public class TaskView_Image extends TaskView {
 
                             }
                             else{
-                                Toast.makeText(parentActivity,"테스크를 모두 완료했습니다. 테스크 리스트로 돌아갑니다.",Toast.LENGTH_SHORT);
-                                Intent in = new Intent(parentActivity,TaskListActivity.class);
-                                parentActivity.startActivity(in);
+                                Toast.makeText(parentActivity,"테스크를 모두 완료했습니다. 테스크 리스트로 돌아갑니다.",Toast.LENGTH_SHORT).show();
+
                                 parentActivity.finish();
 
                             }
