@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.selectstar.hwshin.cachemission.R;
+import com.selectstar.hwshin.cashmission.R;
 
 public class RegionActivity extends AppCompatActivity {
     @Override

@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.selectstar.hwshin.cashmission.Adapter.Explain.SlideAdapter_ExplainMain;
-import com.selectstar.hwshin.cachemission.R;
+import com.selectstar.hwshin.cashmission.R;
 
 public class ExplainActivity extends AppCompatActivity {
 

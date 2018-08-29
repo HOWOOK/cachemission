@@ -15,7 +15,7 @@ import com.selectstar.hwshin.cashmission.Adapter.Explain.SlideAdapter_ExplainTas
 import com.selectstar.hwshin.cashmission.Adapter.Explain.SlideAdapter_ExplainTask_Record;
 import com.selectstar.hwshin.cashmission.Adapter.Explain.SlideAdapter_ExplainTask_Record_ExamType1;
 import com.selectstar.hwshin.cashmission.Adapter.Explain.SlideAdapter_ExplainTask_Record_ExamType2;
-import com.selectstar.hwshin.cachemission.R;
+import com.selectstar.hwshin.cashmission.R;
 
 public class TaskExplainActivity extends AppCompatActivity {
 

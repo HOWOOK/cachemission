@@ -10,7 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
-import com.selectstar.hwshin.cachemission.R;
+import com.selectstar.hwshin.cashmission.R;
 
 public class SettingActivity extends AppCompatActivity {
 
