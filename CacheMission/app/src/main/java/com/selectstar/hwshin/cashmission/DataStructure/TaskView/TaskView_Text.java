@@ -29,7 +29,7 @@ public class TaskView_Text extends TaskView {
             try {
                 param.put("id", id);
 
-                if(id.equals("3")){//RECORD일때는 지역을 같이 넣어서 요청해야함
+                if(id.equals("4")){//RECORD일때는 지역을 같이 넣어서 요청해야함
                     String region;
                     SharedPreferences explain = parentActivity.getSharedPreferences("region", Context.MODE_PRIVATE);
                     region = explain.getString("region",null);
@@ -44,7 +44,7 @@ public class TaskView_Text extends TaskView {
                         JSONObject resulttemp = null;
                         try {
                             resulttemp = new JSONObject(result);
-
+Log.d("hahaha",result);
                             if ((boolean) resulttemp.get("success")) {
 
                                 TextView textView = (TextView) view;
@@ -55,7 +55,7 @@ public class TaskView_Text extends TaskView {
 
                             }
                             else{
-                                Toast.makeText(parentActivity,"테스크를 모두 완료했습니다. 테스크 리스트로 돌아갑니다.",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(parentActivity,"테스크를 모두 텍스트 완료했습니다. 테스크 리스트로 돌아갑니다.",Toast.LENGTH_SHORT).show();
                                 parentActivity.finish();
                             }
                         } catch (JSONException e) {
