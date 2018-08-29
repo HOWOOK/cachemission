@@ -268,12 +268,12 @@ public class ExamActivity extends AppCompatActivity {
 
         //해당 task가 처음이라면 설명서 띄워주는 것
         SharedPreferences tasktoken = getSharedPreferences("tasktoken", MODE_PRIVATE);
-        if(tasktoken.getInt(tasktype+"tasktoken",0) == 1){
+        if(tasktoken.getInt(tasktype+"tasktoken",0) == 100){
             //do nothing
         }else{
             Intent intent_taskExplain = new Intent(ExamActivity.this, TaskExplainActivity.class);
             SharedPreferences.Editor editor = tasktoken.edit();
-            editor.putInt(tasktype+"tasktoken", 1);
+            editor.putInt(tasktype+"tasktoken", 100);
             editor.commit();
             intent_taskExplain.putExtra("tasktype", tasktype);
             startActivity(intent_taskExplain);

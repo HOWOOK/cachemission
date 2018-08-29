@@ -42,12 +42,9 @@ public class Controller_Numbers extends Controller {
         final RadioGroup radioGroup=new RadioGroup(parentActivity);
         radioGroup.setOrientation(RadioGroup.HORIZONTAL);
         RadioGroup.LayoutParams params;
-        //buttons="[1111]";
         JSONArray res = null;
         try {
             res = new JSONArray(buttons);
-
-
 
         for(int i=0; i<Integer.parseInt(res.get(0).toString());i++){
             RadioButton rb= new RadioButton(parentActivity);
@@ -56,19 +53,12 @@ public class Controller_Numbers extends Controller {
             rb.setPadding(20,0,20,0);
             rb.setGravity(Gravity.CENTER);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                Log.d("foo","ba");
                 rb.setButtonDrawable(null);
-
-                //Drawable d=parentActivity.getDrawable(R.drawable.recordstart);
-            rb.setBackground(parentActivity.getDrawable(R.drawable.radiobutton));
-                //rb.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.radiobutton,0,0);
+                rb.setBackground(parentActivity.getDrawable(R.drawable.radiobutton));
             }
-
             params=new RadioGroup.LayoutParams(RadioGroup.LayoutParams.MATCH_PARENT,RadioGroup.LayoutParams.MATCH_PARENT);
             radioGroup.addView(rb,params);
-
         }
-
         templayout.addView(radioGroup);
 
         } catch (JSONException e) {

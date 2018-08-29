@@ -148,7 +148,6 @@ public class TaskListActivity extends AppCompatActivity {
                             usernamedrawer.setText(String.valueOf(user.get("name")));
                             setuserrankImage(userrank, Integer.parseInt(user.get("rank").toString()));
                             reliability.setText(String.valueOf(user.get("reliability"))+" %");
-                            System.out.println("테스크성공횟수"+Integer.parseInt(user.get("success_count").toString()));
                             //progress bar setting
                             setuserprogressbar(progress, Integer.parseInt(user.get("rank").toString()), Integer.parseInt(user.get("success_count").toString()));
 
@@ -246,36 +245,34 @@ public class TaskListActivity extends AppCompatActivity {
         if(rank==1)
             Glide.with(this).load(R.drawable.rank_begginner).into(userrank);
         else if(rank==2)
-            Glide.with(this).load(R.drawable.imagenotload).into(userrank);
+            Glide.with(this).load(R.drawable.rank_intermediate).into(userrank);
         else if(rank==3)
-            Glide.with(this).load(R.drawable.imagenotload).into(userrank);
-        else if(rank==4)
-            Glide.with(this).load(R.drawable.imagenotload).into(userrank);
+            Glide.with(this).load(R.drawable.rank_master).into(userrank);
         else if(rank==151)
             Glide.with(this).load(R.drawable.rank_admin).into(userrank);
+        else
+            Glide.with(this).load(R.drawable.rank_begginner).into(userrank);
     }
 
     private void setuserprogressbar(ProgressBar progressBar, int rank, int count) {
         float percent = 0;
         float count_f = (float)count;
 
-        System.out.println("들어온 랭크 "+ rank + " 들어온 테스크 성공수 "+ count);
-
         if(rank == 1)
             //50회 이상 진행시 레벨업
             percent = (count_f/50)*100;
         else if(rank == 2)
             //300회 이상 진행시 레벨업 (50+250)
-            percent = (count_f-50/250)*100;
+            percent = ((count_f-50)/250)*100;
         else if(rank == 3)
             //현재 최고레벨
             percent = 0;
         else if(rank == 151)
             //관리자
             percent = 100;
+        else//not reachable
+            percent = 100;
 
-        percent=80;
-        System.out.println("계산된 퍼센트 "+ percent);
         progressBar.setProgress((int)percent);
 
     }

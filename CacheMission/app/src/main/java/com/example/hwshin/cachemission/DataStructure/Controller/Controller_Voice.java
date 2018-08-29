@@ -317,11 +317,11 @@ mIsPlaying=false;
                     if (mIsRecording == false) {
                         startRecording();
                         mIsRecording = true;
-                        mRecordBtn.setBackground(ContextCompat.getDrawable(parentActivity, R.drawable.recordstop));
+                        mRecordBtn.setBackground(ContextCompat.getDrawable(parentActivity, R.drawable.recordstopbtn));
                     } else {
                         stopRecording();
                         mIsRecording = false;
-                        mRecordBtn.setBackground(ContextCompat.getDrawable(parentActivity, R.drawable.recordstart));
+                        mRecordBtn.setBackground(ContextCompat.getDrawable(parentActivity, R.drawable.recordstartbtn));
                         File f1 = new File(mPath + ".pcm"); // The location of your PCM file
                         File f2 = new File(mPath + ".wav"); // The location where you want your WAV file
                         try {

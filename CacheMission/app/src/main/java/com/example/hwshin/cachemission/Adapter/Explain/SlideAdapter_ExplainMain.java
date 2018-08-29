@@ -25,7 +25,7 @@ public class SlideAdapter_ExplainMain extends PagerAdapter {
     public int[] list_images={
             R.drawable.explain_main1,
             R.drawable.explain_main2,
-            R.drawable.explain_main4,
+            R.drawable.explain_main3,
             R.drawable.explain_main4,
     };
     public String[] list_description={

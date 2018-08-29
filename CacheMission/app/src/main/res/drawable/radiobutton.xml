@@ -4,10 +4,8 @@
     android:layout_width="wrap_content">
     <!-- UNSELECTED -->
     <item android:state_checked="false">
-        <shape>
-            <stroke android:color="#c4cbd2" android:width="1dp" />
-            <corners android:radius="15dp" />
-            <solid android:color="#fff" />
+        <shape android:shape="oval">
+            <solid android:color="#E0E0E0" />
         </shape>
     </item>
     <!-- SELECTED -->
@@ -15,13 +13,12 @@
         <layer-list>
             <!-- 배경 -->
             <item>
-                <shape>
-                    <corners android:radius="15dp" />
-                    <solid android:color="#e14f50" />
+                <shape android:shape="oval">
+                    <solid android:color="@color/colorPrimaryDark" />
                 </shape>
             </item>
             <!-- 이미지 영역 -->
-            <item android:drawable="@drawable/recordstart" android:top="4dp" android:right="4dp" android:bottom="4dp" android:left="4dp" />
+            <!--item android:drawable="@drawable/recordstart" android:top="4dp" android:right="4dp" android:bottom="4dp" android:left="4dp" /-->
         </layer-list>
     </item>
 </selector>
