@@ -3,23 +3,11 @@
     android:layout_height="wrap_content"
     android:layout_width="wrap_content">
     <!-- UNSELECTED -->
-    <item android:state_checked="false">
-        <shape android:shape="oval">
-            <solid android:color="#E0E0E0" />
-        </shape>
-    </item>
+    <item android:drawable="@drawable/radiobuttonup"
+        android:state_checked="false"/>
     <!-- SELECTED -->
-    <item android:state_checked="true">
-        <layer-list>
-            <!-- 배경 -->
-            <item>
-                <shape android:shape="oval">
-                    <solid android:color="@color/colorPrimaryDark" />
-                </shape>
-            </item>
-            <!-- 이미지 영역 -->
-            <!--item android:drawable="@drawable/recordstart" android:top="4dp" android:right="4dp" android:bottom="4dp" android:left="4dp" /-->
-        </layer-list>
-    </item>
+    <item android:state_checked="true"
+        android:drawable="@drawable/radiobuttonpush"
+        />
 </selector>
 
