@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/taskConstLayout"
-    tools:context=".Activity.TaskListActivity">
+    tools:context="com.selectstar.hwshin.cashmission.Activity.TaskListActivity">
 
     <android.support.constraint.Guideline
         android:id="@+id/optionguideline"

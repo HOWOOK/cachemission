@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Activity.TaskListActivity"
+            android:name="com.selectstar.hwshin.cashmission.Activity.TaskListActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
 
@@ -25,43 +25,43 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.TaskActivity"
+        <activity android:name="com.selectstar.hwshin.cashmission.Activity.TaskActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait"
             ></activity>
-        <activity android:name=".Activity.LoginActivity"
+        <activity android:name="com.selectstar.hwshin.cashmission.Activity.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             ></activity>
-        <activity android:name=".Activity.SignUpActivity"
+        <activity android:name="com.selectstar.hwshin.cashmission.Activity.SignUpActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             ></activity>
-        <activity android:name=".Activity.SettingActivity"
+        <activity android:name="com.selectstar.hwshin.cashmission.Activity.SettingActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             ></activity>
-        <activity android:name=".Activity.ExamActivity"
+        <activity android:name="com.selectstar.hwshin.cashmission.Activity.ExamActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             ></activity>
-        <activity android:name=".Activity.SuggestionActivity"
+        <activity android:name="com.selectstar.hwshin.cashmission.Activity.SuggestionActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             ></activity>
-        <activity android:name=".Activity.TaskExplainActivity"
+        <activity android:name="com.selectstar.hwshin.cashmission.Activity.TaskExplainActivity"
             android:theme="@style/AppTheme.Transparent.NoActionBar"
             ></activity>
-        <activity android:name=".Activity.ExchangeActivity"
+        <activity android:name="com.selectstar.hwshin.cashmission.Activity.ExchangeActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             ></activity>
-        <activity android:name=".Activity.ExplainActivity"
+        <activity android:name="com.selectstar.hwshin.cashmission.Activity.ExplainActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             ></activity>
-        <activity android:name=".Activity.RegionActivity"
+        <activity android:name="com.selectstar.hwshin.cashmission.Activity.RegionActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             ></activity>
