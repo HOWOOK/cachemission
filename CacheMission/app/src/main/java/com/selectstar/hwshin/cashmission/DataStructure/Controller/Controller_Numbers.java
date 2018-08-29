@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.constraint.ConstraintLayout;
+import android.support.constraint.ConstraintSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -33,10 +35,20 @@ public class Controller_Numbers extends Controller {
 
         ConstraintLayout templayout =(ConstraintLayout) view;
         Button numberbutton=templayout.findViewById(R.id.numberbutton);
-        final RadioGroup radioGroup=new RadioGroup(parentActivity);
+        final RadioGroup radioGroup=templayout.findViewById(R.id.numberradio);
         radioGroup.setOrientation(RadioGroup.HORIZONTAL);
         RadioGroup.LayoutParams params;
         JSONArray res = null;
+        /*
+        ConstraintLayout cl = (ConstraintLayout) view.findViewById(R.id.numberscons);
+
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(cl);
+        constraintSet.connect(R.id.explainTaskText, ConstraintSet.TOP, R.id.numberscons, ConstraintSet.TOP);
+        constraintSet.connect(R.id.explainTaskText, ConstraintSet.START, R.id.taskExplainContLayout,ConstraintSet.START);
+        constraintSet.connect(R.id.explainTaskText, ConstraintSet.END, R.id.taskExplainContLayout,ConstraintSet.END);
+        constraintSet.connect(R.id.explainTaskText, ConstraintSet.BOTTOM, R.id.taskExplainContLayout, ConstraintSet.BOTTOM);
+        */
         try {
             res = new JSONArray(buttons);
 
@@ -46,6 +58,7 @@ public class Controller_Numbers extends Controller {
             rb.setTextSize(15);
             rb.setPadding(0,0,0,20);
             rb.setGravity(Gravity.CENTER);
+            //rb.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 rb.setButtonDrawable(null);
                 rb.setBackground(parentActivity.getDrawable(R.drawable.radiobutton));
@@ -53,7 +66,7 @@ public class Controller_Numbers extends Controller {
             params=new RadioGroup.LayoutParams(RadioGroup.LayoutParams.MATCH_PARENT,RadioGroup.LayoutParams.MATCH_PARENT);
             radioGroup.addView(rb,params);
         }
-        templayout.addView(radioGroup);
+        //templayout.addView(radioGroup);
 
         } catch (JSONException e) {
             e.printStackTrace();

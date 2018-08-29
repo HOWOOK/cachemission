@@ -131,7 +131,7 @@ public class UIHashmap {
         parameters_DICTATIONEXAM[5][0] = 10;
         taskHashMap.put("DICTATIONEXAM", parameters_DICTATIONEXAM);
 
-        parameters_NUMBERING[0][0] = 5;
+        parameters_NUMBERING[0][0] = 10;
         parameters_NUMBERING[1][0] = R.id.tasktitle; parameters_NUMBERING[1][1] = 4;
         parameters_NUMBERING[2][0] = R.id.controller; parameters_NUMBERING[2][1] = 3;
         parameters_NUMBERING[3][0] = R.id.taskview; parameters_NUMBERING[3][1] = 4;
