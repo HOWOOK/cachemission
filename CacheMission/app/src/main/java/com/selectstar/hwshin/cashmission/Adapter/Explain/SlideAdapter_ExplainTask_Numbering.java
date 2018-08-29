@@ -65,7 +65,6 @@ public class SlideAdapter_ExplainTask_Numbering extends PagerAdapter {
         constraintSet.connect(R.id.explainTaskText, ConstraintSet.END, R.id.taskExplainContLayout,ConstraintSet.END);
         constraintSet.connect(R.id.explainTaskText, ConstraintSet.BOTTOM, R.id.taskExplainContLayout, ConstraintSet.BOTTOM);
 
-
         if(position==1)
             Glide.with(context).load(list_images[position]).into(img1);
         img2.setOnClickListener(new View.OnClickListener() {

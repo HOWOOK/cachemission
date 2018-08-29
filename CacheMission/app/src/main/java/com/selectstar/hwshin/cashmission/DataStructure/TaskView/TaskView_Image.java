@@ -26,7 +26,7 @@ public class TaskView_Image extends TaskView {
 
     //protected int taskViewID = R.layout.taskview_image;
     @Override
-    public void setContent(String id, String contentURI, final Context context, final View view) {
+    public void setContent(String id, String contentURI, final Context context, final View... view) {
         SharedPreferences token = parentActivity.getSharedPreferences("token",Context.MODE_PRIVATE);
         final String logintoken = token.getString("logintoken",null);
 
@@ -49,8 +49,8 @@ public class TaskView_Image extends TaskView {
 
                             if ((boolean) resulttemp.get("success")) {
 
-                                ImageView imageView = (ImageView) view;
-                                Glide.with(context).load(Uri.parse(parentActivity.getString(R.string.mainurl)+ ((String) resulttemp.get("url")).substring(3))).into((ImageView) view);
+                                ImageView imageView = (ImageView) view[0];
+                                Glide.with(context).load(Uri.parse(parentActivity.getString(R.string.mainurl)+ ((String) resulttemp.get("url")).substring(3))).into((ImageView) view[0]);
 
 
                                 String taskID = resulttemp.get("baseID").toString();
@@ -79,8 +79,8 @@ public class TaskView_Image extends TaskView {
 
         }
         else{
-            ImageView imageView = (ImageView) view;
-            Glide.with(context).load(Uri.parse(parentActivity.getString(R.string.mainurl) + contentURI.substring(3))).into((ImageView) view);
+            ImageView imageView = (ImageView) view[0];
+            Glide.with(context).load(Uri.parse(parentActivity.getString(R.string.mainurl) + contentURI.substring(3))).into((ImageView) view[0]);
 
 
         }

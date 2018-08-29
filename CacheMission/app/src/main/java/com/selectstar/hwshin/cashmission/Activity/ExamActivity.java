@@ -95,14 +95,12 @@ public class ExamActivity extends AppCompatActivity {
         constraintSet.applyTo(constraintLayout);
 
         //TaskView의 weight설정 (default == 10)
-        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) parent1.getLayoutParams();
-        params.verticalWeight = mParameter[0][0];
-        parent1.setLayoutParams(params);
-
-        //TaskView에 source설정
-        final View srcTaskView = (View) findViewById(R.id.srcview);
-
-
+        ConstraintLayout.LayoutParams params1 = (ConstraintLayout.LayoutParams) parent1.getLayoutParams();
+        params1.verticalWeight = mParameter[0][0];
+        parent1.setLayoutParams(params1);
+        ConstraintLayout.LayoutParams params2 = (ConstraintLayout.LayoutParams) parent2.getLayoutParams();
+        params2.verticalWeight = mParameter[5][0];
+        parent2.setLayoutParams(params2);
 
         JSONObject param = new JSONObject();
         try {
@@ -132,7 +130,13 @@ public class ExamActivity extends AppCompatActivity {
                             mExamView.setParent(activity,intent);
                             mExamView.usingactivity=activity;
                             mExamView.mtaskview=mTaskView;
-                            mTaskView.setContent(mId, tempsrcURI, context, srcTaskView);
+                            //TaskView에 source설정 (보통은 srcTaskView1에만 들어가며 Text의 경우 2개를 받는다)
+                            View srcTaskView1 = (View) findViewById(R.id.srcview);
+                            View srcTaskView2 = null;
+                            if(intent.getStringExtra("taskview").equals("text")) {
+                                srcTaskView2 = (View) findViewById(R.id.srcview2);
+                            }
+                            mTaskView.setContent(mId, tempsrcURI, context, srcTaskView1, srcTaskView2);
                             View view = findViewById(R.id.examview);
 
 

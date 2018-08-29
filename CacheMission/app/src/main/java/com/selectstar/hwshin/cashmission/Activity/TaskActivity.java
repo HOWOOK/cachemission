@@ -134,14 +134,19 @@ public class TaskActivity extends AppCompatActivity {
         ConstraintLayout.LayoutParams params2 = (ConstraintLayout.LayoutParams) parent2.getLayoutParams();
         params2.verticalWeight = mParameter[5][0];
         parent2.setLayoutParams(params2);
+
         mTaskView.setParent(this,intent);
         mController.setParent(this,intent);
         mController.usingactivity=this;
         mController.mtaskview=mTaskView;
 
-        //TaskView에 source설정
-        View srcTaskView = (View) findViewById(R.id.srcview);
-        mTaskView.setContent(mId, tempsrcURI, this, srcTaskView);
+        //TaskView에 source설정 (보통은 srcTaskView1에만 들어가며 Text의 경우 2개를 받는다)
+        View srcTaskView1 = (View) findViewById(R.id.srcview);
+        View srcTaskView2 = null;
+        if(intent.getStringExtra("taskview").equals("text")) {
+            srcTaskView2 = (View) findViewById(R.id.srcview2);
+        }
+        mTaskView.setContent(mId, tempsrcURI, this, srcTaskView1, srcTaskView2);
 
         //Controller에 source설정
         View view = findViewById(R.id.controller);

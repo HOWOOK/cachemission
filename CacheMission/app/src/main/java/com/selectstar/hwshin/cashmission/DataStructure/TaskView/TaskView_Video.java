@@ -26,7 +26,7 @@ public class TaskView_Video extends TaskView {
 
 
     @Override
-    public void setContent(String id, String ContentURI, final Context context, final View view) {
+    public void setContent(String id, String ContentURI, final Context context, final View... view) {
 
         SharedPreferences token = parentActivity.getSharedPreferences("token",Context.MODE_PRIVATE);
         final String logintoken = token.getString("logintoken",null);
@@ -47,7 +47,7 @@ public class TaskView_Video extends TaskView {
 
                             if ((boolean) resulttemp.get("success")) {
 
-                                VideoView videoView = (VideoView) view;
+                                VideoView videoView = (VideoView) view[0];
 
 
                                 MediaController mc = new MediaController(context);
@@ -75,7 +75,7 @@ public class TaskView_Video extends TaskView {
 
         }
         else{
-            VideoView videoView = (VideoView) view;
+            VideoView videoView = (VideoView) view[0];
             MediaController mc = new MediaController(context);
             videoView.setMediaController(mc);
             videoView.setVideoURI(Uri.parse(parentActivity.getString(R.string.mainurl) + ContentURI.substring(3)));

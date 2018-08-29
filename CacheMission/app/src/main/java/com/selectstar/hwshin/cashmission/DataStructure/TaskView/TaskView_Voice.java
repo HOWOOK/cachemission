@@ -25,12 +25,12 @@ public class TaskView_Voice extends TaskView {
         taskViewID = R.layout.taskview_voice;
     }
     @Override
-    public void setContent(String id, final String contentURI, final Context context, final View view) {
+    public void setContent(String id, final String contentURI, final Context context, final View... view) {
         SharedPreferences token = parentActivity.getSharedPreferences("token",Context.MODE_PRIVATE);
         final String logintoken = token.getString("logintoken",null);
 
 
-        final Button mBtPlay=(Button) view;
+        final Button mBtPlay=(Button) view[0];
         final MediaPlayer mPlayer=new MediaPlayer();
         if (contentURI.equals("foobar")) {
             JSONObject param = new JSONObject();
