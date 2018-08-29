@@ -48,7 +48,7 @@ public class Controller_Numbers extends Controller {
             rb.setGravity(Gravity.CENTER);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 rb.setButtonDrawable(null);
-                rb.setBackground(parentActivity.getDrawable(R.drawable.radiobuttonup));
+                rb.setBackground(parentActivity.getDrawable(R.drawable.radiobutton));
             }
             params=new RadioGroup.LayoutParams(RadioGroup.LayoutParams.MATCH_PARENT,RadioGroup.LayoutParams.MATCH_PARENT);
             radioGroup.addView(rb,params);
