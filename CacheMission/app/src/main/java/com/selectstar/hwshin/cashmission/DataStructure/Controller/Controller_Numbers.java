@@ -71,56 +71,61 @@ public class Controller_Numbers extends Controller {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        //Log.d("forbid",String.valueOf(radioGroup.getCheckedRadioButtonId()));
        numberbutton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               JSONObject param2 = new JSONObject();
+               if (radioGroup.getCheckedRadioButtonId() == -1) {
+Toast.makeText(parentActivity,"먼저 호감도를 선택해주세요",Toast.LENGTH_SHORT).show();
 
-               try {
+               } else {
+                   JSONObject param2 = new JSONObject();
 
-                   param2.put("answerID", mtaskview.gettaskID());
-                   param2.put("taskID", id);
-                   param2.put("submit", radioGroup.getCheckedRadioButtonId());
-                   new HttpRequest() {
-                       @Override
-                       protected void onPostExecute(Object o) {
-                           super.onPostExecute(o);
+                   try {
 
-                           try {
-                               JSONObject resulttemp = new JSONObject(result);
-                               if (resulttemp.get("success").toString().equals("false")) {
-                                   if (resulttemp.get("message").toString().equals("login")) {
-                                       Intent in = new Intent(parentActivity, LoginActivity.class);
-                                       parentActivity.startActivity(in);
-                                       Toast.makeText(parentActivity, "로그인이 만료되었습니다. 다시 로그인해주세요", Toast.LENGTH_SHORT).show();
+                       param2.put("answerID", mtaskview.gettaskID());
+                       param2.put("taskID", id);
+                       param2.put("submit", radioGroup.getCheckedRadioButtonId());
+                       new HttpRequest() {
+                           @Override
+                           protected void onPostExecute(Object o) {
+                               super.onPostExecute(o);
+
+                               try {
+                                   JSONObject resulttemp = new JSONObject(result);
+                                   if (resulttemp.get("success").toString().equals("false")) {
+                                       if (resulttemp.get("message").toString().equals("login")) {
+                                           Intent in = new Intent(parentActivity, LoginActivity.class);
+                                           parentActivity.startActivity(in);
+                                           Toast.makeText(parentActivity, "로그인이 만료되었습니다. 다시 로그인해주세요", Toast.LENGTH_SHORT).show();
+                                           parentActivity.finish();
+                                       } else if (resulttemp.get("message").toString().equals("task")) {
+
+                                           Toast.makeText(parentActivity, "테스크가 만료되었습니다. 다른 테스크를 선택해주세요", Toast.LENGTH_SHORT).show();
+                                           parentActivity.finish();
+                                       } else {
+
+                                           Toast.makeText(parentActivity, "남은 테스크가 없습니다.", Toast.LENGTH_SHORT).show();
+                                           parentActivity.finish();
+
+                                       }
+
+                                   } else {
+                                       parentActivity.startActivity(parentIntent);
                                        parentActivity.finish();
-                                   } else if (resulttemp.get("message").toString().equals("task")) {
 
-                                       Toast.makeText(parentActivity, "테스크가 만료되었습니다. 다른 테스크를 선택해주세요", Toast.LENGTH_SHORT).show();
-                                       parentActivity.finish();
                                    }
-                                   else{
-
-                                       Toast.makeText(parentActivity,"남은 테스크가 없습니다.",Toast.LENGTH_SHORT).show();
-                                       parentActivity.finish();
-
-                                   }
-
-                               } else {
-                                   parentActivity.startActivity(parentIntent);
-                                   parentActivity.finish();
-
+                               } catch (JSONException e) {
+                                   e.printStackTrace();
                                }
-                           } catch (JSONException e) {
-                               e.printStackTrace();
+
+
                            }
+                       }.execute(parentActivity.getString(R.string.mainurl) + "/taskSubmit", param2, logintoken);
+                   } catch (JSONException e) {
+                       e.printStackTrace();
 
-
-                       }
-                   }.execute(parentActivity.getString(R.string.mainurl)+"/taskSubmit", param2, logintoken);
-               }catch (JSONException e){
-                   e.printStackTrace();
-
+                   }
                }
            }
        });
