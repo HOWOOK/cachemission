@@ -1,7 +1,6 @@
 package com.selectstar.hwshin.cashmission.Activity;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,7 +17,6 @@ import org.json.JSONObject;
 
 public class SuggestionActivity extends AppCompatActivity {
 
-    Context context = this;
     EditText suggestionmain;
     Button send_btn;
 
@@ -73,7 +71,7 @@ public class SuggestionActivity extends AppCompatActivity {
                 try {
                     param.put("suggestion", suggestionVal);
 
-                    new HttpRequest(context){
+                    new HttpRequest(){
                         @Override
                         protected void onPostExecute(Object o) {
                             super.onPostExecute(o);
