@@ -47,7 +47,7 @@ public class TaskView_Voice extends TaskView {
                             resulttemp = new JSONObject(result);
 
                             if ((boolean) resulttemp.get("success")) {
-                                final String url = parentActivity.getString(R.string.mainurl) +"/media/"+ ((String) resulttemp.get("url"));
+                                final String url = parentActivity.getString(R.string.mainurl) + ((String) resulttemp.get("url")).substring(3);
 
                                 mBtPlay.setOnClickListener(new View.OnClickListener() {
                                     @Override
@@ -58,17 +58,19 @@ public class TaskView_Voice extends TaskView {
                                             try {
                                                 mPlayer.setDataSource(context, Uri.parse(url));
                                                 mPlayer.prepare();
-                                            }
-                                            catch (Exception e) {
+                                            } catch (Exception e) {
                                                 e.printStackTrace();
                                             }
                                             mPlayer.start();
+
+
 
                                         } else {
 
                                             isPlaying = false;
                                             mBtPlay.setBackground(ContextCompat.getDrawable(context, R.drawable.voiceplaybtn));
                                             mPlayer.reset();
+
 
                                         }
                                     }
@@ -77,14 +79,15 @@ public class TaskView_Voice extends TaskView {
 
                                     @Override
                                     public void onCompletion(MediaPlayer mp) {
-
                                         isPlaying = false;
                                         mBtPlay.setBackground(ContextCompat.getDrawable(context, R.drawable.voiceplaybtn));
                                         mPlayer.reset();
 
+
                                     }
                                 });
                                 String taskID = resulttemp.get("baseID").toString();
+
                                 settaskID(Integer.parseInt(taskID));
 
                             }
@@ -112,7 +115,7 @@ public class TaskView_Voice extends TaskView {
                         isPlaying = true;
                         mBtPlay.setBackground(ContextCompat.getDrawable(context, R.drawable.voicestopbtn));
                         try {
-                            mPlayer.setDataSource(context, Uri.parse(parentActivity.getString(R.string.mainurl)+"/media/" + contentURI));
+                            mPlayer.setDataSource(context, Uri.parse(parentActivity.getString(R.string.mainurl) + contentURI.substring(3)));
                             mPlayer.prepare();
                         } catch (Exception e) {
                             e.printStackTrace();

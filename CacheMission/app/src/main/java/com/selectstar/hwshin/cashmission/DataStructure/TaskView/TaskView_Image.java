@@ -50,7 +50,7 @@ public class TaskView_Image extends TaskView {
                             if ((boolean) resulttemp.get("success")) {
 
                                 ImageView imageView = (ImageView) view[0];
-                                Glide.with(context).load(Uri.parse(parentActivity.getString(R.string.mainurl)+"/media/"+ ((String) resulttemp.get("url")))).into((ImageView) view[0]);
+                                Glide.with(context).load(Uri.parse(parentActivity.getString(R.string.mainurl)+ ((String) resulttemp.get("url")).substring(3))).into((ImageView) view[0]);
 
 
                                 String taskID = resulttemp.get("baseID").toString();
@@ -80,7 +80,7 @@ public class TaskView_Image extends TaskView {
         }
         else{
             ImageView imageView = (ImageView) view[0];
-            Glide.with(context).load(Uri.parse(parentActivity.getString(R.string.mainurl) + "/media"+contentURI.substring(3))).into((ImageView) view[0]);
+            Glide.with(context).load(Uri.parse(parentActivity.getString(R.string.mainurl) + contentURI.substring(3))).into((ImageView) view[0]);
 
 
         }

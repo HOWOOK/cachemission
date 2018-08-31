@@ -3,26 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/numberscons"
-
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RadioGroup
+        android:id="@+id/numberradio"
+        android:layout_width="wrap_content"
 
-    <GridView
-        android:id="@+id/gridViewff"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:stretchMode="columnWidth"
-android:listSelector="@color/colorAccent"
-        app:layout_constraintBottom_toTopOf="@+id/numberbutton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent">
 
-
+    </RadioGroup>
 
     <Button
         android:id="@+id/numberbutton"
@@ -31,7 +24,5 @@ android:listSelector="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gridViewff" />
-
-
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

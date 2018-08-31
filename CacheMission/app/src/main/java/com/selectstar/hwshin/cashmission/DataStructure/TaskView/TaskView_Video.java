@@ -52,7 +52,7 @@ public class TaskView_Video extends TaskView {
 
                                 MediaController mc = new MediaController(context);
                                 videoView.setMediaController(mc);
-                                videoView.setVideoURI(Uri.parse(parentActivity.getString(R.string.mainurl)+"/media/"+ ((String) resulttemp.get("url"))));
+                                videoView.setVideoURI(Uri.parse(parentActivity.getString(R.string.mainurl)+ ((String) resulttemp.get("url")).substring(3)));
                                 videoView.start();
                                 String taskID = resulttemp.get("baseID").toString();
                                 settaskID(Integer.parseInt(taskID));
@@ -78,7 +78,7 @@ public class TaskView_Video extends TaskView {
             VideoView videoView = (VideoView) view[0];
             MediaController mc = new MediaController(context);
             videoView.setMediaController(mc);
-            videoView.setVideoURI(Uri.parse(parentActivity.getString(R.string.mainurl) +"/media/"+ ContentURI));
+            videoView.setVideoURI(Uri.parse(parentActivity.getString(R.string.mainurl) + ContentURI.substring(3)));
             videoView.start();
 
         }
