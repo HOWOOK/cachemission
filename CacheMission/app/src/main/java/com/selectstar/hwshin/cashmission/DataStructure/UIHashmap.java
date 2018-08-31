@@ -136,7 +136,7 @@ public class UIHashmap {
         parameters_NUMBERING[2][0] = R.id.controller; parameters_NUMBERING[2][1] = 3;
         parameters_NUMBERING[3][0] = R.id.taskview; parameters_NUMBERING[3][1] = 4;
         parameters_NUMBERING[4][0] = R.id.taskConstLayout; parameters_NUMBERING[4][1] = 4;
-        parameters_NUMBERING[5][0] = 10;
+        parameters_NUMBERING[5][0] = 5;
         taskHashMap.put("NUMBERING", parameters_NUMBERING);
 
         parameters_NUMBERINGEXAM[0][0] = 5;
