@@ -93,7 +93,7 @@ public class Controller_Numbers extends Controller {
            @Override
            public void onClick(View v) {
                if (result.equals("foobar")) {
-Toast.makeText(parentActivity,"먼저 호감도를 선택해주세요",Toast.LENGTH_SHORT).show();
+                Toast.makeText(parentActivity,"먼저 호감도를 선택해 주세요",Toast.LENGTH_SHORT).show();
 
                } else {
                    JSONObject param2 = new JSONObject();
