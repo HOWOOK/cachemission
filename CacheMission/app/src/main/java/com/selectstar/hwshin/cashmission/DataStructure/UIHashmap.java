@@ -82,7 +82,7 @@ public class UIHashmap {
         parameters_OCREXAM[4][0] = R.id.taskConstLayoutexam; parameters_OCREXAM[4][1] = 4;
         parameters_OCREXAM[5][0] = 10;
         taskHashMap.put("OCREXAM", parameters_OCREXAM);
-
+        //
         parameters_VIDEO[0][0] = 5;
         parameters_VIDEO[1][0] = R.id.tasktitle; parameters_VIDEO[1][1] = 4;
         parameters_VIDEO[2][0] = R.id.controller; parameters_VIDEO[2][1] = 3;
