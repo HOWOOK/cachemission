@@ -96,7 +96,6 @@ public class Controller_Numbers extends Controller {
                if (result.equals("foobar")) {
                 Toast.makeText(parentActivity,"먼저 호감도를 선택해 주세요",Toast.LENGTH_SHORT).show();
 
-
                } else {
                    JSONObject param2 = new JSONObject();
 
@@ -105,7 +104,7 @@ public class Controller_Numbers extends Controller {
                        param2.put("answerID", mtaskview.gettaskID());
                        param2.put("taskID", id);
                        param2.put("submit", Integer.parseInt(result));
-                       new HttpRequest() {
+                       new HttpRequest(parentActivity) {
                            @Override
                            protected void onPostExecute(Object o) {
                                super.onPostExecute(o);
