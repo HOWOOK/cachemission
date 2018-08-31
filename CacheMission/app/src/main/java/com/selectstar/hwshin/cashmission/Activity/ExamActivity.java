@@ -52,7 +52,7 @@ public class ExamActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exam);
         //캡쳐방지
-//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
 
         SharedPreferences token = getSharedPreferences("token",Context.MODE_PRIVATE);
         final String logintoken = token.getString("logintoken",null);
