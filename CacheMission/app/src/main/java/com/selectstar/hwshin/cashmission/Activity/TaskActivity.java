@@ -66,7 +66,7 @@ public class TaskActivity extends AppCompatActivity {
             region = explain.getString("region", null);
 
             if (region != null)
-                regionText.setText("선택지역 : " + region);
+                regionText.setText("[선택지역] " + region);
 
             regionText.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -146,7 +146,7 @@ public class TaskActivity extends AppCompatActivity {
         if(intent.getStringExtra("taskview").equals("text")) {
             srcTaskView2 = (View) findViewById(R.id.srcview2);
         }
-        mTaskView.setContent(mId, tempsrcURI, this, srcTaskView1, srcTaskView2);
+        mTaskView.setContent(mId, tempsrcURI, this, tasktype, 0, srcTaskView1, srcTaskView2);
 
         //Controller에 source설정
         View view = findViewById(R.id.controller);

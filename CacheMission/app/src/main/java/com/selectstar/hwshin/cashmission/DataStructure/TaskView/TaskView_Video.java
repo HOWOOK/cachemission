@@ -26,7 +26,7 @@ public class TaskView_Video extends TaskView {
 
 
     @Override
-    public void setContent(String id, String ContentURI, final Context context, final View... view) {
+    public void setContent(String id, String ContentURI, final Context context, String taskType, int examType, final View... view) {
 
         SharedPreferences token = parentActivity.getSharedPreferences("token",Context.MODE_PRIVATE);
         final String logintoken = token.getString("logintoken",null);
@@ -36,7 +36,7 @@ public class TaskView_Video extends TaskView {
             try {
                 param.put("id", id);
 
-                new HttpRequest() {
+                new HttpRequest(parentActivity) {
                     @Override
                     protected void onPostExecute(Object o) {
                         super.onPostExecute(o);

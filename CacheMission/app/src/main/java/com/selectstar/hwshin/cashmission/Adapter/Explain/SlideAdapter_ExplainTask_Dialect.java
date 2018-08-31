@@ -25,12 +25,14 @@ public class SlideAdapter_ExplainTask_Dialect extends PagerAdapter {
     public int[] list_images={
             R.drawable.explain_task_dialect1,
             R.drawable.explain_task_dialect2,
+            R.drawable.explain_task_dialect2,
             R.drawable.explain_task_dialect3
     };
     public String[] list_description={
             "1.구사 가능한 사투리를 선택해주세요.\n(다른 사투리 미션에서 설정했다면\n자동으로 설정됩니다.)",
-            "2.주어진 상황 설명을 보고\n그에 맞는 문장을 사투리로 적고\n제출을 눌러주세요!",
-            "3.다른 사람이 같은 문장을\n먼저 제출했거나, 표현이 어색할 경우\n보상을 못 드릴 수도 있습니다ㅠㅠ"
+            "2.주어진 상황 설명을 보고\n그에 맞는 문장을 사투리로 적고\n제출을 눌러주세요.",
+            "3.글로 썼을때는 사투리 처럼 안보이고\n억양만 사투리여도\n그대로 적어주시면 됩니다!",
+            "4.다른 사람이 같은 문장을\n먼저 제출했거나, 표현이 어색할 경우\n보상을 못 드릴 수도 있습니다ㅠㅠ"
     };
 
 
