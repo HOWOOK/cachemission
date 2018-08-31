@@ -2,8 +2,10 @@ package com.selectstar.hwshin.cashmission.DataStructure.TaskView;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,7 +22,7 @@ public class TaskView_Text extends TaskView {
     }
 
     @Override
-    public void setContent(String id, String contentURI, Context context, final View... view) {
+    public void setContent(String id, String contentURI, final Context context, final String taskType, int examType, final View... view) {
         SharedPreferences token = parentActivity.getSharedPreferences("token",Context.MODE_PRIVATE);
         final String logintoken = token.getString("logintoken",null);
 
@@ -29,14 +31,14 @@ public class TaskView_Text extends TaskView {
             try {
                 param.put("id", id);
 
-                if(id.equals("4")){//RECORD일때는 지역을 같이 넣어서 요청해야함
+                if(id.equals("5")){//RECORD일때는 지역을 같이 넣어서 요청해야함
                     String region;
                     SharedPreferences explain = parentActivity.getSharedPreferences("region", Context.MODE_PRIVATE);
                     region = explain.getString("region",null);
                     param.put("region", region);
                 }
 
-                new HttpRequest() {
+                new HttpRequest(parentActivity) {
                     @Override
                     protected void onPostExecute(Object o) {
                         super.onPostExecute(o);
@@ -49,25 +51,27 @@ public class TaskView_Text extends TaskView {
                                 responeText = resulttemp.get("text").toString();
 
                                 //Text parsing /를 기준으로 나눠서 TextVIew에 넣어준다.
-
-                                String[] array = responeText.split("/");
-                                String[] array2 = array[1].split("\\(");
-                                String[] array3 =null;
-                                if(array2.length!=1)//tasktype record
-                                    array3 = array2[1].split("\\)");
-
                                 TextView textView1 = (TextView) view[0];
                                 TextView textView2 = (TextView) view[1];
+                                String[] array;
+                                String[] array2;
+                                String[] array3;
 
-                                if(array2.length!=1) {//tasktype record
-                                    textView1.setText("<"+array[0]+">"+"\n"+array2[0]);
+                                if(taskType.equals("DIALECT")){
+                                    array = responeText.split("/");
+                                    textView1.setText("["+array[0]+"]");
+                                    textView1.setBackground(ContextCompat.getDrawable(context, R.drawable.textview_custom2));
+                                    textView1.setTextSize(20);
+                                    textView2.setText(array[1]);
+                                    textView2.setTextColor(ContextCompat.getColor(context, R.color.fontColorActive));
+                                }else if(taskType.equals("RECORD")){
+                                    array = responeText.split("/");
+                                    array2 = array[1].split("\\(");
+                                    array3 = array2[1].split("\\)");
+                                    textView1.setText("["+array[0]+"]"+"\n"+array2[0]);
+                                    textView1.setBackground(ContextCompat.getDrawable(context, R.drawable.textview_custom1));
                                     textView2.setText("(" + array3[0] + ")" + "\n" + array3[1]);
                                 }
-                                else //tasktype dialect
-                                    textView2.setText("<"+array[0]+">"+"\n"+array[1]);
-
-
-
                                 String taskID = resulttemp.get("baseID").toString();
                                 settaskID(Integer.parseInt(taskID));
 
@@ -89,14 +93,36 @@ public class TaskView_Text extends TaskView {
         }
         else{//examining
             //text를 /와 (와 )를 기준으로 나눠서 각각 텍스트뷰에 넣어준다.
-            String[] array = contentURI.split("/");
-            String[] array2 = array[1].split("\\(");
-            String[] array3 = array2[1].split("\\)");
-
             TextView textView1 = (TextView) view[0];
             TextView textView2 = (TextView) view[1];
-            textView1.setText("<"+array[0]+">"+"\n"+array2[0]);
-            textView2.setText("("+array3[0]+")"+"\n"+array3[1]);
+            String[] array;
+            String[] array2;
+            String[] array3;
+
+            if(examType==1){//문장만 제대로 읽었는지 검수
+                array = contentURI.split("/");
+                array2 = array[1].split("\\(");
+                array3 = array2[1].split("\\)");
+                textView1.setText("["+array[0]+"]"+"\n"+array2[0]);
+                textView1.setBackground(ContextCompat.getDrawable(context, R.drawable.textview_custom1));
+                textView2.setText(array3[1]);
+            }else if(examType==2){//사투리 발음까지 제대로 했는지 검수
+                array = contentURI.split("/");
+                array2 = array[1].split("\\(");
+                array3 = array2[1].split("\\)");
+                textView1.setText("["+array[0]+"]"+"\n"+array2[0]);
+                textView1.setBackground(ContextCompat.getDrawable(context, R.drawable.textview_custom1));
+                textView2.setText("("+array3[0]+")"+"\n"+array3[1]);
+            }
+
+//            String[] array = contentURI.split("/");
+//            String[] array2 = array[1].split("\\(");
+//            String[] array3 = array2[1].split("\\)");
+//
+//            TextView textView1 = (TextView) view[0];
+//            TextView textView2 = (TextView) view[1];
+//            textView1.setText("<"+array[0]+">"+"\n"+array2[0]);
+//            textView2.setText("("+array3[0]+")"+"\n"+array3[1]);
 
         }
     }

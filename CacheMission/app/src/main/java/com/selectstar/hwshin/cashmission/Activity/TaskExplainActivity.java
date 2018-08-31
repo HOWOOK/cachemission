@@ -43,10 +43,11 @@ public class TaskExplainActivity extends AppCompatActivity {
         SharedPreferences tasktoken = getSharedPreferences("tasktoken", MODE_PRIVATE);
         SharedPreferences.Editor editor = tasktoken.edit();
         editor.putInt(tasktype + "tasktoken", 100);
+        if(tasktype.equals("RECORDEXAM")) {
+            examType = intent.getIntExtra("examType", 0);
+            editor.putInt(tasktype + examType+"tasktoken", 100);
+        }
         editor.commit();
-
-        if(tasktype.equals("RECORDEXAM"))
-            examType = intent.getIntExtra("examType",0);
 
         myadapter= findAdaptingTaskExplain(tasktype);
         viewpager.setAdapter(myadapter);

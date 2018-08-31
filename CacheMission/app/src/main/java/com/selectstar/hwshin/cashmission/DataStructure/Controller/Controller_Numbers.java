@@ -81,7 +81,7 @@ public class Controller_Numbers extends Controller {
                    param2.put("answerID", mtaskview.gettaskID());
                    param2.put("taskID", id);
                    param2.put("submit", radioGroup.getCheckedRadioButtonId());
-                   new HttpRequest() {
+                   new HttpRequest(parentActivity) {
                        @Override
                        protected void onPostExecute(Object o) {
                            super.onPostExecute(o);
