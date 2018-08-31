@@ -1,6 +1,7 @@
 package com.selectstar.hwshin.cashmission.Activity;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import org.json.JSONObject;
 
 public class ExchangeActivity extends AppCompatActivity {
 
+    Context context = this;
     EditText exchangemain;
     Button send_btn;
 
@@ -71,7 +73,7 @@ public class ExchangeActivity extends AppCompatActivity {
                 try {
                     param.put("exchange", exchangeVal);
 
-                    new HttpRequest(){
+                    new HttpRequest(context){
                         @Override
                         protected void onPostExecute(Object o) {
                             super.onPostExecute(o);

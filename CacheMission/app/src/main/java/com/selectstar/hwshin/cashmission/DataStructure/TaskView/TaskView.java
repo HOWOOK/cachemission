@@ -22,5 +22,5 @@ public abstract class TaskView {
     public int gettaskID(){
         return this.taskID;
     }
-    public abstract void setContent(String id, String contentURI, Context context, View... view);
+    public abstract void setContent(String id, String contentURI, Context context, String taskType, int examType, View... view);
 }

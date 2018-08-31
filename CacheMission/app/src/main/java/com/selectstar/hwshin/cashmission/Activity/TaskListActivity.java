@@ -1,5 +1,6 @@
 package com.selectstar.hwshin.cashmission.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
@@ -61,8 +62,7 @@ public class TaskListActivity extends AppCompatActivity {
         try {
             param.put("requestlist", "tasklist");
 
-
-            new HttpRequest() {
+            new HttpRequest(this) {
                 @Override
                 protected void onPostExecute(Object o) {
                     super.onPostExecute(o);
