@@ -3,26 +3,19 @@ package com.selectstar.hwshin.cashmission.DataStructure.Controller;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Build;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import com.selectstar.hwshin.cashmission.Activity.LoginActivity;
-import com.selectstar.hwshin.cashmission.Adapter.numbergridadapter;
 import com.selectstar.hwshin.cashmission.DataStructure.HttpRequest;
 import com.selectstar.hwshin.cashmission.R;
 
@@ -30,14 +23,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
 public class Controller_Numbers extends Controller {
     public Controller_Numbers() {
         controllerID = R.layout.controller_numbers;
     }
-    private String result="foobar";
-
     @Override
     public void setLayout(final String id, View view, Context c, Intent in, String buttons) {
 
@@ -46,54 +35,50 @@ public class Controller_Numbers extends Controller {
 
         ConstraintLayout templayout =(ConstraintLayout) view;
         Button numberbutton=templayout.findViewById(R.id.numberbutton);
-
-        //final RadioGroup radioGroup=templayout.findViewById(R.id.numberradio);
-       // radioGroup.setOrientation(RadioGroup.HORIZONTAL);
-        //RadioGroup.LayoutParams params;
+        final RadioGroup radioGroup=templayout.findViewById(R.id.numberradio);
+        radioGroup.setOrientation(RadioGroup.HORIZONTAL);
+        RadioGroup.LayoutParams params;
         JSONArray res = null;
+        /*
+        ConstraintLayout cl = (ConstraintLayout) view.findViewById(R.id.numberscons);
 
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(cl);
+        constraintSet.connect(R.id.explainTaskText, ConstraintSet.TOP, R.id.numberscons, ConstraintSet.TOP);
+        constraintSet.connect(R.id.explainTaskText, ConstraintSet.START, R.id.taskExplainContLayout,ConstraintSet.START);
+        constraintSet.connect(R.id.explainTaskText, ConstraintSet.END, R.id.taskExplainContLayout,ConstraintSet.END);
+        constraintSet.connect(R.id.explainTaskText, ConstraintSet.BOTTOM, R.id.taskExplainContLayout, ConstraintSet.BOTTOM);
+        */
         try {
             res = new JSONArray(buttons);
 
-            GridView gv=templayout.findViewById(R.id.gridViewff);
-            //gv.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT));
-            gv.setNumColumns(Integer.parseInt(res.get(0).toString()));
-            ArrayList<ImageView> as=new ArrayList<>();
-            for(int i=0; i<Integer.parseInt(res.get(0).toString());i++){
-            ImageView iv =new ImageView(parentActivity);
-            as.add(iv);
+        for(int i=0; i<Integer.parseInt(res.get(0).toString());i++){
+            RadioButton rb= new RadioButton(parentActivity);
+            rb.setText(String.valueOf(i+1));
+            rb.setTextSize(15);
+            rb.setPadding(0,0,0,20);
+            rb.setGravity(Gravity.CENTER);
+            //rb.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                rb.setButtonDrawable(null);
+                rb.setBackground(parentActivity.getDrawable(R.drawable.radiobutton));
             }
-            numbergridadapter adapter=new numbergridadapter(c,R.layout.number_button_item,as);
-            gv.setAdapter(adapter);
+            params=new RadioGroup.LayoutParams(RadioGroup.LayoutParams.MATCH_PARENT,RadioGroup.LayoutParams.MATCH_PARENT);
+            radioGroup.addView(rb,params);
+        }
+        //templayout.addView(radioGroup);
 
-            gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int position, long ids) {
-                    result=String.valueOf(position+1);
-                }
-            });
-            for(int i=0; i<Integer.parseInt(res.get(0).toString());i++){
-
-
-            }
-
-
-
-          //  cl.addView(IMGS[i]);
-
-
-
-
-            //cl.addView(IMGS[1]);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        //Log.d("forbid",String.valueOf(radioGroup.getCheckedRadioButtonId()));
        numberbutton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
+
                if (result.equals("foobar")) {
                 Toast.makeText(parentActivity,"먼저 호감도를 선택해 주세요",Toast.LENGTH_SHORT).show();
+
 
                } else {
                    JSONObject param2 = new JSONObject();
@@ -102,7 +87,7 @@ public class Controller_Numbers extends Controller {
 
                        param2.put("answerID", mtaskview.gettaskID());
                        param2.put("taskID", id);
-                       param2.put("submit", Integer.parseInt(result));
+                       param2.put("submit", radioGroup.getCheckedRadioButtonId());
                        new HttpRequest() {
                            @Override
                            protected void onPostExecute(Object o) {
