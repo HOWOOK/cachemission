@@ -56,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         idText = findViewById(R.id.edit_id);
         pwText = findViewById(R.id.edit_pw);
         loginButton = findViewById(R.id.button_in);
+        System.out.println(loginButton);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
                     JSONObject param = new JSONObject();
                     param.put("id", idVal);
                     param.put("pw", pwVal);
-                    new HttpRequest(view.getContext()){
+                    new HttpRequest(){
                         @Override
                         protected void onPostExecute(Object o) {
                             super.onPostExecute(o);

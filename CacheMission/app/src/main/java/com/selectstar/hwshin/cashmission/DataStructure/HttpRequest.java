@@ -1,8 +1,6 @@
 package com.selectstar.hwshin.cashmission.DataStructure;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 
 import java.io.BufferedReader;
@@ -19,21 +17,8 @@ public class HttpRequest extends AsyncTask{
     String img_binary = null;
     public String result = "";
 
-    private ProgressDialog httpDialog;
-    private Context mContext;
 
-    public HttpRequest(Context context){
-        mContext= context;
-    }
 
-    @Override
-    protected void onPreExecute() {
-        httpDialog = new ProgressDialog(mContext);
-        httpDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        httpDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        httpDialog.show();
-        super.onPreExecute();
-    }
 
     @Override
     protected Object doInBackground(Object[] objects) {
@@ -107,7 +92,6 @@ public class HttpRequest extends AsyncTask{
         line = bufferedReader.readLine();
         result += line;
         inputStream.close();
-        httpDialog.dismiss();
         return result;
 
     }

@@ -81,7 +81,7 @@ public class Controller_Buttons extends Controller {
                                     param2.put("submit", submit);
 
 
-                                    new HttpRequest(parentActivity) {
+                                    new HttpRequest() {
                                         @Override
                                         protected void onPostExecute(Object o) {
                                             super.onPostExecute(o);

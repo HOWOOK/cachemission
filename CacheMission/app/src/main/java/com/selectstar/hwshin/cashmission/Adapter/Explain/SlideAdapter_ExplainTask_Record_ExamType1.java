@@ -23,10 +23,10 @@ public class SlideAdapter_ExplainTask_Record_ExamType1 extends PagerAdapter {
 
 
     public int[] list_images={
-            R.drawable.explain_task_dialect7
+            R.drawable.explain_task_dialect6
     };
     public String[] list_description={
-            "재생 버튼을 눌러 음성을 들어주세요.\n주어진 문장을 정확히 읽었다면 O표를\n아니라면 X를 누르고 제출을 눌러주세요."
+            "설명서 시나리오를 못받았습니다.1",
     };
 
 

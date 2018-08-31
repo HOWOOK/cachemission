@@ -43,7 +43,6 @@ public class ExamActivity extends AppCompatActivity {
     private UIHashmap uiHashmap;
     String baseID;
     String tasktype;
-    int examtype;
     String colorflag="";
 
 
@@ -53,7 +52,6 @@ public class ExamActivity extends AppCompatActivity {
         setContentView(R.layout.activity_exam);
         //캡쳐방지
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
-
         SharedPreferences token = getSharedPreferences("token",Context.MODE_PRIVATE);
         final String logintoken = token.getString("logintoken",null);
 
@@ -76,7 +74,6 @@ public class ExamActivity extends AppCompatActivity {
         controllerID = mExamView.ExamViewID;
 
         tasktype = intent.getStringExtra("tasktype");
-        examtype = intent.getIntExtra("examtype",0);
 
         // TaskView Inflating
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -110,7 +107,7 @@ public class ExamActivity extends AppCompatActivity {
             param.put("taskID", Integer.parseInt(mId));
             param.put("examType", intent.getIntExtra("examtype",0));
 
-            new HttpRequest(this) {
+            new HttpRequest() {
                 @Override
                 protected void onPostExecute(Object o) {
                     super.onPostExecute(o);
@@ -139,7 +136,7 @@ public class ExamActivity extends AppCompatActivity {
                             if(intent.getStringExtra("taskview").equals("text")) {
                                 srcTaskView2 = (View) findViewById(R.id.srcview2);
                             }
-                            mTaskView.setContent(mId, tempsrcURI, context, tasktype, examtype, srcTaskView1, srcTaskView2);
+                            mTaskView.setContent(mId, tempsrcURI, context, srcTaskView1, srcTaskView2);
                             View view = findViewById(R.id.examview);
 
 
@@ -234,7 +231,7 @@ public class ExamActivity extends AppCompatActivity {
                     }else {
                         Log.d("examwhat",String.valueOf(exam));
                         param.put("submit", exam);
-                        new HttpRequest(context) {
+                        new HttpRequest() {
                             @Override
                             protected void onPostExecute(Object o) {
                                 super.onPostExecute(o);
@@ -270,12 +267,11 @@ public class ExamActivity extends AppCompatActivity {
 
         //해당 task가 처음이라면 설명서 띄워주는 것
         SharedPreferences tasktoken = getSharedPreferences("tasktoken", MODE_PRIVATE);
-        if(tasktoken.getInt(tasktype+examtype+"tasktoken",0) == 100){
+        if(tasktoken.getInt(tasktype+"tasktoken",0) == 100){
             //do nothing
         }else{
             Intent intent_taskExplain = new Intent(ExamActivity.this, TaskExplainActivity.class);
             intent_taskExplain.putExtra("tasktype", tasktype);
-            intent_taskExplain.putExtra("examType", examtype);
             startActivity(intent_taskExplain);
         }
 
@@ -286,7 +282,7 @@ public class ExamActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent_taskExplain = new Intent(ExamActivity.this, TaskExplainActivity.class);
                 intent_taskExplain.putExtra("tasktype", tasktype);
-                intent_taskExplain.putExtra("examType", examtype);
+                intent_taskExplain.putExtra("examType", intent.getIntExtra("examtype",0));
                 startActivity(intent_taskExplain);
             }
         });

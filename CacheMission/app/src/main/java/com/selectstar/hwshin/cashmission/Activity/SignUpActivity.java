@@ -3,7 +3,6 @@ package com.selectstar.hwshin.cashmission.Activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,7 +22,6 @@ import org.json.JSONObject;
 import java.util.regex.Pattern;
 
 public class SignUpActivity extends AppCompatActivity {
-    Context context = this;
     EditText idText;
     EditText pwText;
     EditText pw2Text;
@@ -90,7 +88,7 @@ public class SignUpActivity extends AppCompatActivity {
                     param.put("nickname",nameVal);
                     param.put("region",regionVal);
                     param.put("description", descriptionVal);
-                    new HttpRequest(context){
+                    new HttpRequest(){
                         @Override
                         protected void onPostExecute(Object o) {
                             super.onPostExecute(o);
@@ -125,7 +123,7 @@ public class SignUpActivity extends AppCompatActivity {
                 try {
                     JSONObject param = new JSONObject();
                     param.put("id", idVal);
-                    new HttpRequest(context){
+                    new HttpRequest(){
                         @Override
                         protected void onPostExecute(Object o) {
                             super.onPostExecute(o);

@@ -25,7 +25,7 @@ public class TaskView_Voice extends TaskView {
         taskViewID = R.layout.taskview_voice;
     }
     @Override
-    public void setContent(String id, final String contentURI, final Context context, String taskType, int examType, final View... view) {
+    public void setContent(String id, final String contentURI, final Context context, final View... view) {
         SharedPreferences token = parentActivity.getSharedPreferences("token",Context.MODE_PRIVATE);
         final String logintoken = token.getString("logintoken",null);
 
@@ -37,7 +37,7 @@ public class TaskView_Voice extends TaskView {
             try {
                 param.put("id", id);
 
-                new HttpRequest(parentActivity) {
+                new HttpRequest() {
                     @Override
                     protected void onPostExecute(Object o) {
                         super.onPostExecute(o);

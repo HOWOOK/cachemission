@@ -92,9 +92,8 @@ public class Controller_Numbers extends Controller {
        numberbutton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-
                if (radioGroup.getCheckedRadioButtonId() == -1) {
-                    Toast.makeText(parentActivity,"먼저 호감도를 선택해주세요",Toast.LENGTH_SHORT).show();
+Toast.makeText(parentActivity,"먼저 호감도를 선택해주세요",Toast.LENGTH_SHORT).show();
 
                } else {
                    JSONObject param2 = new JSONObject();
@@ -104,7 +103,7 @@ public class Controller_Numbers extends Controller {
                        param2.put("answerID", mtaskview.gettaskID());
                        param2.put("taskID", id);
                        param2.put("submit", radioGroup.getCheckedRadioButtonId());
-                       new HttpRequest(parentActivity) {
+                       new HttpRequest() {
                            @Override
                            protected void onPostExecute(Object o) {
                                super.onPostExecute(o);

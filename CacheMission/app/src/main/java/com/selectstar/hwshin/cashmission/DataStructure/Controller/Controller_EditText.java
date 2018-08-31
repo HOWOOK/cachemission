@@ -46,7 +46,7 @@ public class Controller_EditText extends Controller {
                         submit = "("+region+")"+submit;
                     }
                     param2.put("submit", submit);
-                    new HttpRequest(parentActivity) {
+                    new HttpRequest() {
                         @Override
                         protected void onPostExecute(Object o) {
                             super.onPostExecute(o);
