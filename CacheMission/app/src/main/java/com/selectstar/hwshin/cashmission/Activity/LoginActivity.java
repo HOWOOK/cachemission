@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 import com.selectstar.hwshin.cashmission.DataStructure.HttpRequest;
@@ -29,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText pwText;
     Button loginButton;
     Button upButton;
+    Button findid,findpw;
     final int P_RECORD_AUDIO=77;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +106,21 @@ public class LoginActivity extends AppCompatActivity {
                 startActivityForResult(intent,1);
             }
         });
+        findid=findViewById(R.id.button_findid);
+        findpw=findViewById(R.id.button_findpw);
+        findid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"알파테스트에서 구현되지 않은 사항입니다. 앱 추천인에게 문의하세요!",Toast.LENGTH_SHORT).show();
+            }
+        });
+        findpw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"알파테스트에서 구현되지 않은 사항입니다. 앱 추천인에게 문의하세요!",Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
     }
 

@@ -151,7 +151,7 @@ public class ExamActivity extends AppCompatActivity {
                             else{
                                 answer = resulttemp.get("answer_text").toString();
                             }
-
+Log.d("answernow",answer);
                             mExamView.setLayout(mId,view,getApplicationContext(),intent,buttons,answer);
 
                         }
