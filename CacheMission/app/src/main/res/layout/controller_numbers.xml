@@ -7,6 +7,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/numbersText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
+        android:text="호감도를 선택해주세요."
+        android:textColor="@color/colorAccent"
+        android:textSize="27dp"
+        android:fontFamily="@font/nanumsquareeb_"
+        app:layout_constraintBottom_toTopOf="@+id/gridViewff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <GridView
         android:id="@+id/gridViewff"
@@ -14,15 +28,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:stretchMode="columnWidth"
-android:listSelector="@color/colorAccent"
+        android:listSelector="@drawable/listselector"
         app:layout_constraintBottom_toTopOf="@+id/numberbutton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/numbersText"
         />
-
-
 
     <Button
         android:id="@+id/numberbutton"
