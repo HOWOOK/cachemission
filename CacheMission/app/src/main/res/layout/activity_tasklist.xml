@@ -117,7 +117,7 @@
                     style="@style/maincard"
                     android:layout_marginRight="3dp"
                     android:layout_marginBottom="3dp"
-                    android:text="누적 적립금"
+                    android:text="현재 적립금"
                     app:layout_constraintEnd_toStartOf="@+id/money"
                     app:layout_constraintBottom_toTopOf="@+id/textView2"
                     />

@@ -106,11 +106,11 @@ public class Controller_Voice extends Controller {
                             File f2 = new File(i2.getPath());
                             //f2.delete();
                             if (serverResponseCode == 200) {
-
+                                parentIntent.putExtra("from",1);
                                 parentActivity.startActivity(parentIntent);
                                 parentActivity.finish();
                             } else {
-                                //Toast.makeText(parentActivity,"남은 테스크가 없습니다.",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(parentActivity,"남은 테스크가 없습니다.",Toast.LENGTH_SHORT).show();
                                 parentActivity.finish();
                             }
                         }

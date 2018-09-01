@@ -72,6 +72,7 @@ public class Controller_EditText extends Controller {
                                     }
 
                                 } else {
+                                    parentIntent.putExtra("from",1);
                                     parentActivity.startActivity(parentIntent);
                                     parentActivity.finish();
 

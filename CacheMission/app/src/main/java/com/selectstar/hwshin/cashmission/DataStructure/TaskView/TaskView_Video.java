@@ -58,8 +58,12 @@ public class TaskView_Video extends TaskView {
                                 settaskID(Integer.parseInt(taskID));
 
                             }else{
-                                Toast.makeText(parentActivity,"테스크를 모두 완료했습니다. 테스크 리스트로 돌아갑니다.",Toast.LENGTH_SHORT).show();
+                                if(parentActivity.getIntent().getIntExtra("from",0)==0){
+                                    Toast.makeText(parentActivity, "회원님이 선택하신 지역에 해당하는 과제가 더이상 없습니다. 테스크 리스트로 돌아갑니다.", Toast.LENGTH_SHORT).show();
 
+                                }else {
+                                    Toast.makeText(parentActivity, "테스크를 모두 완료했습니다. 테스크 리스트로 돌아갑니다.", Toast.LENGTH_SHORT).show();
+                                }
                                 parentActivity.finish();
                             }
                         } catch (JSONException e) {

@@ -50,7 +50,8 @@ public class TaskListActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
+        final Intent intent_task = new Intent(TaskListActivity.this, TaskActivity.class);
+        final Intent intent_exam = new Intent(TaskListActivity.this, ExamActivity.class);
         //시작하면 일단 토큰을 받아옴
         SharedPreferences token = getSharedPreferences("token",MODE_PRIVATE);
         String stringtoken;
@@ -142,8 +143,10 @@ public class TaskListActivity extends AppCompatActivity {
                             reliability.setText(String.valueOf(user.get("reliability"))+" %");
                             //progress bar setting
                             setuserprogressbar(progress, Integer.parseInt(user.get("rank").toString()), Integer.parseInt(user.get("success_count").toString()));
-
-
+                            intent_task.putExtra("goldnow","\uFFE6 "+String.valueOf(user.get("gold")));
+                            intent_task.putExtra("goldpre","\uFFE6 "+String.valueOf(user.get("maybe")));
+                            intent_exam.putExtra("goldnow","\uFFE6 "+String.valueOf(user.get("gold")));
+                            intent_exam.putExtra("goldpre","\uFFE6 "+String.valueOf(user.get("maybe")));
                             //Task 리스트 띄우기
                             mTaskList.clear();
                             JSONArray exam_res = (JSONArray) resulttemp.get("exam_data");
@@ -182,8 +185,7 @@ public class TaskListActivity extends AppCompatActivity {
                             @Override
                             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
-                                Intent intent_task = new Intent(TaskListActivity.this, TaskActivity.class);
-                                Intent intent_exam = new Intent(TaskListActivity.this, ExamActivity.class);
+
 
                                 int flag=((TaskListItem)adapterView.getItemAtPosition(position)).getTaskFlag();
 
@@ -202,6 +204,7 @@ public class TaskListActivity extends AppCompatActivity {
                                     intent_task.putExtra("controller", controller);
                                     intent_task.putExtra("buttons", buttons);
                                     intent_task.putExtra("taskid", taskid);
+                                    intent_task.putExtra("from", 0);
 
                                     TaskListActivity.this.startActivity(intent_task);
                                 }
@@ -213,7 +216,7 @@ public class TaskListActivity extends AppCompatActivity {
                                     intent_exam.putExtra("buttons", buttons);
                                     intent_exam.putExtra("taskid", taskid);
                                     intent_exam.putExtra("examtype", ((TaskListItem)adapterView.getItemAtPosition(position)).getExamType());
-
+                                    intent_exam.putExtra("from", 0);
                                     TaskListActivity.this.startActivity(intent_exam);
                                 }
 

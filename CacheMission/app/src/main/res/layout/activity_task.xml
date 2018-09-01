@@ -18,6 +18,7 @@
         android:id="@+id/tasktitle"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:background="@color/colorPrimaryDark"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/taskview"
@@ -28,7 +29,7 @@
             style="@style/normalTitle"
             android:text="@string/textnotload"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/goldpre"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,7 +42,40 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/goldnow"
             app:srcCompat="@drawable/questionmark" />
+
+        <TextView
+            android:id="@+id/goldpre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="\uFFE6 0"
+            android:fontFamily="@font/nanumsquareb_"
+            android:textColor="#90FFFFFF"
+            android:textSize="12dp"
+            app:layout_constraintTop_toBottomOf="@+id/goldnow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tasktitletext"
+            app:layout_constraintEnd_toStartOf="@+id/howbtn"
+            />
+
+        <TextView
+            android:id="@+id/goldnow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="\uFFE6 0"
+            android:textColor="#FFFFFF"
+            android:fontFamily="@font/nanumsquareb_"
+            android:textSize="12dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/goldpre"
+            app:layout_constraintStart_toEndOf="@id/tasktitletext"
+            app:layout_constraintEnd_toStartOf="@+id/howbtn"
+            />
 
     </android.support.constraint.ConstraintLayout>
 

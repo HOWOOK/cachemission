@@ -14,11 +14,16 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.selectstar.hwshin.cashmission.DataStructure.Controller.Controller;
+import com.selectstar.hwshin.cashmission.DataStructure.HttpRequest;
 import com.selectstar.hwshin.cashmission.DataStructure.TaskView.TaskView;
 import com.selectstar.hwshin.cashmission.DataStructure.UIHashmap;
 import com.selectstar.hwshin.cashmission.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class TaskActivity extends AppCompatActivity {
 
@@ -88,6 +93,13 @@ public class TaskActivity extends AppCompatActivity {
         //캡쳐방지
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
 
+
+        SharedPreferences token = getSharedPreferences("token",MODE_PRIVATE);
+        String stringtoken;
+        stringtoken = token.getString("logintoken",null);
+        if(stringtoken==null){
+            stringtoken="";
+        }
         /*
         *intent로 부터 받아와야할 것 :   1. 어떤 controller를 사용하는지
         * 2. 어떤 taskview를 사용하는지  3. 두개의 constraint 관계는 어떤지
@@ -173,7 +185,43 @@ public class TaskActivity extends AppCompatActivity {
             }
         });
 
+        final TextView goldpre=findViewById(R.id.goldpre);
+        final TextView goldnow=findViewById(R.id.goldnow);
+        //String goldp=intent.getStringExtra("goldpre");
+        //String goldn=intent.getStringExtra("goldnow");
+        //goldpre.setText("예정 : "+goldp);
+        //goldnow.setText("현재 : "+goldn);
+        JSONObject param2 = new JSONObject();
 
+        try {
+            param2.put("requestlist", "tasklist");
+
+            new HttpRequest(this) {
+                @Override
+                protected void onPostExecute(Object o) {
+                    super.onPostExecute(o);
+
+                    try {
+                        JSONObject resulttemp = new JSONObject(result);
+                        if (resulttemp.get("success").toString().equals("false")) {
+
+
+                        } else {
+                            JSONObject user = (JSONObject) resulttemp.get("user");
+                            goldpre.setText("예정 : "+"\uFFE6 "+String.valueOf(user.get("maybe")));
+                            goldnow.setText("현재 : "+"\uFFE6 "+String.valueOf(user.get("gold")));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+            }.execute(this.getString(R.string.mainurl) + "/main", param2, stringtoken);
+        } catch (JSONException e) {
+            e.printStackTrace();
+
+        }
 
 
     }

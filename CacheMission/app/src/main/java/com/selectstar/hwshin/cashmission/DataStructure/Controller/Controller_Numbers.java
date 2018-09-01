@@ -129,6 +129,7 @@ public class Controller_Numbers extends Controller {
                                        }
 
                                    } else {
+                                       parentIntent.putExtra("from",1);
                                        parentActivity.startActivity(parentIntent);
                                        parentActivity.finish();
 

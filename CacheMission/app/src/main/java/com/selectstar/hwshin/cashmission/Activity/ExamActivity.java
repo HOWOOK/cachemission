@@ -156,7 +156,7 @@ Log.d("answernow",answer);
 
                         }
                         else{
-                            Toast.makeText(getApplicationContext(),"남은 테스크가 없습니다",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"남은 테스크가 없습니다. 테스크 리스트로 돌아갑니다.",Toast.LENGTH_SHORT).show();
 
                             finish();
 
@@ -247,8 +247,10 @@ Log.d("answernow",answer);
                                         startActivity(intent);
                                         finish();
                                     } else {
+                                        Toast.makeText(getApplicationContext(),"남은 검수작업이 없습니다. 테스크리스트로 돌아갑니다.",Toast.LENGTH_SHORT).show();
                                         Intent notaskanymore = new Intent(getApplicationContext(), TaskListActivity.class);
                                         startActivity(notaskanymore);
+                                        finish();
 
                                     }
                                 } catch (JSONException e) {
