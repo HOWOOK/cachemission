@@ -55,13 +55,28 @@
             android:id="@+id/gold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="@string/none"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="\\ 3"
             android:textColor="@color/colorPrimary"
             android:textSize="18dp"
             android:fontFamily="@font/nanumsquareeb_"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/taskType" />
+
+        <TextView
+            android:id="@+id/dailyMission"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="오늘의 미션 [31/200]\n보상 : \\ 50"
+            android:textColor="@color/fontColorInactive"
+            android:textSize="13dp"
+            android:fontFamily="@font/nanumsquareeb_"
+            app:layout_constraintStart_toEndOf="@+id/gold"
+            app:layout_constraintTop_toTopOf="@+id/gold"
+            />
+
 
         <ImageView
             android:id="@+id/taskIn"

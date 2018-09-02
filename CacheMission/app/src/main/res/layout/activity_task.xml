@@ -77,6 +77,34 @@
             app:layout_constraintEnd_toStartOf="@+id/howbtn"
             />
 
+        <TextView
+            android:id="@+id/goldpre_anim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/nanumsquareb_"
+            android:textColor="@color/colorAccent"
+            android:textSize="12dp"
+            app:layout_constraintTop_toBottomOf="@+id/goldnow_anim"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/goldpre"
+            />
+
+        <TextView
+            android:id="@+id/goldnow_anim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/colorAccent"
+            android:fontFamily="@font/nanumsquareb_"
+            android:textSize="12dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/goldpre_anim"
+            app:layout_constraintEnd_toStartOf="@+id/goldnow"
+            />
+
     </android.support.constraint.ConstraintLayout>
 
     <TextView

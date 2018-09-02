@@ -130,6 +130,9 @@ public class Controller_Numbers extends Controller {
 
                                    } else {
                                        parentIntent.putExtra("from",1);
+                                       parentIntent.putExtra("maybe_up", String.valueOf(resulttemp.get("maybe_up")));
+                                       parentIntent.putExtra("gold_up", String.valueOf(resulttemp.get("gold_up")));
+                                       parentIntent.putExtra("bonus_up", String.valueOf(resulttemp.get("bonus_up")));
                                        parentActivity.startActivity(parentIntent);
                                        parentActivity.finish();
 

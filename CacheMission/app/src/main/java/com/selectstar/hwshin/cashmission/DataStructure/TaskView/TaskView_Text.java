@@ -31,7 +31,7 @@ public class TaskView_Text extends TaskView {
             try {
                 param.put("id", id);
 
-                if(id.equals("5")){//RECORD일때는 지역을 같이 넣어서 요청해야함
+                if(taskType.equals("RECORD")){//RECORD일때는 지역을 같이 넣어서 요청해야함
                     String region;
                     SharedPreferences explain = parentActivity.getSharedPreferences("region", Context.MODE_PRIVATE);
                     region = explain.getString("region",null);
@@ -62,7 +62,7 @@ public class TaskView_Text extends TaskView {
                                     textView1.setText("["+array[0]+"]");
                                     textView1.setBackground(ContextCompat.getDrawable(context, R.drawable.textview_custom2));
                                     textView1.setTextSize(18);
-                                    textView2.setText(array[1]+"\n\n※ 억양만 사투리어도 그대로 적어주세요.");
+                                    textView2.setText(array[1]+"\n\n※ 억양만 사투리여도 그대로 적어주세요.");
                                     textView2.setTextColor(ContextCompat.getColor(context, R.color.fontColorActive));
                                     textView2.setTextSize(18);
                                 }else if(taskType.equals("RECORD")){
