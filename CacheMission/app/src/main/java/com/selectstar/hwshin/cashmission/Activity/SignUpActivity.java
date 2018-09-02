@@ -122,6 +122,12 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 final String idVal = idText.getText().toString();
+                boolean checkisemailformat = Pattern.matches("^(.+)(@)(.+)(\\.)(.+)$", idVal);
+                if(!checkisemailformat)
+                {
+                    getDialog("회원가입 양식에 문제가 있습니다.","ID가 이메일 형식이 아닙니다.");
+                    return;
+                }
                 try {
                     JSONObject param = new JSONObject();
                     param.put("id", idVal);
@@ -129,7 +135,6 @@ public class SignUpActivity extends AppCompatActivity {
                         @Override
                         protected void onPostExecute(Object o) {
                             super.onPostExecute(o);
-                            System.out.println(result);
                             try {
                                 JSONObject res = new JSONObject(result);
                                 if (res.get("success").toString() == "true") {
@@ -194,7 +199,6 @@ public class SignUpActivity extends AppCompatActivity {
         }
         if(!pw1.equals(pw2))
         {
-
             getDialog("회원가입 양식에 문제가 있습니다.","비밀번호확인이 일치하지 않습니다.");
             return true;
         }

@@ -61,16 +61,19 @@ public class TaskView_Text extends TaskView {
                                     array = responeText.split("/");
                                     textView1.setText("["+array[0]+"]");
                                     textView1.setBackground(ContextCompat.getDrawable(context, R.drawable.textview_custom2));
-                                    textView1.setTextSize(20);
-                                    textView2.setText(array[1]);
+                                    textView1.setTextSize(18);
+                                    textView2.setText(array[1]+"\n\n※ 억양만 사투리어도 그대로 적어주세요.");
                                     textView2.setTextColor(ContextCompat.getColor(context, R.color.fontColorActive));
+                                    textView2.setTextSize(18);
                                 }else if(taskType.equals("RECORD")){
                                     array = responeText.split("/");
                                     array2 = array[1].split("\\(");
                                     array3 = array2[1].split("\\)");
                                     textView1.setText("["+array[0]+"]"+"\n"+array2[0]);
                                     textView1.setBackground(ContextCompat.getDrawable(context, R.drawable.textview_custom1));
+                                    textView1.setTextSize(12);
                                     textView2.setText("(" + array3[0] + ")" + "\n" + array3[1]);
+                                    textView2.setTextSize(18);
                                 }
                                 String taskID = resulttemp.get("baseID").toString();
                                 settaskID(Integer.parseInt(taskID));
@@ -112,14 +115,18 @@ public class TaskView_Text extends TaskView {
                 array3 = array2[1].split("\\)");
                 textView1.setText("["+array[0]+"]"+"\n"+array2[0]);
                 textView1.setBackground(ContextCompat.getDrawable(context, R.drawable.textview_custom1));
+                textView1.setTextSize(12);
                 textView2.setText(array3[1]);
+                textView2.setTextSize(18);
             }else if(examType==2){//사투리 발음까지 제대로 했는지 검수
                 array = contentURI.split("/");
                 array2 = array[1].split("\\(");
                 array3 = array2[1].split("\\)");
                 textView1.setText("["+array[0]+"]"+"\n"+array2[0]);
                 textView1.setBackground(ContextCompat.getDrawable(context, R.drawable.textview_custom1));
+                textView1.setTextSize(12);
                 textView2.setText("("+array3[0]+")"+"\n"+array3[1]);
+                textView2.setTextSize(18);
             }
 
 //            String[] array = contentURI.split("/");
