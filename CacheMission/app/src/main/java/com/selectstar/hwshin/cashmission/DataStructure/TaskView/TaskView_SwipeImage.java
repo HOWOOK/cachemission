@@ -21,7 +21,7 @@ public class TaskView_SwipeImage extends TaskView {
     public void setContent(String id, String contentURI, Context context, String taskType, int examType, View... view) {
         ViewPager mPager = (ViewPager)view[0];
         int[] pages=new int[3];
-        mPagerAdapter = new CircularPagerAdapter(mPager, pages);
+        mPagerAdapter = new CircularPagerAdapter(mPager, pages, contentURI);
 
         mPager.setAdapter(mPagerAdapter);                     // ViewPager Adapter 설정
 

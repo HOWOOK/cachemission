@@ -4,10 +4,13 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +29,8 @@ import com.selectstar.hwshin.cashmission.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
 
 public class TaskActivity extends AppCompatActivity {
 
@@ -239,12 +244,36 @@ public class TaskActivity extends AppCompatActivity {
 
 
     }
+
+    public String getBase64String(Bitmap bitmap)
+    {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+
+        byte[] imageBytes = byteArrayOutputStream.toByteArray();
+
+        return Base64.encodeToString(imageBytes, Base64.NO_WRAP);
+    }
 @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
+    super.onActivityResult(requestCode, resultCode, data);
 ImageView iv=findViewById(R.id.pagerimage);
-iv.setImageURI(data.getData());
+
+    Bitmap btm=(Bitmap)data.getExtras().get("data");
+    //iv.setImageBitmap(btm);
+//Uri uri=data.getData();
+//String uristring=uri.toString();
+
+
+
+    SharedPreferences bitmap = getSharedPreferences("bitmap", MODE_PRIVATE);
+    SharedPreferences.Editor editor = bitmap.edit();
+    //logintoken이라는 key값으로 token을 저장한다.
+    editor.putString("bitmap", getBase64String(btm));
+    editor.commit();
     View srcTaskView1 = (View) findViewById(R.id.srcview);
     View srcTaskView2 = null;
-    mTaskView.setContent(mId, tempsrcURI, this, tasktype, 0, srcTaskView1, srcTaskView2);
+    mTaskView.setContent(mId, tempsrcURI, this, tasktype, 0, srcTaskView1);
 }
 }

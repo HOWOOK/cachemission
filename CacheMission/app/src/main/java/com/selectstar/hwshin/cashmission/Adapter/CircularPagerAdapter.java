@@ -1,15 +1,23 @@
 package com.selectstar.hwshin.cashmission.Adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.selectstar.hwshin.cashmission.R;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class CircularPagerAdapter extends PagerAdapter {
 
@@ -21,13 +29,17 @@ public class CircularPagerAdapter extends PagerAdapter {
 
     private Context mContext;
 
+    private String mUri;
 
 
-    public CircularPagerAdapter(final ViewPager pager, int[] pageArray) {
+
+
+
+    public CircularPagerAdapter(final ViewPager pager, int[] pageArray, String uri) {
 
         super();
 
-
+mUri=uri;
 
         mPager = pager;
 
@@ -126,7 +138,24 @@ public class CircularPagerAdapter extends PagerAdapter {
 
         LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
+
         View view = inflater.inflate(R.layout.pagerimage1, null);                // ViewPager에 inflate 시킬 layout 연결
+
+
+if(position==2) {
+    SharedPreferences token = mContext.getSharedPreferences("bitmap", MODE_PRIVATE);
+    String stringtoken;
+    stringtoken = token.getString("bitmap", null);
+    if (stringtoken == null) {
+        stringtoken = "";
+    }
+    byte[] decodedByteArray = Base64.decode(stringtoken, Base64.NO_WRAP);
+    Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedByteArray, 0, decodedByteArray.length);
+
+    ImageView iv = view.findViewById(R.id.pagerimage);
+    iv.setImageBitmap(decodedBitmap);
+}
+
 
         ((ViewPager) pager).addView(view, 0);
 
