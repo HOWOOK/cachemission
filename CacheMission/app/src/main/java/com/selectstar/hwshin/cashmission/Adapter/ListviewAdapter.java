@@ -96,6 +96,8 @@ public class ListviewAdapter extends BaseAdapter {
         taskTv.setText(taskItem.getTaskName());
         TextView gold=(TextView) convertView.findViewById(R.id.gold);
         gold.setText(taskItem.getGold());
+        TextView dailyMission=(TextView) convertView.findViewById(R.id.dailyMission);
+        dailyMission.setText(taskItem.getDailyMission());
 
         return convertView;
     }

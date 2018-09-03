@@ -154,11 +154,8 @@ public class TaskListActivity extends AppCompatActivity {
                             for (int i = 0; i < exam_res.length(); i++) {
 
                                 JSONObject temp = (JSONObject) exam_res.get(i);
-
-
-
                                 mTaskList.add(new TaskListItem(String.valueOf(temp.get("id")), (String) temp.get("taskName"), (String) temp.get("taskType"),
-                                        (String) temp.get("taskView"), (String) temp.get("controller"), String.valueOf(temp.get("gold")) + " \uFFE6", (JSONArray) temp.get("buttons"), 1,Integer.parseInt(String.valueOf(temp.get("examType")))));
+                                        (String) temp.get("taskView"), (String) temp.get("controller"), "\uFFE6 "+String.valueOf(temp.get("gold")), (String) temp.get("dailyMission"), (JSONArray) temp.get("buttons"), 1,Integer.parseInt(String.valueOf(temp.get("examType")))));
                             }
 
 
@@ -171,7 +168,7 @@ public class TaskListActivity extends AppCompatActivity {
 
 
                                 mTaskList.add(new TaskListItem(String.valueOf(temp.get("id")), (String) temp.get("taskName"), (String) temp.get("taskType"),
-                                        (String) temp.get("taskView"), (String) temp.get("controller"), String.valueOf(temp.get("gold"))+" \uFFE6",(JSONArray)temp.get("buttons"), 0));
+                                        (String) temp.get("taskView"), (String) temp.get("controller"), "\uFFE6 "+String.valueOf(temp.get("gold")), (String) temp.get("dailyMission"), (JSONArray)temp.get("buttons"), 0));
 
 
                             }

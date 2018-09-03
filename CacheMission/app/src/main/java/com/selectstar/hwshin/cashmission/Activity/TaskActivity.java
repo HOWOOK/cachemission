@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -185,17 +187,13 @@ public class TaskActivity extends AppCompatActivity {
             }
         });
 
+
+        //현재금액 지급예정금액 띄우는거
         final TextView goldpre=findViewById(R.id.goldpre);
         final TextView goldnow=findViewById(R.id.goldnow);
-        //String goldp=intent.getStringExtra("goldpre");
-        //String goldn=intent.getStringExtra("goldnow");
-        //goldpre.setText("예정 : "+goldp);
-        //goldnow.setText("현재 : "+goldn);
         JSONObject param2 = new JSONObject();
-
         try {
             param2.put("requestlist", "tasklist");
-
             new HttpRequest(this) {
                 @Override
                 protected void onPostExecute(Object o) {
@@ -205,7 +203,6 @@ public class TaskActivity extends AppCompatActivity {
                         JSONObject resulttemp = new JSONObject(result);
                         if (resulttemp.get("success").toString().equals("false")) {
 
-
                         } else {
                             JSONObject user = (JSONObject) resulttemp.get("user");
                             goldpre.setText("예정 : "+"\uFFE6 "+String.valueOf(user.get("maybe")));
@@ -214,13 +211,29 @@ public class TaskActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
-
                 }
             }.execute(this.getString(R.string.mainurl) + "/main", param2, stringtoken);
         } catch (JSONException e) {
             e.printStackTrace();
+        }
 
+        //돈 플러스되는거 에니메이션
+        if(intent.getStringExtra("maybe_up")!=null  && intent.getStringExtra("gold_up")!=null){
+            Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.goldtranslate);
+            if(Integer.parseInt(intent.getStringExtra("gold_up")) == 0){//지급예정금액만 애니메이팅
+                TextView maybe_up = findViewById(R.id.goldpre_anim);
+                maybe_up.setText("+ \uFFE6"+intent.getStringExtra("maybe_up"));
+                maybe_up.startAnimation(animation);
+            }else{//현재금액만 애니메이팅
+                TextView gold_up = findViewById(R.id.goldnow_anim);
+                gold_up.setText("+ \uFFE6"+intent.getStringExtra("gold_up"));
+                gold_up.startAnimation(animation);
+            }
+        }
+
+        if(intent.getStringExtra("bonus_up")!=null){
+            if(!intent.getStringExtra("bonus_up").equals("0"))
+                Toast.makeText(getApplicationContext(),"일일 미션을 완료했습니다! \n(\uFFE6"+intent.getStringExtra("bonus_up")+" 추가 획득)",Toast.LENGTH_SHORT).show();
         }
 
 

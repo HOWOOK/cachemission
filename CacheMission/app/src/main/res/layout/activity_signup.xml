@@ -15,6 +15,25 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/signuptitle"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                >
+                <TextView
+                    android:id="@+id/signuptitleetext"
+                    style="@style/normalTitle"
+                    android:text="@string/signuptitle"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
+
+
+
             <android.support.constraint.Guideline
                 android:id="@+id/guideline_signupright"
                 android:layout_width="wrap_content"
@@ -41,7 +60,7 @@
                 android:fontFamily="@font/nanumsquarer_"
                 app:layout_constraintEnd_toStartOf="@+id/idvalue"
                 app:layout_constraintStart_toStartOf="@+id/guideline_signupleft"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/signuptitle" />
 
             <TextView
                 android:id="@+id/pwtag"
@@ -143,7 +162,8 @@
                 android:inputType="textEmailAddress"
                 app:layout_constraintEnd_toStartOf="@+id/idcheck"
                 app:layout_constraintStart_toEndOf="@+id/idtag"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/signuptitle"
+                />
 
             <Button
                 android:id="@+id/idcheck"
@@ -153,7 +173,7 @@
                 android:text="중복확인"
                 android:textSize="12dp"
                 app:layout_constraintEnd_toEndOf="@+id/guideline_signupright"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/signuptitle" />
 
             <EditText
                 android:id="@+id/pwvalue"
