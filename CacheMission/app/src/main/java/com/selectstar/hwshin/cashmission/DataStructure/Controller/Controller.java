@@ -17,7 +17,7 @@ public abstract class Controller  {
     protected Intent parentIntent;
     public Activity usingactivity;
 
-    public abstract void setLayout(String id, View view, Context c, Intent in, String buttons);
+    public abstract void setLayout(String id, View view, Context c, String tasktype, Intent in, String buttons);
     public void setTaskID(int taskID){
         this.taskID=taskID;
 

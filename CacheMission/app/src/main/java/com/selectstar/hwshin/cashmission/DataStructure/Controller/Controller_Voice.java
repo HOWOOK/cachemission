@@ -45,7 +45,7 @@ public class Controller_Voice extends Controller {
 
     private final int[] mSampleRates = new int[] {44100, 22050, 11025, 8000};
     private final short[] mAudioFormats = new short[] {AudioFormat.ENCODING_PCM_16BIT, AudioFormat.ENCODING_PCM_8BIT};
-    private final short[] mChannelConfigs = new short[] {AudioFormat.CHANNEL_IN_STEREO, AudioFormat.CHANNEL_IN_MONO};
+    private final short[] mChannelConfigs = new short[] {AudioFormat.CHANNEL_IN_MONO, AudioFormat.CHANNEL_IN_MONO};
 
 // 위의 값들 중 실제 녹음 및 재생 시 선택된 설정값들을 저장
 
@@ -68,7 +68,7 @@ public class Controller_Voice extends Controller {
     private boolean isrecordstarted=false;
 
     @Override
-    public void setLayout(final String id, View view, Context c, Intent in, String buttons) {
+    public void setLayout(final String id, View view, Context c, String tasktype, Intent in, String buttons) {
         ConstraintLayout temp=(ConstraintLayout)view;
         mRecordBtn = (Button)temp.findViewById(R.id.recb);
         mPlayBtn = (Button)temp.findViewById(R.id.stream);
@@ -391,7 +391,7 @@ mIsPlaying=false;
             writeString(output, "fmt "); // subchunk 1 id
             writeInt(output, 16); // subchunk 1 size
             writeShort(output, (short) 1); // audio format (1 = PCM)
-            writeShort(output, (short) 2); // number of channels
+            writeShort(output, (short) 1); // number of channels
             writeInt(output, 44100); // sample rate
             writeInt(output, mSampleRate *2); // byte rate
             writeShort(output, (short) 2); // block align

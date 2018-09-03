@@ -164,7 +164,7 @@ public class TaskActivity extends AppCompatActivity {
 
         //Controller에 source설정
         View view = findViewById(R.id.controller);
-        mController.setLayout(mId,view,getApplicationContext(),intent,buttons);
+        mController.setLayout(mId,view,getApplicationContext(),tasktype,intent,buttons);
 
         //해당 task가 처음이라면 설명서 띄워주는 것
         SharedPreferences tasktoken = getSharedPreferences("tasktoken", MODE_PRIVATE);
@@ -237,6 +237,14 @@ public class TaskActivity extends AppCompatActivity {
         }
 
 
-    }
 
+    }
+@Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+ImageView iv=findViewById(R.id.pagerimage);
+iv.setImageURI(data.getData());
+    View srcTaskView1 = (View) findViewById(R.id.srcview);
+    View srcTaskView2 = null;
+    mTaskView.setContent(mId, tempsrcURI, this, tasktype, 0, srcTaskView1, srcTaskView2);
+}
 }

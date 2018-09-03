@@ -39,7 +39,7 @@ public class Controller_Numbers extends Controller {
     private String result="foobar";
 
     @Override
-    public void setLayout(final String id, View view, Context c, Intent in, String buttons) {
+    public void setLayout(final String id, View view, Context c, String tasktype, Intent in, String buttons) {
 
         SharedPreferences token = parentActivity.getSharedPreferences("token",Context.MODE_PRIVATE);
         final String logintoken = token.getString("logintoken",null);

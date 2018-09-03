@@ -43,7 +43,7 @@ public class Controller_Buttons extends Controller {
     }
 
     @Override
-    public void setLayout(final String id, View view, final Context c, final Intent in, String buttons) {
+    public void setLayout(final String id, View view, final Context c, String tasktype, final Intent in, String buttons) {
         SharedPreferences token = parentActivity.getSharedPreferences("token",Context.MODE_PRIVATE);
         final String logintoken = token.getString("logintoken",null);
         cont=c;

@@ -29,8 +29,7 @@ public class TaskView_Image extends TaskView {
     public void setContent(String id, String contentURI, final Context context, final String taskType, int examType, final View... view) {
         SharedPreferences token = parentActivity.getSharedPreferences("token",Context.MODE_PRIVATE);
         final String logintoken = token.getString("logintoken",null);
-
-        if (contentURI.equals("foobar")) {
+          if (contentURI.equals("foobar")) {
 
 
             JSONObject param = new JSONObject();

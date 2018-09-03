@@ -48,7 +48,9 @@ public class TaskView_Voice extends TaskView {
 
                             if ((boolean) resulttemp.get("success")) {
                                 final String url = parentActivity.getString(R.string.mainurl) +"/media/"+ ((String) resulttemp.get("url"));
-Log.d("shiba",url);
+
+
+
                                 mBtPlay.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
@@ -73,6 +75,8 @@ Log.d("shiba",url);
                                         }
                                     }
                                 });
+
+
                                 mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 
                                     @Override
@@ -84,6 +88,8 @@ Log.d("shiba",url);
 
                                     }
                                 });
+
+
                                 String taskID = resulttemp.get("baseID").toString();
                                 settaskID(Integer.parseInt(taskID));
 
