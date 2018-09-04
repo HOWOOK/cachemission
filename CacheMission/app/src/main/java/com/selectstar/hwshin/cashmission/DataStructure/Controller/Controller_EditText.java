@@ -24,7 +24,7 @@ public class Controller_EditText extends Controller {
 
 
     @Override
-    public void setLayout(final String id, View view, Context c, Intent in, String buttons) {
+    public void setLayout(final String id, View view, Context c, final String tasktype, Intent in, String buttons) {
         SharedPreferences token = parentActivity.getSharedPreferences("token",Context.MODE_PRIVATE);
         final String logintoken = token.getString("logintoken",null);
 
@@ -39,7 +39,7 @@ public class Controller_EditText extends Controller {
                     param2.put("answerID", mtaskview.gettaskID());
                     param2.put("taskID", id);
                     String submit = edit.getText().toString();
-                    if(id.equals("4")) {//if task is dialect
+                    if(tasktype.equals("DIALECT")) {//if task is dialect
                         String region;
                         SharedPreferences explain = parentActivity.getSharedPreferences("region", Context.MODE_PRIVATE);
                         region = explain.getString("region",null);

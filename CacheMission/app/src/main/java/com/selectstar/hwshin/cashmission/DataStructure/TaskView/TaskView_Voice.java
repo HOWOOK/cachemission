@@ -50,6 +50,8 @@ public class TaskView_Voice extends TaskView {
                             if ((boolean) resulttemp.get("success")) {
                                 final String url = parentActivity.getString(R.string.mainurl) +"/media/"+ ((String) resulttemp.get("url"));
 
+
+
                                 mBtPlay.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
@@ -74,6 +76,8 @@ public class TaskView_Voice extends TaskView {
                                         }
                                     }
                                 });
+
+
                                 mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 
                                     @Override
@@ -85,6 +89,8 @@ public class TaskView_Voice extends TaskView {
 
                                     }
                                 });
+
+
                                 String taskID = resulttemp.get("baseID").toString();
                                 settaskID(Integer.parseInt(taskID));
 
@@ -123,6 +129,7 @@ public class TaskView_Voice extends TaskView {
                         mBtPlay.setBackground(ContextCompat.getDrawable(context, R.drawable.voicestopbtn));
                         try {
                             mPlayer.setDataSource(context, Uri.parse(parentActivity.getString(R.string.mainurl)+"/media/" + contentURI));
+                            Log.d("shishi",parentActivity.getString(R.string.mainurl)+"/media/" + contentURI);
                             mPlayer.prepare();
                         } catch (Exception e) {
                             e.printStackTrace();

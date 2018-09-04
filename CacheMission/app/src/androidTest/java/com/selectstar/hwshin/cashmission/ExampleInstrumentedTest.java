@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.hwshin.cachemission", appContext.getPackageName());
+        assertEquals("com.selectstar.hwshin.cashmission", appContext.getPackageName());
     }
 }
