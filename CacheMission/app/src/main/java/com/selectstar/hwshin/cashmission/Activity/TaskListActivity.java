@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.support.v4.widget.DrawerLayout;
 
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.selectstar.hwshin.cashmission.Adapter.ListviewAdapter;
@@ -28,6 +31,7 @@ import com.selectstar.hwshin.cashmission.R;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -37,13 +41,75 @@ public class TaskListActivity extends AppCompatActivity {
     final static ArrayList<TaskListItem> mTaskList = new ArrayList<TaskListItem>();
     static ListviewAdapter adapter;
     private UIHashmap uiHashmap;
+    private String versionName;
+    private String versionCode;
+    private Context mContext = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tasklist);
         uiHashmap = new UIHashmap();
+        TextView tv_versionName = findViewById(R.id.version_text);
 
+        //버전가져오기
+        try{
+            PackageInfo pi = getPackageManager().getPackageInfo(getPackageName(), 0);
+            versionName = pi.versionName;
+            tv_versionName.setText("현재 버전 v"+versionName);
+            //tv_versionCode.setText(String.valueOf(pi.versionCode));
+        }catch (PackageManager.NameNotFoundException e){
+            e.printStackTrace();
+        }
+
+        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer) ;
+
+        //메뉴버튼
+        Button menubtn = findViewById(R.id.drawviewbtn);
+        menubtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                if (!drawer.isDrawerOpen(Gravity.LEFT)) {
+                    drawer.openDrawer(Gravity.LEFT) ;
+                }
+            }
+        });
+
+        ImageView settingbtn = findViewById(R.id.settingbtn);
+        settingbtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent_setting = new Intent(TaskListActivity.this, SettingActivity.class);
+                if (drawer.isDrawerOpen(Gravity.LEFT)) {
+                    drawer.closeDrawer(Gravity.LEFT) ;
+                }
+                TaskListActivity.this.startActivity(intent_setting);
+            }
+        });
+
+        TextView exchangebtn = findViewById(R.id.exchange);
+        exchangebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent_exchange= new Intent(TaskListActivity.this, ExchangeActivity.class);
+                if (drawer.isDrawerOpen(Gravity.LEFT)) {
+                    drawer.closeDrawer(Gravity.LEFT) ;
+                }
+                startActivity(intent_exchange);
+            }
+        });
+
+        TextView suggestionbtn = findViewById(R.id.suggestion);
+        suggestionbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent_suggestion = new Intent(TaskListActivity.this, SuggestionActivity.class);
+                if (drawer.isDrawerOpen(Gravity.LEFT)) {
+                    drawer.closeDrawer(Gravity.LEFT) ;
+                }
+                startActivity(intent_suggestion);
+            }
+        });
 
     }
 
@@ -62,61 +128,13 @@ public class TaskListActivity extends AppCompatActivity {
         JSONObject param = new JSONObject();
         try {
             param.put("requestlist", "tasklist");
+            param.put("version", versionName);
 
             new HttpRequest(this) {
                 @Override
                 protected void onPostExecute(Object o) {
                     super.onPostExecute(o);
                     try {
-                        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer) ;
-
-                        //메뉴버튼
-                        Button menubtn = findViewById(R.id.drawviewbtn);
-                        menubtn.setOnClickListener(new View.OnClickListener(){
-                            @Override
-                            public void onClick(View v) {
-
-                                if (!drawer.isDrawerOpen(Gravity.LEFT)) {
-                                    drawer.openDrawer(Gravity.LEFT) ;
-                                }
-                            }
-                        });
-
-                        ImageView settingbtn = findViewById(R.id.settingbtn);
-                        settingbtn.setOnClickListener(new View.OnClickListener(){
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent_setting = new Intent(TaskListActivity.this, SettingActivity.class);
-                                if (drawer.isDrawerOpen(Gravity.LEFT)) {
-                                    drawer.closeDrawer(Gravity.LEFT) ;
-                                }
-                                TaskListActivity.this.startActivity(intent_setting);
-                            }
-                        });
-
-                        TextView exchangebtn = findViewById(R.id.exchange);
-                        exchangebtn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent_exchange= new Intent(TaskListActivity.this, ExchangeActivity.class);
-                                if (drawer.isDrawerOpen(Gravity.LEFT)) {
-                                    drawer.closeDrawer(Gravity.LEFT) ;
-                                }
-                                startActivity(intent_exchange);
-                            }
-                        });
-
-                        TextView suggestionbtn = findViewById(R.id.suggestion);
-                        suggestionbtn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent_suggestion = new Intent(TaskListActivity.this, SuggestionActivity.class);
-                                if (drawer.isDrawerOpen(Gravity.LEFT)) {
-                                    drawer.closeDrawer(Gravity.LEFT) ;
-                                }
-                                startActivity(intent_suggestion);
-                            }
-                        });
                         JSONObject resulttemp = new JSONObject(result);
                         System.out.println("통신실패하면 "+resulttemp);
                         if (resulttemp.get("success").toString().equals("login")) {
@@ -147,6 +165,14 @@ public class TaskListActivity extends AppCompatActivity {
                             intent_task.putExtra("goldpre","\uFFE6 "+String.valueOf(user.get("maybe")));
                             intent_exam.putExtra("goldnow","\uFFE6 "+String.valueOf(user.get("gold")));
                             intent_exam.putExtra("goldpre","\uFFE6 "+String.valueOf(user.get("maybe")));
+
+                            //긴급공지사항있을시 토스트 띄우기
+                            try {
+                                if (resulttemp.getString("emergency") != null)
+                                    Toast.makeText(getApplicationContext(), resulttemp.getString("emergency"), Toast.LENGTH_SHORT).show();
+                            }
+                            catch(JSONException e){}
+
                             //Task 리스트 띄우기
                             mTaskList.clear();
                             JSONArray exam_res = (JSONArray) resulttemp.get("exam_data");
@@ -159,14 +185,9 @@ public class TaskListActivity extends AppCompatActivity {
                             }
 
 
-
-
                             for (int i = 0; i < task_res.length(); i++) {
 
                                 JSONObject temp = (JSONObject) task_res.get(i);
-
-
-
                                 mTaskList.add(new TaskListItem(String.valueOf(temp.get("id")), (String) temp.get("taskName"), (String) temp.get("taskType"),
                                         (String) temp.get("taskView"), (String) temp.get("controller"), "\uFFE6 "+String.valueOf(temp.get("gold")), (String) temp.get("dailyMission"), (JSONArray)temp.get("buttons"), 0));
 
@@ -182,8 +203,6 @@ public class TaskListActivity extends AppCompatActivity {
                             @Override
                             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
-
-
                                 int flag=((TaskListItem)adapterView.getItemAtPosition(position)).getTaskFlag();
 
                                 String tasktitle = ((TaskListItem) adapterView.getItemAtPosition(position)).getTaskName();
@@ -191,8 +210,8 @@ public class TaskListActivity extends AppCompatActivity {
                                 String taskview = ((TaskListItem) adapterView.getItemAtPosition(position)).getTaskView();
                                 String controller = ((TaskListItem) adapterView.getItemAtPosition(position)).getController();
                                 String buttons=((TaskListItem) adapterView.getItemAtPosition(position)).getButtons().toString();
-
                                 String taskid = ((TaskListItem) adapterView.getItemAtPosition(position)).getId();
+
 
                                 if(flag==0) {
                                     intent_task.putExtra("tasktitle", tasktitle);

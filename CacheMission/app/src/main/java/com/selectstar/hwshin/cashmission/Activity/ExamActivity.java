@@ -107,6 +107,9 @@ public class ExamActivity extends AppCompatActivity {
         params2.verticalWeight = mParameter[5][0];
         parent2.setLayoutParams(params2);
 
+        final TextView goldpre=findViewById(R.id.goldpre);
+        final TextView goldnow=findViewById(R.id.goldnow);
+
         JSONObject param = new JSONObject();
         try {
             param.put("taskID", Integer.parseInt(mId));
@@ -122,6 +125,10 @@ public class ExamActivity extends AppCompatActivity {
                         resulttemp = new JSONObject(result);
 
                         if((boolean)resulttemp.get("success")){
+
+                            //현재금액 지급예정금액 띄우는거
+                            goldpre.setText("예정 : " + "\uFFE6 " + resulttemp.get("gold"));
+                            goldnow.setText("현재 : " + "\uFFE6 " + resulttemp.get("pending_gold"));
 
                             if(mTaskView.taskViewID == R.layout.taskview_text){
                                 tempsrcURI = resulttemp.get("content_text").toString();
@@ -153,7 +160,7 @@ public class ExamActivity extends AppCompatActivity {
                             else{
                                 answer = resulttemp.get("answer_text").toString();
                             }
-Log.d("answernow",answer);
+
                             mExamView.setLayout(mId,view,getApplicationContext(),intent,buttons,answer);
 
                         }
@@ -242,18 +249,17 @@ Log.d("answernow",answer);
                                 JSONObject resulttemp = null;
                                 try {
                                     resulttemp = new JSONObject(result);
-                                    Log.d("hey2bad", resulttemp.toString());
+
+                                    //테스크 submit하면 돈이 얼마나 올라가는지 보여줘야하니까 intent로 보내준다.
                                     if ((boolean) resulttemp.get("success")) {
                                         intent.putExtra("maybe_up", String.valueOf(resulttemp.get("maybe_up")));
                                         intent.putExtra("gold_up", String.valueOf(resulttemp.get("gold_up")));
                                         startActivity(intent);
                                         finish();
+
                                     } else {
                                         Toast.makeText(getApplicationContext(),"남은 검수작업이 없습니다. 테스크리스트로 돌아갑니다.",Toast.LENGTH_SHORT).show();
-                                        Intent notaskanymore = new Intent(getApplicationContext(), TaskListActivity.class);
-                                        startActivity(notaskanymore);
                                         finish();
-
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -294,36 +300,6 @@ Log.d("answernow",answer);
                 startActivity(intent_taskExplain);
             }
         });
-
-
-        //현재금액 지급예정금액 띄우는거
-        final TextView goldpre=findViewById(R.id.goldpre);
-        final TextView goldnow=findViewById(R.id.goldnow);
-        JSONObject param2 = new JSONObject();
-        try {
-            param2.put("requestlist", "tasklist");
-            new HttpRequest(this) {
-                @Override
-                protected void onPostExecute(Object o) {
-                    super.onPostExecute(o);
-
-                    try {
-                        JSONObject resulttemp = new JSONObject(result);
-                        if (resulttemp.get("success").toString().equals("false")) {
-
-                        } else {
-                            JSONObject user = (JSONObject) resulttemp.get("user");
-                            goldpre.setText("예정 : "+"\uFFE6 "+String.valueOf(user.get("maybe")));
-                            goldnow.setText("현재 : "+"\uFFE6 "+String.valueOf(user.get("gold")));
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }.execute(this.getString(R.string.mainurl) + "/main", param2, logintoken);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
         //돈 플러스되는거 에니메이션
         if(intent.getStringExtra("maybe_up")!=null  && intent.getStringExtra("gold_up")!=null){

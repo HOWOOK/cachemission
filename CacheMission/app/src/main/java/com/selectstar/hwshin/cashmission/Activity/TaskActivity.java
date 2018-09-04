@@ -154,13 +154,16 @@ public class TaskActivity extends AppCompatActivity {
         mController.usingactivity=this;
         mController.mtaskview=mTaskView;
 
+
         //TaskView에 source설정 (보통은 srcTaskView1에만 들어가며 Text의 경우 2개를 받는다)
         View srcTaskView1 = (View) findViewById(R.id.srcview);
         View srcTaskView2 = null;
+        TextView goldnow=findViewById(R.id.goldnow);
+        TextView goldpre=findViewById(R.id.goldpre);
         if(intent.getStringExtra("taskview").equals("text")) {
             srcTaskView2 = (View) findViewById(R.id.srcview2);
         }
-        mTaskView.setContent(mId, tempsrcURI, this, tasktype, 0, srcTaskView1, srcTaskView2);
+        mTaskView.setContent(mId, tempsrcURI, this, tasktype, 0, srcTaskView1, srcTaskView2, goldnow, goldpre);
 
         //Controller에 source설정
         View view = findViewById(R.id.controller);
@@ -186,36 +189,6 @@ public class TaskActivity extends AppCompatActivity {
                 startActivity(intent_taskExplain);
             }
         });
-
-
-        //현재금액 지급예정금액 띄우는거
-        final TextView goldpre=findViewById(R.id.goldpre);
-        final TextView goldnow=findViewById(R.id.goldnow);
-        JSONObject param2 = new JSONObject();
-        try {
-            param2.put("requestlist", "tasklist");
-            new HttpRequest(this) {
-                @Override
-                protected void onPostExecute(Object o) {
-                    super.onPostExecute(o);
-
-                    try {
-                        JSONObject resulttemp = new JSONObject(result);
-                        if (resulttemp.get("success").toString().equals("false")) {
-
-                        } else {
-                            JSONObject user = (JSONObject) resulttemp.get("user");
-                            goldpre.setText("예정 : "+"\uFFE6 "+String.valueOf(user.get("maybe")));
-                            goldnow.setText("현재 : "+"\uFFE6 "+String.valueOf(user.get("gold")));
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }.execute(this.getString(R.string.mainurl) + "/main", param2, stringtoken);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
         //돈 플러스되는거 에니메이션
         if(intent.getStringExtra("maybe_up")!=null  && intent.getStringExtra("gold_up")!=null){

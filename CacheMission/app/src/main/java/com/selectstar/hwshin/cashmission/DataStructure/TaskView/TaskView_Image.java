@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -59,6 +60,10 @@ public class TaskView_Image extends TaskView {
 
                                 settaskID(Integer.parseInt(taskID));
 
+                                TextView textView_nowgold = (TextView) view[2];
+                                TextView textView_pregold = (TextView) view[3];
+                                textView_nowgold.setText("현재 : " + "\uFFE6 "+String.valueOf(resulttemp.get("gold")));
+                                textView_pregold.setText("예정 : " + "\uFFE6 "+String.valueOf(resulttemp.get("pending_gold")));
                             }
                             else{
                                 if(parentActivity.getIntent().getIntExtra("from",0)==0){

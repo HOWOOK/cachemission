@@ -62,7 +62,7 @@ public class TaskView_Text extends TaskView {
                                     textView1.setText("["+array[0]+"]");
                                     textView1.setBackground(ContextCompat.getDrawable(context, R.drawable.textview_custom2));
                                     textView1.setTextSize(18);
-                                    textView2.setText(array[1]+"\n\n※ 억양만 사투리여도 그대로 적어주세요.");
+                                    textView2.setText(array[1]+"\n\n※ 억양만 사투리여도 그대로 적으시고, 원하는 호칭이나 이름으로 자연스럽게 써주세요.");
                                     textView2.setTextColor(ContextCompat.getColor(context, R.color.fontColorActive));
                                     textView2.setTextSize(18);
                                 }else if(taskType.equals("RECORD")){
@@ -77,6 +77,11 @@ public class TaskView_Text extends TaskView {
                                 }
                                 String taskID = resulttemp.get("baseID").toString();
                                 settaskID(Integer.parseInt(taskID));
+
+                                TextView textView_nowgold = (TextView) view[2];
+                                TextView textView_pregold = (TextView) view[3];
+                                textView_nowgold.setText("현재 : " + "\uFFE6 "+String.valueOf(resulttemp.get("gold")));
+                                textView_pregold.setText("예정 : " + "\uFFE6 "+String.valueOf(resulttemp.get("pending_gold")));
 
                             }
                             else{
