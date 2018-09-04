@@ -69,7 +69,7 @@ public class TaskListActivity extends AppCompatActivity {
                     super.onPostExecute(o);
                     try {
                         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer) ;
-
+Log.d("ffffffff",result);
                         //메뉴버튼
                         Button menubtn = findViewById(R.id.drawviewbtn);
                         menubtn.setOnClickListener(new View.OnClickListener(){

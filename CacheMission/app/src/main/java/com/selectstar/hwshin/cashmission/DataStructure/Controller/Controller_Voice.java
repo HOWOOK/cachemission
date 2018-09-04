@@ -75,6 +75,7 @@ public class Controller_Voice extends Controller {
         mRecordBtn.setOnClickListener(btnClick);
         mPlayBtn.setOnClickListener(btnClick);
         Button post=temp.findViewById(R.id.post);
+        Log.d("gggggg",String.valueOf(mtaskview.gettaskID()));
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 
             @Override
@@ -101,10 +102,10 @@ public class Controller_Voice extends Controller {
 
                             Uri i = Uri.parse(mPath + ".pcm");
                             File f = new File(i.getPath());
-                            //f.delete();
+                            f.delete();
                             Uri i2 = Uri.parse(mPath + ".wav");
                             File f2 = new File(i2.getPath());
-                            //f2.delete();
+                            f2.delete();
                             if (serverResponseCode == 200) {
                                 parentIntent.putExtra("from",1);
                                 parentActivity.startActivity(parentIntent);

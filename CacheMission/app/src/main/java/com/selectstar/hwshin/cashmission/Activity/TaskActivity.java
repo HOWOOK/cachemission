@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +32,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class TaskActivity extends AppCompatActivity {
 
@@ -255,23 +260,26 @@ public class TaskActivity extends AppCompatActivity {
 
         return Base64.encodeToString(imageBytes, Base64.NO_WRAP);
     }
+
 @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
     super.onActivityResult(requestCode, resultCode, data);
-ImageView iv=findViewById(R.id.pagerimage);
+//ImageView iv=findViewById(R.id.pagerimage);
 
-    Bitmap btm=(Bitmap)data.getExtras().get("data");
+//    Bitmap btm=(Bitmap)data.getExtras().get("data");
     //iv.setImageBitmap(btm);
 //Uri uri=data.getData();
 //String uristring=uri.toString();
 
 
 
-    SharedPreferences bitmap = getSharedPreferences("bitmap", MODE_PRIVATE);
-    SharedPreferences.Editor editor = bitmap.edit();
+  //  SharedPreferences bitmap = getSharedPreferences("bitmap", MODE_PRIVATE);
+  //  SharedPreferences.Editor editor = bitmap.edit();
     //logintoken이라는 key값으로 token을 저장한다.
-    editor.putString("bitmap", getBase64String(btm));
-    editor.commit();
+   // editor.putString("bitmap", getBase64String(btm));
+  //  editor.commit();
+
+
     View srcTaskView1 = (View) findViewById(R.id.srcview);
     View srcTaskView2 = null;
     mTaskView.setContent(mId, tempsrcURI, this, tasktype, 0, srcTaskView1);

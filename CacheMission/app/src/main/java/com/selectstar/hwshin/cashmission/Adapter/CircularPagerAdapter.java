@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -16,6 +18,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.selectstar.hwshin.cashmission.R;
+
+import java.io.IOException;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -33,7 +37,10 @@ public class CircularPagerAdapter extends PagerAdapter {
 
 
 
+public  CircularPagerAdapter(){
 
+
+}
 
     public CircularPagerAdapter(final ViewPager pager, int[] pageArray, String uri) {
 
@@ -129,7 +136,22 @@ mUri=uri;
 
     }
 
+    private int exifOrientationToDegrees(int exifOrientation) {
+        if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
+            return 90;
+        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {
+            return 180;
+        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {
+            return 270;
+        }
+        return 0;
+    }
 
+    private Bitmap rotate(Bitmap bitmap, float degree) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+    }
 
 
     public Object instantiateItem(View pager, int position) {                // position 별로 pager에 view들을 등록
@@ -143,17 +165,39 @@ mUri=uri;
 
 
 if(position==2) {
-    SharedPreferences token = mContext.getSharedPreferences("bitmap", MODE_PRIVATE);
+    SharedPreferences imagefilepath = mContext.getSharedPreferences("imagefilepath", MODE_PRIVATE);
     String stringtoken;
-    stringtoken = token.getString("bitmap", null);
+    stringtoken = imagefilepath.getString("imagefilepath", null);
     if (stringtoken == null) {
         stringtoken = "";
     }
-    byte[] decodedByteArray = Base64.decode(stringtoken, Base64.NO_WRAP);
-    Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedByteArray, 0, decodedByteArray.length);
+    Bitmap bitmap = BitmapFactory.decodeFile(stringtoken);
+    ExifInterface exif = null;
 
+    try {
+        exif = new ExifInterface(stringtoken);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+
+    int exifOrientation;
+    int exifDegree;
+
+    if (exif != null) {
+        exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+        exifDegree = exifOrientationToDegrees(exifOrientation);
+    } else {
+        exifDegree = 0;
+    }
+
+
+   // byte[] decodedByteArray = Base64.decode(stringtoken, Base64.NO_WRAP);
+  //  Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedByteArray, 0, decodedByteArray.length);
+//Uri uri=Uri.parse(stringtoken);
     ImageView iv = view.findViewById(R.id.pagerimage);
-    iv.setImageBitmap(decodedBitmap);
+    if(bitmap!=null){
+    iv.setImageBitmap(rotate(bitmap, exifDegree));}
+
 }
 
 

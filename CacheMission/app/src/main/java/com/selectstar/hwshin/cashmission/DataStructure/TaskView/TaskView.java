@@ -8,7 +8,7 @@ import android.view.View;
 public abstract class TaskView {
     //why Serializable??? 나중에 공부해봅시다.
     public int taskViewID;
-    private   int taskID;
+    public   int taskID;
     protected AppCompatActivity parentActivity;
     protected Intent parentIntent;
     public void setParent(AppCompatActivity context, Intent intent)
