@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.selectstar.hwshin.cashmission.Activity.TaskListActivity;
@@ -102,6 +103,11 @@ public class TaskView_Voice extends TaskView {
                                     Toast.makeText(parentActivity, "테스크를 모두 완료했습니다. 테스크 리스트로 돌아갑니다.", Toast.LENGTH_SHORT).show();
                                 }
                                 parentActivity.finish();
+
+                                TextView textView_nowgold = (TextView) view[2];
+                                TextView textView_pregold = (TextView) view[3];
+                                textView_nowgold.setText("현재 : " + "\uFFE6 "+String.valueOf(resulttemp.get("gold")));
+                                textView_pregold.setText("예정 : " + "\uFFE6 "+String.valueOf(resulttemp.get("pending_gold")));
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

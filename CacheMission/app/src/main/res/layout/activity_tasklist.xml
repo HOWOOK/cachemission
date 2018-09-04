@@ -213,7 +213,7 @@
         >
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/constraintLayout2"
+            android:id="@+id/drawer_usertable"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:background="#F3F3F3"
@@ -251,7 +251,7 @@
             android:text="환전신청"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"/>
+            app:layout_constraintTop_toBottomOf="@+id/drawer_usertable"/>
 
         <TextView
             android:id="@+id/suggestion"
@@ -260,6 +260,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/exchange" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/drawer_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/version_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:text=""
+                android:textColor="@color/fontColorInactive"
+                android:textSize="12dp"
+                android:gravity="center_vertical"
+                android:fontFamily="@font/nanumsquareb_"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </android.support.constraint.ConstraintLayout>
 
     </android.support.constraint.ConstraintLayout>
 

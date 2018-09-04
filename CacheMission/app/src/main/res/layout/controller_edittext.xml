@@ -29,6 +29,7 @@
         android:ems="10"
         android:hint="텍스트를 입력해 주세요."
         android:inputType="textPersonName"
+        android:background="#E0FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/sendbtn"
         app:layout_constraintStart_toStartOf="parent"

@@ -78,6 +78,11 @@ public class TaskView_Text extends TaskView {
                                 String taskID = resulttemp.get("baseID").toString();
                                 settaskID(Integer.parseInt(taskID));
 
+                                TextView textView_nowgold = (TextView) view[2];
+                                TextView textView_pregold = (TextView) view[3];
+                                textView_nowgold.setText("현재 : " + "\uFFE6 "+String.valueOf(resulttemp.get("gold")));
+                                textView_pregold.setText("예정 : " + "\uFFE6 "+String.valueOf(resulttemp.get("pending_gold")));
+
                             }
                             else{
 
