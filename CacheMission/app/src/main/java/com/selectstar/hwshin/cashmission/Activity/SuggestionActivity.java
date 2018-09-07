@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.selectstar.hwshin.cashmission.DataStructure.HttpRequest;
 import com.selectstar.hwshin.cashmission.R;
@@ -21,6 +22,7 @@ public class SuggestionActivity extends AppCompatActivity {
     Context context = this;
     EditText suggestionmain;
     Button send_btn;
+    ImageView backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,14 @@ public class SuggestionActivity extends AppCompatActivity {
 
         suggestionmain = findViewById(R.id.suggestionmain);
         send_btn = findViewById(R.id.sendbtn);
+
+        backButton = findViewById(R.id.suggestionback);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         send_btn.setOnClickListener(new View.OnClickListener() {
             @Override

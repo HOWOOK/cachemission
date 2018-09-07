@@ -51,6 +51,7 @@ public class TaskActivity extends AppCompatActivity {
     private UIHashmap uiHashmap;
     String tasktype;
     Dialog explainDialog;
+    ImageView backButton;
 
     //사투리특별전용옵션
     static String region_dialect;
@@ -125,7 +126,13 @@ public class TaskActivity extends AppCompatActivity {
         mParameter =  (int[][]) uiHashmap.taskHashMap.get(intent.getStringExtra("tasktype"));
         tasktitle = intent.getStringExtra("tasktitle");
         buttons= intent.getStringExtra("buttons");
-
+        backButton = findViewById(R.id.taskback);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         TextView mtasktitle = findViewById(R.id.tasktitletext);
         mtasktitle.setText(tasktitle);
         taskViewID = mTaskView.taskViewID;
@@ -170,10 +177,11 @@ public class TaskActivity extends AppCompatActivity {
         View srcTaskView2 = null;
         TextView goldnow=findViewById(R.id.goldnow);
         TextView goldpre=findViewById(R.id.goldpre);
+        TextView regionText=findViewById(R.id.regionText);
         if(intent.getStringExtra("taskview").equals("text")) {
             srcTaskView2 = (View) findViewById(R.id.srcview2);
         }
-        mTaskView.setContent(mId, tempsrcURI, this, tasktype, 0, srcTaskView1, srcTaskView2, goldnow, goldpre);
+        mTaskView.setContent(mId, tempsrcURI, this, tasktype, 0, srcTaskView1, srcTaskView2, goldnow, goldpre,regionText);
 
         //Controller에 source설정
         View view = findViewById(R.id.controller);

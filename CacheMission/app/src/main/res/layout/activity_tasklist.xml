@@ -244,15 +244,6 @@
                 app:srcCompat="@drawable/setting" />
 
         </android.support.constraint.ConstraintLayout>
-
-        <TextView
-            android:id="@+id/exchange"
-            style="@style/normalTextList"
-            android:text="환전신청"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/drawer_usertable"/>
-
         <TextView
             android:id="@+id/suggestion"
             style="@style/normalTextList"
@@ -260,6 +251,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/exchange" />
+        <TextView
+            android:id="@+id/noticeb"
+            style="@style/normalTextList"
+            android:text="공지사항"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/drawer_usertable"/>
+        <TextView
+            android:id="@+id/exchange"
+            style="@style/normalTextList"
+            android:text="환전신청"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/noticeb"/>
+
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/drawer_bottom"
