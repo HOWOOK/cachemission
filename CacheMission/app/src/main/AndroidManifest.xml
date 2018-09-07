@@ -77,6 +77,15 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             ></activity>
+        <activity android:name="com.selectstar.hwshin.cashmission.Activity.NoticeActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            ></activity>
+        <activity android:name="com.selectstar.hwshin.cashmission.Activity.NoticePopUpActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            ></activity>
+
 
         <provider
             android:name="android.support.v4.content.FileProvider"

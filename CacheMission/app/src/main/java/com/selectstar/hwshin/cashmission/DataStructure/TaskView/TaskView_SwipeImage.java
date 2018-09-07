@@ -33,51 +33,48 @@ public class TaskView_SwipeImage extends TaskView {
     public void setContent(String id, String contentURI, Context context, String taskType, int examType, View... view) {
         SharedPreferences token = parentActivity.getSharedPreferences("token",Context.MODE_PRIVATE);
         final String logintoken = token.getString("logintoken",null);
+        JSONObject param = new JSONObject();
+        try {
+            param.put("id", id);
 
-        if(contentURI.equals("donthttp")==false) {
+            new HttpRequest(parentActivity) {
+                @Override
+                protected void onPostExecute(Object o) {
+                    super.onPostExecute(o);
 
-            JSONObject param = new JSONObject();
-            try {
-                param.put("id", id);
+                    JSONObject resulttemp = null;
+                    try {
+                        resulttemp = new JSONObject(result);
 
-                new HttpRequest(parentActivity) {
-                    @Override
-                    protected void onPostExecute(Object o) {
-                        super.onPostExecute(o);
+                        if ((boolean) resulttemp.get("success")) {
 
-                        JSONObject resulttemp = null;
-                        try {
-                            resulttemp = new JSONObject(result);
 
-                            if ((boolean) resulttemp.get("success")) {
+                            String mtaskID = resulttemp.get("baseID").toString();
+                            settaskID(Integer.parseInt(mtaskID));
+                            SharedPreferences iddd = parentActivity.getSharedPreferences("iddd", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = iddd.edit();
+                            editor.putString("iddd", String.valueOf(taskID));
+                            editor.commit();
+                            Log.d("ssssss",String.valueOf(taskID));
 
-                                String mtaskID = resulttemp.get("baseID").toString();
-                                settaskID(Integer.parseInt(mtaskID));
-                                SharedPreferences iddd = parentActivity.getSharedPreferences("iddd", MODE_PRIVATE);
-                                SharedPreferences.Editor editor = iddd.edit();
-                                editor.putString("iddd", String.valueOf(taskID));
-                                editor.commit();
-                                Log.d("ssssss", String.valueOf(taskID));
+                        }else{
+                            if(parentActivity.getIntent().getIntExtra("from",0)==0){
+                                Toast.makeText(parentActivity, "회원님이 선택하신 지역에 해당하는 과제가 더이상 없습니다. 테스크 리스트로 돌아갑니다.", Toast.LENGTH_SHORT).show();
 
-                            } else {
-                                if (parentActivity.getIntent().getIntExtra("from", 0) == 0) {
-                                    Toast.makeText(parentActivity, "회원님이 선택하신 지역에 해당하는 과제가 더이상 없습니다. 테스크 리스트로 돌아갑니다.", Toast.LENGTH_SHORT).show();
-
-                                } else {
-                                    Toast.makeText(parentActivity, "테스크를 모두 완료했습니다. 테스크 리스트로 돌아갑니다.", Toast.LENGTH_SHORT).show();
-                                }
-                                parentActivity.finish();
+                            }else {
+                                Toast.makeText(parentActivity, "테스크를 모두 완료했습니다. 테스크 리스트로 돌아갑니다.", Toast.LENGTH_SHORT).show();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                            //parentActivity.finish();
                         }
-
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                }.execute(parentActivity.getString(R.string.mainurl) + "/taskGet", param, logintoken);
 
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+                }
+            }.execute(parentActivity.getString(R.string.mainurl)+"/taskGet", param,logintoken);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
         ViewPager mPager = (ViewPager)view[0];
         int[] pages=new int[3];
