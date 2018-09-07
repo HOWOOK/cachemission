@@ -52,7 +52,11 @@ public class TaskView_Image extends TaskView {
                                 ImageView imageView = (ImageView) view[0];
                                 if(taskType.equals("NUMBERING"))
                                     imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                                Glide.with(context).load(Uri.parse(parentActivity.getString(R.string.mainurl)+"/media/"+ ((String) resulttemp.get("url")))).into((ImageView) view[0]);
+
+                                Glide.with(context)
+                                        .load(Uri.parse(parentActivity.getString(R.string.mainurl)+"/media/"+ ((String) resulttemp.get("url"))))
+                                        .thumbnail(0.1f)
+                                        .into((ImageView) view[0]);
 
 
                                 String taskID = resulttemp.get("baseID").toString();
