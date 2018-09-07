@@ -1,24 +1,34 @@
 package com.selectstar.hwshin.cashmission.DataStructure.Controller;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.selectstar.hwshin.cashmission.Adapter.CircularPagerAdapter;
+import com.selectstar.hwshin.cashmission.DataStructure.ControllerBundle.ControllerBundle_GPS;
 import com.selectstar.hwshin.cashmission.R;
 
 import java.io.BufferedInputStream;
@@ -36,39 +46,44 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
+import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+import static android.Manifest.permission.RECORD_AUDIO;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static android.content.Context.MODE_PRIVATE;
 
 public class Controller_Photo extends Controller {
 
     String imageFilePath;
     Uri photoUri;
-int serverResponseCode;
+    int serverResponseCode;
+    private String locationProvider = null;
+    private Location lastKnownLocation = null;
+    ControllerBundle_GPS gps = null;
+    public Handler mHandler;
+    String GPSX = "";
+    String GPSY = "";
+    boolean photountaken=true;
 
     private void SaveBitmapToFileCache(Bitmap bitmap, String strFilePath) {
 
         File fileCacheItem = new File(strFilePath);
         OutputStream out = null;
 
-        try
-        {
+        try {
             fileCacheItem.createNewFile();
             out = new FileOutputStream(fileCacheItem);
 
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally
-        {
-            try
-            {
+        } finally {
+            try {
                 out.close();
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -92,24 +107,29 @@ int serverResponseCode;
 
         return image;
     }
+
     public Controller_Photo() {
         controllerID = R.layout.controller_photo;
     }
+
     @Override
     public void setLayout(final String id, View view, Context c, String tasktype, Intent in, String buttons) {
         SharedPreferences token = parentActivity.getSharedPreferences("token", MODE_PRIVATE);
 
 
-        final String logintoken = token.getString("logintoken",null);
+        final String logintoken = token.getString("logintoken", null);
 
-        ConstraintLayout templayout = (ConstraintLayout) view;
-        Button phototake=templayout.findViewById(R.id.phototake);
-        Button photosend=templayout.findViewById(R.id.postphoto);
-        Log.d("dddggg",String.valueOf(mtaskview.gettaskID()));
+
+        final ConstraintLayout templayout = (ConstraintLayout) view;
+        Button phototake = templayout.findViewById(R.id.phototake);
+        Button photosend = templayout.findViewById(R.id.postphoto);
+        Button gps = templayout.findViewById(R.id.GPS);
+        Log.d("dddggg", String.valueOf(mtaskview.gettaskID()));
         phototake.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent takepictureintent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                photountaken=false;
+                Intent takepictureintent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
                 if (takepictureintent.resolveActivity(parentActivity.getPackageManager()) != null) {
                     File photoFile = null;
@@ -132,42 +152,131 @@ int serverResponseCode;
 
             }
         });
-        photosend.setOnClickListener(new View.OnClickListener() {
+
+        gps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
-                new Thread() {
-                    public void run() {
-                        SharedPreferences imagefilepath = parentActivity.getSharedPreferences("imagefilepath", MODE_PRIVATE);
-                        String stringtoken;
-                        stringtoken = imagefilepath.getString("imagefilepath", null);
-                        if (stringtoken == null) {
-                            stringtoken = "";
+            }
+        });
+        photosend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (photountaken) {
+                    Toast.makeText(parentActivity,"먼저 사진을 찍어주세요",Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.d("Main", "onCreate");
+
+                    final TextView logView = (TextView) templayout.findViewById(R.id.longggg);
+                    logView.setText("GPS 가 잡혀야 좌표가 구해짐");
+
+                    // Acquire a reference to the system Location Manager
+                    LocationManager locationManager = (LocationManager) parentActivity.getSystemService(Context.LOCATION_SERVICE);
+
+                    // GPS 프로바이더 사용가능여부
+                    boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+                    // 네트워크 프로바이더 사용가능여부
+                    boolean isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+                    Log.d("Main", "isGPSEnabled=" + isGPSEnabled);
+                    Log.d("Main", "isNetworkEnabled=" + isNetworkEnabled);
+
+                    LocationListener locationListener = new LocationListener() {
+                        public void onLocationChanged(Location location) {
+                            double lat = location.getLatitude();
+                            double lng = location.getLongitude();
+
+                            logView.setText("latitude: " + lat + ", longitude: " + lng);
                         }
-                        Bitmap bitmap = BitmapFactory.decodeFile(stringtoken);
-                        ExifInterface exif = null;
-                        try {
-                            exif = new ExifInterface(stringtoken);
 
+                        public void onStatusChanged(String provider, int status, Bundle extras) {
+                            logView.setText("onStatusChanged");
+                        }
 
-                            int exifOrientation;
-                            int exifDegree;
+                        public void onProviderEnabled(String provider) {
+                            logView.setText("onProviderEnabled");
+                        }
 
-                            if (exif != null) {
-                                exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-                                exifDegree = exifOrientationToDegrees(exifOrientation);
-                            } else {
-                                exifDegree = 0;
+                        public void onProviderDisabled(String provider) {
+                            logView.setText("onProviderDisabled");
+                        }
+                    };
+
+                    // Register the listener with the Location Manager to receive location updates
+                    if (ActivityCompat.checkSelfPermission(parentActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(parentActivity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        // TODO: Consider calling
+                        //    ActivityCompat#requestPermissions
+                        // here to request the missing permissions, and then overriding
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for ActivityCompat#requestPermissions for more details.
+                        return;
+                    }
+                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+
+                    // 수동으로 위치 구하기
+                    String locationProvider = LocationManager.GPS_PROVIDER;
+                    Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
+                    if (lastKnownLocation != null) {
+                        double lng = lastKnownLocation.getLatitude();
+                        double lat = lastKnownLocation.getLongitude();
+                        GPSX = "" + lng;
+                        GPSY = "" + lat;
+                        Log.d("MMMain", "longtitude=" + lng + ", latitude=" + lat);
+                    }
+
+                    new Thread() {
+                        public void run() {
+                            SharedPreferences imagefilepath = parentActivity.getSharedPreferences("imagefilepath", MODE_PRIVATE);
+                            String stringtoken;
+                            stringtoken = imagefilepath.getString("imagefilepath", null);
+                            if (stringtoken == null) {
+                                stringtoken = "";
                             }
-                            bitmap = rotate(bitmap, exifDegree);
-                            String sd = Environment.getExternalStorageDirectory().getAbsolutePath();
 
-                            String mPath = sd + "/image_"+System.currentTimeMillis();
-                            SaveBitmapToFileCache(bitmap,mPath+".jpg");
 
-                            uploadFile(mPath+".jpg",id);
+                            Bitmap bitmap = BitmapFactory.decodeFile(stringtoken);
+                            ExifInterface exif = null;
+                            try {
+                                exif = new ExifInterface(stringtoken);
 
+
+                                int exifOrientation;
+                                int exifDegree;
+
+                                if (exif != null) {
+                                    exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+                                    exifDegree = exifOrientationToDegrees(exifOrientation);
+                                } else {
+                                    exifDegree = 0;
+                                }
+                                bitmap = rotate(bitmap, exifDegree);
+                                String sd = Environment.getExternalStorageDirectory().getAbsolutePath();
+
+                                String mPath = sd + "/image_" + System.currentTimeMillis();
+                                SaveBitmapToFileCache(bitmap, mPath + ".jpg");
+
+                                uploadFile(mPath + ".jpg", id);
+                                Uri muri = Uri.parse(mPath + ".jpg");
+                                File file = new File(muri.getPath());
+                                file.delete();
+                                Log.d("serverres", String.valueOf(serverResponseCode));
+                                if (serverResponseCode == 200)
+
+                                {
+
+                                    parentIntent.putExtra("from", 1);
+                                    parentActivity.startActivity(parentIntent);
+                                    parentActivity.finish();
+                                } else
+
+                                {
+                                    //Toast.makeText(parentActivity, "남은 테스크가 없습니다.", Toast.LENGTH_SHORT).show();
+                                    parentActivity.finish();
+                                }
 /*
                             String attachmentName = "bitmap";
                             String attachmentFileName = "bitmap.bmp";
@@ -239,30 +348,18 @@ int serverResponseCode;
                             httpUrlConnection.disconnect();
 */
 
-                        } catch (
-                                IOException e)
+                            } catch (
+                                    IOException e)
 
-                        {
-                            e.printStackTrace();
+                            {
+                                e.printStackTrace();
+                            }
+
+
                         }
+                    }.start();
 
-                        if (serverResponseCode == 200)
-
-                        {
-
-                            parentIntent.putExtra("from", 1);
-                            parentActivity.startActivity(parentIntent);
-                            parentActivity.finish();
-                        } else
-
-                        {
-                            //Toast.makeText(parentActivity, "남은 테스크가 없습니다.", Toast.LENGTH_SHORT).show();
-                            parentActivity.finish();
-                        }
-
-                    }
-                }.start();
-
+                }
             }
         });
 
@@ -335,6 +432,9 @@ int serverResponseCode;
                 conn.setRequestProperty("TOKEN",logintoken);
                 conn.setRequestProperty("ANSWERID",idd);
                 conn.setRequestProperty("TASKID",id);
+                Log.d("gghhff",GPSY);
+                conn.setRequestProperty("GPSX",GPSX);
+                conn.setRequestProperty("GPSY",GPSY);
 
                 dos = new DataOutputStream(conn.getOutputStream());
 

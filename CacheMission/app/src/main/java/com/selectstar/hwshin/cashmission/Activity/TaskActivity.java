@@ -255,6 +255,6 @@ public class TaskActivity extends AppCompatActivity {
 
     View srcTaskView1 = (View) findViewById(R.id.srcview);
     View srcTaskView2 = null;
-    mTaskView.setContent(mId, tempsrcURI, this, tasktype, 0, srcTaskView1);
+    mTaskView.setContent(mId, "donthttp", this, tasktype, 0, srcTaskView1);
 }
 }

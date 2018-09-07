@@ -33,48 +33,51 @@ public class TaskView_SwipeImage extends TaskView {
     public void setContent(String id, String contentURI, Context context, String taskType, int examType, View... view) {
         SharedPreferences token = parentActivity.getSharedPreferences("token",Context.MODE_PRIVATE);
         final String logintoken = token.getString("logintoken",null);
-        JSONObject param = new JSONObject();
-        try {
-            param.put("id", id);
 
-            new HttpRequest(parentActivity) {
-                @Override
-                protected void onPostExecute(Object o) {
-                    super.onPostExecute(o);
+        if(contentURI.equals("donthttp")==false) {
 
-                    JSONObject resulttemp = null;
-                    try {
-                        resulttemp = new JSONObject(result);
+            JSONObject param = new JSONObject();
+            try {
+                param.put("id", id);
 
-                        if ((boolean) resulttemp.get("success")) {
+                new HttpRequest(parentActivity) {
+                    @Override
+                    protected void onPostExecute(Object o) {
+                        super.onPostExecute(o);
 
+                        JSONObject resulttemp = null;
+                        try {
+                            resulttemp = new JSONObject(result);
 
-                            String mtaskID = resulttemp.get("baseID").toString();
-                            settaskID(Integer.parseInt(mtaskID));
-                            SharedPreferences iddd = parentActivity.getSharedPreferences("iddd", MODE_PRIVATE);
-                            SharedPreferences.Editor editor = iddd.edit();
-                            editor.putString("iddd", String.valueOf(taskID));
-                            editor.commit();
-                            Log.d("ssssss",String.valueOf(taskID));
+                            if ((boolean) resulttemp.get("success")) {
 
-                        }else{
-                            if(parentActivity.getIntent().getIntExtra("from",0)==0){
-                                Toast.makeText(parentActivity, "회원님이 선택하신 지역에 해당하는 과제가 더이상 없습니다. 테스크 리스트로 돌아갑니다.", Toast.LENGTH_SHORT).show();
+                                String mtaskID = resulttemp.get("baseID").toString();
+                                settaskID(Integer.parseInt(mtaskID));
+                                SharedPreferences iddd = parentActivity.getSharedPreferences("iddd", MODE_PRIVATE);
+                                SharedPreferences.Editor editor = iddd.edit();
+                                editor.putString("iddd", String.valueOf(taskID));
+                                editor.commit();
+                                Log.d("ssssss", String.valueOf(taskID));
 
-                            }else {
-                                Toast.makeText(parentActivity, "테스크를 모두 완료했습니다. 테스크 리스트로 돌아갑니다.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                if (parentActivity.getIntent().getIntExtra("from", 0) == 0) {
+                                    Toast.makeText(parentActivity, "회원님이 선택하신 지역에 해당하는 과제가 더이상 없습니다. 테스크 리스트로 돌아갑니다.", Toast.LENGTH_SHORT).show();
+
+                                } else {
+                                    Toast.makeText(parentActivity, "테스크를 모두 완료했습니다. 테스크 리스트로 돌아갑니다.", Toast.LENGTH_SHORT).show();
+                                }
+                                parentActivity.finish();
                             }
-                            //parentActivity.finish();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+
                     }
+                }.execute(parentActivity.getString(R.string.mainurl) + "/taskGet", param, logintoken);
 
-                }
-            }.execute(parentActivity.getString(R.string.mainurl)+"/taskGet", param,logintoken);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
         ViewPager mPager = (ViewPager)view[0];
         int[] pages=new int[3];
