@@ -246,27 +246,12 @@
         </android.support.constraint.ConstraintLayout>
 
         <TextView
-            android:id="@+id/notice"
-            style="@style/normalTextList"
-            android:text="건의사항"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/exchange" />
-        <TextView
-            android:id="@+id/noticeb"
-            style="@style/normalTextList"
-            android:text="공지사항"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/drawer_usertable"/>
-
-        <TextView
             android:id="@+id/exchange"
             style="@style/normalTextList"
             android:text="환전신청"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/noticeb"/>
+            app:layout_constraintTop_toBottomOf="@+id/drawer_usertable"/>
 
         <TextView
             android:id="@+id/suggestion"

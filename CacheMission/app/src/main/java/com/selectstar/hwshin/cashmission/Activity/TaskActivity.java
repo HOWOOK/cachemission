@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
@@ -21,11 +23,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.selectstar.hwshin.cashmission.DataStructure.Controller.Controller;
+import com.selectstar.hwshin.cashmission.DataStructure.HttpRequest;
 import com.selectstar.hwshin.cashmission.DataStructure.TaskView.TaskView;
 import com.selectstar.hwshin.cashmission.DataStructure.UIHashmap;
 import com.selectstar.hwshin.cashmission.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class TaskActivity extends AppCompatActivity {
 
@@ -41,7 +51,6 @@ public class TaskActivity extends AppCompatActivity {
     private UIHashmap uiHashmap;
     String tasktype;
     Dialog explainDialog;
-    ImageView backButton;
 
     //사투리특별전용옵션
     static String region_dialect;
@@ -75,6 +84,7 @@ public class TaskActivity extends AppCompatActivity {
 
             if (region != null)
                 regionText.setText("[선택지역] " + region);
+
             regionText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -95,13 +105,7 @@ public class TaskActivity extends AppCompatActivity {
         //캡쳐방지
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
 
-        backButton = findViewById(R.id.popupback);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+
         SharedPreferences token = getSharedPreferences("token",MODE_PRIVATE);
         String stringtoken;
         stringtoken = token.getString("logintoken",null);
@@ -122,7 +126,7 @@ public class TaskActivity extends AppCompatActivity {
         tasktitle = intent.getStringExtra("tasktitle");
         buttons= intent.getStringExtra("buttons");
 
-        TextView mtasktitle = findViewById(R.id.popuptitle);
+        TextView mtasktitle = findViewById(R.id.tasktitletext);
         mtasktitle.setText(tasktitle);
         taskViewID = mTaskView.taskViewID;
         controllerID = mController.controllerID;
@@ -166,11 +170,10 @@ public class TaskActivity extends AppCompatActivity {
         View srcTaskView2 = null;
         TextView goldnow=findViewById(R.id.goldnow);
         TextView goldpre=findViewById(R.id.goldpre);
-        TextView regionText=findViewById(R.id.regionText);
         if(intent.getStringExtra("taskview").equals("text")) {
             srcTaskView2 = (View) findViewById(R.id.srcview2);
         }
-        mTaskView.setContent(mId, tempsrcURI, this, tasktype, 0, srcTaskView1, srcTaskView2, goldnow, goldpre,regionText);
+        mTaskView.setContent(mId, tempsrcURI, this, tasktype, 0, srcTaskView1, srcTaskView2, goldnow, goldpre);
 
         //Controller에 source설정
         View view = findViewById(R.id.controller);
@@ -252,6 +255,6 @@ public class TaskActivity extends AppCompatActivity {
 
     View srcTaskView1 = (View) findViewById(R.id.srcview);
     View srcTaskView2 = null;
-    mTaskView.setContent(mId, tempsrcURI, this, tasktype, 0, srcTaskView1);
+    mTaskView.setContent(mId, "donthttp", this, tasktype, 0, srcTaskView1);
 }
 }

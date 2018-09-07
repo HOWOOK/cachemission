@@ -86,18 +86,6 @@ public class TaskListActivity extends AppCompatActivity {
                 TaskListActivity.this.startActivity(intent_setting);
             }
         });
-        TextView noticebtn = findViewById(R.id.noticeb);
-        noticebtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent_notice= new Intent(TaskListActivity.this, NoticeActivity.class);
-                if (drawer.isDrawerOpen(Gravity.LEFT)) {
-                    drawer.closeDrawer(Gravity.LEFT) ;
-                }
-                startActivity(intent_notice);
-
-            }
-        });
 
         TextView exchangebtn = findViewById(R.id.exchange);
         exchangebtn.setOnClickListener(new View.OnClickListener() {

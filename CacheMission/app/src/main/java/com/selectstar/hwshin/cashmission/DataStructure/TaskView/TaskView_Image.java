@@ -65,15 +65,8 @@ public class TaskView_Image extends TaskView {
 
                                 TextView textView_nowgold = (TextView) view[2];
                                 TextView textView_pregold = (TextView) view[3];
-                                TextView textView_taskCount = (TextView) view[4];
                                 textView_nowgold.setText("현재 : " + "\uFFE6 "+String.valueOf(resulttemp.get("gold")));
                                 textView_pregold.setText("예정 : " + "\uFFE6 "+String.valueOf(resulttemp.get("pending_gold")));
-                                String textCount = resulttemp.get("task_count").toString();
-                                textCount = textCount.replace("\n"," ");
-                                textCount = textCount.replace("추가 보상","(추가 보상");
-                                if(!textCount.contains("!"))
-                                    textCount = textCount + ")";
-                                textView_taskCount.setText(textCount);
                             }
                             else{
                                 if(parentActivity.getIntent().getIntExtra("from",0)==0){

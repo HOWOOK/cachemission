@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.selectstar.hwshin.cashmission.DataStructure.HttpRequest;
 import com.selectstar.hwshin.cashmission.R;
@@ -22,19 +21,12 @@ public class ExchangeActivity extends AppCompatActivity {
     Context context = this;
     EditText exchangemain;
     Button send_btn;
-    ImageView backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exchange);
-        backButton = findViewById(R.id.exchangeback);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+
         exchangemain = findViewById(R.id.exchangemain);
         send_btn = findViewById(R.id.sendbtn);
 
