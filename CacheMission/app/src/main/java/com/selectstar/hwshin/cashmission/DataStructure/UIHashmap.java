@@ -1,21 +1,17 @@
 package com.selectstar.hwshin.cashmission.DataStructure;
 
-import com.selectstar.hwshin.cashmission.DataStructure.Controller.Controller;
-import com.selectstar.hwshin.cashmission.DataStructure.Controller.Controller_Buttons;
-import com.selectstar.hwshin.cashmission.DataStructure.Controller.Controller_EditText;
-import com.selectstar.hwshin.cashmission.DataStructure.Controller.Controller_Numbers;
-import com.selectstar.hwshin.cashmission.DataStructure.Controller.Controller_Photo;
-import com.selectstar.hwshin.cashmission.DataStructure.Controller.Controller_Voice;
+import com.selectstar.hwshin.cashmission.DataStructure.NewController.NewController;
+import com.selectstar.hwshin.cashmission.DataStructure.NewController.NewController_EditText;
+import com.selectstar.hwshin.cashmission.DataStructure.NewController.NewController_Numbers;
 import com.selectstar.hwshin.cashmission.DataStructure.ExamView.ExamView;
 import com.selectstar.hwshin.cashmission.DataStructure.ExamView.ExamView_Buttons;
 import com.selectstar.hwshin.cashmission.DataStructure.ExamView.ExamView_EditText;
 import com.selectstar.hwshin.cashmission.DataStructure.ExamView.ExamView_Voice;
-import com.selectstar.hwshin.cashmission.DataStructure.TaskView.TaskView;
-import com.selectstar.hwshin.cashmission.DataStructure.TaskView.TaskView_Image;
-import com.selectstar.hwshin.cashmission.DataStructure.TaskView.TaskView_SwipeImage;
-import com.selectstar.hwshin.cashmission.DataStructure.TaskView.TaskView_Text;
-import com.selectstar.hwshin.cashmission.DataStructure.TaskView.TaskView_Video;
-import com.selectstar.hwshin.cashmission.DataStructure.TaskView.TaskView_Voice;
+import com.selectstar.hwshin.cashmission.DataStructure.NewController.NewController_Voice;
+import com.selectstar.hwshin.cashmission.DataStructure.NewTaskView.NewTaskView;
+import com.selectstar.hwshin.cashmission.DataStructure.NewTaskView.NewTaskView_Image;
+import com.selectstar.hwshin.cashmission.DataStructure.NewTaskView.NewTaskView_Text;
+import com.selectstar.hwshin.cashmission.DataStructure.NewTaskView.NewTaskView_Voice;
 import com.selectstar.hwshin.cashmission.R;
 
 import java.util.HashMap;
@@ -23,13 +19,13 @@ import java.util.HashMap;
 public class UIHashmap {
 
     /* int[][] parameters 설명
-    * parameters[0] -> TaskView의 Weight  (Default Weight : TaskView = 10)
-    * parameters[1] -> TaskView의 Top을 어떤 Constraintlayout에 연결할지
-    * parameters[2] -> TaskView의 Bottom을 어떤 Constraintlayout에 연결할지
-    * parameters[3] -> Controller의 Top을 어떤 Constraintlayout에 연결할지
-    * parameters[4] -> Controller의 Bottom을 어떤 Constraintlayout에 연결할지
-    * parameters[5] -> Controller의 Weight  (Default Weight : Controller = 10)
-    */
+     * parameters[0] -> TaskView의 Weight  (Default Weight : TaskView = 10)
+     * parameters[1] -> TaskView의 Top을 어떤 Constraintlayout에 연결할지
+     * parameters[2] -> TaskView의 Bottom을 어떤 Constraintlayout에 연결할지
+     * parameters[3] -> Controller의 Top을 어떤 Constraintlayout에 연결할지
+     * parameters[4] -> Controller의 Bottom을 어떤 Constraintlayout에 연결할지
+     * parameters[5] -> Controller의 Weight  (Default Weight : Controller = 10)
+     */
     int[][] parameters_OCR = new int[6][2];
     int[][] parameters_VIDEO = new int[6][2];
     int[][] parameters_VOICE = new int[6][2];
@@ -45,24 +41,24 @@ public class UIHashmap {
     int[][] parameters_NUMBERINGEXAM = new int[6][2];
     int[][] parameters_DIALECTEXAM = new int[6][2];
 
-    public HashMap<String, TaskView> taskViewHashMap = new HashMap();
-    public HashMap<String, Controller> controllerHashMap = new HashMap();
+    public HashMap<String, NewTaskView> taskViewHashMap = new HashMap();
+    public HashMap<String, NewController> controllerHashMap = new HashMap();
     public HashMap<String, ExamView> examviewHashMap = new HashMap();
     public HashMap<String, int[][]> taskHashMap = new HashMap();
 
     public UIHashmap() {
         //TaskView hashmap 종류들
-        taskViewHashMap.put("image", new TaskView_Image());
-        taskViewHashMap.put("video", new TaskView_Video());
-        taskViewHashMap.put("text", new TaskView_Text());
-        taskViewHashMap.put("voice", new TaskView_Voice());
-        taskViewHashMap.put("swipeimage", new TaskView_SwipeImage());
+        taskViewHashMap.put("image", new NewTaskView_Image());
+        //taskViewHashMap.put("video", new TaskView_Video());
+        taskViewHashMap.put("text", new NewTaskView_Text());
+        taskViewHashMap.put("voice", new NewTaskView_Voice());
+        //taskViewHashMap.put("swipeimage", new TaskView_SwipeImage());
         //Controller hashmap 종류들
-        controllerHashMap.put("edittext", new Controller_EditText());
-        controllerHashMap.put("buttons", new Controller_Buttons());
-        controllerHashMap.put("record", new Controller_Voice());
-        controllerHashMap.put("numbers", new Controller_Numbers());
-        controllerHashMap.put("photo", new Controller_Photo());
+        controllerHashMap.put("edittext", new NewController_EditText());
+        //controllerHashMap.put("buttons", new Controller_Buttons());
+        //controllerHashMap.put("record", new NewController_Voice());
+        controllerHashMap.put("numbers", new NewController_Numbers());
+        //controllerHashMap.put("photo", new Controller_Photo());
 
         examviewHashMap.put("edittext", new ExamView_EditText());
         examviewHashMap.put("buttons", new ExamView_Buttons());

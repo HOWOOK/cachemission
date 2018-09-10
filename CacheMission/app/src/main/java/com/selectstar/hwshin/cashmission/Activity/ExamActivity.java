@@ -3,31 +3,14 @@ package com.selectstar.hwshin.cashmission.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
-import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.selectstar.hwshin.cashmission.DataStructure.ExamView.ExamView;
-import com.selectstar.hwshin.cashmission.DataStructure.HttpRequest;
-import com.selectstar.hwshin.cashmission.DataStructure.TaskView.TaskView;
+import com.selectstar.hwshin.cashmission.DataStructure.NewTaskView.NewTaskView;
 import com.selectstar.hwshin.cashmission.DataStructure.UIHashmap;
 import com.selectstar.hwshin.cashmission.R;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class ExamActivity extends AppCompatActivity {
 
@@ -36,7 +19,7 @@ public class ExamActivity extends AppCompatActivity {
     AppCompatActivity activity=this;
     int controllerID, taskViewID;
     String mId;
-    TaskView mTaskView;
+    NewTaskView mTaskView;
     ExamView mExamView;
     int[][] mParameter;
     String tempsrcURI="foobar";
@@ -55,18 +38,16 @@ public class ExamActivity extends AppCompatActivity {
         setContentView(R.layout.activity_exam);
         //캡쳐방지
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
-
         SharedPreferences token = getSharedPreferences("token",Context.MODE_PRIVATE);
         final String logintoken = token.getString("logintoken",null);
 
         /*
          *intent로 부터 받아와야할 것 :   1. 어떤 controller를 사용하는지
          * 2. 어떤 taskview를 사용하는지  3. 두개의 constraint 관계는 어떤지
-         */
         intent = getIntent();
         uiHashmap = new UIHashmap();
         mId=(String)intent.getStringExtra("taskid");
-        mTaskView = (TaskView) uiHashmap.taskViewHashMap.get(intent.getStringExtra("taskview"));
+        mTaskView = (NewTaskView) uiHashmap.taskViewHashMap.get(intent.getStringExtra("taskview"));
         mExamView = (ExamView) uiHashmap.examviewHashMap.get(intent.getStringExtra("examview"));
         mParameter =  (int[][]) uiHashmap.taskHashMap.get(intent.getStringExtra("tasktype"));
         tasktitle = intent.getStringExtra("tasktitle");
@@ -314,7 +295,7 @@ public class ExamActivity extends AppCompatActivity {
                 gold_up.startAnimation(animation);
             }
         }
+        */
 
     }
-
 }
