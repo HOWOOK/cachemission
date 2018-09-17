@@ -20,7 +20,7 @@ import com.selectstar.hwshin.cachemission.R;
 public class TaskExplainActivity extends AppCompatActivity {
 
     Intent intent;
-    String tasktype="";
+    String taskType="";
     int examType = 0;
 
     private ViewPager viewpager;
@@ -38,18 +38,18 @@ public class TaskExplainActivity extends AppCompatActivity {
 
         viewpager=(ViewPager)findViewById(R.id.explainViewpager);
         intent = getIntent();
-        tasktype = intent.getStringExtra("tasktype");
+        taskType = intent.getStringExtra("taskType");
 
-        SharedPreferences tasktoken = getSharedPreferences("tasktoken", MODE_PRIVATE);
-        SharedPreferences.Editor editor = tasktoken.edit();
-        editor.putInt(tasktype + "tasktoken", 100);
-        if(tasktype.equals("RECORDEXAM")) {
+        SharedPreferences taskToken = getSharedPreferences("taskToken", MODE_PRIVATE);
+        SharedPreferences.Editor editor = taskToken.edit();
+        editor.putInt(taskType + "taskToken", 100);
+        if(taskType.equals("RECORDEXAM")) {
             examType = intent.getIntExtra("examType", 0);
-            editor.putInt(tasktype + examType+"tasktoken", 100);
+            editor.putInt(taskType + examType+"taskToken", 100);
         }
         editor.commit();
 
-        myadapter= findAdaptingTaskExplain(tasktype);
+        myadapter= findAdaptingTaskExplain(taskType);
         viewpager.setAdapter(myadapter);
         viewpager.addOnPageChangeListener(viewlistener);
 

@@ -41,7 +41,7 @@ public class SettingActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         SharedPreferences test = getSharedPreferences("token", MODE_PRIVATE);
                         SharedPreferences.Editor editor = test.edit();
-                        editor.remove("logintoken");
+                        editor.remove("loginToken");
                         editor.commit();
                         finish();
                     }

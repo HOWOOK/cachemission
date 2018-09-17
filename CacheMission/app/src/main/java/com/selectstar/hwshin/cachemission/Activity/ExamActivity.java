@@ -18,47 +18,115 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.selectstar.hwshin.cachemission.DataStructure.ExamView.ExamView;
+import com.selectstar.hwshin.cachemission.DataStructure.HurryHttpRequest;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView;
 import com.selectstar.hwshin.cachemission.DataStructure.UIHashMap;
 import com.selectstar.hwshin.cachemission.DataStructure.WaitHttpRequest;
 import com.selectstar.hwshin.cachemission.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ExamActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.Date;
 
-    Intent intent;
-    Context context=this;
-    AppCompatActivity activity=this;
-    int controllerID, taskViewID;
-    String mId;
-    TaskView mTaskView;
+public class ExamActivity extends PatherActivity {
+
     ExamView mExamView;
-    int[][] mParameter;
-    String tempsrcURI="foobar";
-    String tasktitle;
     String buttons;
-    private UIHashMap uiHashMap;
-    String baseID;
-    String tasktype;
-    int examtype;
+    int examType;
     String examFlag="";
     ImageView backButton;
-    String loginToken;
 
-    public void startTask()
+
+    protected void showDescription(Context context)
     {
 
+        Intent intent_taskExplain = new Intent(context, TaskExplainActivity.class);
+        intent_taskExplain.putExtra("taskType", taskType);
+        intent_taskExplain.putExtra("examType", examType);
+        startActivity(intent_taskExplain);
     }
 
-    private void showDescription()
-    {
+    @Override
+    public void getNewTask() {
+        JSONObject param = new JSONObject();
+        try {
+            param.put("taskID", taskID);
+            param.put("examType",examType);
+            new HurryHttpRequest(this) {
+                @Override
+                protected void onPostExecute(Object o) {
+                    super.onPostExecute(o);
+                    JSONObject resultTemp;
+                    try {
+                        resultTemp = new JSONObject(result);
+                        System.out.println(result);
+                        if ((boolean) resultTemp.get("success")) {
+                            waitingTasks = new ArrayList<>();
+                            JSONArray tempTasks = (JSONArray)resultTemp.get("answers");
+                            for(int i=0;i<tempTasks.length();i++)
+                                waitingTasks.add((JSONObject)tempTasks.get(i));
+                            mTaskView.setPreviewContents(waitingTasks);
+                            Date after28time = addMinutesToDate(28,new Date());
+                            ((JSONObject)waitingTasks.get(0)).put("time",DateToString(after28time));
+                            currentTask = waitingTasks.get(waitingTasks.size()-1);
+                            System.out.println((String)currentTask.get("content"));
+                            System.out.println("------------");
+                            mTaskView.setContent((String) currentTask.get("content"));
+                            answerID = ((Integer)currentTask.get("id")).toString();
+                            mExamView.setContent((String) currentTask.get("answer"),taskID);
 
-        Intent intent_taskExplain = new Intent(ExamActivity.this, TaskExplainActivity.class);
-        intent_taskExplain.putExtra("tasktype", tasktype);
-        intent_taskExplain.putExtra("examType", examtype);
-        startActivity(intent_taskExplain);
+                        } else {
+                            if (getIntent().getIntExtra("from", 0) == 0) {
+                                Toast.makeText(ExamActivity.this, "회원님이 선택하신 지역에 해당하는 과제가 더이상 없습니다. 테스크 리스트로 돌아갑니다.", Toast.LENGTH_SHORT).show();
+
+                            } else {
+                                Toast.makeText(ExamActivity.this, "테스크를 모두 완료했습니다. 테스크 리스트로 돌아갑니다.", Toast.LENGTH_SHORT).show();
+                            }
+                            finish();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+            }.execute(getString(R.string.mainurl) + "/newExamGet", param, getLoginToken());
+        } catch(JSONException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void startTask()
+    {
+        try {
+            waitingTasks = JSONtoArray(new JSONArray(getPreference("waitingTasks",taskType)));
+            if(waitingTasks.size()>0) {
+                if (timeCheck(((JSONObject) waitingTasks.get(0)).get("time").toString())) {
+                    if(mTaskView.isEmpty())
+                        mTaskView.setPreviewContents(waitingTasks);
+                    currentTask = (JSONObject)waitingTasks.get(waitingTasks.size()-1);
+                    answerID = currentTask.get("id").toString();
+                    mTaskView.setContent((String) currentTask.get("content"));
+                    mExamView.setContent((String) currentTask.get("answer"),taskID);
+                }
+                else
+                {
+                    getNewTask();
+                }
+            }
+            else
+            {
+                getNewTask();
+            }
+        }catch(JSONException e)
+        {
+            e.printStackTrace();
+        }
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,27 +143,26 @@ public class ExamActivity extends AppCompatActivity {
             }
         });
         SharedPreferences token = getSharedPreferences("token",MODE_PRIVATE);
-        loginToken = token.getString("logintoken",null);
-        if(loginToken==null){
-            loginToken="";
-        }
+        setLoginToken(token.getString("loginToken",null));
 
         intent = getIntent();
         uiHashMap = new UIHashMap();
-        mId=(String)intent.getStringExtra("taskid");
-        mTaskView = uiHashMap.taskViewHashMap.get(intent.getStringExtra("taskview"));
-        mExamView = (ExamView) uiHashMap.examViewHashMap.get(intent.getStringExtra("examview"));
-        mParameter =  (int[][]) uiHashMap.taskHashMap.get(intent.getStringExtra("tasktype"));
-        tasktitle = intent.getStringExtra("tasktitle");
+        taskID=(String)intent.getStringExtra("taskId");
+        mTaskView = uiHashMap.taskViewHashMap.get(intent.getStringExtra("taskView"));
+        mTaskView.setParentActivity(this);
+        mExamView = (ExamView) uiHashMap.examViewHashMap.get(intent.getStringExtra("examView"));
+        mExamView.setParentActivity(this);
+        mParameter =  (int[][]) uiHashMap.taskHashMap.get(intent.getStringExtra("taskType"));
+        taskTitle = intent.getStringExtra("taskTitle");
         buttons= intent.getStringExtra("buttons");
 
-        TextView mtasktitle = findViewById(R.id.tasktitletextexam);
-        mtasktitle.setText(tasktitle);
+        TextView mTaskTitle = findViewById(R.id.tasktitletextexam);
+        mTaskTitle.setText(taskTitle);
         taskViewID = mTaskView.taskViewID;
         controllerID = mExamView.ExamViewID;
 
-        tasktype = intent.getStringExtra("tasktype");
-        examtype = intent.getIntExtra("examtype",0);
+        taskType = intent.getStringExtra("taskType");
+        examType = intent.getIntExtra("examType",0);
 
         // TaskView Inflating
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -123,7 +190,7 @@ public class ExamActivity extends AppCompatActivity {
         params2.verticalWeight = mParameter[5][0];
         parent2.setLayoutParams(params2);
 
-
+        startTask();
         final Button confirm=findViewById(R.id.confirmbutton);
         final Button reject=findViewById(R.id.rejectbutton);
         Button sendExam=findViewById(R.id.examsend);
@@ -131,11 +198,7 @@ public class ExamActivity extends AppCompatActivity {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(examFlag.equals("confirm")){
-
-
-                }
-                else {
+                if(!examFlag.equals("confirm")){
                     examFlag="confirm";
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
@@ -143,17 +206,12 @@ public class ExamActivity extends AppCompatActivity {
                         reject.setBackground(getDrawable(R.drawable.examining_false));
                     }
                 }
-
             }
         });
         reject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(examFlag.equals("reject")){
-
-
-                }
-                else {
+                if(!examFlag.equals("reject")){
                     examFlag="reject";
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
@@ -167,12 +225,18 @@ public class ExamActivity extends AppCompatActivity {
         sendExam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!mExamView.isChecked())
+                {
+                    Toast.makeText(ExamActivity.this,"컨텐츠를 확인하고 판단해주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 if(examFlag.equals("")) {
                     Toast.makeText(getApplicationContext(),"테스크가 잘 되었는지 여부를 먼저 선택해 주세요",Toast.LENGTH_SHORT).show();
                     return;
                 }
                 boolean answer = false;
-                if(examFlag.equals("true"))
+                if(examFlag.equals("confirm"))
                     answer=true;
                 examFlag = "";
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -181,12 +245,11 @@ public class ExamActivity extends AppCompatActivity {
                 }
                 JSONObject param = new JSONObject();
                 try {
-                    param.put("taskID", Integer.parseInt(mId));
-                    param.put("answerID", baseID);
-                    param.put("examType", intent.getIntExtra("examtype",0));
-
+                    param.put("taskID", Integer.parseInt(taskID));
+                    param.put("answerID", answerID);
+                    param.put("examType", intent.getIntExtra("examType",0));
                     param.put("submit", answer);
-                    new WaitHttpRequest(context) {
+                    new WaitHttpRequest(ExamActivity.this) {
                         @Override
                         protected void onPostExecute(Object o) {
                             super.onPostExecute(o);
@@ -207,7 +270,7 @@ public class ExamActivity extends AppCompatActivity {
 
 
                         }
-                    }.execute(getString(R.string.mainurl)+"/examSubmit", param, loginToken);
+                    }.execute(getString(R.string.mainurl)+"/examSubmit", param, getLoginToken());
 
 
 
@@ -219,9 +282,9 @@ public class ExamActivity extends AppCompatActivity {
         });
         //해당 task가 처음이라면 설명서 띄워주는 것
 
-        SharedPreferences taskToken = getSharedPreferences("tasktoken", MODE_PRIVATE);
-        if(!(taskToken.getInt(tasktype+examtype+"tasktoken",0) == 100)){
-            showDescription();
+        SharedPreferences taskToken = getSharedPreferences("taskToken", MODE_PRIVATE);
+        if(!(taskToken.getInt(taskType+examType+"taskToken",0) == 100)){
+            showDescription(this);
         }
 
         //물음표버튼누르면 설명서 띄워주는것
@@ -229,7 +292,7 @@ public class ExamActivity extends AppCompatActivity {
         howBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDescription();
+                showDescription(ExamActivity.this);
             }
         });
 

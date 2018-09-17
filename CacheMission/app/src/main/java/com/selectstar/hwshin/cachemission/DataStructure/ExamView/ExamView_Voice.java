@@ -17,20 +17,22 @@ public class ExamView_Voice extends ExamView {
     }
     boolean isPlaying=false;
     @Override
-    public void setLayout(String id, View view, final Context c, Intent in, String buttons, final String answer) {
-        ConstraintLayout voicelayout=(ConstraintLayout) view;
-
-        final Button mBtPlay=(Button)voicelayout.findViewById(R.id.examviewvoicebutton) ;
+    public void setContent(String content,String taskID) {
+        final Button mBtPlay=(Button)parentActivity.findViewById(R.id.examviewvoicebutton) ;
         final MediaPlayer mPlayer=new MediaPlayer();
+        final String fcontent = content;
+        isCheck = false;
         mBtPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if (isPlaying == false) {
+                    isCheck = true;
                     mBtPlay.setBackground(ContextCompat.getDrawable(parentActivity, R.drawable.voicestopbtn));
                     isPlaying = true;
                     try {
 
-                        mPlayer.setDataSource(c, Uri.parse(parentActivity.getString(R.string.mainurl) +"/media/" + answer));
+                        mPlayer.setDataSource(parentActivity, Uri.parse(parentActivity.getString(R.string.mainurl) +"/media/" +fcontent));
 
                         mPlayer.prepare();
                     } catch (Exception e) {
@@ -59,6 +61,9 @@ public class ExamView_Voice extends ExamView {
 
             }
         });
+    }
 
+    @Override
+    public void setLayout(String id, View view, final Context c, Intent in, String buttons, final String answer) {
     }
 }

@@ -6,25 +6,20 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.selectstar.hwshin.cachemission.Activity.PatherActivity;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView;
 
 public abstract class ExamView {
     public int ExamViewID;
-    private int taskID;
-    public TaskView mtaskview;
-
     protected AppCompatActivity parentActivity;
-    protected Intent parentIntent;
-    public Activity usingactivity;
-
-    public abstract void setLayout(String id, View view, Context c, Intent in, String buttons, String Answer);
-    public void setTaskID(int taskID){
-        this.taskID=taskID;
-
-    };
-    public void setParent(AppCompatActivity context, Intent intent)
+    protected boolean isCheck = true;
+    public boolean isChecked()
     {
-        this.parentActivity = context;
-        this.parentIntent = intent;
+        return isCheck;
     }
+    public abstract void setContent(String content,String taskID);
+    public void setParentActivity(AppCompatActivity parentActivity) {
+        this.parentActivity = parentActivity;
+    }
+    public abstract void setLayout(String id, View view, Context c, Intent in, String buttons, String Answer);
 }
