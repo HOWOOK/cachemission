@@ -68,7 +68,7 @@ public class SuggestionActivity extends AppCompatActivity {
     {
         SharedPreferences token = getSharedPreferences("token",MODE_PRIVATE);
         String stringtoken="";
-        stringtoken = token.getString("logintoken",null);
+        stringtoken = token.getString("loginToken",null);
         final String finalStringtoken = stringtoken;
 
         android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(SuggestionActivity.this);

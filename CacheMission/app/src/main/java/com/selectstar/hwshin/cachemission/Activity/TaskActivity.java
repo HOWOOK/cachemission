@@ -33,52 +33,15 @@ import java.util.Date;
 
 import static java.lang.Integer.parseInt;
 
-public class TaskActivity extends AppCompatActivity {
+public class TaskActivity extends PatherActivity {
 
-    Intent intent;
-    int controllerID, taskViewID;
-    String mId;
     View controllerView;
-    TaskView mTaskView;
     Controller mController;
-    int[][] mParameter;
-    String tempsrcURI = "foobar";
-    String tasktitle;
     String buttons;
     Uri photoUri;
-    private UIHashMap uiHashMap;
-    private JSONObject currentTask;
-    String answerID;
-    String taskType;
     Dialog explainDialog;
     ImageView backButton;
-    TextView nowGold;
-    TextView pendingGold;
     TextView taskCount;
-    String taskID;
-    String loginToken;
-    private int upGold;
-    private String gold;
-    private String maybe;
-    private ArrayList<JSONObject> waitingTasks;
-    public int getUpGold()
-    {
-        return upGold;
-    }
-    public void setGold(String value)
-    {
-        if(value=="-1")
-        {
-            value = String.valueOf(Integer.parseInt(gold) + upGold);
-        }
-        gold = value;
-        nowGold.setText("현재 : \uFFE6 " + gold);
-    }
-    public void setMaybe(String value)
-    {
-        maybe = value;
-        pendingGold.setText("예정 : \uFFE6 " + maybe);
-    }
     public void deleteWaitingTasks()
     {
         savePreference("waitingTasks",taskType,new JSONArray().toString());
@@ -90,49 +53,8 @@ public class TaskActivity extends AppCompatActivity {
     }
     //사투리특별전용옵션
     static String region_dialect;
-    public String getPreference(String title,String key)
-    {
-        SharedPreferences SPF = getSharedPreferences(title, MODE_PRIVATE);
-        return SPF.getString(key, (new ArrayList<JSONObject>()).toString());
-    }
-    private static Date addMinutesToDate(int minutes, Date beforeTime){
-        final long ONE_MINUTE_IN_MILLIS = 60000;//millisecs
 
-        long curTimeInMs = beforeTime.getTime();
-        Date afterAddingMins = new Date(curTimeInMs + (minutes * ONE_MINUTE_IN_MILLIS));
-        return afterAddingMins;
-    }
-    public void savePreference(String title, String key, String value)
-    {
 
-        SharedPreferences SPF = getSharedPreferences(title, MODE_PRIVATE);
-        SharedPreferences.Editor editor = SPF.edit();
-        editor.putString(key, value);
-        editor.commit();
-
-    }
-    public String getAnswerID() {
-        try {
-            return currentTask.get("id").toString();
-        }
-        catch(JSONException e)
-        {
-            e.printStackTrace();
-            return "-1";
-        }
-    }
-
-    public String getTaskID() {
-        return taskID;
-    }
-
-    public String getLoginToken() {
-        return loginToken;
-    }
-
-    public String getTaskType() {
-        return taskType;
-    }
 
     public TaskView getmTaskView() {
         return mTaskView;
@@ -228,58 +150,13 @@ public class TaskActivity extends AppCompatActivity {
 
 
                 }
-            }.execute(getString(R.string.mainurl) + "/newTaskGet", param, loginToken);
+            }.execute(getString(R.string.mainurl) + "/newTaskGet", param, getLoginToken());
         } catch(JSONException e)
         {
             e.printStackTrace();
         }
     }
-    private String DateToString(Date from) {
-        SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String to = transFormat.format(from);
-        return to;
-    }
-    private Date StringToDate(String from)
-    {
-        try {
-            SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date to = transFormat.parse(from);
-            return to;
-        }
-        catch(Exception e)
-        {
-        }
-        return null;
-    }
-    private boolean timeCheck(String x)
-    {
-        System.out.println(StringToDate(x));
-        System.out.println(new Date());
-        if(StringToDate(x).after(new Date()))
-            return true;
-        System.out.println("??");
-        return false;
-    }
-    // 새로운 테스크(베이스)를 받을 때 호출하는 함수
-    private JSONArray ARRAYtoJSON(ArrayList<JSONObject> list)
-    {
-        JSONArray jsonArray = new JSONArray();
-        for(int i=0;i<list.size();i++)
-            jsonArray.put(list.get(i));
-        return jsonArray;
-    }
-    private ArrayList<JSONObject> JSONtoArray(JSONArray jsonArray)
-    {
-        ArrayList<JSONObject> list = new ArrayList<>();
-        try {
-            for (int i = 0; i < jsonArray.length(); i++)
-                list.add((JSONObject) jsonArray.get(i));
-        }
-        catch(JSONException e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
+    @Override
     public void startTask()
     {
         try {
@@ -375,10 +252,7 @@ public class TaskActivity extends AppCompatActivity {
             }
         });
         SharedPreferences token = getSharedPreferences("token",MODE_PRIVATE);
-        loginToken = token.getString("logintoken",null);
-        if(loginToken==null){
-            loginToken="";
-        }
+        setLoginToken(token.getString("loginToken",null));
 
         /*
          *intent로 부터 받아와야할 것 :   1. 어떤 controller를 사용하는지
@@ -386,30 +260,29 @@ public class TaskActivity extends AppCompatActivity {
          */
         explainDialog = new Dialog(this);
         intent = getIntent();
-        upGold = Integer.parseInt(intent.getStringExtra("upgold").substring(2));
-        gold =intent.getStringExtra("goldnow");
-        maybe = intent.getStringExtra("goldpre");
+        upGold = Integer.parseInt(intent.getStringExtra("upGold").substring(2));
+        gold =intent.getStringExtra("goldNow");
+        maybe = intent.getStringExtra("goldPre");
         nowGold.setText("현재 : \uFFE6 " + gold);
         pendingGold.setText("예정 : \uFFE6 " + maybe);
         if(intent.hasExtra("daily"))
             taskCount.setText(parseDailyQuest(intent.getStringExtra("daily")));
         uiHashMap = new UIHashMap();
-        mId=(String)intent.getStringExtra("taskid");
-        taskID = (String)intent.getStringExtra("taskid");
-        mTaskView =  uiHashMap.taskViewHashMap.get(intent.getStringExtra("taskview"));
+        taskID = (String)intent.getStringExtra("taskId");
+        mTaskView =  uiHashMap.taskViewHashMap.get(intent.getStringExtra("taskView"));
         mTaskView.setParentActivity(this);
         mController =  uiHashMap.controllerHashMap.get(intent.getStringExtra("controller"));
-        mParameter =  (int[][]) uiHashMap.taskHashMap.get(intent.getStringExtra("tasktype"));
-        tasktitle = intent.getStringExtra("tasktitle");
+        mParameter =  (int[][]) uiHashMap.taskHashMap.get(intent.getStringExtra("taskType"));
+        taskTitle = intent.getStringExtra("taskTitle");
         buttons= intent.getStringExtra("buttons");
-        TextView mtasktitle = findViewById(R.id.tasktitletext);
-        mtasktitle.setText(tasktitle);
+        TextView mTaskTitle = findViewById(R.id.tasktitletext);
+        mTaskTitle.setText(taskTitle);
         taskViewID = mTaskView.taskViewID;
         controllerID = mController.controllerID;
 //        taskViewID = mTaskView.taskViewID;
 //        controllerID = mController.controllerID;
 
-        taskType = intent.getStringExtra("tasktype");
+        taskType = intent.getStringExtra("taskType");
 
         // TaskView Inflating
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -449,7 +322,7 @@ public class TaskActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent_taskExplain = new Intent(TaskActivity.this, TaskExplainActivity.class);
-                intent_taskExplain.putExtra("tasktype", taskType);
+                intent_taskExplain.putExtra("taskType", taskType);
                 startActivity(intent_taskExplain);
             }
         });

@@ -12,6 +12,12 @@ public class ExamView_EditText extends ExamView {
     public ExamView_EditText() {
         ExamViewID = R.layout.examview_edittext;
     }
+
+    @Override
+    public void setContent(String content, String taskID) {
+
+    }
+
     @Override
     public void setLayout(String id, View view, Context c, Intent in, String buttons, String answer) {
         ConstraintLayout textlayout=(ConstraintLayout) view;

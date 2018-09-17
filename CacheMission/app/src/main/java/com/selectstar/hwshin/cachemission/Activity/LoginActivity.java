@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
                                     SharedPreferences token = getSharedPreferences("token", MODE_PRIVATE);
                                     SharedPreferences.Editor editor = token.edit();
                                     //logintoken이라는 key값으로 token을 저장한다.
-                                    editor.putString("logintoken", res.get("token").toString());
+                                    editor.putString("loginToken", res.get("token").toString());
                                     editor.commit();
                                     startActivity(in);
                                     finish();

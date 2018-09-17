@@ -130,7 +130,7 @@ public class TaskListActivity extends AppCompatActivity {
         //시작하면 일단 토큰을 받아옴
         SharedPreferences token = getSharedPreferences("token",MODE_PRIVATE);
         String stringtoken;
-        stringtoken = token.getString("logintoken",null);
+        stringtoken = token.getString("loginToken",null);
         if(stringtoken==null){
             stringtoken="";
         }
@@ -170,10 +170,10 @@ public class TaskListActivity extends AppCompatActivity {
                             reliability.setText(String.valueOf(user.get("reliability"))+" %");
                             //progress bar setting
                             setuserprogressbar(progress, Integer.parseInt(user.get("rank").toString()), Integer.parseInt(user.get("success_count").toString()));
-                            intent_task.putExtra("goldnow",String.valueOf(user.get("gold")));
-                            intent_task.putExtra("goldpre",String.valueOf(user.get("maybe")));
-                            intent_exam.putExtra("goldnow",String.valueOf(user.get("gold")));
-                            intent_exam.putExtra("goldpre",String.valueOf(user.get("maybe")));
+                            intent_task.putExtra("goldNow",String.valueOf(user.get("gold")));
+                            intent_task.putExtra("goldPre",String.valueOf(user.get("maybe")));
+                            intent_exam.putExtra("goldNow",String.valueOf(user.get("gold")));
+                            intent_exam.putExtra("goldPre",String.valueOf(user.get("maybe")));
 
                             //긴급공지사항있을시 토스트 띄우기
                             try {
@@ -225,27 +225,27 @@ public class TaskListActivity extends AppCompatActivity {
 
 
                                 if(flag==0) {
-                                    intent_task.putExtra("tasktitle", tasktitle);
-                                    intent_task.putExtra("tasktype", tasktype);
-                                    intent_task.putExtra("taskview", taskview);
-                                    intent_task.putExtra("upgold",upgold);
+                                    intent_task.putExtra("taskTitle", tasktitle);
+                                    intent_task.putExtra("taskType", tasktype);
+                                    intent_task.putExtra("taskView", taskview);
+                                    intent_task.putExtra("upGold",upgold);
                                     intent_task.putExtra("controller", controller);
                                     intent_task.putExtra("buttons", buttons);
-                                    intent_task.putExtra("taskid", taskid);
+                                    intent_task.putExtra("taskId", taskid);
                                     intent_task.putExtra("daily",dailyQuest);
                                     intent_task.putExtra("from", 0);
 
                                     TaskListActivity.this.startActivity(intent_task);
                                 }
                                 else if(flag==1) {
-                                    intent_exam.putExtra("tasktitle", tasktitle);
-                                    intent_exam.putExtra("tasktype", tasktype);
-                                    intent_exam.putExtra("taskview", taskview);
-                                    intent_exam.putExtra("examview", controller);
-                                    intent_exam.putExtra("upgold",upgold);
+                                    intent_exam.putExtra("taskTitle", tasktitle);
+                                    intent_exam.putExtra("taskType", tasktype);
+                                    intent_exam.putExtra("taskView", taskview);
+                                    intent_exam.putExtra("examView", controller);
+                                    intent_exam.putExtra("upGold",upgold);
                                     intent_exam.putExtra("buttons", buttons);
-                                    intent_exam.putExtra("taskid", taskid);
-                                    intent_exam.putExtra("examtype", ((TaskListItem)adapterView.getItemAtPosition(position)).getExamType());
+                                    intent_exam.putExtra("taskId", taskid);
+                                    intent_exam.putExtra("examType", ((TaskListItem)adapterView.getItemAtPosition(position)).getExamType());
                                     intent_exam.putExtra("from", 0);
                                     TaskListActivity.this.startActivity(intent_exam);
                                 }

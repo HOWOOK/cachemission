@@ -18,6 +18,12 @@ public class ExamView_Buttons extends ExamView {
     public ExamView_Buttons() {
         ExamViewID = R.layout.examview_buttons;
     }
+
+    @Override
+    public void setContent(String content, String taskID) {
+
+    }
+
     @Override
     public void setLayout(String id, View view, Context c, Intent in, String buttons, String answer) {
         ConstraintLayout templayout = (ConstraintLayout) view;

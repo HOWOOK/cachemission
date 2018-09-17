@@ -69,9 +69,9 @@ public class ExchangeActivity extends AppCompatActivity {
     private void getDialog2 ()
     {
         SharedPreferences token = getSharedPreferences("token",MODE_PRIVATE);
-        String stringtoken="";
-        stringtoken = token.getString("logintoken",null);
-        final String finalStringtoken = stringtoken;
+        String stringToken="";
+        stringToken = token.getString("loginToken",null);
+        final String finalStringToken = stringToken;
 
         android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(ExchangeActivity.this);
         alertDialogBuilder.setTitle("환전요청 전송");
@@ -102,7 +102,7 @@ public class ExchangeActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                         }
-                    }.execute(getString(R.string.mainurl)+"/exchange",param, finalStringtoken);
+                    }.execute(getString(R.string.mainurl)+"/exchange",param, finalStringToken);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
