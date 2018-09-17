@@ -154,7 +154,7 @@ public class UIHashMap {
         taskHashMap.put("NUMBERINGEXAM", parameters_NUMBERINGEXAM);
 
         parameters_DIALECT[0][0] = 5;
-        parameters_DIALECT[1][0] = R.id.tasktitle; parameters_DIALECT[1][1] = 4;
+        parameters_DIALECT[1][0] = R.id.option; parameters_DIALECT[1][1] = 4;
         parameters_DIALECT[2][0] = R.id.taskConstLayout; parameters_DIALECT[2][1] = 4;
         parameters_DIALECT[3][0] = R.id.taskConstLayout; parameters_DIALECT[3][1] = 3;
         parameters_DIALECT[4][0] = R.id.taskConstLayout; parameters_DIALECT[4][1] = 4;
