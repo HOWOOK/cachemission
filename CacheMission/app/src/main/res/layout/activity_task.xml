@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/taskConstLayout"
-    tools:context="com.selectstar.hwshin.cashmission.Activity.TaskListActivity">
+    tools:context="com.selectstar.hwshin.cachemission.Activity.TaskListActivity">
 
     <android.support.constraint.Guideline
         android:id="@+id/optionguideline"
@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/taskback"
+            android:id="@+id/back"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginStart="8dp"
@@ -39,7 +39,7 @@
             android:text="@string/textnotload"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/goldpre"
-            app:layout_constraintStart_toEndOf="@+id/taskback"
+            app:layout_constraintStart_toEndOf="@+id/back"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
@@ -118,8 +118,7 @@
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/nanumsquareb_"
         android:text=""
-        android:textColor="@color/colorPrimary"
-        android:textSize="15dp"
+        android:textColor="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tasktitle" />
 
@@ -155,5 +154,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/optionguideline"        >
     </android.support.constraint.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/imageAnimation"
+        android:layout_width="320dp"
+        android:layout_height="180dp"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="35dp"
+        android:adjustViewBounds="true"
+        android:elevation="10000dp"
+        app:layout_constraintBottom_toBottomOf="@+id/option"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textAnimation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:layout_marginEnd="90dp"
+        android:textSize="25dp"
+        android:fontFamily="@font/nanumsquareb_"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

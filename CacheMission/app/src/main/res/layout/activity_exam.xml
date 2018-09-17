@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/fullexam"
-    tools:context="com.selectstar.hwshin.cashmission.Activity.TaskListActivity">
+    tools:context="com.selectstar.hwshin.cashmission.com.selectstar.hwshin.cachemission.Activity.TaskListActivity">
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_examining"
@@ -32,13 +32,24 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/main_explain_left"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/tasktitletextexam"
                 style="@style/normalTitle"
+                android:layout_marginStart="8dp"
                 android:text="테스크 제목"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/goldpre"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/back"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView

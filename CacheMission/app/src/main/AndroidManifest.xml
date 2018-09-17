@@ -3,7 +3,7 @@
 
 
 
-    package="com.selectstar.hwshin.cashmission">
+    package="com.selectstar.hwshin.cachemission">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -21,7 +21,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.selectstar.hwshin.cashmission.Activity.TaskListActivity"
+            android:name="com.selectstar.hwshin.cachemission.Activity.TaskListActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
 
@@ -33,55 +33,55 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.selectstar.hwshin.cashmission.Activity.TaskActivity"
+        <activity android:name="com.selectstar.hwshin.cachemission.Activity.TaskActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait"
             ></activity>
-        <activity android:name="com.selectstar.hwshin.cashmission.Activity.LoginActivity"
+        <activity android:name="com.selectstar.hwshin.cachemission.Activity.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             ></activity>
-        <activity android:name="com.selectstar.hwshin.cashmission.Activity.SignUpActivity"
+        <activity android:name="com.selectstar.hwshin.cachemission.Activity.SignUpActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             ></activity>
-        <activity android:name="com.selectstar.hwshin.cashmission.Activity.SettingActivity"
+        <activity android:name="com.selectstar.hwshin.cachemission.Activity.SettingActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             ></activity>
-        <activity android:name="com.selectstar.hwshin.cashmission.Activity.ExamActivity"
+        <activity android:name="com.selectstar.hwshin.cachemission.Activity.ExamActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             ></activity>
-        <activity android:name="com.selectstar.hwshin.cashmission.Activity.SuggestionActivity"
+        <activity android:name="com.selectstar.hwshin.cachemission.Activity.SuggestionActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             ></activity>
-        <activity android:name="com.selectstar.hwshin.cashmission.Activity.TaskExplainActivity"
+        <activity android:name="com.selectstar.hwshin.cachemission.Activity.TaskExplainActivity"
             android:theme="@style/AppTheme.Transparent.NoActionBar"
             ></activity>
-        <activity android:name="com.selectstar.hwshin.cashmission.Activity.ExchangeActivity"
+        <activity android:name="com.selectstar.hwshin.cachemission.Activity.ExchangeActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             ></activity>
-        <activity android:name="com.selectstar.hwshin.cashmission.Activity.ExplainActivity"
+        <activity android:name="com.selectstar.hwshin.cachemission.Activity.ExplainActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             ></activity>
-        <activity android:name="com.selectstar.hwshin.cashmission.Activity.RegionActivity"
+        <activity android:name="com.selectstar.hwshin.cachemission.Activity.RegionActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             ></activity>
-        <activity android:name="com.selectstar.hwshin.cashmission.Activity.TestActivity"
+        <activity android:name="com.selectstar.hwshin.cachemission.Activity.TestActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             ></activity>
-        <activity android:name="com.selectstar.hwshin.cashmission.Activity.NoticeActivity"
+        <activity android:name="com.selectstar.hwshin.cachemission.Activity.NoticeActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             ></activity>
-        <activity android:name="com.selectstar.hwshin.cashmission.Activity.NoticePopUpActivity"
+        <activity android:name="com.selectstar.hwshin.cachemission.Activity.NoticePopUpActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             ></activity>

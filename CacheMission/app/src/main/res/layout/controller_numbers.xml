@@ -38,6 +38,7 @@
         app:layout_constraintTop_toBottomOf="@+id/numbersText"
         />
 
+
     <Button
         android:id="@+id/numberbutton"
         style="@style/normalbtn1"
@@ -46,6 +47,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/gridViewff" />
+
 
 
 </android.support.constraint.ConstraintLayout>
