@@ -67,6 +67,17 @@ public class SettingActivity extends AppCompatActivity {
                 startActivity(intent_suggestion);
             }
         });
+
+        //테스트를 위해 숨겨놓은 페이지
+        //혹시 유저가 찾으면 개꿀딱 이스터에그
+        View testingpage = findViewById(R.id.secret_gototestingpage);
+        testingpage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent_testing = new Intent(SettingActivity.this, TestActivity.class);
+                startActivity(intent_testing);
+            }
+        });
     }
 
 }

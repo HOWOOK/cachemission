@@ -1,6 +1,7 @@
 package com.selectstar.hwshin.cashmission.DataStructure;
 
 import com.selectstar.hwshin.cashmission.DataStructure.NewController.NewController;
+import com.selectstar.hwshin.cashmission.DataStructure.NewController.NewController_2DBox;
 import com.selectstar.hwshin.cashmission.DataStructure.NewController.NewController_EditText;
 import com.selectstar.hwshin.cashmission.DataStructure.NewController.NewController_Numbers;
 import com.selectstar.hwshin.cashmission.DataStructure.ExamView.ExamView;
@@ -10,6 +11,7 @@ import com.selectstar.hwshin.cashmission.DataStructure.ExamView.ExamView_Voice;
 import com.selectstar.hwshin.cashmission.DataStructure.NewController.NewController_Voice;
 import com.selectstar.hwshin.cashmission.DataStructure.NewTaskView.NewTaskView;
 import com.selectstar.hwshin.cashmission.DataStructure.NewTaskView.NewTaskView_Image;
+import com.selectstar.hwshin.cashmission.DataStructure.NewTaskView.NewTaskView_PhotoView;
 import com.selectstar.hwshin.cashmission.DataStructure.NewTaskView.NewTaskView_Text;
 import com.selectstar.hwshin.cashmission.DataStructure.NewTaskView.NewTaskView_Voice;
 import com.selectstar.hwshin.cashmission.R;
@@ -33,6 +35,7 @@ public class UIHashmap {
     int[][] parameters_NUMBERING = new int[6][2];
     int[][] parameters_DIALECT = new int[6][2];
     int[][] parameters_PHOTO = new int[6][2];
+    int[][] parameters_BOXCROP = new int[6][2];
 
     int[][] parameters_OCREXAM = new int[6][2];
     int[][] parameters_VIDEOEXAM = new int[6][2];
@@ -40,6 +43,7 @@ public class UIHashmap {
     int[][] parameters_DICTATIONEXAM = new int[6][2];
     int[][] parameters_NUMBERINGEXAM = new int[6][2];
     int[][] parameters_DIALECTEXAM = new int[6][2];
+    int[][] parameters_BOXCROPEXAM = new int[6][2];
 
     public HashMap<String, NewTaskView> taskViewHashMap = new HashMap();
     public HashMap<String, NewController> controllerHashMap = new HashMap();
@@ -53,13 +57,15 @@ public class UIHashmap {
         taskViewHashMap.put("text", new NewTaskView_Text());
         taskViewHashMap.put("voice", new NewTaskView_Voice());
         //taskViewHashMap.put("swipeimage", new TaskView_SwipeImage());
+        taskViewHashMap.put("photoview", new NewTaskView_PhotoView());
         //Controller hashmap 종류들
         controllerHashMap.put("edittext", new NewController_EditText());
         //controllerHashMap.put("buttons", new Controller_Buttons());
         //controllerHashMap.put("record", new NewController_Voice());
         controllerHashMap.put("numbers", new NewController_Numbers());
         //controllerHashMap.put("photo", new Controller_Photo());
-
+        controllerHashMap.put("2dbox", new NewController_2DBox());
+        //ExamView hashmap 종류들
         examviewHashMap.put("edittext", new ExamView_EditText());
         examviewHashMap.put("buttons", new ExamView_Buttons());
         examviewHashMap.put("record", new ExamView_Voice());
@@ -68,7 +74,7 @@ public class UIHashmap {
         parameters_OCR[0][0] = 10;
         parameters_OCR[1][0] = R.id.tasktitle; parameters_OCR[1][1] = 4;
         parameters_OCR[2][0] = R.id.taskConstLayout; parameters_OCR[2][1] = 4;
-        parameters_OCR[3][0] = R.id.taskConstLayout; parameters_OCR[3][1] = 3;
+        parameters_OCR[3][0] = R.id.tasktitle; parameters_OCR[3][1] = 3;
         parameters_OCR[4][0] = R.id.taskConstLayout; parameters_OCR[4][1] = 4;
         parameters_OCR[5][0] = 0;
         taskHashMap.put("OCR", parameters_OCR);
@@ -116,7 +122,7 @@ public class UIHashmap {
         parameters_DICTATION[0][0] = 5;
         parameters_DICTATION[1][0] = R.id.tasktitle; parameters_DICTATION[1][1] = 4;
         parameters_DICTATION[2][0] = R.id.taskConstLayout; parameters_DICTATION[2][1] = 4;
-        parameters_DICTATION[3][0] = R.id.taskConstLayout; parameters_DICTATION[3][1] = 3;
+        parameters_DICTATION[3][0] = R.id.tasktitle; parameters_DICTATION[3][1] = 3;
         parameters_DICTATION[4][0] = R.id.taskConstLayout; parameters_DICTATION[4][1] = 4;
         parameters_DICTATION[5][0] = 10;
         taskHashMap.put("DICTATION", parameters_DICTATION);
@@ -148,7 +154,7 @@ public class UIHashmap {
         parameters_DIALECT[0][0] = 5;
         parameters_DIALECT[1][0] = R.id.tasktitle; parameters_DIALECT[1][1] = 4;
         parameters_DIALECT[2][0] = R.id.taskConstLayout; parameters_DIALECT[2][1] = 4;
-        parameters_DIALECT[3][0] = R.id.taskConstLayout; parameters_DIALECT[3][1] = 3;
+        parameters_DIALECT[3][0] = R.id.tasktitle; parameters_DIALECT[3][1] = 3;
         parameters_DIALECT[4][0] = R.id.taskConstLayout; parameters_DIALECT[4][1] = 4;
         parameters_DIALECT[5][0] = 10;
         taskHashMap.put("DIALECT", parameters_DIALECT);
@@ -168,6 +174,14 @@ public class UIHashmap {
         parameters_PHOTO[4][0] = R.id.taskConstLayout; parameters_PHOTO[4][1] = 4;
         parameters_PHOTO[5][0] = 10;
         taskHashMap.put("PHOTO", parameters_PHOTO);
+
+        parameters_BOXCROP[0][0] = 10;
+        parameters_BOXCROP[1][0] = R.id.tasktitle; parameters_BOXCROP[1][1] = 4;
+        parameters_BOXCROP[2][0] = R.id.taskConstLayout; parameters_BOXCROP[2][1] = 4;
+        parameters_BOXCROP[3][0] = R.id.tasktitle; parameters_BOXCROP[3][1] = 3;
+        parameters_BOXCROP[4][0] = R.id.taskConstLayout; parameters_BOXCROP[4][1] = 4;
+        parameters_BOXCROP[5][0] = 10;
+        taskHashMap.put("BOXCROP", parameters_BOXCROP);
 
     }
 

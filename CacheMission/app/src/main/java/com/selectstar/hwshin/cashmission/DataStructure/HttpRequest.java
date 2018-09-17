@@ -19,7 +19,8 @@ public class HttpRequest extends AsyncTask{
     String img_binary = null;
     public String result = "";
 
-    private ProgressDialog httpDialog;
+    private MyProgressDialog httpDialog;
+    private MyProgressDialog httpDialogSomethingOptimizationFailed;
     private Context mContext;
 
     public HttpRequest(Context context){
@@ -28,10 +29,7 @@ public class HttpRequest extends AsyncTask{
 
     @Override
     protected void onPreExecute() {
-        httpDialog = new ProgressDialog(mContext);
-        httpDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        httpDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        httpDialog.show();
+        httpDialogSomethingOptimizationFailed = httpDialog.show(mContext,"","",true,true,null);
         super.onPreExecute();
     }
 
@@ -107,7 +105,9 @@ public class HttpRequest extends AsyncTask{
         line = bufferedReader.readLine();
         result += line;
         inputStream.close();
-        httpDialog.dismiss();
+        if (httpDialog!=null)
+            httpDialog.dismiss();
+        httpDialogSomethingOptimizationFailed.dismiss();
         return result;
 
     }

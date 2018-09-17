@@ -76,6 +76,7 @@
         <activity android:name="com.selectstar.hwshin.cashmission.Activity.TestActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
+            android:hardwareAccelerated="false"
             ></activity>
         <activity android:name="com.selectstar.hwshin.cashmission.Activity.NoticeActivity"
             android:theme="@style/AppTheme.NoActionBar"

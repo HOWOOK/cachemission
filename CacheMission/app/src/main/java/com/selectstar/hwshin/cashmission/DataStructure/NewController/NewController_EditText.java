@@ -37,10 +37,10 @@ public class NewController_EditText extends NewController{
                     Toast.makeText(parentActivity, "먼저 응답을 세 자 이상 기록해 주세요", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                JSONObject param2 = new JSONObject();
+                JSONObject param = new JSONObject();
                 try {
-                    param2.put("answerID", ((TaskActivity)parentActivity).getAnswerID());
-                    param2.put("taskID", taskID);
+                    param.put("answerID", ((TaskActivity)parentActivity).getAnswerID());
+                    param.put("taskID", taskID);
                     String submit = edit.getText().toString();
                     if(((TaskActivity)parentActivity).getTaskType().equals("DIALECT")) {//if task is dialect
                         String region;
@@ -48,7 +48,7 @@ public class NewController_EditText extends NewController{
                         region = explain.getString("region",null);
                         submit = "("+region+")"+submit;
                     }
-                    param2.put("submit", submit);
+                    param.put("submit", submit);
                     new HttpRequest(parentActivity) {
                         @Override
                         protected void onPostExecute(Object o) {
@@ -75,21 +75,13 @@ public class NewController_EditText extends NewController{
                                 } else {
                                     ((TaskActivity)parentActivity).startTask();
 
-                                    /*
-                                    parentIntent.putExtra("from",1);
-                                    parentIntent.putExtra("maybe_up", String.valueOf(resulttemp.get("maybe_up")));
-                                    parentIntent.putExtra("gold_up", String.valueOf(resulttemp.get("gold_up")));
-                                    parentIntent.putExtra("bonus_up", String.valueOf(resulttemp.get("bonus_up")));
-                                    parentActivity.startActivity(parentIntent);
-                                    parentActivity.finish();*/
-
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
 
                         }
-                    }.execute(parentActivity.getString(R.string.mainurl)+"/taskSubmit", param2,((TaskActivity)parentActivity).getLoginToken());
+                    }.execute(parentActivity.getString(R.string.mainurl)+"/taskSubmit", param,((TaskActivity)parentActivity).getLoginToken());
                 }catch (JSONException e){
                     e.printStackTrace();
 

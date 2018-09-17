@@ -31,7 +31,6 @@ public class ExamActivity extends AppCompatActivity {
     int examtype;
     String colorflag="";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +39,6 @@ public class ExamActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
         SharedPreferences token = getSharedPreferences("token",Context.MODE_PRIVATE);
         final String logintoken = token.getString("logintoken",null);
-
         /*
          *intent로 부터 받아와야할 것 :   1. 어떤 controller를 사용하는지
          * 2. 어떤 taskview를 사용하는지  3. 두개의 constraint 관계는 어떤지
