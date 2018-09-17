@@ -62,10 +62,50 @@ public class NewController_2DBox extends NewController{
         sendBotton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                JSONObject param2 = new JSONObject();
+                JSONObject param = new JSONObject();
                 try {
-                    param2.put("answerID", ((TaskActivity) parentActivity).getAnswerID());
-                    param2.put("taskID", taskID);
+                    param.put("answerID", ((TaskActivity) parentActivity).getAnswerID());
+                    param.put("taskID", taskID);
+
+                    System.out.println("디스플레이 네모 : " + photoView.getDisplayRect());
+                    System.out.println("배율 : " + photoView.getScale());
+                    int widthCL = boxCL.getWidth();
+                    int heightCL = boxCL.getHeight();
+                    testingText1 = view.findViewById(R.id.testingtext1);
+                    testingText2 = view.findViewById(R.id.testingtext2);
+                    testingText3 = view.findViewById(R.id.testingtext3);
+
+                    /********************************
+                    * (x1, y1) = crop box의 현재 좌상단 좌표
+                    * (x2, y2) = crop box의 현재 우하단 좌표
+                    * (x3, y3) = photoView를 담고있는 constraintlayout의 (0,0)의 좌표가 Scale = 1일 때는 뭔지 환산한 값
+                     * (x4, y4) = crop box의 scale = 1일 대 좌상단 좌표 환산값
+                     * (x5, y5) = crop box의 scale = 1일 대 우하단 좌표 환산값
+                    */
+                    float x1, x2, x3, x4, x5, y1, y2, y3, y4, y5;
+                    x1 = centerImage.getX();    x2 = x1 + centerImage.getWidth();
+                    y1 = centerImage.getY();    y2 = y1 + centerImage.getHeight();
+                    originWidth = (photoView.getDisplayRect().right-photoView.getDisplayRect().left)/photoView.getScale();
+                    originHeight = (photoView.getDisplayRect().bottom-photoView.getDisplayRect().top)/photoView.getScale();
+                    originLeftMargin = (widthCL/2) - (originWidth)/2 ;
+                    originTopMargin = (heightCL/2) - (originHeight)/2;
+                    x3 = originLeftMargin - photoView.getDisplayRect().left/photoView.getScale();
+                    y3 = originTopMargin - photoView.getDisplayRect().top/photoView.getScale();
+                    x4 = x3 + x1 / photoView.getScale();
+                    y4 = y3 + y1 / photoView.getScale();
+                    x5 = x3 + x2 / photoView.getScale();
+                    y5 = y3 + y2 / photoView.getScale();
+
+                    //보내야하는 데이타
+                    float leftPercent, topPercent, rightPercent, bottomPercent;
+                    String submit;
+                    leftPercent = (x4 - originLeftMargin) / originWidth;
+                    topPercent = (y4 - originTopMargin) / originHeight;
+                    rightPercent = (x5 - originLeftMargin) / originWidth;
+                    bottomPercent = (y5 - originTopMargin) / originHeight;
+                    submit = "("+leftPercent+","+topPercent+","+rightPercent+","+bottomPercent+")";
+                    param.put("submit", submit);
+
 
                     new HttpRequest(parentActivity) {
                         @Override
@@ -95,33 +135,37 @@ public class NewController_2DBox extends NewController{
                                 e.printStackTrace();
                             }
                         }
-                    }.execute(parentActivity.getString(R.string.mainurl) + "/taskSubmit", param2, ((TaskActivity) parentActivity).getLoginToken());
+                    }.execute(parentActivity.getString(R.string.mainurl) + "/taskSubmit", param, ((TaskActivity) parentActivity).getLoginToken());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         });
 
-        //임시로 테스팅 텍스트 띄우는 버튼으로 사용중
+
         completeBotton = view.findViewById(R.id.completebtn);
         completeBotton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 System.out.println("디스플레이 네모 : " + photoView.getDisplayRect());
                 System.out.println("배율 : " + photoView.getScale());
-                //System.out.println("이미지 매트릭스 : " + photoView.getImageMatrix());
                 int widthCL = boxCL.getWidth();
                 int heightCL = boxCL.getHeight();
                 testingText1 = view.findViewById(R.id.testingtext1);
                 testingText2 = view.findViewById(R.id.testingtext2);
                 testingText3 = view.findViewById(R.id.testingtext3);
 
-                //testingText1.setText("너비 : " + String.valueOf(width)+"\n높이 : " + String.valueOf(height));
-                //testingText2.setText("원본너비 : " + srcOriginWidth +"\n원본너비 : " + srcOriginHeight);
+                /********************************
+                 * (x1, y1) = crop box의 현재 좌상단 좌표
+                 * (x2, y2) = crop box의 현재 우하단 좌표
+                 * (x3, y3) = photoView를 담고있는 constraintlayout의 (0,0)의 좌표가 Scale = 1일 때는 뭔지 환산한 값
+                 * (x4, y4) = crop box의 scale = 1일 대 좌상단 좌표 환산값
+                 * (x5, y5) = crop box의 scale = 1일 대 우하단 좌표 환산값
+                 */
                 float x1, x2, x3, x4, x5, y1, y2, y3, y4, y5;
                 x1 = centerImage.getX();    x2 = x1 + centerImage.getWidth();
                 y1 = centerImage.getY();    y2 = y1 + centerImage.getHeight();
-                //testingText1.setText("(" + x1 + ","+ y1 + ")\n(" + x2 + "," + y2 + ")");
                 originWidth = (photoView.getDisplayRect().right-photoView.getDisplayRect().left)/photoView.getScale();
                 originHeight = (photoView.getDisplayRect().bottom-photoView.getDisplayRect().top)/photoView.getScale();
                 originLeftMargin = (widthCL/2) - (originWidth)/2 ;
@@ -137,6 +181,7 @@ public class NewController_2DBox extends NewController{
 
                 //보내야하는 데이타
                 float leftPercent, topPercent, rightPercent, bottomPercent;
+                String submit;
                 leftPercent = (x4 - originLeftMargin) / originWidth;
                 topPercent = (y4 - originTopMargin) / originHeight;
                 rightPercent = (x5 - originLeftMargin) / originWidth;

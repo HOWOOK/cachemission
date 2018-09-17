@@ -11,7 +11,7 @@ public class NewTaskView_PhotoView extends NewTaskView {
     private PhotoView myView;
     public NewTaskView_PhotoView()
     {
-        taskViewID = R.layout.taskview_image;
+        taskViewID = R.layout.taskview_photoview;
     }
     public void setContent(String content)
     {

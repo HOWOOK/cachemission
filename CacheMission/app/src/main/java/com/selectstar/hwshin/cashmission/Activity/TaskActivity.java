@@ -53,6 +53,7 @@ public class TaskActivity extends AppCompatActivity {
     String loginToken;
     //사투리특별전용옵션
     static String region_dialect;
+
     public String getAnswerID() {
         return answerID;
     }
@@ -65,6 +66,7 @@ public class TaskActivity extends AppCompatActivity {
     public String getTaskType() {
         return taskType;
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -104,8 +106,8 @@ public class TaskActivity extends AppCompatActivity {
             });
         }
 
-
     }
+
     // 새로운 테스크(베이스)를 받을 때 호출하는 함수
     public void startTask()
     {
@@ -262,79 +264,18 @@ public class TaskActivity extends AppCompatActivity {
                 startActivity(intent_taskExplain);
             }
         });
+
         controllerView = findViewById(R.id.controller);
         mNewController.setParentActivity(this);
         mNewController.setLayout(controllerView, this, taskID);
         startTask();
-    /*
-        mTaskView.setParent(this,intent);
-        mController.setParent(this,intent);
-        mController.usingactivity=this;
-        mController.mtaskview=mTaskView;
-        startTask();
-        View srcTaskView = findViewById(R.id.srcview);
-        View controllerView = findViewById(R.id.controller)
-        mNewController.setLayout(controllerView,this,taskID);
-        //TaskView에 source설정 (보통은 srcTaskView1에만 들어가며 Text의 경우 2개를 받는다)
-        View srcTaskView1 = (View) findViewById(R.id.srcview);
-        View srcTaskView2 = null;
-        TextView goldnow=findViewById(R.id.goldnow);
-        TextView goldpre=findViewById(R.id.goldpre);
-        TextView regionText=findViewById(R.id.regionText);
-        if(intent.getStringExtra("taskview").equals("text")) {
-            srcTaskView2 = (View) findViewById(R.id.srcview2);
-        }
-        mTaskView.setContent(mId, tempsrcURI, this, tasktype, 0, srcTaskView1, srcTaskView2, goldnow, goldpre,regionText);
-
-        //Controller에 source설정
-        View view = findViewById(R.id.controller);
-        mController.setLayout(mId,view,getApplicationContext(),tasktype,intent,buttons);
-
-
-        //돈 플러스되는거 에니메이션
-        if(intent.getStringExtra("maybe_up")!=null  && intent.getStringExtra("gold_up")!=null){
-            Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.goldtranslate);
-            if(Integer.parseInt(intent.getStringExtra("gold_up")) == 0){//지급예정금액만 애니메이팅
-                TextView maybe_up = findViewById(R.id.goldpre_anim);
-                maybe_up.setText("+ \uFFE6"+intent.getStringExtra("maybe_up"));
-                maybe_up.startAnimation(animation);
-            }else{//현재금액만 애니메이팅
-                TextView gold_up = findViewById(R.id.goldnow_anim);
-                gold_up.setText("+ \uFFE6"+intent.getStringExtra("gold_up"));
-                gold_up.startAnimation(animation);
-            }
-        }
-
-        if(intent.getStringExtra("bonus_up")!=null){
-            if(!intent.getStringExtra("bonus_up").equals("0"))
-                Toast.makeText(getApplicationContext(),"일일 미션을 완료했습니다! \n(\uFFE6"+intent.getStringExtra("bonus_up")+" 추가 획득)",Toast.LENGTH_SHORT).show();
-        }
-
-        */
-
     }
-
 
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
-//ImageView iv=findViewById(R.id.pagerimage);
-
-//    Bitmap btm=(Bitmap)data.getExtras().get("data");
-        //iv.setImageBitmap(btm);
-//Uri uri=data.getData();
-//String uristring=uri.toString();
-
-
-
-        //  SharedPreferences bitmap = getSharedPreferences("bitmap", MODE_PRIVATE);
-        //  SharedPreferences.Editor editor = bitmap.edit();
-        //logintoken이라는 key값으로 token을 저장한다.
-        // editor.putString("bitmap", getBase64String(btm));
-        //  editor.commit();
-
 
         View srcTaskView1 = (View) findViewById(R.id.srcview);
         View srcTaskView2 = null;

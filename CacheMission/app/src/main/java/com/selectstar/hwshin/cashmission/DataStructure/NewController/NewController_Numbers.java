@@ -24,6 +24,7 @@ public class NewController_Numbers extends NewController {
     public NewController_Numbers() {controllerID = R.layout.controller_numbers;    }
     private String result="foobar";
     private GridView gv;
+
     @Override
     public void resetContent(final View view, final String taskID)
     {
