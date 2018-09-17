@@ -33,7 +33,7 @@ public class Controller_EditText extends Controller {
         sendb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (edit.getText().toString().length()<3) {
+                if (edit.getText().toString().length() < 3) {
                     Toast.makeText(parentActivity, "먼저 응답을 세 자 이상 기록해 주세요", Toast.LENGTH_SHORT).show();
                     return;
                 }

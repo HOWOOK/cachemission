@@ -1,20 +1,18 @@
 package com.selectstar.hwshin.cachemission.DataStructure.Controller;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.constraint.ConstraintLayout;
+import android.support.constraint.ConstraintSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.chrisbanes.photoview.PhotoView;
 import com.selectstar.hwshin.cachemission.Activity.LoginActivity;
 import com.selectstar.hwshin.cachemission.Activity.TaskActivity;
-import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller;
+import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoView;
 import com.selectstar.hwshin.cachemission.DataStructure.WaitHttpRequest;
 import com.selectstar.hwshin.cachemission.R;
 
@@ -29,6 +27,7 @@ public class Controller_2DBox extends Controller {
     String htmlContentInStringFormat;
     PhotoView photoView;
     float originWidth, originHeight, originLeftMargin, originTopMargin;
+    TaskView_PhotoView mtaskView_PhotoView;
 
     public Controller_2DBox() {
         controllerID = R.layout.controller_2dbox;
@@ -36,9 +35,11 @@ public class Controller_2DBox extends Controller {
 
     @Override
     public void resetContent(final View view, final String taskID) {
+        //GPU가속 끄기 (그래픽 랜더링 문제 때문에 합니다.)
+        view.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
-        photoView = (PhotoView) view.findViewById(R.id.photo_view);
         centerImage = view.findViewById(R.id.centerimage);
+        mtaskView_PhotoView = (TaskView_PhotoView) parentActivity.getmTaskView();
 
         //처음에는 box가 없어야 합니다.
         final ConstraintLayout boxCL = view.findViewById(R.id.boxCL);
@@ -68,10 +69,13 @@ public class Controller_2DBox extends Controller {
                     param.put("answerID", ((TaskActivity) parentActivity).getAnswerID());
                     param.put("taskID", taskID);
 
+                    TaskView_PhotoView temp = (TaskView_PhotoView) parentActivity.getmTaskView();
+                    photoView = temp.getPhotoView();
+
                     System.out.println("디스플레이 네모 : " + photoView.getDisplayRect());
                     System.out.println("배율 : " + photoView.getScale());
-                    int widthCL = boxCL.getWidth();
-                    int heightCL = boxCL.getHeight();
+                    float widthCL = boxCL.getWidth();
+                    float heightCL = boxCL.getHeight();
                     testingText1 = view.findViewById(R.id.testingtext1);
                     testingText2 = view.findViewById(R.id.testingtext2);
                     testingText3 = view.findViewById(R.id.testingtext3);
@@ -82,7 +86,7 @@ public class Controller_2DBox extends Controller {
                      * (x3, y3) = photoView를 담고있는 constraintlayout의 (0,0)의 좌표가 Scale = 1일 때는 뭔지 환산한 값
                      * (x4, y4) = crop box의 scale = 1일 대 좌상단 좌표 환산값
                      * (x5, y5) = crop box의 scale = 1일 대 우하단 좌표 환산값
-                     */
+                     *********************************/
                     float x1, x2, x3, x4, x5, y1, y2, y3, y4, y5;
                     x1 = centerImage.getX();
                     x2 = x1 + centerImage.getWidth();
@@ -90,8 +94,8 @@ public class Controller_2DBox extends Controller {
                     y2 = y1 + centerImage.getHeight();
                     originWidth = (photoView.getDisplayRect().right - photoView.getDisplayRect().left) / photoView.getScale();
                     originHeight = (photoView.getDisplayRect().bottom - photoView.getDisplayRect().top) / photoView.getScale();
-                    originLeftMargin = (widthCL / 2) - (originWidth) / 2;
-                    originTopMargin = (heightCL / 2) - (originHeight) / 2;
+                    originLeftMargin = (widthCL / 2.0f) - (originWidth) / 2.0f;
+                    originTopMargin = (heightCL / 2.0f) - (originHeight) / 2.0f;
                     x3 = originLeftMargin - photoView.getDisplayRect().left / photoView.getScale();
                     y3 = originTopMargin - photoView.getDisplayRect().top / photoView.getScale();
                     x4 = x3 + x1 / photoView.getScale();
@@ -150,6 +154,7 @@ public class Controller_2DBox extends Controller {
         completeBotton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                photoView = mtaskView_PhotoView.getPhotoView();
 
                 System.out.println("디스플레이 네모 : " + photoView.getDisplayRect());
                 System.out.println("배율 : " + photoView.getScale());
@@ -173,8 +178,8 @@ public class Controller_2DBox extends Controller {
                 y2 = y1 + centerImage.getHeight();
                 originWidth = (photoView.getDisplayRect().right - photoView.getDisplayRect().left) / photoView.getScale();
                 originHeight = (photoView.getDisplayRect().bottom - photoView.getDisplayRect().top) / photoView.getScale();
-                originLeftMargin = (widthCL / 2) - (originWidth) / 2;
-                originTopMargin = (heightCL / 2) - (originHeight) / 2;
+                originLeftMargin = (widthCL / 2.0f) - (originWidth) / 2.0f;
+                originTopMargin = (heightCL / 2.0f) - (originHeight) / 2.0f;
                 x3 = originLeftMargin - photoView.getDisplayRect().left / photoView.getScale();
                 y3 = originTopMargin - photoView.getDisplayRect().top / photoView.getScale();
                 testingText2.setText("현화면 (0,0) = \n(" + x3 + "," + y3 + ")");
@@ -183,6 +188,10 @@ public class Controller_2DBox extends Controller {
                 x5 = x3 + x2 / photoView.getScale();
                 y5 = y3 + y2 / photoView.getScale();
                 testingText3.setText("(" + x4 + "," + y4 + ")\n(" + x5 + "," + y5 + ")");
+
+//                System.out.println("(x1,y1),(x2,y2) ="+"(" + x1 + "," + y1 + "), (" + x2 + "," + y2 + ")");
+//                System.out.println("(widthCL,heightCL) ="+"(" + widthCL + "," + heightCL + ")");
+//                System.out.println("(originWidth,originHeight),(originLeftMargin,originTopMargin) ="+"(" + originWidth + "," + originHeight + "), (" + originLeftMargin + "," + originTopMargin + ")");
 
                 //보내야하는 데이타
                 float leftPercent, topPercent, rightPercent, bottomPercent;
@@ -709,4 +718,10 @@ public class Controller_2DBox extends Controller {
     public void setLayout(View view, String taskID) {
 
     }
+
+    public void drawAnswer(){
+
+    }
+
+
 }

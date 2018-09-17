@@ -7,13 +7,6 @@
     android:id="@+id/taskConstLayout"
     tools:context="com.selectstar.hwshin.cachemission.Activity.TaskListActivity">
 
-    <android.support.constraint.Guideline
-        android:id="@+id/optionguideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
-
     <android.support.constraint.ConstraintLayout
         android:id="@+id/tasktitle"
         android:layout_width="match_parent"
@@ -110,17 +103,30 @@
 
     </android.support.constraint.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/regionText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_marginEnd="8dp"
-        android:fontFamily="@font/nanumsquareb_"
-        android:text=""
-        android:textColor="@color/colorPrimaryDark"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/option"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tasktitle" />
+        app:layout_constraintTop_toBottomOf="@+id/tasktitle"
+        app:layout_constraintBottom_toTopOf="@+id/taskview"
+        >
+        <TextView
+            android:id="@+id/regionText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/nanumsquareb_"
+            android:text=""
+            android:textColor="@color/colorPrimaryDark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+    </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/taskview"
@@ -129,9 +135,8 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/controller"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/regionText"
+        app:layout_constraintTop_toBottomOf="@+id/option"
         app:layout_constraintVertical_weight="10" />
-
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/controller"
@@ -146,26 +151,16 @@
 
     </android.support.constraint.ConstraintLayout>
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/option"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/optionguideline"        >
-    </android.support.constraint.ConstraintLayout>
-
     <ImageView
         android:id="@+id/imageAnimation"
         android:layout_width="320dp"
         android:layout_height="180dp"
         android:layout_centerInParent="true"
-        android:layout_marginBottom="35dp"
         android:adjustViewBounds="true"
         android:elevation="10000dp"
-        app:layout_constraintBottom_toBottomOf="@+id/option"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="352dp" />
 
     <TextView
         android:id="@+id/textAnimation"

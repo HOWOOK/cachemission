@@ -138,7 +138,7 @@ public class UIHashMap {
         taskHashMap.put("DICTATIONEXAM", parameters_DICTATIONEXAM);
 
         parameters_NUMBERING[0][0] = 10;
-        parameters_NUMBERING[1][0] = R.id.tasktitle; parameters_NUMBERING[1][1] = 4;
+        parameters_NUMBERING[1][0] = R.id.option; parameters_NUMBERING[1][1] = 4;
         parameters_NUMBERING[2][0] = R.id.controller; parameters_NUMBERING[2][1] = 3;
         parameters_NUMBERING[3][0] = R.id.taskview; parameters_NUMBERING[3][1] = 4;
         parameters_NUMBERING[4][0] = R.id.taskConstLayout; parameters_NUMBERING[4][1] = 4;
@@ -180,7 +180,7 @@ public class UIHashMap {
         parameters_BOXCROP[0][0] = 10;
         parameters_BOXCROP[1][0] = R.id.tasktitle; parameters_BOXCROP[1][1] = 4;
         parameters_BOXCROP[2][0] = R.id.taskConstLayout; parameters_BOXCROP[2][1] = 4;
-        parameters_BOXCROP[3][0] = R.id.tasktitle; parameters_BOXCROP[3][1] = 3;
+        parameters_BOXCROP[3][0] = R.id.tasktitle; parameters_BOXCROP[3][1] = 4;
         parameters_BOXCROP[4][0] = R.id.taskConstLayout; parameters_BOXCROP[4][1] = 4;
         parameters_BOXCROP[5][0] = 10;
         taskHashMap.put("BOXCROP", parameters_BOXCROP);
