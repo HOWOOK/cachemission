@@ -28,7 +28,7 @@ public class NoticePopUpActivity extends AppCompatActivity {
         titleView.setText(title);
         TextView contentView = findViewById(R.id.popupcontent);
         contentView.setText(content);
-        backButton = findViewById(R.id.popupback);
+        backButton = findViewById(R.id.back);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

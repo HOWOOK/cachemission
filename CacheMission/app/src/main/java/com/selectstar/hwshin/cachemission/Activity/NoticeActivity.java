@@ -33,7 +33,7 @@ public class NoticeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice);
-        quitButton = findViewById(R.id.popupback);
+        quitButton = findViewById(R.id.back);
         listView = findViewById(R.id.noticelist);
         mNoticeList.clear();
         quitButton.setOnClickListener(new View.OnClickListener() {

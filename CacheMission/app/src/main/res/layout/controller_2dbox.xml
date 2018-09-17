@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/photoViewCL"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnCL"
+        >
+
+        <com.github.chrisbanes.photoview.PhotoView
+            android:id="@+id/photo_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/boxCL"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnCL"
+        >
+
+        <View
+            android:id="@+id/youcanttouchanymore"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#00000000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <View
+            android:id="@+id/top_line_value"
+            android:layout_width="0dp"
+            android:layout_height="3dp"
+            android:background="@drawable/boxline_horizontal"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/top_line" />
+
+        <View
+            android:id="@+id/top_line"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="100dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/bottom_line_value"
+            android:layout_width="0dp"
+            android:layout_height="3dp"
+            android:background="@drawable/boxline_horizontal"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/bottom_line" />
+
+        <View
+            android:id="@+id/bottom_line"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginBottom="100dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <View
+            android:id="@+id/left_line_value"
+            android:layout_width="3dp"
+            android:layout_height="0dp"
+            android:background="@drawable/boxline_vertical"
+            android:layout_marginRight="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/left_line"/>
+
+        <View
+            android:id="@+id/left_line"
+            android:layout_width="20dp"
+            android:layout_height="0dp"
+            android:layout_marginLeft="70dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/right_line_value"
+            android:layout_width="3dp"
+            android:layout_height="0dp"
+            android:background="@drawable/boxline_vertical"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/right_line"/>
+
+        <View
+            android:id="@+id/right_line"
+            android:layout_width="20dp"
+            android:layout_height="0dp"
+            android:layout_marginRight="70dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/topleft_corner_view"
+            android:layout_width="9dp"
+            android:layout_height="9dp"
+            android:background="@color/colorPrimary"
+            app:layout_constraintStart_toStartOf="@+id/topleft_corner"
+            app:layout_constraintEnd_toEndOf="@+id/topleft_corner"
+            app:layout_constraintBottom_toBottomOf="@+id/topleft_corner"
+            app:layout_constraintTop_toTopOf="@+id/topleft_corner" />
+
+        <View
+            android:id="@+id/topleft_corner"
+            android:layout_width="31dp"
+            android:layout_height="31dp"
+            android:layout_marginLeft="65dp"
+            android:layout_marginTop="95dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/topright_corner_view"
+            android:layout_width="9dp"
+            android:layout_height="9dp"
+            android:background="@color/colorPrimary"
+            app:layout_constraintStart_toStartOf="@+id/topright_corner"
+            app:layout_constraintEnd_toEndOf="@+id/topright_corner"
+            app:layout_constraintBottom_toBottomOf="@+id/topright_corner"
+            app:layout_constraintTop_toTopOf="@+id/topright_corner" />
+
+        <View
+            android:id="@+id/topright_corner"
+            android:layout_width="31dp"
+            android:layout_height="31dp"
+            android:layout_marginRight="65dp"
+            android:layout_marginTop="95dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/bottomright_corner_view"
+            android:layout_width="9dp"
+            android:layout_height="9dp"
+            android:background="@color/colorPrimary"
+            app:layout_constraintStart_toStartOf="@+id/bottomright_corner"
+            app:layout_constraintEnd_toEndOf="@+id/bottomright_corner"
+            app:layout_constraintBottom_toBottomOf="@+id/bottomright_corner"
+            app:layout_constraintTop_toTopOf="@+id/bottomright_corner" />
+
+        <View
+            android:id="@+id/bottomright_corner"
+            android:layout_width="31dp"
+            android:layout_height="31dp"
+            android:layout_marginBottom="95dp"
+            android:layout_marginRight="65dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <View
+            android:id="@+id/bottomleft_corner_view"
+            android:layout_width="9dp"
+            android:layout_height="9dp"
+            android:background="@color/colorPrimary"
+            app:layout_constraintStart_toStartOf="@+id/bottomleft_corner"
+            app:layout_constraintEnd_toEndOf="@+id/bottomleft_corner"
+            app:layout_constraintBottom_toBottomOf="@+id/bottomleft_corner"
+            app:layout_constraintTop_toTopOf="@+id/bottomleft_corner" />
+
+        <View
+            android:id="@+id/bottomleft_corner"
+            android:layout_width="31dp"
+            android:layout_height="31dp"
+            android:layout_marginBottom="95dp"
+            android:layout_marginLeft="65dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <View
+            android:id="@+id/centerimage"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#10000000"
+            app:layout_constraintBottom_toTopOf="@+id/bottom_line_value"
+            app:layout_constraintEnd_toStartOf="@+id/right_line_value"
+            app:layout_constraintStart_toEndOf="@+id/left_line_value"
+            app:layout_constraintTop_toBottomOf="@+id/top_line_value" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/centerimage"
+            app:layout_constraintEnd_toEndOf="@+id/centerimage"
+            app:layout_constraintStart_toStartOf="@+id/centerimage"
+            app:layout_constraintTop_toTopOf="@+id/centerimage"
+            app:srcCompat="@drawable/clear_btn"
+            />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/btnCL"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/boxCL"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+
+        <Button
+            android:id="@+id/boxbtn"
+            style="@style/normalbtn1"
+            android:text="BOX"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/sendbtn"
+            />
+
+        <Button
+            android:id="@+id/sendbtn"
+            style="@style/normalbtn1"
+            android:text="제출"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/boxbtn"
+            app:layout_constraintEnd_toStartOf="@+id/completebtn"
+            />
+
+        <Button
+            android:id="@+id/completebtn"
+            style="@style/normalbtn1"
+            android:text="다 찾음"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/sendbtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/testingtext1"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/testingtext2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/testingtext2"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        app:layout_constraintStart_toEndOf="@+id/testingtext1"
+        app:layout_constraintEnd_toStartOf="@+id/testingtext3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/testingtext3"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        app:layout_constraintStart_toEndOf="@+id/testingtext2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+
+
+</android.support.constraint.ConstraintLayout>

@@ -9,5 +9,5 @@
     <string name="exchangehint">--환전신청양식--\n\n원하는상품 : \n(이모티콘/기프티콘/현금 중 택1)\n\n전화번호or계좌번호 : \n(이모티콘/기프티콘)은 전화번호 \n(현금)은 계좌번호\n\n*본인의 적립금보다 많은 금액 신청시 신청이 반려됩니다*</string>
     <string name="signuptitle">캐시미션 회원가입</string>
     <string name="regiontext">구사 가능한 사투리를 선택해주세요!\n서울지역이신 분들은 다른 테스크를 진행해 주세요.</string>
-    <string name="mainurl">http://18.222.204.84</string>
+    <string name="mainurl">http://18.188.94.71</string>
 </resources>

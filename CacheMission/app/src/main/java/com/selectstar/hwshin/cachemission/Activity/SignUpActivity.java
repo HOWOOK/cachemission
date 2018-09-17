@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.selectstar.hwshin.cachemission.DataStructure.WaitHttpRequest;
@@ -35,6 +36,7 @@ public class SignUpActivity extends AppCompatActivity {
     Button checkButton;
     Button okButton;
     Button noButton;
+    ImageView backButton;
     String validId = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +51,13 @@ public class SignUpActivity extends AppCompatActivity {
         ageSpinner = (Spinner) findViewById(R.id.agevalue);
         descriptionText = findViewById(R.id.descriptionvalue);
         okButton = findViewById(R.id.okbutton);
-
+        backButton = findViewById(R.id.back);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         final ArrayAdapter genderAdapter = ArrayAdapter.createFromResource(this, R.array.signup_gender, R.layout.signup_si);
         genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
