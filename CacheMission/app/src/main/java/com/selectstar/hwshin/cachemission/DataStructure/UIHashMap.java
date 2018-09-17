@@ -1,6 +1,7 @@
 package com.selectstar.hwshin.cachemission.DataStructure;
 
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller;
+import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_2DBox;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_EditText;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_Numbers;
 import com.selectstar.hwshin.cachemission.DataStructure.ExamView.ExamView;
@@ -11,6 +12,7 @@ import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_Ph
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_Voice;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_Image;
+import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoView;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_SwipeImage;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_Text;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_Voice;
@@ -35,6 +37,7 @@ public class UIHashMap {
     int[][] parameters_NUMBERING = new int[6][2];
     int[][] parameters_DIALECT = new int[6][2];
     int[][] parameters_PHOTO = new int[6][2];
+    int[][] parameters_BOXCROP = new int[6][2];
 
     int[][] parameters_OCREXAM = new int[6][2];
     int[][] parameters_VIDEOEXAM = new int[6][2];
@@ -42,6 +45,7 @@ public class UIHashMap {
     int[][] parameters_DICTATIONEXAM = new int[6][2];
     int[][] parameters_NUMBERINGEXAM = new int[6][2];
     int[][] parameters_DIALECTEXAM = new int[6][2];
+    int[][] parameters_BOXCROPEXAM = new int[6][2];
 
     public HashMap<String, TaskView> taskViewHashMap = new HashMap();
     public HashMap<String, Controller> controllerHashMap = new HashMap();
@@ -55,8 +59,10 @@ public class UIHashMap {
         taskViewHashMap.put("text", new TaskView_Text());
         taskViewHashMap.put("voice", new TaskView_Voice());
         taskViewHashMap.put("swipeimage", new TaskView_SwipeImage());
+        taskViewHashMap.put("photoview", new TaskView_PhotoView());
         //Controller hashmap 종류들
         controllerHashMap.put("edittext", new Controller_EditText());
+        controllerHashMap.put("2dbox", new Controller_2DBox());
         //controllerHashMap.put("buttons", new Controller_Buttons());
         controllerHashMap.put("record", new Controller_Voice());
         controllerHashMap.put("numbers", new Controller_Numbers());
@@ -170,6 +176,14 @@ public class UIHashMap {
         parameters_PHOTO[4][0] = R.id.taskConstLayout; parameters_PHOTO[4][1] = 4;
         parameters_PHOTO[5][0] = 10;
         taskHashMap.put("PHOTO", parameters_PHOTO);
+
+        parameters_BOXCROP[0][0] = 10;
+        parameters_BOXCROP[1][0] = R.id.tasktitle; parameters_BOXCROP[1][1] = 4;
+        parameters_BOXCROP[2][0] = R.id.taskConstLayout; parameters_BOXCROP[2][1] = 4;
+        parameters_BOXCROP[3][0] = R.id.tasktitle; parameters_BOXCROP[3][1] = 3;
+        parameters_BOXCROP[4][0] = R.id.taskConstLayout; parameters_BOXCROP[4][1] = 4;
+        parameters_BOXCROP[5][0] = 10;
+        taskHashMap.put("BOXCROP", parameters_BOXCROP);
 
     }
 
