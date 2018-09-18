@@ -21,7 +21,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
+    <TextView
+        android:id="@+id/warningText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(불성실 응답 자동 검사 적발 시 보상 압수됩니다.)"
+        android:fontFamily="@font/nanumsquareb_"
+        android:textColor="#ff0000"
+        android:gravity="center_horizontal"
+        android:textSize="12dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/numbersText"
+        />
     <GridView
         android:id="@+id/gridViewff"
         android:layout_width="match_parent"
@@ -37,6 +50,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/numbersText"
         />
+    <ImageView
+        android:id="@+id/imageAnimation"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/numberbutton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/textAnimation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+
+        android:textSize="25dp"
+        android:fontFamily="@font/nanumsquareb_"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gridViewff"
+        app:layout_constraintLeft_toRightOf="@+id/numberbutton" />
 
 
     <Button

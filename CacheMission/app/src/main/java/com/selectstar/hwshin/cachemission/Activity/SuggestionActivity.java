@@ -67,9 +67,10 @@ public class SuggestionActivity extends AppCompatActivity {
     private void getDialog2 ()
     {
         SharedPreferences token = getSharedPreferences("token",MODE_PRIVATE);
-        String stringtoken="";
-        stringtoken = token.getString("loginToken",null);
-        final String finalStringtoken = stringtoken;
+        String stringToken = token.getString("loginToken",null);
+        if(stringToken==null)
+            stringToken="";
+        final String finalStringToken = stringToken;
 
         android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(SuggestionActivity.this);
         alertDialogBuilder.setTitle("건의사항 전송");
@@ -100,7 +101,7 @@ public class SuggestionActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                         }
-                    }.execute(getString(R.string.mainurl)+"/suggestion",param, finalStringtoken);
+                    }.execute(getString(R.string.mainurl)+"/suggestion",param, finalStringToken);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

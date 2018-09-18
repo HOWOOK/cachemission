@@ -42,15 +42,7 @@ public class TaskActivity extends PatherActivity {
     Dialog explainDialog;
     ImageView backButton;
     TextView taskCount;
-    public void deleteWaitingTasks()
-    {
-        savePreference("waitingTasks",taskType,new JSONArray().toString());
-    }
-    public void updateWaitingTasks()
-    {
-        waitingTasks.remove(waitingTasks.size()-1);
-        savePreference("waitingTasks",taskType,ARRAYtoJSON(waitingTasks).toString());
-    }
+
     //사투리특별전용옵션
     static String region_dialect;
 
@@ -64,10 +56,10 @@ public class TaskActivity extends PatherActivity {
         super.onResume();
         //사투리선택해야하는 테스크면 선택하게 만들어야함
         String region;
-        SharedPreferences tasktoken = getSharedPreferences("tasktoken", MODE_PRIVATE);
+        SharedPreferences tasktoken = getSharedPreferences("taskToken", MODE_PRIVATE);
         SharedPreferences explain = getSharedPreferences("region", MODE_PRIVATE);
         region = explain.getString("region", null);
-        if ((taskType.equals("DIALECT") || taskType.equals("RECORD")) && tasktoken.getInt(taskType + "tasktoken", 0) == 100 && region == null) {
+        if ((taskType.equals("DIALECT") || taskType.equals("RECORD")) && tasktoken.getInt(taskType + "taskToken", 0) == 100 && region == null) {
             Intent intent_region = new Intent(TaskActivity.this, RegionActivity.class);
             intent_region.putExtra("wanttochange", "false");
             startActivity(intent_region);
@@ -193,17 +185,19 @@ public class TaskActivity extends PatherActivity {
     //해당 task가 처음이라면 설명서 띄워주는 것
     public void showDescription()
     {
-        SharedPreferences taskToken = getSharedPreferences("tasktoken", MODE_PRIVATE);
-        if(taskToken.getInt(taskType + "tasktoken",0) == 100)
+        SharedPreferences taskToken = getSharedPreferences("taskToken", MODE_PRIVATE);
+        if(taskToken.getInt(taskType + "taskToken",0) == 100)
             return;
         Intent intent_taskExplain = new Intent(TaskActivity.this, TaskExplainActivity.class);
-        intent_taskExplain.putExtra("tasktype", taskType);
+        intent_taskExplain.putExtra("taskType", taskType);
         startActivity(intent_taskExplain);
     }
-    public void setDailyQuest(String rawText)
+    public int setDailyQuest(String rawText)
     {
-        if(rawText=="-1") {
-            int startPoint = -1, endPoint = -1, midPoint = -1;
+        if(rawText.equals("-1")) {
+            int startPoint = -1, endPoint = -1, midPoint = -1,bonusPoint = -1;
+            String a = taskCount.getText().toString();
+            rawText = a;
             for (int i = 0; i < rawText.length(); i++) {
                 if (rawText.charAt(i) == '[')
                     startPoint = i;
@@ -211,20 +205,31 @@ public class TaskActivity extends PatherActivity {
                     endPoint = i;
                 if (rawText.charAt(i) == '/')
                     midPoint = i;
+                if (rawText.charAt(i) == '(')
+                    bonusPoint = i;
             }
-            if (startPoint == -1 || endPoint == -1 || midPoint == -1)
-                return;
+            System.out.println("~!~!!~!");
+            System.out.println(startPoint);
+            System.out.println(endPoint);
+            System.out.println(midPoint);
+            System.out.println(bonusPoint);
+
+            if (startPoint == -1 || endPoint == -1 || midPoint == -1 || bonusPoint == -1)
+                return 0;
+
             if (startPoint >= endPoint)
-                return;
+                return 0;
+            int bonusGold = Integer.parseInt(getNumberInString(rawText.substring(bonusPoint+1)));
             int count = Integer.parseInt(rawText.substring(startPoint+1,midPoint));
             int allCount = Integer.parseInt(rawText.substring(midPoint+1,endPoint));
             if(count + 1 == allCount)
-                return;
+                return bonusGold+getUpGold();
             else
                 rawText.replace(String.valueOf(count),String.valueOf(count+1));
 
         }
         taskCount.setText(parseDailyQuest(rawText));
+        return 0;
     }
     private String parseDailyQuest(String rawText) {
             if(rawText.contains("\n"))
