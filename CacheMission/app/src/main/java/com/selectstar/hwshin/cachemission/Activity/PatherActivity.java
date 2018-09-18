@@ -3,11 +3,18 @@ package com.selectstar.hwshin.cachemission.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.AnimationDrawable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView;
 import com.selectstar.hwshin.cachemission.DataStructure.UIHashMap;
+import com.selectstar.hwshin.cachemission.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,6 +49,11 @@ public abstract class PatherActivity extends AppCompatActivity {
     protected TextView nowGold;
     protected TextView pendingGold;
     protected int upGold;
+    public String getNumberInString(String rawText)
+    {
+        return rawText.replaceAll("\\D+","");
+
+    }
     public int getUpGold()
     {
         return upGold;
@@ -55,10 +67,43 @@ public abstract class PatherActivity extends AppCompatActivity {
         gold = value;
         nowGold.setText("현재 : \uFFE6 " + gold);
     }
+    public void showAnimation(int animID, int gold)
+    {
+        ImageView view = findViewById(R.id.imageAnimation);
+        TextView tView = findViewById(R.id.textAnimation);
+        view.bringToFront();
+        ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) view.getLayoutParams();
+        if(animID == R.drawable.three_coin_anim_list) {
+            lp.height = 800;
+            lp.width = 800;
+            view.setLayoutParams(lp);
+        }
+        else {
+            lp.height = 400;
+            lp.width = 400;
+            view.setLayoutParams(lp);
+        }
+        view.setBackgroundResource(animID);
+        Animation animation = AnimationUtils.loadAnimation(this,R.anim.goldtranslate);
+        tView.setText("+ " + String.valueOf(gold) + " \uFFE6");
+        tView.startAnimation(animation);
+        AnimationDrawable spinnerAnim = (AnimationDrawable) view.getBackground();
+        spinnerAnim.stop();
+        spinnerAnim.start();
+    }
     public void setMaybe(String value)
     {
         maybe = value;
         pendingGold.setText("예정 : \uFFE6 " + maybe);
+    }
+    public void deleteWaitingTasks()
+    {
+        savePreference("waitingTasks",taskType,new JSONArray().toString());
+    }
+    public void updateWaitingTasks()
+    {
+        waitingTasks.remove(waitingTasks.size()-1);
+        savePreference("waitingTasks",taskType,ARRAYtoJSON(waitingTasks).toString());
     }
     public abstract void startTask();
     public abstract void getNewTask();

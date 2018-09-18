@@ -29,20 +29,6 @@ public class Controller_Numbers extends Controller {
     private GridView gv;
     private AnimationDrawable frameAnimation;
 
-    public void showAnimation()
-    {
-        ImageView view = parentActivity.findViewById(R.id.imageAnimation);
-        TextView tView = parentActivity.findViewById(R.id.textAnimation);
-        view.bringToFront();
-        view.setBackgroundResource(R.drawable.coin_animation_list);
-        Animation animation = AnimationUtils.loadAnimation(parentActivity,R.anim.goldtranslate);
-        tView.setText("+ " + String.valueOf(parentActivity.getUpGold()) + " \uFFE6");
-        tView.startAnimation(animation);
-
-        AnimationDrawable spinnerAnim = (AnimationDrawable) view.getBackground();
-        spinnerAnim.stop();
-        spinnerAnim.start();
-    }
     @Override
     public void resetContent(final View view, final String taskID)
     {
@@ -64,13 +50,16 @@ public class Controller_Numbers extends Controller {
                     System.out.println(taskID);
                     System.out.println(Integer.parseInt(result));
                     parentActivity.setGold("-1");
-                    parentActivity.setDailyQuest("-1");
+                    int nowUpGold = parentActivity.setDailyQuest("-1");
+                    if(nowUpGold>0)
+                        parentActivity.showAnimation(R.drawable.three_coin_anim_list,nowUpGold);
+                    else
+                        parentActivity.showAnimation(R.drawable.coin_animation_list,parentActivity.getUpGold());
                     param.put("answerID", parentActivity.getAnswerID());
                     param.put("taskID", taskID);
                     param.put("submit", Integer.parseInt(result));
                     parentActivity.updateWaitingTasks();
                     parentActivity.startTask();
-                    showAnimation();
                     new HurryHttpRequest(parentActivity) {
                         @Override
                         protected void onPostExecute(Object o) {
