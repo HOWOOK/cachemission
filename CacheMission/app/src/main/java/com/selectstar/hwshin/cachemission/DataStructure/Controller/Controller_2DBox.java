@@ -24,10 +24,10 @@ public class Controller_2DBox extends Controller {
     Button boxBotton, sendBotton, completeBotton;
     TextView testingText1, testingText2, testingText3;
     View centerImage;
-    String htmlContentInStringFormat;
     PhotoView photoView;
     float originWidth, originHeight, originLeftMargin, originTopMargin;
     TaskView_PhotoView mtaskView_PhotoView;
+    //float[][] answerCoordination;
 
     public Controller_2DBox() {
         controllerID = R.layout.controller_2dbox;
@@ -40,6 +40,7 @@ public class Controller_2DBox extends Controller {
 
         centerImage = view.findViewById(R.id.centerimage);
         mtaskView_PhotoView = (TaskView_PhotoView) parentActivity.getmTaskView();
+        //answerCoordination = mtaskView_PhotoView.getAnswerCoordination();
 
         //처음에는 box가 없어야 합니다.
         final ConstraintLayout boxCL = view.findViewById(R.id.boxCL);

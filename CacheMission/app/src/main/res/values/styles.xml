@@ -75,6 +75,18 @@
         <item name="android:textSize">15dp</item>
         <item name="android:textColor">@color/colorAccent</item>
     </style>
+
+    <style name="normalbtn3" parent="@android:style/Widget.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:background">@drawable/btn_custom2</item>
+        <item name="android:fontFamily">@font/nanumsquareeb_</item>
+        <item name="android:textSize">15dp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+
+
     <style name="MyDialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowBackground">@android:color/transparent</item>

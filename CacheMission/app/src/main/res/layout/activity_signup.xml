@@ -46,20 +46,19 @@
             </android.support.constraint.ConstraintLayout>
 
 
-
             <android.support.constraint.Guideline
                 android:id="@+id/guideline_signupright"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.9" />
+                app:layout_constraintGuide_percent="0.95" />
 
             <android.support.constraint.Guideline
                 android:id="@+id/guideline_signupleft"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.1" />
+                app:layout_constraintGuide_percent="0.05" />
 
             <TextView
                 android:id="@+id/idtag"
@@ -180,8 +179,8 @@
 
             <Button
                 android:id="@+id/idcheck"
-                style="@style/normalbtn1"
-                android:layout_width="70dp"
+                style="@style/normalbtn3"
+                android:layout_width="60dp"
                 android:layout_marginTop="20dp"
                 android:text="중복확인"
                 android:textSize="12dp"
@@ -263,7 +262,7 @@
 
             <Button
                 android:id="@+id/okbutton"
-                style="@style/normalbtn1"
+                style="@style/normalbtn3"
                 android:layout_width="0dp"
                 android:text="가입하기"
                 app:layout_constraintTop_toBottomOf="@+id/descriptionvalue"
@@ -273,7 +272,7 @@
 
             <Button
                 android:id="@+id/nobutton"
-                style="@style/normalbtn1"
+                style="@style/normalbtn3"
                 android:layout_width="0dp"
                 android:layout_marginTop="3dp"
                 android:text="가입취소"

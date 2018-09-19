@@ -45,7 +45,7 @@ public class TaskExplainActivity extends AppCompatActivity {
         editor.putInt(taskType + "taskToken", 100);
         if(taskType.equals("RECORDEXAM")) {
             examType = intent.getIntExtra("examType", 0);
-            editor.putInt(taskType + examType+"taskToken", 100);
+            editor.putInt(taskType + examType + "taskToken", 100);
         }
         editor.commit();
 

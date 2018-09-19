@@ -213,7 +213,7 @@
 
         <Button
             android:id="@+id/boxbtn"
-            style="@style/normalbtn1"
+            style="@style/normalbtn3"
             android:text="BOX"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -223,7 +223,7 @@
 
         <Button
             android:id="@+id/sendbtn"
-            style="@style/normalbtn1"
+            style="@style/normalbtn3"
             android:text="제출"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -233,7 +233,7 @@
 
         <Button
             android:id="@+id/completebtn"
-            style="@style/normalbtn1"
+            style="@style/normalbtn3"
             android:text="다 찾음"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

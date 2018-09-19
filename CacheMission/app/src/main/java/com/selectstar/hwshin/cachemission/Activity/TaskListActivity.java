@@ -10,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,6 +22,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingService;
 import com.selectstar.hwshin.cachemission.Adapter.ListviewAdapter;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskListItem;
 import com.selectstar.hwshin.cachemission.DataStructure.UIHashMap;
@@ -49,6 +54,15 @@ public class TaskListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tasklist);
         uiHashMap = new UIHashMap();
         TextView tv_versionName = findViewById(R.id.version_text);
+
+        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+        Log.d("파이어베이스토큰", "Refreshed token: " + refreshedToken);
+        FirebaseMessaging.getInstance().subscribeToTopic("RetentionPush");
+
+        //테스트를 위해 사용하는 푸시 Topic 'unsubscribeFromTopic 지우지 말것 (호욱)
+        //FirebaseMessaging.getInstance().subscribeToTopic("TestPush");
+        FirebaseMessaging.getInstance().unsubscribeFromTopic("TestPush");
+
 
         //버전가져오기
         try{

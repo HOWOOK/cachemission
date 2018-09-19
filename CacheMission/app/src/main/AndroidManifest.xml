@@ -22,6 +22,35 @@
         android:largeHeap="true"
         android:hardwareAccelerated="false"
         android:theme="@style/AppTheme">
+
+
+        <service
+            android:name="com.selectstar.hwshin.cachemission.Service.CashMissionFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <service
+            android:name="com.selectstar.hwshin.cachemission.Service.CashMissionFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <!-- 파이어베이스 푸시알림 default value들 시작 -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/cashmissionicon" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id"/>
+        <!-- 파이어베이스 푸시알림 default value들 끝 -->
+
+\
+
         <activity
             android:name="com.selectstar.hwshin.cachemission.Activity.TaskListActivity"
             android:theme="@style/AppTheme.NoActionBar"
