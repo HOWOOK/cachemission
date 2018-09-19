@@ -52,7 +52,7 @@
 
     <Button
         android:id="@+id/sendbtn"
-        style="@style/normalbtn1"
+        style="@style/normalbtn3"
         android:layout_width="0dp"
         android:layout_margin="3dp"
         android:text="건의사항 보내기"

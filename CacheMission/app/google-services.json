@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "297460927468",
+    "firebase_url": "https://cashmission-8544f.firebaseio.com",
+    "project_id": "cashmission-8544f",
+    "storage_bucket": "cashmission-8544f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:297460927468:android:ed67a61ebdde0e20",
+        "android_client_info": {
+          "package_name": "com.selectstar.hwshin.cachemission"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "297460927468-ffoart3bfhgn5kav00rnuqm625mfl6gk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.selectstar.hwshin.cachemission",
+            "certificate_hash": "b2e3ec0b2df5c6566bcbd9d870115d280dc32c71"
+          }
+        },
+        {
+          "client_id": "297460927468-f2geonhrqp7kphh1r8nv2mvdf0o6a9n1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFgQ_X2sRZhuzYj0OnfKfXDs4K-lr8jrM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "297460927468-f2geonhrqp7kphh1r8nv2mvdf0o6a9n1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

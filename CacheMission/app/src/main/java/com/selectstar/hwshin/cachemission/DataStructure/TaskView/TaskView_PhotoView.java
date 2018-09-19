@@ -2,6 +2,7 @@ package com.selectstar.hwshin.cachemission.DataStructure.TaskView;
 
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
@@ -13,7 +14,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.selectstar.hwshin.cachemission.R;
 
@@ -51,33 +54,29 @@ public class TaskView_PhotoView extends TaskView {
         photoVIewCL = parentActivity.findViewById(R.id.photoViewCL);
         //box 좌표 구해서 저장
         array1 = content.split("&");
-        array2 = array1[1].split("\\(");
-        answerCoordination = new float[array2.length][4];
-        coordinationParsing(array2);
-
-
+        if(array1.length==2) {//좌표를 찾은적이 있는 놈이라면..
+            array2 = array1[1].split("\\(");
+            answerCoordination = new float[array2.length][4];
+            coordinationParsing(array2);
+        }
 
         photoView = parentActivity.findViewById(R.id.srcview);
         photoView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         Glide.with(parentActivity)
                 .load(Uri.parse(parentActivity.getString(R.string.mainurl)+"/media/"+ array1[0]))
-                .listener(new RequestListener<Drawable>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        return true;
-                    }
-
-                    @Override
-                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        System.out.println("나여기들어옴1");
-                        coordinationChange(answerCoordination);
-                        drawAnswer(answerCoordination);
-                        return true;
-                    }
-                })
                 .thumbnail(0.1f)
-                .into(photoView)
-        ;
+                .into(new SimpleTarget<Drawable>(){
+                    @Override
+                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                        photoView.setImageDrawable(resource);
+                        System.out.println("나여기들어옴1");
+                        if(answerCoordination!=null) {
+                            System.out.println("안비어있지롱 : "+answerCoordination);
+                            coordinationChange(answerCoordination);
+                            drawAnswer(answerCoordination);
+                        }
+                    }
+                });
 
 
         photoView.setOnTouchListener(new View.OnTouchListener() {

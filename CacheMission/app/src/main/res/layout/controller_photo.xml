@@ -8,8 +8,7 @@
 
     <Button
         android:id="@+id/phototake"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/normalbtn3"
         android:text="사진찍기"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/postphoto"
@@ -18,8 +17,7 @@
 
     <Button
         android:id="@+id/postphoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/normalbtn3"
         android:text="전송하기"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,8 +26,7 @@
 
     <Button
         android:id="@+id/GPS"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/normalbtn3"
         android:layout_marginBottom="119dp"
         android:layout_marginEnd="148dp"
         android:layout_marginStart="148dp"
