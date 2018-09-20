@@ -111,7 +111,7 @@ public class Controller_2DBox extends Controller {
                     topPercent = (y4 - originTopMargin) / originHeight;
                     rightPercent = (x5 - originLeftMargin) / originWidth;
                     bottomPercent = (y5 - originTopMargin) / originHeight;
-                    submit = "(" + leftPercent + "," + topPercent + "," + rightPercent + "," + bottomPercent + ")";
+                    submit = leftPercent + "," + topPercent + "," + rightPercent + "," + bottomPercent;
                     param.put("submit", submit);
 
 
@@ -202,6 +202,9 @@ public class Controller_2DBox extends Controller {
                 rightPercent = (x5 - originLeftMargin) / originWidth;
                 bottomPercent = (y5 - originTopMargin) / originHeight;
                 testingText1.setText(leftPercent + "," + topPercent + ",\n" + rightPercent + "," + bottomPercent);
+
+
+
 
             }
         });

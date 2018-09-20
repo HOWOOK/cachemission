@@ -42,7 +42,6 @@ public class ExamActivity extends PatherActivity {
 
     protected void showDescription(Context context)
     {
-
         Intent intent_taskExplain = new Intent(context, TaskExplainActivity.class);
         intent_taskExplain.putExtra("taskType", taskType);
         intent_taskExplain.putExtra("examType", examType);
@@ -134,6 +133,15 @@ public class ExamActivity extends PatherActivity {
         setContentView(R.layout.activity_exam);
         //캡쳐방지
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
+        intent = getIntent();
+
+        nowGold = findViewById(R.id.goldnow);
+        pendingGold = findViewById(R.id.goldpre);
+
+        gold =intent.getStringExtra("goldNow");
+        maybe = intent.getStringExtra("goldPre");
+        nowGold.setText("현재 : \uFFE6 " + gold);
+        pendingGold.setText("예정 : \uFFE6 " + maybe);
 
         backButton = findViewById(R.id.back);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -145,7 +153,7 @@ public class ExamActivity extends PatherActivity {
         SharedPreferences token = getSharedPreferences("token",MODE_PRIVATE);
         setLoginToken(token.getString("loginToken",null));
 
-        intent = getIntent();
+
         uiHashMap = new UIHashMap();
         taskID=(String)intent.getStringExtra("taskId");
         mTaskView = uiHashMap.taskViewHashMap.get(intent.getStringExtra("taskView"));

@@ -13,9 +13,12 @@
     import com.selectstar.hwshin.cachemission.DataStructure.NoticeItem;
     import com.selectstar.hwshin.cachemission.R;
 
+    import java.text.ParseException;
+    import java.text.SimpleDateFormat;
     import java.util.ArrayList;
+    import java.util.Date;
 
-public class NoticeviewAdapter extends BaseAdapter {
+    public class NoticeviewAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
     private ArrayList<NoticeItem> mNoticeList;
@@ -45,13 +48,20 @@ public class NoticeviewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        final NoticeItem noticeItem = mNoticeList.get(position);
+        String date1 = noticeItem.getDate();
+        System.out.println("서버에서 받은 날짜 : "+date1);
+        String date;
+        date = timeCalculate(date1);
+
+
 
         convertView = inflater.inflate(layout, parent, false);
-        final NoticeItem noticeItem = mNoticeList.get(position);
+
         TextView titleView = (TextView) convertView.findViewById(R.id.title2);
         titleView.setText(noticeItem.getTitle());
         TextView dateView = (TextView) convertView.findViewById(R.id.date);
-        dateView.setText(noticeItem.getDate());
+        dateView.setText(date);
         final Context context = convertView.getContext();
 
         convertView.setOnClickListener(new View.OnClickListener() {
@@ -67,4 +77,39 @@ public class NoticeviewAdapter extends BaseAdapter {
         });
         return convertView;
     }
-}
+
+
+        //나중에 더 정교하게할 필요가 있음 (1년 52주인데 48주로 계산된다던지...)
+        private String timeCalculate(String data1) {
+            long currentTime = System.currentTimeMillis();
+            long calDate = 0;
+            Integer num;
+            String returnVal="";
+
+            SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+            try {
+                Date postDate = format.parse(data1);
+                calDate = currentTime - postDate.getTime();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            if(calDate < 24l*60l*60l*1000l){
+                returnVal = "오늘";
+            }else if((calDate >= 24l*60l*60l*1000l) && (calDate < 24l*60l*60l*1000l*7l)){
+                num = (int) (long) (calDate / (24l*60l*60l*1000l));
+                returnVal = String.valueOf(num)+"일전";
+            }else if((calDate >= 24l*60l*60l*1000l*7l) && (calDate < 24l*60l*60l*1000l*7l*4l)){
+                num = (int) (long) (calDate / (24l*60l*60l*1000l*7l));
+                returnVal = String.valueOf(num)+"주전";
+            }else if((calDate >= 24l*60l*60l*1000l*7l*4l) && (calDate < 24l*60l*60l*1000l*7l*4l*12l)){
+                num = (int) (long) (calDate / (24l*60l*60l*1000l*7l*4l));
+                returnVal = String.valueOf(num)+"달전";
+            }else if(calDate >= 24l*60l*60l*1000l*7l*4l*12l){
+                num = (int) (long) (calDate / (24l*60l*60l*1000l*7l*4l*12l));
+                returnVal = String.valueOf(num)+"년전";
+            }
+
+            return returnVal;
+        }
+    }

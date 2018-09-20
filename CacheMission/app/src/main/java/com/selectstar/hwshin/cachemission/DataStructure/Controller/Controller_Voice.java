@@ -1,5 +1,6 @@
 package com.selectstar.hwshin.cachemission.DataStructure.Controller;
 
+import android.app.ProgressDialog;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioRecord;
@@ -7,6 +8,7 @@ import android.media.AudioTrack;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
@@ -15,7 +17,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Task;
 import com.selectstar.hwshin.cachemission.Activity.TaskActivity;
+import com.selectstar.hwshin.cachemission.DataStructure.MyProgressDialog;
 import com.selectstar.hwshin.cachemission.R;
 
 import java.io.DataInputStream;
@@ -38,13 +42,13 @@ public class Controller_Voice extends Controller {
     private final int mBufferSize = 1024;
     private final int mBytesPerElement = 2;
 
-// 설정할 수 있는 sampleRate, AudioFormat, channelConfig 값들을 정의
+    // 설정할 수 있는 sampleRate, AudioFormat, channelConfig 값들을 정의
 
     private final int[] mSampleRates = new int[] {44100, 22050, 11025, 8000};
     private final short[] mAudioFormats = new short[] {AudioFormat.ENCODING_PCM_16BIT, AudioFormat.ENCODING_PCM_8BIT};
     private final short[] mChannelConfigs = new short[] {AudioFormat.CHANNEL_IN_MONO, AudioFormat.CHANNEL_IN_MONO};
 
-// 위의 값들 중 실제 녹음 및 재생 시 선택된 설정값들을 저장
+    // 위의 값들 중 실제 녹음 및 재생 시 선택된 설정값들을 저장
 
     private int mSampleRate;
     private short mAudioFormat;
@@ -92,6 +96,7 @@ public class Controller_Voice extends Controller {
                 //mBtPlay.setText("들어보기");
             }
         });
+
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,30 +104,15 @@ public class Controller_Voice extends Controller {
                     Toast.makeText(parentActivity,"먼저 음성을 녹음해 주세요",Toast.LENGTH_SHORT).show();
 
                 } else {
+                    TaskParams params = new TaskParams(view, taskID);
+                    VoiceAsyncTask voiceAsyncTask = new VoiceAsyncTask();
+                    voiceAsyncTask.execute(params);
 
-
-
-                    new Thread() {
-                        public void run() {
-                            uploadFile(mPath + ".wav", (parentActivity.getTaskID()));
-
-                            Uri i = Uri.parse(mPath + ".pcm");
-                            File f = new File(i.getPath());
-                            f.delete();
-                            Uri i2 = Uri.parse(mPath + ".wav");
-                            File f2 = new File(i2.getPath());
-                            f2.delete();
-                            if (serverResponseCode == 200) {
-                                ((TaskActivity)parentActivity).startTask();
-
-                                resetContent(view,taskID);
-                            } else {
-                                Toast.makeText(parentActivity,"남은 테스크가 없습니다.",Toast.LENGTH_SHORT).show();
-                                parentActivity.finish();
-                            }
-                        }
-                    }.start();
-
+//                    new Thread() {
+//                        public void run() {
+//
+//                        }
+//                    }.start();
 
                 }
             }
@@ -135,8 +125,7 @@ public class Controller_Voice extends Controller {
     }
 
 
-// 녹음을 수행할 Thread를 생성하여 녹음을 수행하는 함수
-
+    // 녹음을 수행할 Thread를 생성하여 녹음을 수행하는 함수
     private void startRecording() {
 
         mRecorder = findAudioRecord();
@@ -156,9 +145,67 @@ public class Controller_Voice extends Controller {
         mRecordingThread.start();
     }
 
+    private static class TaskParams {
+        View view;
+        String taskID;
 
+        TaskParams(View view, String taskID) {
+            this.view = view;
+            this.taskID = taskID;
+        }
+    }
 
-// 녹음을 하기 위한 sampleRate, audioFormat, channelConfig 값들을 설정
+    private class VoiceAsyncTask extends AsyncTask<TaskParams, Void, Void> {
+        View view;
+        String taskID;
+
+        private MyProgressDialog httpDialog;
+        private MyProgressDialog httpDialogSomethingOptimizationFailed;
+
+        @Override
+        protected void onPreExecute() {
+            httpDialogSomethingOptimizationFailed = httpDialog.show(parentActivity,"","",true,true,null);
+
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(TaskParams... params) {
+            view = params[0].view;
+            taskID = params[0].taskID;
+
+            uploadFile(mPath + ".wav", (parentActivity.getTaskID()));
+
+            Uri i = Uri.parse(mPath + ".pcm");
+            File f = new File(i.getPath());
+            f.delete();
+            Uri i2 = Uri.parse(mPath + ".wav");
+            File f2 = new File(i2.getPath());
+            f2.delete();
+            if (serverResponseCode == 200) {
+
+                ((TaskActivity)parentActivity).startTask();
+
+                return null;
+            } else {
+                Toast.makeText(parentActivity,"남은 테스크가 없습니다.",Toast.LENGTH_SHORT).show();
+                parentActivity.finish();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            resetContent(view,taskID);
+
+            if (httpDialog!=null)
+                httpDialog.dismiss();
+            httpDialogSomethingOptimizationFailed.dismiss();
+        }
+    }
+
+    // 녹음을 하기 위한 sampleRate, audioFormat, channelConfig 값들을 설정
 
 
     private AudioRecord findAudioRecord() {
@@ -194,9 +241,7 @@ public class Controller_Voice extends Controller {
 
     }
 
-
-
-// 실제 녹음한 data를 file에 쓰는 함수
+    // 실제 녹음한 data를 file에 쓰는 함수
 
     private void writeAudioDataToFile() {
 
@@ -254,8 +299,7 @@ public class Controller_Voice extends Controller {
     }
 
 
-
-// 녹음을 중지하는 함수
+    // 녹음을 중지하는 함수
 
     private void stopRecording() {
 
@@ -268,9 +312,7 @@ public class Controller_Voice extends Controller {
         }
     }
 
-
-
-// 녹음할 때 설정했던 값과 동일한 설정값들로 해당 파일을 재생하는 함수
+    // 녹음할 때 설정했던 값과 동일한 설정값들로 해당 파일을 재생하는 함수
 
 
     private void playWaveFile() {
@@ -455,12 +497,10 @@ public class Controller_Voice extends Controller {
         output.write(value >> 16);
         output.write(value >> 24);
     }
-
     private void writeShort(final DataOutputStream output, final short value) throws IOException {
         output.write(value >> 0);
         output.write(value >> 8);
     }
-
     private void writeString(final DataOutputStream output, final String value) throws IOException {
         for (int i = 0; i < value.length(); i++) {
             output.write(value.charAt(i));

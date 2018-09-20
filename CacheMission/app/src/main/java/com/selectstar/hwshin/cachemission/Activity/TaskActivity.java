@@ -246,6 +246,7 @@ public class TaskActivity extends PatherActivity {
         setContentView(R.layout.activity_task);
         //캡쳐방지
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
+
         nowGold = findViewById(R.id.goldnow);
         pendingGold = findViewById(R.id.goldpre);
         taskCount = findViewById(R.id.regionText);
