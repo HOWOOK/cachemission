@@ -8,10 +8,10 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="13dp"
+        android:layout_height="80dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
         android:background="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,30 +23,30 @@
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="TextView"
+            android:paddingLeft="20dp"
+            android:text="며칠전"
             android:fontFamily="@font/nanumsquareb_"
-            android:textColor="@color/fontColorActive"
+            android:textColor="@color/fontColorInactive"
+            android:textSize="12dp"
+            app:layout_constraintTop_toBottomOf="@+id/title2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            />
 
         <TextView
             android:id="@+id/title2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="8dp"
-            android:text="TextView"
+            android:paddingLeft="20dp"
+            android:text="어떠어떠한 공지사항"
             android:fontFamily="@font/nanumsquareb_"
             android:textColor="@color/fontColorActive"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/date"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toTopOf="@+id/date"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.507" />
+            />
+
 
     </android.support.constraint.ConstraintLayout>
 
