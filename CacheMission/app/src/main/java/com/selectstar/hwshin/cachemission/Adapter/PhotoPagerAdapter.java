@@ -17,6 +17,7 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.selectstar.hwshin.cachemission.R;
@@ -36,7 +37,7 @@ public class PhotoPagerAdapter extends PagerAdapter {
 
     public PhotoPagerAdapter(Context context) {
         this.context = context;
-        photoList.pollLast();
+        this.inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         photoStack = new Stack<>();
     }
     public boolean isEmpty() {
@@ -62,13 +63,19 @@ public class PhotoPagerAdapter extends PagerAdapter {
     public boolean isViewFromObject(View view, Object object) {
         return view == ((ConstraintLayout) object);
     }
-    @Override
-    public Object instantiateItem(ViewGroup container, int position) {
-        inflater = (LayoutInflater) context.getSystemService
-                (Context.LAYOUT_INFLATER_SERVICE);
+    public Object instantiateItem(ViewGroup container, final int position) {
+
         View v = inflater.inflate(R.layout.viewpageritem, container, false);
-        ImageView imageView = (ImageView)(v.findViewById(R.id.imageitem));
+        ImageView imageView = (ImageView) (v.findViewById(R.id.imageitem));
         imageView.setImageURI(photoStack.get(position));
+        Button deleteButton = v.findViewById(R.id.itemdelete);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                photoStack.remove(position);
+                notifyDataSetChanged();
+            }
+        });
         container.addView(v);
         return v;
     }

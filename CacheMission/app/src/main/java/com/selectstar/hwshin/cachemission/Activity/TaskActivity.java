@@ -42,7 +42,7 @@ public class TaskActivity extends PatherActivity {
     Dialog explainDialog;
     ImageView backButton;
     TextView taskCount;
-
+    ArrayList<String> pic=new ArrayList<>();
     //사투리특별전용옵션
     static String region_dialect;
 
@@ -350,9 +350,19 @@ public class TaskActivity extends PatherActivity {
         if (requestCode == 1 && resultCode == RESULT_OK) {
     //        Bundle extras = data.getExtras();
 //            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            photoUri=mController.getPhotoUri();
             System.out.println(photoUri);
             ((Controller_Photo) mController).addPhoto(photoUri);
         }
+        if(requestCode==999&& resultCode == RESULT_OK){
+            pic= data.getStringArrayListExtra("pic");
+            for(int i=0;i<pic.size();i++){
+                Uri uri=Uri.parse(pic.get(i));
+                ((Controller_Photo)mController).addPhoto(uri);
+            }
+
+        }
+
 
     }
 }
