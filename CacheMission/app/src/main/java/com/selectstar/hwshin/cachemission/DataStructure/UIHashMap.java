@@ -5,6 +5,7 @@ import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_2D
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_EditText;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_Numbers;
 import com.selectstar.hwshin.cachemission.DataStructure.ExamView.ExamView;
+import com.selectstar.hwshin.cachemission.DataStructure.ExamView.ExamView_2DBox;
 import com.selectstar.hwshin.cachemission.DataStructure.ExamView.ExamView_Buttons;
 import com.selectstar.hwshin.cachemission.DataStructure.ExamView.ExamView_EditText;
 import com.selectstar.hwshin.cachemission.DataStructure.ExamView.ExamView_Voice;
@@ -71,6 +72,7 @@ public class UIHashMap {
         examViewHashMap.put("edittext", new ExamView_EditText());
         examViewHashMap.put("buttons", new ExamView_Buttons());
         examViewHashMap.put("record", new ExamView_Voice());
+        examViewHashMap.put("2dbox", new ExamView_2DBox());
 
         //OCR view-controller connect
         parameters_OCR[0][0] = 10;
@@ -184,6 +186,14 @@ public class UIHashMap {
         parameters_BOXCROP[4][0] = R.id.taskConstLayout; parameters_BOXCROP[4][1] = 4;
         parameters_BOXCROP[5][0] = 10;
         taskHashMap.put("BOXCROP", parameters_BOXCROP);
+
+        parameters_BOXCROPEXAM[0][0] = 10;
+        parameters_BOXCROPEXAM[1][0] = R.id.tasktitleexam; parameters_BOXCROPEXAM[1][1] = 4;
+        parameters_BOXCROPEXAM[2][0] = R.id.taskConstLayoutexam; parameters_BOXCROPEXAM[2][1] = 4;
+        parameters_BOXCROPEXAM[3][0] = R.id.tasktitleexam; parameters_BOXCROPEXAM[3][1] = 4;
+        parameters_BOXCROPEXAM[4][0] = R.id.taskConstLayoutexam; parameters_BOXCROPEXAM[4][1] = 4;
+        parameters_BOXCROPEXAM[5][0] = 10;
+        taskHashMap.put("BOXCROPEXAM", parameters_BOXCROPEXAM);
 
     }
 
