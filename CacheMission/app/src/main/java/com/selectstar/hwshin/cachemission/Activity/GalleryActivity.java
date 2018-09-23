@@ -46,6 +46,7 @@ public class GalleryActivity extends AppCompatActivity {
         basePath = mediaStorageDir.getPath();
         mView = findViewById(R.id.gallerygridview);
         mChoiceAdapter = new ChoiceImageAdapter(mView);
+
         mAdapter = new GalleryImageAdapter(basePath,this,mChoiceAdapter);
         mChoiceAdapter.setGalleryAdapter(mAdapter);
         mView.setLayoutManager(new GridLayoutManager(this,3));

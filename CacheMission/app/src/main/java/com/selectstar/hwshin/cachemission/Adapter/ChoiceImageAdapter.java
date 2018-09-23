@@ -2,6 +2,7 @@ package com.selectstar.hwshin.cachemission.Adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -51,12 +52,25 @@ public class ChoiceImageAdapter extends RecyclerView.Adapter<ChoiceImageAdapter.
         if(viewHolder != null)
             viewHolder.setFalse();
         notifyItemRemoved(pos);
+        if(checkedPhoto.isEmpty()) {
+            ((TextView) adapter.mActivity.findViewById(R.id.picselect)).setTextColor(Color.parseColor("#888888"));
+            ((TextView) adapter.mActivity.findViewById(R.id.picselect)).setText("확인");
+        }
+        else{
+            ((TextView) adapter.mActivity.findViewById(R.id.picselect)).setText(String.valueOf(checkedPhoto.size())+" 확인");
+
+        }
+
     }
     public void addPhoto(Integer integer)
     {
         checkedPhoto.add(integer);
         RecyclerItem item = new RecyclerItem(String.valueOf(integer));
         notifyItemInserted(checkedPhoto.size()-1);
+        int color = adapter.mActivity.getResources().getColor(R.color.fontColor1);
+        ((TextView)adapter.mActivity.findViewById(R.id.picselect)).setTextColor(color);
+        ((TextView) adapter.mActivity.findViewById(R.id.picselect)).setText(String.valueOf(checkedPhoto.size())+" 확인");
+
     }
     public void setGalleryAdapter(GalleryImageAdapter adapter)
     {

@@ -35,6 +35,7 @@ public class PhotoPagerAdapter extends RecyclerView.Adapter<PhotoPagerAdapter.It
         photoList.add(photoUri);
         notifyItemInserted(photoList.size()-1);
         notifyDataSetChanged();
+        ((ImageView)parentActivity.findViewById(R.id.emptyview)).setVisibility(View.INVISIBLE);
     }
     public Uri getUri(int index)
     {
@@ -52,6 +53,7 @@ public class PhotoPagerAdapter extends RecyclerView.Adapter<PhotoPagerAdapter.It
     {
         photoList = new ArrayList<>();
         notifyDataSetChanged();
+        ((ImageView)parentActivity.findViewById(R.id.emptyview)).setVisibility(View.VISIBLE);
     }
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -105,6 +107,8 @@ public class PhotoPagerAdapter extends RecyclerView.Adapter<PhotoPagerAdapter.It
                 photoList.remove(position);
                 notifyItemRemoved(position);
                 notifyDataSetChanged();
+                if(photoList.isEmpty())
+                    ((ImageView)parentActivity.findViewById(R.id.emptyview)).setVisibility(View.VISIBLE);
             }
         });
 

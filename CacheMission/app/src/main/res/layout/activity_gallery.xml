@@ -20,7 +20,7 @@
             android:layout_marginEnd="18dp"
             android:fontFamily="@font/bmjua_"
             android:text="확인"
-            android:textColor="@color/fontColor1"
+            android:textColor="#888888"
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

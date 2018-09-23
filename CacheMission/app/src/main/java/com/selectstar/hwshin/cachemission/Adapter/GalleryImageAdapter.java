@@ -16,6 +16,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.util.ArrayUtils;
 import com.selectstar.hwshin.cachemission.Activity.GalleryActivity;
 import com.selectstar.hwshin.cachemission.Activity.TaskActivity;
 import com.selectstar.hwshin.cachemission.DataStructure.RecyclerItem;
@@ -23,6 +24,7 @@ import com.selectstar.hwshin.cachemission.R;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static android.support.constraint.Constraints.TAG;
 
@@ -52,6 +54,12 @@ public class GalleryImageAdapter extends RecyclerView.Adapter<GalleryImageAdapte
         }
         mItems = new ArrayList<>();
         mImgs = file.list(); // file.list() method를 통해 directory 내 file 명들을 String[] 에 저// 장
+        for(int i=0;i<mImgs.length/2;i++)
+        {
+            String tmp = mImgs[i];
+            mImgs[i] = mImgs[mImgs.length-i-1];
+            mImgs[mImgs.length-i-1] = tmp;
+        }
         checkList = new boolean[mImgs.length];
         for (int i=0;i<mImgs.length;i++) {
             RecyclerItem item = new RecyclerItem(mImgs[i]);
