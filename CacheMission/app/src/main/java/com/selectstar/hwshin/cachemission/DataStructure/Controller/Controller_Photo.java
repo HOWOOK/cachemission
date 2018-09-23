@@ -137,13 +137,13 @@ public class Controller_Photo extends Controller {
                                     System.out.println(myResult);
                                     successCount += 1;
                                     String sentence = String.valueOf(successCount) + " / " + String.valueOf(allCount) + " 전송 완료!";
-                                    Toast.makeText(parentActivity,sentence,Toast.LENGTH_SHORT);
+                                    Toast.makeText(parentActivity,sentence,Toast.LENGTH_SHORT).show();
                                     if(allCount == successCount) {
                                         adapter.clearItem();
                                         adapter.notifyDataSetChanged();
+                                        parentActivity.startTask();
+                                        parentActivity.taskCount.setText(String.valueOf(resultTemp.get("dailyQuest")));
                                     }
-                                    parentActivity.showAnimation(R.drawable.coin_animation_list,parentActivity.getUpGold());
-                                    parentActivity.startTask();
                                     parentActivity.setGold(String.valueOf(resultTemp.get("gold")));
                                     parentActivity.setMaybe(String.valueOf(resultTemp.get("maybe")));
 

@@ -45,7 +45,7 @@ public class TaskActivity extends PatherActivity {
     Uri photoUri;
     Dialog explainDialog;
     ImageView backButton;
-    TextView taskCount;
+    public TextView taskCount;
     ArrayList<String> pic=new ArrayList<>();
     //사투리특별전용옵션
     static String region_dialect;
