@@ -1,24 +1,32 @@
 package com.selectstar.hwshin.cachemission.DataStructure.Controller;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.selectstar.hwshin.cachemission.Activity.GalleryActivity;
+import com.selectstar.hwshin.cachemission.Activity.LoginActivity;
 import com.selectstar.hwshin.cachemission.Activity.TaskActivity;
 import com.selectstar.hwshin.cachemission.Adapter.PhotoPagerAdapter;
-import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller;
+import com.selectstar.hwshin.cachemission.DataStructure.FileHttpRequest;
+import com.selectstar.hwshin.cachemission.DataStructure.MyProgressDialog;
 import com.selectstar.hwshin.cachemission.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -30,19 +38,19 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static android.content.Context.MODE_PRIVATE;
-
 public class Controller_Photo extends Controller {
     PhotoPagerAdapter adapter;
     Dialog dialog;
     int serverResponseCode=0;
-
+    int successCount = 0;
+    int allCount = 0;
+    RecyclerView recyclerView;
     public Controller_Photo(){
         controllerID= R.layout.controller_photo;
     }
     @Override
     public void resetContent(View view, String taskID) {
-        adapter.stackClear();
+        adapter.clearItem();
     }
 
 
@@ -51,12 +59,15 @@ public class Controller_Photo extends Controller {
         adapter.addPhoto(bitmap);
     }
     @Override
-    public void setLayout(View view, String taskID) {
-        Button photoTake = parentActivity.findViewById(R.id.phototake);
-        ViewPager viewPager = parentActivity.findViewById(R.id.srcview);
+    public void setLayout(final View view, String taskID) {
+        ImageView cameraButton = parentActivity.findViewById(R.id.camera);
+        recyclerView = parentActivity.findViewById(R.id.srcview);
         adapter = new PhotoPagerAdapter(parentActivity);
-        viewPager.setAdapter(adapter);
-        photoTake.setOnClickListener(new View.OnClickListener() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(parentActivity);
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+        cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -67,171 +78,93 @@ public class Controller_Photo extends Controller {
                     // Error occurred while creating the File
                     System.out.println("ERROR!");
                 }
-                System.out.println(photoFile);
-                System.out.println("----");
-                System.out.println(parentActivity.getPackageName());
                 photoUri = FileProvider.getUriForFile(parentActivity, parentActivity.getPackageName(), photoFile);
-                System.out.println(photoUri);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                 parentActivity.startActivityForResult(intent,1);
 
             }
         });
-        Button gallery =parentActivity.findViewById(R.id.GPS);
-        gallery.setOnClickListener(new View.OnClickListener() {
+        ImageView galleryButton =parentActivity.findViewById(R.id.gallery);
+        galleryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent in=new Intent(parentActivity, GalleryActivity.class);
                 parentActivity.startActivityForResult(in,999);
             }
         });
-        Button photoSend = parentActivity.findViewById(R.id.postphoto);
-        photoSend.setOnClickListener(new View.OnClickListener() {
+        Button submitButton = parentActivity.findViewById(R.id.submit);
+        submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                final int allCount = adapter.getCount();
+                allCount = adapter.getItemCount();
                 if (allCount == 0) {
                     Toast.makeText(parentActivity, "사진을 올려주세요.", Toast.LENGTH_SHORT).show();
                 }
-                new Thread() {
-                    public void run() {
-                        while (!adapter.isEmpty()) {
-                            Uri uri = adapter.pop();
+                successCount = 0;
+                for(int i=0;i<allCount;i++)
+                {
+                    Uri uri = adapter.getUri(i);
+                    new FileHttpRequest(parentActivity) {
 
-                            Log.d("dope", uri.toString());
-                            String answerID = parentActivity.getAnswerID();
-                            String taskID = parentActivity.getTaskID();
-                            uploadFileToServer(uri, answerID, taskID);
-                        }
-                        if (serverResponseCode == 200) {
-                            ((TaskActivity) parentActivity).startTask();
-                        }
+                        @Override
+                        protected void onPostExecute(Object o) {
+                            try{
+                                JSONObject resultTemp = new JSONObject(myResult);
+                                System.out.println(myResult);
+                                if ((boolean) resultTemp.get("success")) {
+                                    System.out.println(myResult);
+                                    successCount += 1;
+                                    String sentence = String.valueOf(successCount) + " / " + String.valueOf(allCount) + " 전송 완료!";
+                                    Toast.makeText(parentActivity,sentence,Toast.LENGTH_SHORT);
+                                    if(allCount == successCount) {
+                                        adapter.clearItem();
+                                        adapter.notifyDataSetChanged();
+                                    }
+                                    parentActivity.showAnimation(R.drawable.coin_animation_list,parentActivity.getUpGold());
+                                    parentActivity.startTask();
+                                    parentActivity.setGold(String.valueOf(resultTemp.get("gold")));
+                                    parentActivity.setMaybe(String.valueOf(resultTemp.get("maybe")));
 
-                    }
-                }.start();
-                adapter.notifyDataSetChanged();
+
+                                }else
+                                {
+                                    System.out.println(myResult);
+                                    if (resultTemp.get("message").toString().equals("login")) {
+                                        Intent in = new Intent(parentActivity, LoginActivity.class);
+                                        parentActivity.startActivity(in);
+                                        Toast.makeText(parentActivity, "로그인이 만료되었습니다. 다시 로그인해주세요", Toast.LENGTH_SHORT).show();
+                                        parentActivity.finish();
+                                    } else if (resultTemp.get("message").toString().equals("task")) {
+
+                                        Toast.makeText(parentActivity, "테스크가 만료되었습니다. 다시 시도해주세요", Toast.LENGTH_SHORT).show();
+                                        parentActivity.finish();
+                                    }
+                                    else{
+                                        Toast.makeText(parentActivity,"남은 테스크가 없습니다.",Toast.LENGTH_SHORT).show();
+                                        parentActivity.finish();
+                                    }
+
+                                }
+
+                            }
+                            catch(JSONException e)
+                            {
+                                Toast.makeText(parentActivity,"예기치 못한 에러가 발생했습니다.(ERROR CODE: 501)", Toast.LENGTH_SHORT).show();
+                                parentActivity.finish();
+                            }
+                            if (httpDialog!=null)
+                                httpDialog.dismiss();
+                            httpDialogSomethingOptimizationFailed.dismiss();
+                        }
+                    }.execute(uri);
+                }
+
 
             }
         });
     }
 
-    public int uploadFileToServer(Uri uri, String answerID, String taskID)
-    {
-        String fileName = uri.toString();
-
-        HttpURLConnection conn = null;
-        DataOutputStream dos = null;
-        String lineEnd = "\r\n";
-        String twoHyphens = "--";
-        String boundary = "*****";
-        int bytesRead, bytesAvailable, bufferSize;
-        byte[] buffer;
-        int maxBufferSize = 1 * 1024 * 1024;
-        File sourceFile = new File(fileName);
-
-
-        if (!sourceFile.isFile()) {
-
-            return 0;
-        }
-        else
-        {
-            try {
-
-                // open a URL connection to the Servlet
-                FileInputStream fileInputStream = new FileInputStream(sourceFile);
-                URL url = new URL(parentActivity.getString(R.string.mainurl)+"/taskSubmit");
-
-                // Open a HTTP  connection to  the URL
-                conn = (HttpURLConnection) url.openConnection();
-                conn.setDoInput(true); // Allow Inputs
-                conn.setDoOutput(true); // Allow Outputs
-                conn.setUseCaches(false); // Don't use a Cached Copy
-                conn.setRequestMethod("POST");
-                conn.setRequestProperty("Connection", "Keep-Alive");
-                conn.setRequestProperty("ENCTYPE", "multipart/form-data");
-                conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-                conn.setRequestProperty("uploaded_file", fileName);
-                conn.setRequestProperty("TOKEN",parentActivity.getLoginToken());
-                conn.setRequestProperty("ANSWERID",answerID);
-                conn.setRequestProperty("TASKID",taskID);
-
-                // conn.setRequestProperty("GPSX",GPSX);
-                //   conn.setRequestProperty("GPSY",GPSY);
-
-                dos = new DataOutputStream(conn.getOutputStream());
-
-                dos.writeBytes(twoHyphens + boundary + lineEnd);
-                dos.writeBytes("Content-Disposition: form-data; name =\""+ "uploaded_file"+"\";filename=\"" + sourceFile.getName() + "\"" + lineEnd);
-
-                dos.writeBytes(lineEnd);
-
-                // create a buffer of  maximum size
-                bytesAvailable = fileInputStream.available();
-
-                bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                buffer = new byte[bufferSize];
-
-                // read file and write it into form...
-                bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-
-                while (bytesRead > 0) {
-
-                    dos.write(buffer, 0, bufferSize);
-                    bytesAvailable = fileInputStream.available();
-                    bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                    bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-
-                }
-
-                // send multipart form data necesssary after file data...
-                dos.writeBytes(lineEnd);
-                dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-
-                // Responses from the server (code and message)
-                serverResponseCode = conn.getResponseCode();
-                String serverResponseMessage = conn.getResponseMessage();
-
-                Log.i("uploadFile", "HTTP Response is : "
-                        + serverResponseMessage + ": " + serverResponseCode);
-
-                if(serverResponseCode == 200){
-
-
-                }
-
-                //close the streams //
-                fileInputStream.close();
-                dos.flush();
-                dos.close();
-
-            } catch (MalformedURLException ex) {
-
-
-                ex.printStackTrace();
-
-
-                Log.e("Upload file to server", "error: " + ex.getMessage(), ex);
-            } catch (Exception e) {
-
-
-                e.printStackTrace();
-
-
-                Log.e("Upload file ", "Exception : "
-                        + e.getMessage(), e);
-            }
-
-
-            return serverResponseCode;
-
-        } // End else block
-    }
-    public void deleteImage()
-    {
-
-    }
     private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "TEST_" + timeStamp + "_";

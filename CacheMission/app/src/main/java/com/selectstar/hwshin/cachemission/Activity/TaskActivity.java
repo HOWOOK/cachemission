@@ -4,6 +4,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -27,6 +30,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -350,12 +354,11 @@ public class TaskActivity extends PatherActivity {
         if (requestCode == 1 && resultCode == RESULT_OK) {
     //        Bundle extras = data.getExtras();
 //            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            photoUri=mController.getPhotoUri();
-            System.out.println(photoUri);
-            ((Controller_Photo) mController).addPhoto(photoUri);
+                photoUri = mController.getPhotoUri();
+                ((Controller_Photo) mController).addPhoto(photoUri);
         }
         if(requestCode==999&& resultCode == RESULT_OK){
-            pic= data.getStringArrayListExtra("pic");
+            pic= data.getStringArrayListExtra("result");
             for(int i=0;i<pic.size();i++){
                 Uri uri=Uri.parse(pic.get(i));
                 ((Controller_Photo)mController).addPhoto(uri);
@@ -365,4 +368,7 @@ public class TaskActivity extends PatherActivity {
 
 
     }
+
+
+
 }

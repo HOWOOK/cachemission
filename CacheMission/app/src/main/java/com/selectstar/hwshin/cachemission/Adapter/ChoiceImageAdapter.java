@@ -2,7 +2,6 @@ package com.selectstar.hwshin.cachemission.Adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -22,47 +21,60 @@ import com.selectstar.hwshin.cachemission.DataStructure.RecyclerItem;
 import com.selectstar.hwshin.cachemission.R;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import static android.support.constraint.Constraints.TAG;
 
-public class PhotoPagerAdapter extends RecyclerView.Adapter<PhotoPagerAdapter.ItemViewHolder> {
-    ArrayList<Uri> photoList;
-    AppCompatActivity parentActivity;
-    public void addPhoto(Uri photoUri)
+public class ChoiceImageAdapter extends RecyclerView.Adapter<ChoiceImageAdapter.ItemViewHolder> {
+    ArrayList<Integer> checkedPhoto;
+    GalleryImageAdapter adapter;
+    RecyclerView mView;
+    public ArrayList<String> getChoicePhoto()
     {
-        photoList.add(photoUri);
-        notifyItemInserted(photoList.size()-1);
-        notifyDataSetChanged();
+        ArrayList<String> photos = new ArrayList<>();
+        for(int i=0;i<checkedPhoto.size();i++)
+        {
+            photos.add(adapter.basePath + File.separator + adapter.mImgs[checkedPhoto.get(i)]);
+        }
+        return photos;
     }
-    public Uri getUri(int index)
+    public ChoiceImageAdapter(RecyclerView mView) {
+        checkedPhoto = new ArrayList<>();
+        this.mView = mView;
+    }
+    public void removePhoto(Integer integer)
     {
-        return photoList.get(index);
+        int pos = checkedPhoto.indexOf(integer);
+        checkedPhoto.remove(integer);
+        adapter.checkList[integer] = false;
+        GalleryImageAdapter.ItemViewHolder viewHolder = (GalleryImageAdapter.ItemViewHolder)mView.findViewHolderForAdapterPosition(integer);
+        if(viewHolder != null)
+            viewHolder.setFalse();
+        notifyItemRemoved(pos);
     }
-    public PhotoPagerAdapter(AppCompatActivity parentActivity) {
-        photoList = new ArrayList<>();
-        this.parentActivity = parentActivity;
-    }
-    public boolean isEmpty()
+    public void addPhoto(Integer integer)
     {
-        return photoList.isEmpty();
+        checkedPhoto.add(integer);
+        RecyclerItem item = new RecyclerItem(String.valueOf(integer));
+        notifyItemInserted(checkedPhoto.size()-1);
     }
-    public void clearItem()
+    public void setGalleryAdapter(GalleryImageAdapter adapter)
     {
-        photoList = new ArrayList<>();
-        notifyDataSetChanged();
+        this.adapter = adapter;
     }
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewpageritem, parent, false);
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.choicepageritem, parent, false);
+        RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) view.getLayoutParams();
+        view.setLayoutParams(layoutParams);
+
         return new ItemViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final @NonNull PhotoPagerAdapter.ItemViewHolder holder, int pos) {
-        // holder.delete.setOnClickListener();
-        final int position = pos;
+    public void onBindViewHolder(final @NonNull ChoiceImageAdapter.ItemViewHolder holder, int pos) {
+       // holder.delete.setOnClickListener();
+        final int position = checkedPhoto.get(pos);
         new Thread() {
             @Override
             public void run() {
@@ -72,39 +84,24 @@ public class PhotoPagerAdapter extends RecyclerView.Adapter<PhotoPagerAdapter.It
                 //options.inSampleSize = calculateInSampleSize(options, 100, 100);
                 options.inSampleSize = 8;
                 options.inJustDecodeBounds = false;
-                System.out.println(photoList.get(position).getPath());
+                final Bitmap bm = BitmapFactory.decodeFile(adapter.basePath + File.separator + adapter.mImgs[position], options);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-
-                        parentActivity.runOnUiThread(new Runnable() {
+                        adapter.mActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                holder.image.setImageURI(photoList.get(position));
+                                holder.image.setImageBitmap(bm);
                             }
                         });
                     }
                 }).start();
-//                final Bitmap bm = BitmapFactory.decodeFile(photoList.get(position).getPath(), options);
-//                new Thread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        parentActivity.runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                holder.image.setImageBitmap(bm);
-//                            }
-//                        });
-//                    }
-//                }).start();
             }
         }.start();
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                photoList.remove(position);
-                notifyItemRemoved(position);
-                notifyDataSetChanged();
+                removePhoto(new Integer(position));
             }
         });
 
@@ -112,7 +109,7 @@ public class PhotoPagerAdapter extends RecyclerView.Adapter<PhotoPagerAdapter.It
 
     @Override
     public int getItemCount() {
-        return photoList.size();
+        return checkedPhoto.size();
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {

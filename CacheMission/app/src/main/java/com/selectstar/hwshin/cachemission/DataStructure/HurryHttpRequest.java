@@ -13,8 +13,6 @@ import java.net.URL;
 
 
 public class HurryHttpRequest extends AsyncTask{
-    Context parent = null;
-    String img_binary = null;
     public String result = "";
 
     private Context mContext;
