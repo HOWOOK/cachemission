@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.selectstar.hwshin.cachemission.Adapter.Explain.SlideAdapter_ExplainTask_Dialect;
 import com.selectstar.hwshin.cachemission.Adapter.Explain.SlideAdapter_ExplainTask_None;
 import com.selectstar.hwshin.cachemission.Adapter.Explain.SlideAdapter_ExplainTask_Numbering;
+import com.selectstar.hwshin.cachemission.Adapter.Explain.SlideAdapter_ExplainTask_Photo;
 import com.selectstar.hwshin.cachemission.Adapter.Explain.SlideAdapter_ExplainTask_Record;
 import com.selectstar.hwshin.cachemission.Adapter.Explain.SlideAdapter_ExplainTask_Record_ExamType1;
 import com.selectstar.hwshin.cachemission.Adapter.Explain.SlideAdapter_ExplainTask_Record_ExamType2;
@@ -94,6 +95,8 @@ public class TaskExplainActivity extends AppCompatActivity {
             return new SlideAdapter_ExplainTask_Numbering(this);
         else if (tasktype.equals("DIALECT"))
             return new SlideAdapter_ExplainTask_Dialect(this);
+        else if (tasktype.equals("PHOTO"))
+            return new SlideAdapter_ExplainTask_Photo(this);
         else
             return new SlideAdapter_ExplainTask_None(this);
     }
