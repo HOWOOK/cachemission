@@ -121,14 +121,14 @@ public class Controller_2DBox extends Controller {
                             super.onPostExecute(o);
 
                             try {
-                                JSONObject resulttemp = new JSONObject(result);
-                                if (resulttemp.get("success").toString().equals("false")) {
-                                    if (resulttemp.get("message").toString().equals("login")) {
+                                JSONObject resultTemp = new JSONObject(result);
+                                if (resultTemp.get("success").toString().equals("false")) {
+                                    if (resultTemp.get("message").toString().equals("login")) {
                                         Intent in = new Intent(parentActivity, LoginActivity.class);
                                         parentActivity.startActivity(in);
                                         Toast.makeText(parentActivity, "로그인이 만료되었습니다. 다시 로그인해주세요", Toast.LENGTH_SHORT).show();
                                         parentActivity.finish();
-                                    } else if (resulttemp.get("message").toString().equals("task")) {
+                                    } else if (resultTemp.get("message").toString().equals("task")) {
 
                                         Toast.makeText(parentActivity, "테스크가 만료되었습니다. 다른 테스크를 선택해주세요", Toast.LENGTH_SHORT).show();
                                         parentActivity.finish();
@@ -137,7 +137,7 @@ public class Controller_2DBox extends Controller {
                                         parentActivity.finish();
                                     }
                                 } else {
-                                    ((TaskActivity) parentActivity).startTask();
+                                   //((TaskActivity) parentActivity).startTask();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();

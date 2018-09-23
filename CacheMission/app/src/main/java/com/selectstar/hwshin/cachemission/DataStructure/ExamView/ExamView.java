@@ -18,6 +18,8 @@ public abstract class ExamView {
         return isCheck;
     }
     public abstract void setContent(String content,String taskID);
+
+
     public void setParentActivity(AppCompatActivity parentActivity) {
         this.parentActivity = parentActivity;
     }

@@ -23,14 +23,28 @@ public class SlideAdapter_ExplainTask_Photo extends PagerAdapter {
 
 
     public int[] list_images={
-            R.drawable.explain_task_dialect1,
-            R.drawable.explain_task_dialect4,
-            R.drawable.explain_task_dialect5
+            R.drawable.explain_task_photo1,
+            R.drawable.explain_task_photo2,
+            R.drawable.explain_task_photo3,
+            R.drawable.explain_task_photo4,
+            R.drawable.explain_task_photo5,
+            R.drawable.explain_task_photo6,
+            R.drawable.explain_task_photo7,
+            R.drawable.explain_task_photo8,
+            R.drawable.explain_task_photo9,
+            R.drawable.explain_task_photo10
     };
     public String[] list_description={
-            "1.구사 가능한 사투리를 선택해주세요.\n(다른 사투리 미션에서 설정했다면\n자동으로 설정됩니다.)",
-            "2.녹음 버튼을 누르고 주어진 문장을\n생동감있게 사투리로 말해주세요.",
-            "3.녹음이 잘 되었는지 들으신 후,\n녹음이 잘 되었다면 제출 버튼을,\n아니라면 다시 녹음해주세요."
+            "1.다음 예시 사진과 같이 2개 이상의 바코드 또는 QR 코드를 한번에 찍어주세요. 사진을 여러 장 찍어 한 번에 제출할 수 있습니다!",
+            "2.같은 물건, 다른 배경 반복 OK! 하지만, 촬영 각도와 거리가 바뀌어야합니다.",
+            "3.다른 물건, 같은 배경 반복도 OK! 하지만, 촬영 각도와 거리가 바뀌어야합니다.",
+            "4.필터없이 촬영하셔야 하며, 사진이 흔들리면 안됩니다.",
+            "5.물체와 카메라 사이 거리는 60cm 이하 (팔을 뻗었을 때 닿는 거리) 입니다.",
+            "6.사진 촬영을 너무 비스듬히 (45도 이상) 하시면 안됩니다.",
+            "7.사진을 미리 찍어두고 갤러리로 업로드 해주셔도 됩니다.",
+            "8.단, 인터넷에서 다운받은 사진은 보상이 압수됩니다!\n9.보상은 적립 예정금에 쌓이며, 사진 검사 후 적립 확정됩니다.",
+            "(예시사진)",
+            "(예시사진)"
     };
 
 
