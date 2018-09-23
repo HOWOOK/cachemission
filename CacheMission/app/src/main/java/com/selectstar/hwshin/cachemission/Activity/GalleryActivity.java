@@ -27,10 +27,12 @@ public class GalleryActivity extends AppCompatActivity {
     public RecyclerView mChoiceView;
     public GalleryImageAdapter mAdapter;
     public ChoiceImageAdapter mChoiceAdapter;
-
+    public int availNumber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        availNumber = intent.getIntExtra("avail",0);
         setContentView(R.layout.activity_gallery);
         ImageView back = findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {

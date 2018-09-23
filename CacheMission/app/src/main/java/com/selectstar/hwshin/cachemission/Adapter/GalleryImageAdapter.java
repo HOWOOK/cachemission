@@ -14,7 +14,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.selectstar.hwshin.cachemission.Activity.GalleryActivity;
+import com.selectstar.hwshin.cachemission.Activity.TaskActivity;
 import com.selectstar.hwshin.cachemission.DataStructure.RecyclerItem;
 import com.selectstar.hwshin.cachemission.R;
 
@@ -25,7 +28,7 @@ import static android.support.constraint.Constraints.TAG;
 
 public class GalleryImageAdapter extends RecyclerView.Adapter<GalleryImageAdapter.ItemViewHolder> {
     ArrayList<RecyclerItem> mItems;
-    AppCompatActivity mActivity;
+    GalleryActivity mActivity;
     String basePath;
     String[] mImgs;
     boolean[] checkList;
@@ -36,7 +39,7 @@ public class GalleryImageAdapter extends RecyclerView.Adapter<GalleryImageAdapte
         checkList[integer] = false;
 
     }
-    public GalleryImageAdapter(String basePath,AppCompatActivity mActivity,ChoiceImageAdapter choiceImageAdapter) {
+    public GalleryImageAdapter(String basePath, GalleryActivity mActivity, ChoiceImageAdapter choiceImageAdapter) {
         this.mActivity = mActivity;
         this.basePath = basePath;
         this.choiceImageAdapter = choiceImageAdapter;
@@ -76,6 +79,11 @@ public class GalleryImageAdapter extends RecyclerView.Adapter<GalleryImageAdapte
             choiceImageAdapter.removePhoto(new Integer(position));
         }
         else {
+            if(mActivity.availNumber <= choiceImageAdapter.checkedPhoto.size())
+            {
+                Toast.makeText(mActivity,"더 이상 제출할 수 없습니다.",Toast.LENGTH_SHORT).show();
+                return;
+            }
             button.setChecked(true);
             checkList[position] = true;
             choiceImageAdapter.addPhoto(new Integer(position));
@@ -89,7 +97,7 @@ public class GalleryImageAdapter extends RecyclerView.Adapter<GalleryImageAdapte
         holder.myCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toggleButton(v,position);
+                        toggleButton(v,position);
 
             }
         });

@@ -2,8 +2,12 @@ package com.selectstar.hwshin.cachemission.DataStructure;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.renderscript.ScriptGroup;
+import android.support.annotation.NonNull;
+import android.support.v4.provider.DocumentFile;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -24,6 +28,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
 
@@ -52,7 +58,6 @@ public class FileHttpRequest extends AsyncTask {
     protected Object doInBackground(Object[] objects) {
         Uri uri = (Uri)objects[0];
 
-
         HttpURLConnection conn = null;
         DataOutputStream dos = null;
         String lineEnd = "\r\n";
@@ -62,15 +67,18 @@ public class FileHttpRequest extends AsyncTask {
         byte[] buffer;
         int maxBufferSize = 1 * 1024 * 1024;
         String fileName = uri.toString();
-        File sourceFile = new File(fileName);
-        if(!sourceFile.isFile()) {
-            myResult = "ERROR";
-            return 0;
-        }
+        InputStream inputStream;
         try {
-
+            System.out.println(fileName);
+            if(fileName.substring(0,7).equals("content"))
+            {
+                inputStream = parentActivity.getContentResolver().openInputStream(uri);
+            }
+            else
+            {
+                inputStream =  new FileInputStream(fileName);
+            }
             // open a URL connection to the Servlet
-            FileInputStream fileInputStream = new FileInputStream(sourceFile);
             URL url = new URL(parentActivity.getString(R.string.mainurl)+"/taskSubmit");
 
             // Open a HTTP  connection to  the URL
@@ -93,25 +101,26 @@ public class FileHttpRequest extends AsyncTask {
             dos = new DataOutputStream(conn.getOutputStream());
 
             dos.writeBytes(twoHyphens + boundary + lineEnd);
-            dos.writeBytes("Content-Disposition: form-data; name =\""+ "uploaded_file"+"\";filename=\"" + sourceFile.getName() + "\"" + lineEnd);
+            dos.writeBytes("Content-Disposition: form-data; name =\""+ "uploaded_file"+"\";filename=\"" + fileName + "\"" + lineEnd);
 
             dos.writeBytes(lineEnd);
 
             // create a buffer of  maximum size
-            bytesAvailable = fileInputStream.available();
+            bytesAvailable = inputStream.available();
 
             bufferSize = Math.min(bytesAvailable, maxBufferSize);
             buffer = new byte[bufferSize];
 
             // read file and write it into form...
-            bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+            bytesRead = inputStream.read(buffer, 0, bufferSize);
 
             while (bytesRead > 0) {
 
                 dos.write(buffer, 0, bufferSize);
-                bytesAvailable = fileInputStream.available();
+
+                bytesAvailable = inputStream.available();
                 bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+                bytesRead = inputStream.read(buffer, 0, bufferSize);
 
             }
 
@@ -129,7 +138,7 @@ public class FileHttpRequest extends AsyncTask {
             myResult = convertInputStreamToString(conn.getInputStream());
 
             //close the streams //
-            fileInputStream.close();
+            inputStream.close();
             dos.flush();
             dos.close();
 
@@ -153,7 +162,19 @@ public class FileHttpRequest extends AsyncTask {
         return null;
     }
 
-
+    private String getFileUrifromContentUri(Uri _uri)
+    {
+        String filePath = null;
+        if (_uri != null && "content".equals(_uri.getScheme())) {
+            Cursor cursor = parentActivity.getContentResolver().query(_uri, new String[] { android.provider.MediaStore.Images.ImageColumns.DATA }, null, null, null);
+            cursor.moveToFirst();
+            filePath = cursor.getString(0);
+            cursor.close();
+        } else {
+            filePath = _uri.getPath();
+        }
+        return filePath;
+    }
 
     private String convertInputStreamToString(InputStream inputStream) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));

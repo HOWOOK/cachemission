@@ -184,6 +184,25 @@ public class TaskActivity extends PatherActivity {
 
 
     }
+    public int getTaskCount()
+    {
+        String string = taskCount.getText().toString();
+        int startPoint=-1;
+        int midPoint=-1;
+        int endPoint=-1;
+        for(int i=0;i<string.length();i++)
+        {
+            if(string.charAt(i)=='[')
+                startPoint=i;
+            if(string.charAt(i)=='/')
+                midPoint=i;
+            if(string.charAt(i)==']')
+                endPoint=i;
+        }
+        int a = Integer.parseInt(string.substring(startPoint+1,midPoint));
+        int b = Integer.parseInt(string.substring(midPoint+1,endPoint));
+        return b-a;
+    }
 
 
     //해당 task가 처음이라면 설명서 띄워주는 것
