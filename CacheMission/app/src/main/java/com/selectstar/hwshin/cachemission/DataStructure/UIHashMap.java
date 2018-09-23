@@ -171,7 +171,7 @@ public class UIHashMap {
         parameters_DIALECTEXAM[5][0] = 10;
         taskHashMap.put("DIALECTEXAM", parameters_DIALECTEXAM);
 
-        parameters_PHOTO[0][0] = 5;
+        parameters_PHOTO[0][0] = 20;
         parameters_PHOTO[1][0] = R.id.tasktitle; parameters_PHOTO[1][1] = 4;
         parameters_PHOTO[2][0] = R.id.controller; parameters_PHOTO[2][1] = 3;
         parameters_PHOTO[3][0] = R.id.taskview; parameters_PHOTO[3][1] = 4;

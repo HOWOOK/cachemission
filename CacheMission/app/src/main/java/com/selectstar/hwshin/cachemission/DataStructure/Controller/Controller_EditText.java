@@ -64,7 +64,7 @@ public class Controller_EditText extends Controller {
                                         parentActivity.finish();
                                     } else if (resulttemp.get("message").toString().equals("task")) {
 
-                                        Toast.makeText(parentActivity, "테스크가 만료되었습니다. 다른 테스크를 선택해주세요", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(parentActivity, "테스크가 만료되었습니다. 다시 시도해주세요", Toast.LENGTH_SHORT).show();
                                         parentActivity.finish();
                                     }
                                     else{
@@ -77,13 +77,6 @@ public class Controller_EditText extends Controller {
                                     parentActivity.setGold(String.valueOf(resulttemp.get("gold")));
                                     parentActivity.setMaybe(String.valueOf(resulttemp.get("maybe")));
 
-                                    /*
-                                    parentIntent.putExtra("from",1);
-                                    parentIntent.putExtra("maybe_up", String.valueOf(resulttemp.get("maybe_up")));
-                                    parentIntent.putExtra("gold_up", String.valueOf(resulttemp.get("gold_up")));
-                                    parentIntent.putExtra("bonus_up", String.valueOf(resulttemp.get("bonus_up")));
-                                    parentActivity.startActivity(parentIntent);
-                                    parentActivity.finish();*/
 
                                 }
                             } catch (JSONException e) {

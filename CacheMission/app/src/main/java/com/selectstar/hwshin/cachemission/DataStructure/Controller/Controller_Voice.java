@@ -1,6 +1,7 @@
 package com.selectstar.hwshin.cachemission.DataStructure.Controller;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioRecord;
@@ -18,10 +19,15 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.Task;
+import com.selectstar.hwshin.cachemission.Activity.LoginActivity;
 import com.selectstar.hwshin.cachemission.Activity.TaskActivity;
 import com.selectstar.hwshin.cachemission.DataStructure.MyProgressDialog;
 import com.selectstar.hwshin.cachemission.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -29,6 +35,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -158,10 +166,13 @@ public class Controller_Voice extends Controller {
     private class VoiceAsyncTask extends AsyncTask<TaskParams, Void, Void> {
         View view;
         String taskID;
-
+        String myResult;
         private MyProgressDialog httpDialog;
         private MyProgressDialog httpDialogSomethingOptimizationFailed;
-
+        public void setMyResult(String string)
+        {
+            myResult = string;
+        }
         @Override
         protected void onPreExecute() {
             httpDialogSomethingOptimizationFailed = httpDialog.show(parentActivity,"","",true,true,null);
@@ -174,7 +185,7 @@ public class Controller_Voice extends Controller {
             view = params[0].view;
             taskID = params[0].taskID;
 
-            uploadFile(mPath + ".wav", (parentActivity.getTaskID()));
+            uploadFile(mPath + ".wav",this);
 
             Uri i = Uri.parse(mPath + ".pcm");
             File f = new File(i.getPath());
@@ -182,23 +193,51 @@ public class Controller_Voice extends Controller {
             Uri i2 = Uri.parse(mPath + ".wav");
             File f2 = new File(i2.getPath());
             f2.delete();
-            if (serverResponseCode == 200) {
-
-                ((TaskActivity)parentActivity).startTask();
-
-                return null;
-            } else {
-                Toast.makeText(parentActivity,"남은 테스크가 없습니다.",Toast.LENGTH_SHORT).show();
-                parentActivity.finish();
-            }
 
             return null;
         }
 
         @Override
         protected void onPostExecute(Void result) {
-            resetContent(view,taskID);
+            try{
+                    System.out.println(1);
+                    JSONObject resultTemp = new JSONObject(myResult);
+                    System.out.println(myResult);
+                    if ((boolean) resultTemp.get("success")) {
+                        System.out.println(myResult);
+                        Toast.makeText(parentActivity,"성공적으로 제출되었습니다.",Toast.LENGTH_SHORT).show();
+                        parentActivity.showAnimation(R.drawable.coin_animation_list,parentActivity.getUpGold());
+                        parentActivity.startTask();
+                        parentActivity.setGold(String.valueOf(resultTemp.get("gold")));
+                        parentActivity.setMaybe(String.valueOf(resultTemp.get("maybe")));
 
+
+                    }else
+                    {
+                        System.out.println(myResult);
+                        if (resultTemp.get("message").toString().equals("login")) {
+                            Intent in = new Intent(parentActivity, LoginActivity.class);
+                            parentActivity.startActivity(in);
+                            Toast.makeText(parentActivity, "로그인이 만료되었습니다. 다시 로그인해주세요", Toast.LENGTH_SHORT).show();
+                            parentActivity.finish();
+                        } else if (resultTemp.get("message").toString().equals("task")) {
+
+                            Toast.makeText(parentActivity, "테스크가 만료되었습니다. 다시 시도해주세요", Toast.LENGTH_SHORT).show();
+                            parentActivity.finish();
+                        }
+                        else{
+                            Toast.makeText(parentActivity,"남은 테스크가 없습니다.",Toast.LENGTH_SHORT).show();
+                            parentActivity.finish();
+                        }
+
+                    }
+
+            }
+            catch(JSONException e)
+            {
+                Toast.makeText(parentActivity,"예기치 못한 에러가 발생했습니다.(ERROR CODE: 501)", Toast.LENGTH_SHORT).show();
+                parentActivity.finish();
+            }
             if (httpDialog!=null)
                 httpDialog.dismiss();
             httpDialogSomethingOptimizationFailed.dismiss();
@@ -506,7 +545,7 @@ public class Controller_Voice extends Controller {
             output.write(value.charAt(i));
         }
     }
-    public int uploadFile(String sourceFileUri, String id) {
+    public int uploadFile(String sourceFileUri, VoiceAsyncTask myBoy) {
 
 
         String fileName = sourceFileUri;
@@ -565,7 +604,6 @@ public class Controller_Voice extends Controller {
 
                 // read file and write it into form...
                 bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-
                 while (bytesRead > 0) {
 
                     dos.write(buffer, 0, bufferSize);
@@ -582,23 +620,10 @@ public class Controller_Voice extends Controller {
                 // Responses from the server (code and message)
                 serverResponseCode = conn.getResponseCode();
                 String serverResponseMessage = conn.getResponseMessage();
-
+                myBoy.setMyResult(convertInputStreamToString(conn.getInputStream()));
                 Log.i("uploadFile", "HTTP Response is : "
                         + serverResponseMessage + ": " + serverResponseCode);
 
-                if(serverResponseCode == 200){
-
-                    parentActivity.runOnUiThread(new Runnable() {
-                        public void run() {
-
-                            // String msg = "File Upload Completed.\n\n See uploaded file here : \n\n" +" http://www.androidexample.com/media/uploads/" +uploadFileName;
-
-                            // messageText.setText(msg);
-                            //Toast.makeText(RecActivity.this, "File Upload Complete.",
-                            //    Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
 
                 //close the streams //
                 fileInputStream.close();
@@ -637,5 +662,15 @@ public class Controller_Voice extends Controller {
             return serverResponseCode;
 
         } // End else block
+    }
+    private String convertInputStreamToString(InputStream inputStream) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        String line = "";
+        String result = "";
+        // while ((line = bufferedReader.readLine()) != null)
+        line = bufferedReader.readLine();
+        result += line;
+        return result;
+
     }
 }
