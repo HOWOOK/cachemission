@@ -86,7 +86,13 @@ public class TaskListActivity extends AppCompatActivity {
                 }
             }
         });
-
+        TextView myPage = findViewById(R.id.mypage);
+        myPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(TaskListActivity.this, "구현 중이에용~~",Toast.LENGTH_SHORT).show();
+            }
+        });
         ImageView settingBtn = findViewById(R.id.settingbtn);
         settingBtn.setOnClickListener(new View.OnClickListener(){
             @Override
