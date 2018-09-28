@@ -61,7 +61,6 @@ public class ExamActivity extends PatherActivity {
                     JSONObject resultTemp;
                     try {
                         resultTemp = new JSONObject(result);
-                        System.out.println(result);
                         if ((boolean) resultTemp.get("success")) {
                             waitingTasks = new ArrayList<>();
                             JSONArray tempTasks = (JSONArray)resultTemp.get("answers");

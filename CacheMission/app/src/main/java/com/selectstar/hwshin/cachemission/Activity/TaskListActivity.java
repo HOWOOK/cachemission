@@ -169,19 +169,14 @@ public class TaskListActivity extends AppCompatActivity {
 
                             //유저정보세팅
                             JSONObject user = (JSONObject) resulttemp.get("user");
-                            TextView username = findViewById(R.id.username);
                             TextView usernamedrawer = findViewById(R.id.usernamedrawer);
                             ImageView userrank = findViewById(R.id.userrank);
-                            TextView money = findViewById(R.id.money);
-                            TextView maybemoney = findViewById(R.id.maybemoney);
-                            TextView reliability = findViewById(R.id.reliability);
+                            TextView money = findViewById(R.id.mygold);
                             ProgressBar progress = (ProgressBar) findViewById(R.id.mainProgressBar);
-                            money.setText("\uFFE6 "+String.valueOf(user.get("gold")));
-                            maybemoney.setText("\uFFE6 "+String.valueOf(user.get("maybe")));
-                            username.setText(String.valueOf(user.get("name")));
+                            int allGold = (int)user.get("gold") + (int)user.get("maybe");
+                            money.setText(String.valueOf(allGold));
                             usernamedrawer.setText(String.valueOf(user.get("name")));
                             setuserrankImage(userrank, Integer.parseInt(user.get("rank").toString()));
-                            reliability.setText(String.valueOf(user.get("reliability"))+" %");
                             //progress bar setting
                             setuserprogressbar(progress, Integer.parseInt(user.get("rank").toString()), Integer.parseInt(user.get("success_count").toString()));
                             intent_task.putExtra("goldNow",String.valueOf(user.get("gold")));
@@ -204,7 +199,7 @@ public class TaskListActivity extends AppCompatActivity {
 
                                 JSONObject temp = (JSONObject) exam_res.get(i);
                                 mTaskList.add(new TaskListItem(String.valueOf(temp.get("id")), (String) temp.get("taskName"), (String) temp.get("taskType"),
-                                        (String) temp.get("taskView"), (String) temp.get("controller"), "\uFFE6 "+String.valueOf(temp.get("gold")), (String) temp.get("dailyMission"), (JSONArray) temp.get("buttons"), 1,Integer.parseInt(String.valueOf(temp.get("examType")))));
+                                        (String) temp.get("taskView"), (String) temp.get("controller"), "\uFFE6"+String.valueOf(temp.get("gold")), (String) temp.get("dailyMission"), (JSONArray) temp.get("buttons"), 1,Integer.parseInt(String.valueOf(temp.get("examType")))));
                             }
 
 
@@ -212,7 +207,7 @@ public class TaskListActivity extends AppCompatActivity {
 
                                 JSONObject temp = (JSONObject) task_res.get(i);
                                 mTaskList.add(new TaskListItem(String.valueOf(temp.get("id")), (String) temp.get("taskName"), (String) temp.get("taskType"),
-                                        (String) temp.get("taskView"), (String) temp.get("controller"), "\uFFE6 "+String.valueOf(temp.get("gold")), (String) temp.get("dailyMission"), (JSONArray)temp.get("buttons"), 0));
+                                        (String) temp.get("taskView"), (String) temp.get("controller"), "\uFFE6"+String.valueOf(temp.get("gold")), (String) temp.get("dailyMission"), (JSONArray)temp.get("buttons"), 0));
 
 
                             }

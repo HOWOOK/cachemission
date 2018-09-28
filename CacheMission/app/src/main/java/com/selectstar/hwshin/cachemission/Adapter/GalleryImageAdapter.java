@@ -72,7 +72,7 @@ public class GalleryImageAdapter extends RecyclerView.Adapter<GalleryImageAdapte
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.gallery_image, parent, false);
         GridLayoutManager.LayoutParams lp = (GridLayoutManager.LayoutParams) view.getLayoutParams();
-        lp.height = parent.getMeasuredHeight() / 4;
+        lp.height = parent.getMeasuredWidth() / 3;
         view.setLayoutParams(lp);
         final RadioButton button = view.findViewById(R.id.chooseoption);
         button.setClickable(false);

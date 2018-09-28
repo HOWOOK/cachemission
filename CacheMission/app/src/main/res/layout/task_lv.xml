@@ -8,11 +8,11 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="13dp"
+        android:layout_height="130dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:background="#FFFFFF"
+        android:layout_marginTop="13dp"
+        android:background="@drawable/itemstyle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,47 +20,46 @@
 
         <ImageView
             android:id="@+id/taskType"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_margin="10dp"
+            android:layout_marginStart="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-             />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/taskTypeCheck"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            app:layout_constraintTop_toTopOf="@id/taskType"
             app:layout_constraintEnd_toEndOf="@id/taskType"
-            />
+            app:layout_constraintTop_toTopOf="@id/taskType" />
 
         <TextView
             android:id="@+id/taskTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:maxLines="2"
+            android:layout_margin="22dp"
             android:ellipsize="end"
+            android:fontFamily="@font/bmjua_"
+            android:maxLines="2"
             android:text="@string/none"
             android:textColor="@color/colorSecondary"
             android:textSize="13dp"
-            android:fontFamily="@font/nanumsquareb_"
-            app:layout_constraintStart_toEndOf="@id/taskType"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/taskType"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/gold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginBottom="20dp"
-            android:text="\\ 3"
+            android:fontFamily="@font/nanumsquarer_"
+            android:text="\\3"
             android:textColor="@color/colorPrimary"
-            android:textSize="18dp"
-            android:fontFamily="@font/nanumsquareeb_"
+            android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/taskType" />
 
@@ -68,14 +67,13 @@
             android:id="@+id/dailyMission"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:text="오늘의 미션 [31/200]\n보상 : \\ 50"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/bmjua_"
+            android:text="Daily Quest [31/200]"
             android:textColor="@color/fontColorInactive"
-            android:textSize="13dp"
-            android:fontFamily="@font/nanumsquareeb_"
-            app:layout_constraintStart_toEndOf="@+id/gold"
-            app:layout_constraintTop_toTopOf="@+id/gold"
-            />
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/taskTitle"
+            app:layout_constraintTop_toBottomOf="@+id/taskTitle" />
 
 
         <ImageView
