@@ -289,7 +289,7 @@ public class TaskActivity extends PatherActivity {
          */
         explainDialog = new Dialog(this);
         intent = getIntent();
-        upGold = Integer.parseInt(intent.getStringExtra("upGold").substring(2));
+        upGold = Integer.parseInt(intent.getStringExtra("upGold").substring(1));
         gold =intent.getStringExtra("goldNow");
         maybe = intent.getStringExtra("goldPre");
         nowGold.setText("현재 : \uFFE6 " + gold);
