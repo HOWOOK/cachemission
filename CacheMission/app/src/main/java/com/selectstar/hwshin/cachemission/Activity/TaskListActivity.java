@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -183,6 +184,8 @@ public class TaskListActivity extends AppCompatActivity {
                             money.setText(String.valueOf(allGold));
                             usernamedrawer.setText(String.valueOf(user.get("name")));
                             setuserrankImage(userrank, Integer.parseInt(user.get("rank").toString()));
+                            //TextView level = findViewById(R.id.level);
+                            //level.setText("LEVEL " + user.get("rank").toString());
                             //progress bar setting
                             setuserprogressbar(progress, Integer.parseInt(user.get("rank").toString()), Integer.parseInt(user.get("success_count").toString()));
                             intent_task.putExtra("goldNow",String.valueOf(user.get("gold")));
