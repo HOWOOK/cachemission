@@ -39,6 +39,7 @@ public class UIHashMap {
     int[][] parameters_DIALECT = new int[6][2];
     int[][] parameters_PHOTO = new int[6][2];
     int[][] parameters_BOXCROP = new int[6][2];
+    //int[][] parameters_BOXCROP = new int[6][2];
 
     int[][] parameters_OCREXAM = new int[6][2];
     int[][] parameters_VIDEOEXAM = new int[6][2];
@@ -61,6 +62,7 @@ public class UIHashMap {
         taskViewHashMap.put("voice", new TaskView_Voice());
         taskViewHashMap.put("swipeimage", new TaskView_SwipeImage());
         taskViewHashMap.put("photoview", new TaskView_PhotoView());
+
         //Controller hashmap 종류들
         controllerHashMap.put("edittext", new Controller_EditText());
         controllerHashMap.put("2dbox", new Controller_2DBox());
@@ -186,6 +188,14 @@ public class UIHashMap {
         parameters_BOXCROP[4][0] = R.id.taskConstLayout; parameters_BOXCROP[4][1] = 4;
         parameters_BOXCROP[5][0] = 10;
         taskHashMap.put("BOXCROP", parameters_BOXCROP);
+
+        parameters_BOXCROPEXAM[0][0] = 10;
+        parameters_BOXCROPEXAM[1][0] = R.id.tasktitleexam; parameters_BOXCROPEXAM[1][1] = 4;
+        parameters_BOXCROPEXAM[2][0] = R.id.taskConstLayoutexam; parameters_BOXCROPEXAM[2][1] = 4;
+        parameters_BOXCROPEXAM[3][0] = R.id.tasktitleexam; parameters_BOXCROPEXAM[3][1] = 4;
+        parameters_BOXCROPEXAM[4][0] = R.id.taskConstLayoutexam; parameters_BOXCROPEXAM[4][1] = 4;
+        parameters_BOXCROPEXAM[5][0] = 10;
+        taskHashMap.put("BOXCROPEXAM", parameters_BOXCROPEXAM);
 
         parameters_BOXCROPEXAM[0][0] = 10;
         parameters_BOXCROPEXAM[1][0] = R.id.tasktitleexam; parameters_BOXCROPEXAM[1][1] = 4;
