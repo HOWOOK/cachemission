@@ -6,7 +6,7 @@ import android.net.Uri;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
-import com.github.chrisbanes.photoview.PhotoView;
+import com.selectstar.hwshin.cachemission.Photoview.PhotoView;
 import com.selectstar.hwshin.cachemission.R;
 
 public class ExamView_ZoomImage extends ExamView{
