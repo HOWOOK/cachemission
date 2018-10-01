@@ -57,11 +57,11 @@ public class TaskListActivity extends AppCompatActivity {
 
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         Log.d("파이어베이스토큰", "Refreshed token: " + refreshedToken);
-        FirebaseMessaging.getInstance().subscribeToTopic("RetentionPush");
+        //FirebaseMessaging.getInstance().subscribeToTopic("RetentionPush");
 
         //테스트를 위해 사용하는 푸시 Topic 'unsubscribeFromTopic 지우지 말것 (호욱)
         //FirebaseMessaging.getInstance().subscribeToTopic("TestPush");
-        FirebaseMessaging.getInstance().unsubscribeFromTopic("TestPush");
+        //FirebaseMessaging.getInstance().unsubscribeFromTopic("TestPush");
 
 
         //버전가져오기

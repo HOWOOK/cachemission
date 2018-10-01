@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F3F3F3">
@@ -58,13 +59,33 @@
             app:layout_constraintTop_toBottomOf="@+id/exchangebtn" />
 
         <TextView
+            android:id="@+id/pushonoff"
+            style="@style/normalTextList"
+            android:text="푸시알림 허용"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/suggestionbtn" />
+
+        <Switch
+            android:id="@+id/pushonoffbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/pushonoff"
+            app:layout_constraintBottom_toBottomOf="@+id/pushonoff"
+            />
+
+        <TextView
             android:id="@+id/logoutbtn"
             style="@style/normalTextList"
             android:text="로그아웃"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/suggestionbtn" />
+            app:layout_constraintTop_toBottomOf="@+id/pushonoff" />
+
+
 
     </android.support.constraint.ConstraintLayout>
 

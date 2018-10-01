@@ -8,9 +8,14 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingService;
 import com.selectstar.hwshin.cachemission.R;
 
 public class SettingActivity extends AppCompatActivity {
@@ -72,6 +77,36 @@ public class SettingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent_suggestion = new Intent(SettingActivity.this, SuggestionActivity.class);
                 startActivity(intent_suggestion);
+            }
+        });
+
+        Switch pushOnOff = findViewById(R.id.pushonoffbtn);
+        final SharedPreferences push = getSharedPreferences("push", MODE_PRIVATE);
+        String OnOff = push.getString("push", null);
+        boolean isOn = false;
+        if(OnOff!=null) {
+            if (OnOff.equals("true"))
+                isOn = true;
+            else
+                isOn = false;
+        }
+        pushOnOff.setChecked(isOn);
+        pushOnOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            SharedPreferences.Editor editor = push.edit();
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    FirebaseMessaging.getInstance().subscribeToTopic("TestPush");
+                    editor.putString("push","true");
+                    editor.commit();
+                    Toast.makeText(SettingActivity.this, "푸시알람을 허용합니다.", Toast.LENGTH_SHORT).show();
+                }else {
+                    FirebaseMessaging.getInstance().unsubscribeFromTopic("TestPush");
+                    editor.putString("push","false");
+                    editor.commit();
+                    Toast.makeText(SettingActivity.this, "푸시알람을 허용을 해제합니다.", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }
