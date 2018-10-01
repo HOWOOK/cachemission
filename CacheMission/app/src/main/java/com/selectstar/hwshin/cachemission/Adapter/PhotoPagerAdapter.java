@@ -132,11 +132,18 @@ public class PhotoPagerAdapter extends RecyclerView.Adapter<PhotoPagerAdapter.It
                             @Override
                             public void run() {
                                 ExifInterface exif=null;
-                                try{exif=new ExifInterface(photoList.get(position).toString());}
-                                catch(IOException e){e.printStackTrace();}
+
+                                try{
+                                    exif=new ExifInterface(photoList.get(position).toString());
+                                }
+                                catch(IOException e){
+                                    e.printStackTrace();
+                                }
+
                                 int orientation=exif.getAttributeInt(ExifInterface.TAG_ORIENTATION,ExifInterface.ORIENTATION_UNDEFINED);
                                 final Bitmap bm = BitmapFactory.decodeFile(photoList.get(position).toString(), options);
                                 final Bitmap bmRotated = rotateBitmap(bm,orientation);
+                                Log.d("jotttttt",photoList.get(position).toString());
                                 holder.image.setImageBitmap(bmRotated);
                             }
                         });

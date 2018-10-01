@@ -43,7 +43,9 @@ public class TaskView_Text extends TaskView {
             textView2.setTextColor(ContextCompat.getColor(parentActivity, R.color.fontColorActive));
             textView2.setTextSize(18);
         }else if(taskType.equals("RECORD") || taskType.equals("RECORDEXAM")){
-            if(content.replace("\\(","1").equals(content)){
+
+
+            if(!(content.indexOf("(")>0)){
                 array = content.split("/");
                 textView1.setText("["+array[0]+"]");
                 textView1.setBackground(ContextCompat.getDrawable(parentActivity, R.drawable.textview_custom2));
@@ -52,7 +54,7 @@ public class TaskView_Text extends TaskView {
                 textView2.setTextColor(ContextCompat.getColor(parentActivity, R.color.fontColorActive));
                 textView2.setTextSize(18);
             }
-            else{
+           else{
             array = content.split("/");
 
             array2 = array[1].split("\\(");
