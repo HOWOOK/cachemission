@@ -126,7 +126,7 @@ public class TaskActivity extends PatherActivity {
                             Date after28time = addMinutesToDate(28,new Date());
                             ((JSONObject)waitingTasks.get(0)).put("time",DateToString(after28time));
                             currentTask = waitingTasks.get(waitingTasks.size()-1);
-                            System.out.println((String)currentTask.get("content"));
+                            System.out.println("컨텐츠 : "+ currentTask.get("content"));
                             System.out.println("------------");
                             mTaskView.setContent((String) currentTask.get("content"));
                             answerID = ((Integer)currentTask.get("id")).toString();

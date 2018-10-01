@@ -9,11 +9,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.chrisbanes.photoview.PhotoView;
 import com.selectstar.hwshin.cachemission.Activity.LoginActivity;
 import com.selectstar.hwshin.cachemission.Activity.TaskActivity;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoView;
 import com.selectstar.hwshin.cachemission.DataStructure.WaitHttpRequest;
+import com.selectstar.hwshin.cachemission.Photoview.PhotoView;
 import com.selectstar.hwshin.cachemission.R;
 
 import org.json.JSONException;
