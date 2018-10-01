@@ -3,7 +3,6 @@ package com.selectstar.hwshin.cachemission.DataStructure.TaskView;
 import android.support.v4.content.ContextCompat;
 import android.widget.TextView;
 
-import com.selectstar.hwshin.cachemission.Activity.TaskActivity;
 import com.selectstar.hwshin.cachemission.R;
 
 import org.json.JSONObject;

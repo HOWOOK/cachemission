@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -173,7 +174,6 @@ public class TaskListActivity extends AppCompatActivity {
         if(lazyLoding.getString("isfirst","").equals("")){
         Log.d("secccc",lazyLoding.getString("isfirst",""));
             editor.putString("isfirst","yes");
-
         }
         String ymd="";
         ymd=lazyLoding.getString("ymd","");
@@ -210,6 +210,7 @@ Log.d("timeclose",String.valueOf(nowTime-hms));
                         Toast.makeText(getApplicationContext(), resTemp.getString("emergency"), Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                 }
+
 
                 //Task 리스트 띄우기
                 mTaskList.clear();

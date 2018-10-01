@@ -8,7 +8,7 @@
     tools:context="com.selectstar.hwshin.cachemission.Activity.TaskListActivity">
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/tasktitle"
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/colorPrimaryDark"
@@ -83,7 +83,7 @@
         android:layout_height="18dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tasktitle"
+        app:layout_constraintTop_toBottomOf="@+id/title"
         app:layout_constraintBottom_toTopOf="@+id/taskview"
         >
         <TextView

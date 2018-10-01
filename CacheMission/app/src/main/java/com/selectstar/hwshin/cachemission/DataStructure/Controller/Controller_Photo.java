@@ -3,38 +3,27 @@ package com.selectstar.hwshin.cachemission.DataStructure.Controller;
 import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.selectstar.hwshin.cachemission.Activity.GalleryActivity;
 import com.selectstar.hwshin.cachemission.Activity.LoginActivity;
-import com.selectstar.hwshin.cachemission.Activity.TaskActivity;
 import com.selectstar.hwshin.cachemission.Adapter.PhotoPagerAdapter;
 import com.selectstar.hwshin.cachemission.DataStructure.FileHttpRequest;
-import com.selectstar.hwshin.cachemission.DataStructure.MyProgressDialog;
 import com.selectstar.hwshin.cachemission.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
