@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -24,8 +25,11 @@ import com.selectstar.hwshin.cachemission.DataStructure.RecyclerItem;
 import com.selectstar.hwshin.cachemission.R;
 
 import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import static android.support.constraint.Constraints.TAG;
@@ -131,20 +135,38 @@ public class PhotoPagerAdapter extends RecyclerView.Adapter<PhotoPagerAdapter.It
                         parentActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                ExifInterface exif=null;
+                                InputStream inputStream=null;
+                                ExifInterface exif = null;
+                                int orientation=0;
+                                try {
+                                    System.out.println(photoList.get(position).toString());
 
-                                try{
-                                    exif=new ExifInterface(photoList.get(position).toString());
-                                }
-                                catch(IOException e){
+                                    if(photoList.get(position).toString().substring(0,7).equals("content"))
+                                    {
+                                        inputStream = parentActivity.getContentResolver().openInputStream(photoList.get(position));
+                                    }
+                                    else
+                                    {
+                                        inputStream =  new FileInputStream(photoList.get(position).toString());
+                                    }
+
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                        exif = new ExifInterface(inputStream);
+                                        orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+                                    }
+
+                                }catch (IOException e){
                                     e.printStackTrace();
                                 }
 
-                                int orientation=exif.getAttributeInt(ExifInterface.TAG_ORIENTATION,ExifInterface.ORIENTATION_UNDEFINED);
-                                final Bitmap bm = BitmapFactory.decodeFile(photoList.get(position).toString(), options);
-                                final Bitmap bmRotated = rotateBitmap(bm,orientation);
-                                Log.d("jotttttt",photoList.get(position).toString());
-                                holder.image.setImageBitmap(bmRotated);
+                                if(photoList.get(position).toString().substring(0,7).equals("content")){
+                                    holder.image.setImageURI(photoList.get(position));
+                                }else {
+                                    final Bitmap bm = BitmapFactory.decodeFile(photoList.get(position).toString(), options);
+                                    final Bitmap bmRotated = rotateBitmap(bm, orientation);
+                                    holder.image.setImageBitmap(bmRotated);
+                                }
+
                             }
                         });
                     }
