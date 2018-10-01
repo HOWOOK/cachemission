@@ -1,5 +1,6 @@
 package com.selectstar.hwshin.cachemission.DataStructure.TaskView;
 
+import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -12,7 +13,6 @@ import android.view.MotionEvent;
 
 import android.view.View;
 import android.widget.ImageView;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
@@ -75,6 +75,7 @@ public class TaskView_PhotoView extends TaskView {
         }
 
         photoView = parentActivity.findViewById(R.id.srcview);
+        photoView.setMaximumScale(10);
         photoView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         Glide.with(parentActivity)
                 .load(Uri.parse(parentActivity.getString(R.string.mainurl)+"/media/"+ array1[0]))
@@ -121,6 +122,11 @@ public class TaskView_PhotoView extends TaskView {
             float initY = 0;
             float ratio = 0;
             float ratio2 = 0;
+            int space = 50;
+            float valueSaveWidth = 0;
+            float valueSaveHeight = 0;
+            float valueSaveX = 0;
+            float valueSaveY = 0;
 
 
             @Override
@@ -132,6 +138,7 @@ public class TaskView_PhotoView extends TaskView {
                             initX = event.getX();
                             initY = event.getY();
                             ratio = (float) photoVIewCL.getWidth() / (float) photoVIewCL.getHeight();
+                            System.out.println("포토뷰 비율 : "+ ratio );
 
                             expandView = new ImageView(parentActivity);
                             expandViewParams = new ConstraintLayout.LayoutParams(0, 0);
@@ -191,18 +198,22 @@ public class TaskView_PhotoView extends TaskView {
                             //expandView2 마진 설정
                             if(ratio2 < 0)
                                 ratio2 = -ratio2;
-                            if(ratio2 > ratio) { // 높이가 더 긴 디바이스
-                                width2 = width;
+                            if(ratio2 > ratio) {
+                                width2 = width + space;
                                 height2 = (int) ((float)width2 / ratio);
-                                leftMargin2  = leftMargin;
+                                leftMargin2  = leftMargin - space/2;
                                 topMargin2 = topMargin - (height2 - height) / 2;
-                            }else{// ratio < 1 // 너비가 더 긴 디바이스
-                                height2 = height;
+                            }else{// ratio < 1
+                                height2 = height + space;
                                 width2 = (int) ((float)height2 * ratio);
                                 leftMargin2 = leftMargin - (width2 - width) / 2;
-                                topMargin2 = topMargin;
+                                topMargin2 = topMargin - space/2;
                             }
 
+                            valueSaveWidth = (float) width2;
+                            valueSaveHeight = (float) height2;
+                            valueSaveX = (float) expandView2.getX();
+                            valueSaveY = (float) expandView2.getY();
 
                             if(expandView != null && expandView2 != null) {
                                 expandViewParams = new ConstraintLayout.LayoutParams(width, height);
@@ -222,11 +233,55 @@ public class TaskView_PhotoView extends TaskView {
                             }
                             break;
                         case MotionEvent.ACTION_UP:
+//                            Matrix scaleUp = new Matrix();
+//                            Matrix hackMatrix = new Matrix();
+//                            float[] var = new float[9];
+//                            float[] hackVar = new float[9];
+//                            float scale = 1;
+//                            float photoWidth, photoHeight;
+//                            float left, top;
+//
+//
+//                            scale = (float) photoVIewCL.getWidth() / valueSaveWidth;
+//                            System.out.println("스케일 : "+scale);
+//
+//                            photoWidth = photoView.getDisplayRect().right - photoView.getDisplayRect().left;
+//                            photoHeight = photoView.getDisplayRect().bottom - photoView.getDisplayRect().top;
+//                            System.out.println("사진 너비 : "+photoWidth+" 높이 : "+photoHeight);
+//
+//                            left = (photoView.getDisplayRect().left - valueSaveX) * scale;
+//                            top = (photoView.getDisplayRect().top - valueSaveY) * scale;
+//                            System.out.println("사진 left : "+left+" top : "+top);
+//
+//                            var[0] = scale;
+//                            var[1] = 0;
+//                            var[2] = left;
+//                            var[3] = 0;
+//                            var[4] = scale;
+//                            var[5] = top;
+//                            var[6] = 0;
+//                            var[7] = 0;
+//                            var[8] = 1;
+//
+//                            System.out.println("베이스메트릭스 : "+photoView.getAttacher().mBaseMatrix);
+//                            System.out.println("서플라이메트릭스 : "+photoView.getAttacher().mSuppMatrix);
+//                            System.out.println("드로우매트릭스 : "+photoView.getAttacher().mDrawMatrix);
+//
+//                            scaleUp.setValues(var);
+//                            System.out.println("매트릭스"+ scaleUp);
+//                            photoView.setSuppMatrix(scaleUp);
+//
+//                            photoView.getDisplayMatrix(scaleUp);
+//                            System.out.println("매트리스 결과값 : "+scaleUp);
+//
+//                            System.out.println("베이스메트릭스2 : "+photoView.getAttacher().mBaseMatrix);
+//                            System.out.println("서플라이메트릭스2 : "+photoView.getAttacher().mSuppMatrix);
+//                            System.out.println("드로우매트릭스2 : "+photoView.getAttacher().mDrawMatrix);
 
                             photoVIewCL.removeView(expandView);
                             photoVIewCL.removeView(expandView2);
 
-
+                            expandFlag = false;
                             break;
                     }
                 }

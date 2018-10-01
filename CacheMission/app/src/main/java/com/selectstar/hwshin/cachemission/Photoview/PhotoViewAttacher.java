@@ -66,9 +66,9 @@ public class PhotoViewAttacher implements View.OnTouchListener,
     private CustomGestureDetector mScaleDragDetector;
 
     // These are set so we don't keep allocating them on the heap
-    private final Matrix mBaseMatrix = new Matrix();
-    private final Matrix mDrawMatrix = new Matrix();
-    private final Matrix mSuppMatrix = new Matrix();
+    public final Matrix mBaseMatrix = new Matrix();
+    public final Matrix mDrawMatrix = new Matrix();
+    public final Matrix mSuppMatrix = new Matrix();
     private final RectF mDisplayRect = new RectF();
     private final float[] mMatrixValues = new float[9];
 
@@ -571,7 +571,7 @@ public class PhotoViewAttacher implements View.OnTouchListener,
         checkMatrixBounds();
     }
 
-    private void setImageViewMatrix(Matrix matrix) {
+    public void setImageViewMatrix(Matrix matrix) {
         mImageView.setImageMatrix(matrix);
 
         // Call MatrixChangedListener if needed
