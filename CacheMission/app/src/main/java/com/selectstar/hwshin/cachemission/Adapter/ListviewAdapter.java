@@ -56,10 +56,10 @@ public class ListviewAdapter extends BaseAdapter {
         if(taskType.equals("OCR"))
             Glide.with(convertView).load(R.drawable.tasktype_ocr).into(taskIv);
         else if(taskType.equals("PHOTO"))
-            Glide.with(convertView).load(R.drawable.tocamera).into(taskIv);
+            Glide.with(convertView).load(R.drawable.photoicon).into(taskIv);
         else if(taskType.equals("PHOTOEXAM"))
         {
-            Glide.with(convertView).load(R.drawable.tocamera).into(taskIv);
+            Glide.with(convertView).load(R.drawable.photoicon).into(taskIv);
             Glide.with(convertView).load(R.drawable.tasktypeadd).into(tasklv_check);
         }
         else if(taskType.equals("OCREXAM")) {

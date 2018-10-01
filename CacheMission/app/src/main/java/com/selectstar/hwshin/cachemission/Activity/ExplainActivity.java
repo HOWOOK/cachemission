@@ -17,10 +17,10 @@ import com.selectstar.hwshin.cachemission.R;
 public class ExplainActivity extends AppCompatActivity {
 
     private LinearLayout liner;
-    private ViewPager viewpager;
-    private SlideAdapter_ExplainMain myadapter;
+    private ViewPager viewPager;
+    private SlideAdapter_ExplainMain myAdapter;
 
-    private TextView[] mdots;
+    private TextView[] mDots;
     private Button prev, next;
 
     private int mCurrentPage;
@@ -31,14 +31,14 @@ public class ExplainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_explain);
 
-        viewpager=(ViewPager)findViewById(R.id.explainViewpager);
+        viewPager=(ViewPager)findViewById(R.id.explainViewpager);
         liner=(LinearLayout)findViewById(R.id.dots);
 
-        myadapter=new SlideAdapter_ExplainMain(this);
-        viewpager.setAdapter(myadapter);
+        myAdapter=new SlideAdapter_ExplainMain(this);
+        viewPager.setAdapter(myAdapter);
         adddots(0);
 
-        viewpager.addOnPageChangeListener(viewlistener);
+        viewPager.addOnPageChangeListener(viewListener);
 
         prev = findViewById(R.id.prev);
         next = findViewById(R.id.next);
@@ -49,14 +49,14 @@ public class ExplainActivity extends AppCompatActivity {
                 if(mCurrentPage == maxPage - 1)
                     finish();
                 else
-                    viewpager.setCurrentItem(mCurrentPage+1);
+                    viewPager.setCurrentItem(mCurrentPage+1);
             }
         });
 
         prev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewpager.setCurrentItem(mCurrentPage-1);
+                viewPager.setCurrentItem(mCurrentPage-1);
             }
         });
 
@@ -65,24 +65,24 @@ public class ExplainActivity extends AppCompatActivity {
 
     public void adddots(int i){
 
-        mdots=new TextView[maxPage];
+        mDots=new TextView[maxPage];
         liner.removeAllViews();
 
-        for (int x=0; x < mdots.length; x++){
-            mdots[x]=new TextView(this);
-            mdots[x].setText(Html.fromHtml("&#8226;"));
-            mdots[x].setTextSize(50);
-            mdots[x].setTextColor(Color.parseColor("#90FFFFFF"));
+        for (int x=0; x < mDots.length; x++){
+            mDots[x]=new TextView(this);
+            mDots[x].setText(Html.fromHtml("&#8226;"));
+            mDots[x].setTextSize(50);
+            mDots[x].setTextColor(Color.parseColor("#90FFFFFF"));
 
-            liner.addView(mdots[x]);
+            liner.addView(mDots[x]);
         }
-        if (mdots.length>0){
-            mdots[i].setTextColor(Color.parseColor("#FFFFFF"));
+        if (mDots.length>0){
+            mDots[i].setTextColor(Color.parseColor("#FFFFFF"));
         }
 
     }
 
-    ViewPager.OnPageChangeListener viewlistener = new ViewPager.OnPageChangeListener() {
+    ViewPager.OnPageChangeListener viewListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -100,7 +100,7 @@ public class ExplainActivity extends AppCompatActivity {
 
                 next.setBackground(ContextCompat.getDrawable(ExplainActivity.this, R.drawable.main_explain_right));
             }
-            else if(position == mdots.length-1){
+            else if(position == mDots.length-1){
 
                 next.setEnabled(true);
                 prev.setEnabled(true);
