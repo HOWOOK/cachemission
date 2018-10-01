@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -36,7 +37,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class TaskListActivity extends AppCompatActivity {
 
@@ -47,6 +50,7 @@ public class TaskListActivity extends AppCompatActivity {
     private String versionName;
     private String versionCode;
     private Context mContext = this;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +90,13 @@ public class TaskListActivity extends AppCompatActivity {
                 }
             }
         });
-
+        TextView myPage = findViewById(R.id.mypage);
+        myPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(TaskListActivity.this, "구현 중이에용~~",Toast.LENGTH_SHORT).show();
+            }
+        });
         ImageView settingBtn = findViewById(R.id.settingbtn);
         settingBtn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -148,133 +158,268 @@ public class TaskListActivity extends AppCompatActivity {
         if(stringtoken==null){
             stringtoken="";
         }
-        JSONObject param = new JSONObject();
-        try {
-            param.put("requestlist", "tasklist");
-            param.put("version", versionName);
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        SimpleDateFormat hourFormat = new SimpleDateFormat("HH");
+        SimpleDateFormat minuteFormat = new SimpleDateFormat("mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-            new WaitHttpRequest(this) {
-                @Override
-                protected void onPostExecute(Object o) {
-                    super.onPostExecute(o);
-                    try {
-                        JSONObject resulttemp = new JSONObject(result);
-                        System.out.println("통신실패하면 "+resulttemp);
-                        if (resulttemp.get("success").toString().equals("login")) {
-                            Intent gotologin = new Intent(TaskListActivity.this,LoginActivity.class);
-                            startActivity(gotologin);
-                            finish();
-                        }
-                        else{
-
-                            //유저정보세팅
-                            JSONObject user = (JSONObject) resulttemp.get("user");
-                            TextView username = findViewById(R.id.username);
-                            TextView usernamedrawer = findViewById(R.id.usernamedrawer);
-                            ImageView userrank = findViewById(R.id.userrank);
-                            TextView money = findViewById(R.id.money);
-                            TextView maybemoney = findViewById(R.id.maybemoney);
-                            TextView reliability = findViewById(R.id.reliability);
-                            ProgressBar progress = (ProgressBar) findViewById(R.id.mainProgressBar);
-                            money.setText("\uFFE6 "+String.valueOf(user.get("gold")));
-                            maybemoney.setText("\uFFE6 "+String.valueOf(user.get("maybe")));
-                            username.setText(String.valueOf(user.get("name")));
-                            usernamedrawer.setText(String.valueOf(user.get("name")));
-                            setuserrankImage(userrank, Integer.parseInt(user.get("rank").toString()));
-                            reliability.setText(String.valueOf(user.get("reliability"))+" %");
-                            //progress bar setting
-                            setuserprogressbar(progress, Integer.parseInt(user.get("rank").toString()), Integer.parseInt(user.get("success_count").toString()));
-                            intent_task.putExtra("goldNow",String.valueOf(user.get("gold")));
-                            intent_task.putExtra("goldPre",String.valueOf(user.get("maybe")));
-                            intent_exam.putExtra("goldNow",String.valueOf(user.get("gold")));
-                            intent_exam.putExtra("goldPre",String.valueOf(user.get("maybe")));
-
-                            //긴급공지사항있을시 토스트 띄우기
-                            try {
-                                if (resulttemp.getString("emergency") != null)
-                                    Toast.makeText(getApplicationContext(), resulttemp.getString("emergency"), Toast.LENGTH_SHORT).show();
-                            }
-                            catch(JSONException e){}
-
-                            //Task 리스트 띄우기
-                            mTaskList.clear();
-                            JSONArray exam_res = (JSONArray) resulttemp.get("exam_data");
-                            JSONArray task_res = (JSONArray) resulttemp.get("task_data");
-                            for (int i = 0; i < exam_res.length(); i++) {
-
-                                JSONObject temp = (JSONObject) exam_res.get(i);
-                                mTaskList.add(new TaskListItem(String.valueOf(temp.get("id")), (String) temp.get("taskName"), (String) temp.get("taskType"),
-                                        (String) temp.get("taskView"), (String) temp.get("controller"), "\uFFE6 "+String.valueOf(temp.get("gold")), (String) temp.get("dailyMission"), (JSONArray) temp.get("buttons"), 1,Integer.parseInt(String.valueOf(temp.get("examType")))));
-                            }
-
-
-                            for (int i = 0; i < task_res.length(); i++) {
-
-                                JSONObject temp = (JSONObject) task_res.get(i);
-                                mTaskList.add(new TaskListItem(String.valueOf(temp.get("id")), (String) temp.get("taskName"), (String) temp.get("taskType"),
-                                        (String) temp.get("taskView"), (String) temp.get("controller"), "\uFFE6 "+String.valueOf(temp.get("gold")), (String) temp.get("dailyMission"), (JSONArray)temp.get("buttons"), 0));
-
-
-                            }
-
-                        }
-
-                        lv_main = (ListView) findViewById(R.id.taskList);
-                        adapter = new ListviewAdapter(getApplicationContext(), R.layout.task_lv, TaskListActivity.mTaskList);
-                        lv_main.setAdapter(adapter);
-                        lv_main.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-
-                                int flag=((TaskListItem)adapterView.getItemAtPosition(position)).getTaskFlag();
-
-                                String tasktitle = ((TaskListItem) adapterView.getItemAtPosition(position)).getTaskName();
-                                String tasktype = ((TaskListItem) adapterView.getItemAtPosition(position)).getTaskType();
-                                String taskview = ((TaskListItem) adapterView.getItemAtPosition(position)).getTaskView();
-                                String controller = ((TaskListItem) adapterView.getItemAtPosition(position)).getController();
-                                String buttons=((TaskListItem) adapterView.getItemAtPosition(position)).getButtons().toString();
-                                String taskid = ((TaskListItem) adapterView.getItemAtPosition(position)).getId();
-                                String upgold = ((TaskListItem) adapterView.getItemAtPosition(position)).getGold();
-                                String dailyQuest = ((TaskListItem) adapterView.getItemAtPosition(position)).getDailyMission();
-
-
-                                if(flag==0) {
-                                    intent_task.putExtra("taskTitle", tasktitle);
-                                    intent_task.putExtra("taskType", tasktype);
-                                    intent_task.putExtra("taskView", taskview);
-                                    intent_task.putExtra("upGold",upgold);
-                                    intent_task.putExtra("controller", controller);
-                                    intent_task.putExtra("buttons", buttons);
-                                    intent_task.putExtra("taskId", taskid);
-                                    intent_task.putExtra("daily",dailyQuest);
-                                    intent_task.putExtra("from", 0);
-
-                                    TaskListActivity.this.startActivity(intent_task);
-                                }
-                                else if(flag==1) {
-                                    intent_exam.putExtra("taskTitle", tasktitle);
-                                    intent_exam.putExtra("taskType", tasktype);
-                                    intent_exam.putExtra("taskView", taskview);
-                                    intent_exam.putExtra("examView", controller);
-                                    intent_exam.putExtra("upGold",upgold);
-                                    intent_exam.putExtra("buttons", buttons);
-                                    intent_exam.putExtra("taskId", taskid);
-                                    intent_exam.putExtra("examType", ((TaskListItem)adapterView.getItemAtPosition(position)).getExamType());
-                                    intent_exam.putExtra("from", 0);
-                                    TaskListActivity.this.startActivity(intent_exam);
-                                }
-
-                            }
-                        });
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }.execute(getString(R.string.mainurl)+"/main", param, stringtoken);
+        String getDate = dateFormat.format(date);
+        String getHour = hourFormat.format(date);
+        String getMinute = minuteFormat.format(date);
+        Log.d("date",getHour);
+        SharedPreferences lazyLoding = getSharedPreferences("lazyLoding", MODE_PRIVATE);
+        final SharedPreferences.Editor editor = lazyLoding.edit();
+        Log.d("seddddd",lazyLoding.getString("isfirst",""));
+        if(lazyLoding.getString("isfirst","").equals("")){
+        Log.d("secccc",lazyLoding.getString("isfirst",""));
+            editor.putString("isfirst","yes");
         }
-        catch (JSONException e) {
-            e.printStackTrace();
+        String ymd="";
+        ymd=lazyLoding.getString("ymd","");
+        int hms=lazyLoding.getInt("hms",0);
+        int nowTime=Integer.parseInt(getHour)*60+Integer.parseInt(getMinute);
+        Log.d("timeclose1",String.valueOf(hms));
+        Log.d("timeclose2",String.valueOf(nowTime));
+        Log.d("timeclose3",ymd);
+        Log.d("firrrr",lazyLoding.getString("isfirst",""));
+
+        if((!lazyLoding.getString("isfirst","").equals("yes"))&&(ymd.equals(getDate)&&nowTime-hms<10)) {
+Log.d("timeclose",String.valueOf(nowTime-hms));
+            try {
+                JSONObject resTemp=new JSONObject(lazyLoding.getString("preresult",""));
+                JSONObject user = (JSONObject) resTemp.get("user");
+                TextView usernamedrawer = findViewById(R.id.usernamedrawer);
+                ImageView userrank = findViewById(R.id.userrank);
+                TextView money = findViewById(R.id.mygold);
+                ProgressBar progress = (ProgressBar) findViewById(R.id.mainProgressBar);
+                int allGold = (int) user.get("gold") + (int) user.get("maybe");
+                money.setText(String.valueOf(allGold));
+                usernamedrawer.setText(String.valueOf(user.get("name")));
+                setuserrankImage(userrank, Integer.parseInt(user.get("rank").toString()));
+                //progress bar setting
+                setuserprogressbar(progress, Integer.parseInt(user.get("rank").toString()), Integer.parseInt(user.get("success_count").toString()));
+                intent_task.putExtra("goldNow", String.valueOf(user.get("gold")));
+                intent_task.putExtra("goldPre", String.valueOf(user.get("maybe")));
+                intent_exam.putExtra("goldNow", String.valueOf(user.get("gold")));
+                intent_exam.putExtra("goldPre", String.valueOf(user.get("maybe")));
+
+                //긴급공지사항있을시 토스트 띄우기
+                try {
+                    if (resTemp.getString("emergency") != null)
+                        Toast.makeText(getApplicationContext(), resTemp.getString("emergency"), Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                }
+
+
+                //Task 리스트 띄우기
+                mTaskList.clear();
+                JSONArray exam_res = (JSONArray) resTemp.get("exam_data");
+                JSONArray task_res = (JSONArray) resTemp.get("task_data");
+                for (int i = 0; i < exam_res.length(); i++) {
+
+                    JSONObject temp = (JSONObject) exam_res.get(i);
+                    mTaskList.add(new TaskListItem(String.valueOf(temp.get("id")), (String) temp.get("taskName"), (String) temp.get("taskType"),
+                            (String) temp.get("taskView"), (String) temp.get("controller"), "\uFFE6" + String.valueOf(temp.get("gold")), (String) temp.get("dailyMission"), (JSONArray) temp.get("buttons"), 1, Integer.parseInt(String.valueOf(temp.get("examType")))));
+                }
+
+
+                for (int i = 0; i < task_res.length(); i++) {
+
+                    JSONObject temp = (JSONObject) task_res.get(i);
+                    mTaskList.add(new TaskListItem(String.valueOf(temp.get("id")), (String) temp.get("taskName"), (String) temp.get("taskType"),
+                            (String) temp.get("taskView"), (String) temp.get("controller"), "\uFFE6" + String.valueOf(temp.get("gold")), (String) temp.get("dailyMission"), (JSONArray) temp.get("buttons"), 0));
+
+
+                }
+
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+
+            lv_main = (ListView) findViewById(R.id.taskList);
+            adapter = new ListviewAdapter(getApplicationContext(), R.layout.task_lv, TaskListActivity.mTaskList);
+            lv_main.setAdapter(adapter);
+            lv_main.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
+                    int flag = ((TaskListItem) adapterView.getItemAtPosition(position)).getTaskFlag();
+
+                    String tasktitle = ((TaskListItem) adapterView.getItemAtPosition(position)).getTaskName();
+                    String tasktype = ((TaskListItem) adapterView.getItemAtPosition(position)).getTaskType();
+                    String taskview = ((TaskListItem) adapterView.getItemAtPosition(position)).getTaskView();
+                    String controller = ((TaskListItem) adapterView.getItemAtPosition(position)).getController();
+                    String buttons = ((TaskListItem) adapterView.getItemAtPosition(position)).getButtons().toString();
+                    String taskid = ((TaskListItem) adapterView.getItemAtPosition(position)).getId();
+                    String upgold = ((TaskListItem) adapterView.getItemAtPosition(position)).getGold();
+                    String dailyQuest = ((TaskListItem) adapterView.getItemAtPosition(position)).getDailyMission();
+
+
+                    if (flag == 0) {
+                        intent_task.putExtra("taskTitle", tasktitle);
+                        intent_task.putExtra("taskType", tasktype);
+                        intent_task.putExtra("taskView", taskview);
+                        intent_task.putExtra("upGold", upgold);
+                        intent_task.putExtra("controller", controller);
+                        intent_task.putExtra("buttons", buttons);
+                        intent_task.putExtra("taskId", taskid);
+                        intent_task.putExtra("daily", dailyQuest);
+                        intent_task.putExtra("from", 0);
+
+                        TaskListActivity.this.startActivity(intent_task);
+                    } else if (flag == 1) {
+                        intent_exam.putExtra("taskTitle", tasktitle);
+                        intent_exam.putExtra("taskType", tasktype);
+                        intent_exam.putExtra("taskView", taskview);
+                        intent_exam.putExtra("examView", controller);
+                        intent_exam.putExtra("upGold", upgold);
+                        intent_exam.putExtra("buttons", buttons);
+                        intent_exam.putExtra("taskId", taskid);
+                        intent_exam.putExtra("examType", ((TaskListItem) adapterView.getItemAtPosition(position)).getExamType());
+                        intent_exam.putExtra("from", 0);
+                        TaskListActivity.this.startActivity(intent_exam);
+                    }
+
+                }
+            });
+
+        }
+
+        else {
+            Log.d("notreach","notnot");
+
+            editor.putString("ymd", getDate);
+            editor.putInt("hms",nowTime);
+            editor.apply();
+
+            JSONObject param = new JSONObject();
+            try {
+                param.put("requestlist", "tasklist");
+                param.put("version", versionName);
+
+                new WaitHttpRequest(this) {
+                    @Override
+                    protected void onPostExecute(Object o) {
+                        super.onPostExecute(o);
+                        try {
+                            JSONObject resulttemp = new JSONObject(result);
+                            editor.putString("preresult",resulttemp.toString());
+                            editor.apply();
+                            System.out.println("통신실패하면 " + resulttemp);
+                            if (resulttemp.get("success").toString().equals("login")) {
+
+
+                                Intent gotologin = new Intent(TaskListActivity.this, LoginActivity.class);
+                                startActivity(gotologin);
+                                finish();
+                            } else {
+
+                                editor.putString("isfirst","no");
+                                editor.apply();
+                                Log.d("hogu","hogu");
+                                //유저정보세팅
+                                JSONObject user = (JSONObject) resulttemp.get("user");
+                                TextView usernamedrawer = findViewById(R.id.usernamedrawer);
+                                ImageView userrank = findViewById(R.id.userrank);
+                                TextView money = findViewById(R.id.mygold);
+                                ProgressBar progress = (ProgressBar) findViewById(R.id.mainProgressBar);
+                                int allGold = (int) user.get("gold") + (int) user.get("maybe");
+                                money.setText(String.valueOf(allGold));
+                                usernamedrawer.setText(String.valueOf(user.get("name")));
+                                setuserrankImage(userrank, Integer.parseInt(user.get("rank").toString()));
+                                //progress bar setting
+                                setuserprogressbar(progress, Integer.parseInt(user.get("rank").toString()), Integer.parseInt(user.get("success_count").toString()));
+                                intent_task.putExtra("goldNow", String.valueOf(user.get("gold")));
+                                intent_task.putExtra("goldPre", String.valueOf(user.get("maybe")));
+                                intent_exam.putExtra("goldNow", String.valueOf(user.get("gold")));
+                                intent_exam.putExtra("goldPre", String.valueOf(user.get("maybe")));
+
+                                //긴급공지사항있을시 토스트 띄우기
+                                try {
+                                    if (resulttemp.getString("emergency") != null)
+                                        Toast.makeText(getApplicationContext(), resulttemp.getString("emergency"), Toast.LENGTH_SHORT).show();
+                                } catch (JSONException e) {
+                                }
+
+                                //Task 리스트 띄우기
+                                mTaskList.clear();
+                                JSONArray exam_res = (JSONArray) resulttemp.get("exam_data");
+                                JSONArray task_res = (JSONArray) resulttemp.get("task_data");
+                                for (int i = 0; i < exam_res.length(); i++) {
+
+                                    JSONObject temp = (JSONObject) exam_res.get(i);
+                                    mTaskList.add(new TaskListItem(String.valueOf(temp.get("id")), (String) temp.get("taskName"), (String) temp.get("taskType"),
+                                            (String) temp.get("taskView"), (String) temp.get("controller"), "\uFFE6" + String.valueOf(temp.get("gold")), (String) temp.get("dailyMission"), (JSONArray) temp.get("buttons"), 1, Integer.parseInt(String.valueOf(temp.get("examType")))));
+                                }
+
+
+                                for (int i = 0; i < task_res.length(); i++) {
+
+                                    JSONObject temp = (JSONObject) task_res.get(i);
+                                    mTaskList.add(new TaskListItem(String.valueOf(temp.get("id")), (String) temp.get("taskName"), (String) temp.get("taskType"),
+                                            (String) temp.get("taskView"), (String) temp.get("controller"), "\uFFE6" + String.valueOf(temp.get("gold")), (String) temp.get("dailyMission"), (JSONArray) temp.get("buttons"), 0));
+
+
+                                }
+
+                            }
+
+                            lv_main = (ListView) findViewById(R.id.taskList);
+                            adapter = new ListviewAdapter(getApplicationContext(), R.layout.task_lv, TaskListActivity.mTaskList);
+                            lv_main.setAdapter(adapter);
+                            lv_main.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
+                                    int flag = ((TaskListItem) adapterView.getItemAtPosition(position)).getTaskFlag();
+
+                                    String tasktitle = ((TaskListItem) adapterView.getItemAtPosition(position)).getTaskName();
+                                    String tasktype = ((TaskListItem) adapterView.getItemAtPosition(position)).getTaskType();
+                                    String taskview = ((TaskListItem) adapterView.getItemAtPosition(position)).getTaskView();
+                                    String controller = ((TaskListItem) adapterView.getItemAtPosition(position)).getController();
+                                    String buttons = ((TaskListItem) adapterView.getItemAtPosition(position)).getButtons().toString();
+                                    String taskid = ((TaskListItem) adapterView.getItemAtPosition(position)).getId();
+                                    String upgold = ((TaskListItem) adapterView.getItemAtPosition(position)).getGold();
+                                    String dailyQuest = ((TaskListItem) adapterView.getItemAtPosition(position)).getDailyMission();
+
+
+                                    if (flag == 0) {
+                                        intent_task.putExtra("taskTitle", tasktitle);
+                                        intent_task.putExtra("taskType", tasktype);
+                                        intent_task.putExtra("taskView", taskview);
+                                        intent_task.putExtra("upGold", upgold);
+                                        intent_task.putExtra("controller", controller);
+                                        intent_task.putExtra("buttons", buttons);
+                                        intent_task.putExtra("taskId", taskid);
+                                        intent_task.putExtra("daily", dailyQuest);
+                                        intent_task.putExtra("from", 0);
+
+                                        TaskListActivity.this.startActivity(intent_task);
+                                    } else if (flag == 1) {
+                                        intent_exam.putExtra("taskTitle", tasktitle);
+                                        intent_exam.putExtra("taskType", tasktype);
+                                        intent_exam.putExtra("taskView", taskview);
+                                        intent_exam.putExtra("examView", controller);
+                                        intent_exam.putExtra("upGold", upgold);
+                                        intent_exam.putExtra("buttons", buttons);
+                                        intent_exam.putExtra("taskId", taskid);
+                                        intent_exam.putExtra("examType", ((TaskListItem) adapterView.getItemAtPosition(position)).getExamType());
+                                        intent_exam.putExtra("from", 0);
+                                        TaskListActivity.this.startActivity(intent_exam);
+                                    }
+
+                                }
+                            });
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }.execute(getString(R.string.mainurl) + "/main", param, stringtoken);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
     }

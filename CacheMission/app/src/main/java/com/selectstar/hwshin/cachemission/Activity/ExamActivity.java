@@ -61,7 +61,6 @@ public class ExamActivity extends PatherActivity {
                     JSONObject resultTemp;
                     try {
                         resultTemp = new JSONObject(result);
-                        System.out.println(result);
                         if ((boolean) resultTemp.get("success")) {
                             waitingTasks = new ArrayList<>();
                             JSONArray tempTasks = (JSONArray)resultTemp.get("answers");
@@ -158,12 +157,12 @@ public class ExamActivity extends PatherActivity {
 
 
         uiHashMap = new UIHashMap();
-        taskID=(String)intent.getStringExtra("taskId");
+        taskID=intent.getStringExtra("taskId");
         mTaskView = uiHashMap.taskViewHashMap.get(intent.getStringExtra("taskView"));
         mTaskView.setParentActivity(this);
-        mExamView = (ExamView) uiHashMap.examViewHashMap.get(intent.getStringExtra("examView"));
+        mExamView = uiHashMap.examViewHashMap.get(intent.getStringExtra("examView"));
         mExamView.setParentActivity(this);
-        mParameter =  (int[][]) uiHashMap.taskHashMap.get(intent.getStringExtra("taskType"));
+        mParameter = uiHashMap.taskHashMap.get(intent.getStringExtra("taskType"));
         taskTitle = intent.getStringExtra("taskTitle");
         buttons= intent.getStringExtra("buttons");
 

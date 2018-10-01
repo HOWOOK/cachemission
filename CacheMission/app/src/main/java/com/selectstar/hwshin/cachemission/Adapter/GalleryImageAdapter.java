@@ -2,6 +2,8 @@ package com.selectstar.hwshin.cachemission.Adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +25,7 @@ import com.selectstar.hwshin.cachemission.DataStructure.RecyclerItem;
 import com.selectstar.hwshin.cachemission.R;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -72,7 +75,7 @@ public class GalleryImageAdapter extends RecyclerView.Adapter<GalleryImageAdapte
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.gallery_image, parent, false);
         GridLayoutManager.LayoutParams lp = (GridLayoutManager.LayoutParams) view.getLayoutParams();
-        lp.height = parent.getMeasuredHeight() / 4;
+        lp.height = parent.getMeasuredWidth() / 3;
         view.setLayoutParams(lp);
         final RadioButton button = view.findViewById(R.id.chooseoption);
         button.setClickable(false);
@@ -97,6 +100,49 @@ public class GalleryImageAdapter extends RecyclerView.Adapter<GalleryImageAdapte
             choiceImageAdapter.addPhoto(new Integer(position));
         }
     }
+    public static Bitmap rotateBitmap(Bitmap bitmap, int orientation) {
+
+        Matrix matrix = new Matrix();
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_NORMAL:
+                return bitmap;
+            case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
+                matrix.setScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                matrix.setRotate(180);
+                break;
+            case ExifInterface.ORIENTATION_FLIP_VERTICAL:
+                matrix.setRotate(180);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_TRANSPOSE:
+                matrix.setRotate(90);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                matrix.setRotate(90);
+                break;
+            case ExifInterface.ORIENTATION_TRANSVERSE:
+                matrix.setRotate(-90);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                matrix.setRotate(-90);
+                break;
+            default:
+                return bitmap;
+        }
+        try {
+            Bitmap bmRotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+            bitmap.recycle();
+            return bmRotated;
+        }
+        catch (OutOfMemoryError e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     @Override
     public void onBindViewHolder(final @NonNull GalleryImageAdapter.ItemViewHolder holder, int pos) {
         final int position = pos;
@@ -109,6 +155,7 @@ public class GalleryImageAdapter extends RecyclerView.Adapter<GalleryImageAdapte
 
             }
         });
+
         holder.myView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,14 +171,20 @@ public class GalleryImageAdapter extends RecyclerView.Adapter<GalleryImageAdapte
                 //options.inSampleSize = calculateInSampleSize(options, 100, 100);
                 options.inSampleSize = 8;
                 options.inJustDecodeBounds = false;
+                ExifInterface exif=null;
+                try{exif=new ExifInterface(basePath + File.separator + mImgs[position]);}
+                catch(IOException e){e.printStackTrace();}
+                int orientation=exif.getAttributeInt(ExifInterface.TAG_ORIENTATION,ExifInterface.ORIENTATION_UNDEFINED);
                 final Bitmap bm = BitmapFactory.decodeFile(basePath + File.separator + mImgs[position], options);
+                final Bitmap bmRotated = rotateBitmap(bm,orientation);
+
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
                         mActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                holder.image.setImageBitmap(bm);
+                                holder.image.setImageBitmap(bmRotated);
                             }
                         });
                     }

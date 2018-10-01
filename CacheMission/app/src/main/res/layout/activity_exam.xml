@@ -24,7 +24,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/tasktitleexam"
+            android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/colorPrimaryDark"
@@ -103,7 +103,7 @@
             app:layout_constraintBottom_toTopOf="@+id/examview"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tasktitleexam"
+            app:layout_constraintTop_toBottomOf="@+id/title"
             app:layout_constraintVertical_weight="10" />
 
         <android.support.constraint.ConstraintLayout

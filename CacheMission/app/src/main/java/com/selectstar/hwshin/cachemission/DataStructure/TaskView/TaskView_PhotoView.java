@@ -7,7 +7,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
+
 import android.view.MotionEvent;
+
 import android.view.View;
 import android.widget.ImageView;
 
@@ -15,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.selectstar.hwshin.cachemission.Photoview.OnMatrixChangedListener;
+
 import com.selectstar.hwshin.cachemission.R;
 import com.selectstar.hwshin.cachemission.Photoview.PhotoView;
 
