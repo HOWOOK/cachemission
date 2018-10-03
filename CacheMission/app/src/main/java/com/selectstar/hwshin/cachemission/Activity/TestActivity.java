@@ -15,9 +15,6 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test);
 
-        TextView textView = findViewById(R.id.bombom);
-        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.goldtranslate);
-        textView.startAnimation(animation);
 
     }
 }

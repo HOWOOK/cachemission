@@ -30,7 +30,7 @@ public class TaskView_PhotoView extends TaskView {
     private float[][] answerCoordination;
     private float[][] changedCoordination;
     private String[] array1, array2, array3;
-    private ConstraintLayout photoVIewCL;
+    private ConstraintLayout photoViewCL;
     private ImageView[] answerList;
     private boolean expandFlag, isExamFlag;
 
@@ -63,7 +63,7 @@ public class TaskView_PhotoView extends TaskView {
         if(isExamFlag == true)
             expandFlag = false;
 
-        photoVIewCL = parentActivity.findViewById(R.id.photoViewCL);
+        photoViewCL = parentActivity.findViewById(R.id.photoViewCL);
 
         //box 좌표 구해서 저장
         array1 = content.split("&");
@@ -110,23 +110,20 @@ public class TaskView_PhotoView extends TaskView {
                     drawAnswer(answerCoordination);
             }
         });
-
-
+        
         photoView.setOnTouchListener(new View.OnTouchListener() {
             ImageView expandView = null;
             ConstraintLayout.LayoutParams expandViewParams;
             ImageView expandView2 = null;
             ConstraintLayout.LayoutParams expandView2Params;
-            ConstraintSet constraintSet;
             float initX = 0;
             float initY = 0;
-            float ratio = 0;
-            float ratio2 = 0;
+            float pvRatio = 0;
             int space = 50;
-            float valueSaveWidth = 0;
-            float valueSaveHeight = 0;
-            float valueSaveX = 0;
-            float valueSaveY = 0;
+            float saveWidth = 0;
+            float saveHeight = 0;
+            float saveX = 0;
+            float saveY = 0;
 
 
             @Override
@@ -137,44 +134,34 @@ public class TaskView_PhotoView extends TaskView {
                         case MotionEvent.ACTION_DOWN :
                             initX = event.getX();
                             initY = event.getY();
-                            ratio = (float) photoVIewCL.getWidth() / (float) photoVIewCL.getHeight();
-                            System.out.println("포토뷰 비율 : "+ ratio );
+                            pvRatio = (float) photoViewCL.getWidth() / (float) photoViewCL.getHeight();
+                            System.out.println("포토뷰 비율 : "+ pvRatio );
 
                             expandView = new ImageView(parentActivity);
                             expandViewParams = new ConstraintLayout.LayoutParams(0, 0);
                             expandView.setId(View.generateViewId());
                             expandView.setBackgroundResource(R.drawable.box_2dbox);
                             expandView.setLayoutParams(expandViewParams);
-                            constraintSet = new ConstraintSet();
-                            constraintSet.clone(photoVIewCL);
-                            constraintSet.connect(expandView.getId(), ConstraintSet.START, photoVIewCL.getId(), ConstraintSet.START, (int) initX);
-                            constraintSet.connect(expandView.getId(), ConstraintSet.TOP, photoVIewCL.getId(), ConstraintSet.TOP, (int) initY);
-                            constraintSet.applyTo(photoVIewCL);
-                            photoVIewCL.addView(expandView);
+                            photoViewCL.addView(expandView);
+                            updateConstraintSet(expandView, (int) initX, (int) initY);
 
                             expandView2 = new ImageView(parentActivity);
                             expandView2Params = new ConstraintLayout.LayoutParams(0,0);
                             expandView2.setId(View.generateViewId());
                             expandView2.setBackgroundResource(R.drawable.box_2dbox2);
                             expandView2.setLayoutParams(expandViewParams);
-                            constraintSet = new ConstraintSet();
-                            constraintSet.clone(photoVIewCL);
-                            constraintSet.connect(expandView2.getId(), ConstraintSet.START, photoVIewCL.getId(), ConstraintSet.START, (int) initX);
-                            constraintSet.connect(expandView2.getId(), ConstraintSet.TOP, photoVIewCL.getId(), ConstraintSet.TOP, (int) initY);
-                            constraintSet.applyTo(photoVIewCL);
-                            photoVIewCL.addView(expandView2);
+                            photoViewCL.addView(expandView2);
+                            updateConstraintSet(expandView2, (int) initX, (int) initY);
                             break;
 
                         case MotionEvent.ACTION_MOVE:
                             int width = (int)(event.getX() - initX);
                             int height = (int)(event.getY() - initY);
-                            int width2 = 0;
-                            int height2 = 0;
-                            float ratio2 = (float) width/(float) height;
                             float topMargin = 0;
                             float leftMargin = 0;
-                            float topMargin2 = 0;
-                            float leftMargin2 = 0;
+                            int width2 = 0;
+                            int height2 = 0;
+                            float expandBoxRatio = (float) width/(float) height;
 
                             //expandView 마진 설정
                             if(width >= 0 && height < 0){
@@ -196,91 +183,44 @@ public class TaskView_PhotoView extends TaskView {
                             }
 
                             //expandView2 마진 설정
-                            if(ratio2 < 0)
-                                ratio2 = -ratio2;
-                            if(ratio2 > ratio) {
+                            if(expandBoxRatio < 0)
+                                expandBoxRatio = -expandBoxRatio;
+                            if(expandBoxRatio > pvRatio) {
                                 width2 = width + space;
-                                height2 = (int) ((float)width2 / ratio);
-                                leftMargin2  = leftMargin - space/2;
-                                topMargin2 = topMargin - (height2 - height) / 2;
+                                height2 = (int) ((float)width2 / pvRatio);
                             }else{// ratio < 1
                                 height2 = height + space;
-                                width2 = (int) ((float)height2 * ratio);
-                                leftMargin2 = leftMargin - (width2 - width) / 2;
-                                topMargin2 = topMargin - space/2;
+                                width2 = (int) ((float)height2 * pvRatio);
                             }
 
-                            valueSaveWidth = (float) width2;
-                            valueSaveHeight = (float) height2;
-                            valueSaveX = (float) expandView2.getX();
-                            valueSaveY = (float) expandView2.getY();
+                            saveWidth = (float) width2;
+                            saveHeight = (float) height2;
+                            saveX = (float) expandView2.getX();
+                            saveY = (float) expandView2.getY();
 
                             if(expandView != null && expandView2 != null) {
                                 expandViewParams = new ConstraintLayout.LayoutParams(width, height);
                                 expandView.setLayoutParams(expandViewParams);
+                                updateConstraintSet(expandView, (int)leftMargin, (int) topMargin);
 
                                 expandView2Params = new ConstraintLayout.LayoutParams(width2, height2);
                                 expandView2.setLayoutParams(expandView2Params);
-
-                                constraintSet = new ConstraintSet();
-                                constraintSet.clone(photoVIewCL);
-                                constraintSet.connect(expandView.getId(), ConstraintSet.START, photoVIewCL.getId(), ConstraintSet.START, (int) leftMargin);
-                                constraintSet.connect(expandView.getId(), ConstraintSet.TOP, photoVIewCL.getId(), ConstraintSet.TOP, (int) topMargin);
-                                constraintSet.connect(expandView2.getId(), ConstraintSet.START, photoVIewCL.getId(), ConstraintSet.START, (int) leftMargin2);
-                                constraintSet.connect(expandView2.getId(), ConstraintSet.TOP, photoVIewCL.getId(), ConstraintSet.TOP, (int) topMargin2);
-                                constraintSet.applyTo(photoVIewCL);
-
+                                ConstraintSet constraintSet = new ConstraintSet();
+                                constraintSet.clone(photoViewCL);
+                                constraintSet.connect(expandView2.getId(), ConstraintSet.START, expandView.getId(), ConstraintSet.START);
+                                constraintSet.connect(expandView2.getId(), ConstraintSet.END, expandView.getId(), ConstraintSet.END);
+                                constraintSet.connect(expandView2.getId(), ConstraintSet.TOP, expandView.getId(), ConstraintSet.TOP);
+                                constraintSet.connect(expandView2.getId(), ConstraintSet.BOTTOM, expandView.getId(), ConstraintSet.BOTTOM);
+                                constraintSet.applyTo(photoViewCL);
                             }
                             break;
+
                         case MotionEvent.ACTION_UP:
-//                            Matrix scaleUp = new Matrix();
-//                            Matrix hackMatrix = new Matrix();
-//                            float[] var = new float[9];
-//                            float[] hackVar = new float[9];
-//                            float scale = 1;
-//                            float photoWidth, photoHeight;
-//                            float left, top;
-//
-//
-//                            scale = (float) photoVIewCL.getWidth() / valueSaveWidth;
-//                            System.out.println("스케일 : "+scale);
-//
-//                            photoWidth = photoView.getDisplayRect().right - photoView.getDisplayRect().left;
-//                            photoHeight = photoView.getDisplayRect().bottom - photoView.getDisplayRect().top;
-//                            System.out.println("사진 너비 : "+photoWidth+" 높이 : "+photoHeight);
-//
-//                            left = (photoView.getDisplayRect().left - valueSaveX) * scale;
-//                            top = (photoView.getDisplayRect().top - valueSaveY) * scale;
-//                            System.out.println("사진 left : "+left+" top : "+top);
-//
-//                            var[0] = scale;
-//                            var[1] = 0;
-//                            var[2] = left;
-//                            var[3] = 0;
-//                            var[4] = scale;
-//                            var[5] = top;
-//                            var[6] = 0;
-//                            var[7] = 0;
-//                            var[8] = 1;
-//
-//                            System.out.println("베이스메트릭스 : "+photoView.getAttacher().mBaseMatrix);
-//                            System.out.println("서플라이메트릭스 : "+photoView.getAttacher().mSuppMatrix);
-//                            System.out.println("드로우매트릭스 : "+photoView.getAttacher().mDrawMatrix);
-//
-//                            scaleUp.setValues(var);
-//                            System.out.println("매트릭스"+ scaleUp);
-//                            photoView.setSuppMatrix(scaleUp);
-//
-//                            photoView.getDisplayMatrix(scaleUp);
-//                            System.out.println("매트리스 결과값 : "+scaleUp);
-//
-//                            System.out.println("베이스메트릭스2 : "+photoView.getAttacher().mBaseMatrix);
-//                            System.out.println("서플라이메트릭스2 : "+photoView.getAttacher().mSuppMatrix);
-//                            System.out.println("드로우매트릭스2 : "+photoView.getAttacher().mDrawMatrix);
+                            Matrix newSuppMatrix = new Matrix();
+                            updateSuppMatrix(newSuppMatrix, saveWidth, saveHeight, saveX, saveY);
 
-                            photoVIewCL.removeView(expandView);
-                            photoVIewCL.removeView(expandView2);
-
+                            photoViewCL.removeView(expandView);
+                            photoViewCL.removeView(expandView2);
                             expandFlag = false;
                             break;
                     }
@@ -290,9 +230,52 @@ public class TaskView_PhotoView extends TaskView {
             }
         });
 
-
     }
 
+    //photoViewCL의 ConstraintSet을 업데이트한다.
+    private void updateConstraintSet(ImageView targetView, int leftMargin, int topMargin) {
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(photoViewCL);
+        constraintSet.connect(targetView.getId(), ConstraintSet.START, photoViewCL.getId(), ConstraintSet.START, leftMargin);
+        constraintSet.connect(targetView.getId(), ConstraintSet.TOP, photoViewCL.getId(), ConstraintSet.TOP, topMargin);
+        constraintSet.applyTo(photoViewCL);
+    }
+
+    //확대영역을 결정하기 위해 mSuppMatrix를 업데이트 해준다.
+    private void updateSuppMatrix(Matrix newSuppMatrix, float saveWidth, float saveHeight, float saveX, float saveY) {
+        Matrix hackMatrix1 = new Matrix();  //mBaseMatrix
+        float[] var = new float[9];
+        float[] hackVar1 = new float[9];
+        float scale = 1;
+        float left, top;
+
+        scale = (float) photoViewCL.getWidth() / saveWidth;
+        left = (photoView.getDisplayRect().left - saveX) * scale;
+        top = (photoView.getDisplayRect().top - saveY) * scale;
+        hackMatrix1 = photoView.getAttacher().mBaseMatrix;
+        hackMatrix1.getValues(hackVar1);
+
+        var[0] = scale;
+        var[1] = 0;
+        if(hackVar1[2] != 0)
+            var[2] = left - (scale * hackVar1[2]);
+        else
+            var[2] = left;
+        var[3] = 0;
+        var[4] = scale;
+        if(hackVar1[5] != 0)
+            var[5] = top - (scale * hackVar1[5]);
+        else
+            var[5] = top;
+        var[6] = 0;
+        var[7] = 0;
+        var[8] = 1;
+
+        newSuppMatrix.setValues(var);
+        photoView.setSuppMatrix(newSuppMatrix);
+    }
+
+    //좌표를 토대로 photoview에 라벨링된 데이터를 그려준다.
     private void drawAnswer(float[][] answerCoordination) {
         coordinationChange(answerCoordination);
 
@@ -317,7 +300,7 @@ public class TaskView_PhotoView extends TaskView {
                 answerList[i].setId(View.generateViewId());
                 answerList[i].setLayoutParams(squareParams);
                 answerList[i].setBackgroundResource(R.drawable.box_2dbox);
-                photoVIewCL.addView(answerList[i]);
+                photoViewCL.addView(answerList[i]);
             }
         }
 
@@ -328,10 +311,10 @@ public class TaskView_PhotoView extends TaskView {
             answerList[i].setLayoutParams(squareParams);
 
             ConstraintSet constraintSet = new ConstraintSet();
-            constraintSet.clone(photoVIewCL);
-            constraintSet.connect(answerList[i].getId(), ConstraintSet.START, photoVIewCL.getId(), ConstraintSet.START, (int) changedCoordination[i][0]);
-            constraintSet.connect(answerList[i].getId(), ConstraintSet.TOP, photoVIewCL.getId(), ConstraintSet.TOP, (int) changedCoordination[i][1]);
-            constraintSet.applyTo(photoVIewCL);
+            constraintSet.clone(photoViewCL);
+            constraintSet.connect(answerList[i].getId(), ConstraintSet.START, photoViewCL.getId(), ConstraintSet.START, (int) changedCoordination[i][0]);
+            constraintSet.connect(answerList[i].getId(), ConstraintSet.TOP, photoViewCL.getId(), ConstraintSet.TOP, (int) changedCoordination[i][1]);
+            constraintSet.applyTo(photoViewCL);
         }
 
     }
