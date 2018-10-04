@@ -15,7 +15,7 @@
         android:layout_marginStart="1dp"
         android:layout_marginTop="1dp"
         android:scaleType="fitCenter"
-        android:background="@color/colorblack"
+        android:background="@color/colorBlack"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +25,7 @@
         android:id="@+id/chooseoption"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:buttonTint="@color/colorwhite"
+        android:buttonTint="@color/colorWhite"
         android:elevation="10dp"
         app:layout_constraintEnd_toEndOf="@+id/imagecontent"
         app:layout_constraintTop_toTopOf="@+id/imagecontent" />
