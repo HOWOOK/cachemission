@@ -3,14 +3,18 @@ package com.selectstar.hwshin.cachemission.DataStructure.Controller;
 import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.selectstar.hwshin.cachemission.Activity.LoginActivity;
 import com.selectstar.hwshin.cachemission.Activity.TaskActivity;
+import com.selectstar.hwshin.cachemission.Activity.TaskListActivity;
+import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoView;
 import com.selectstar.hwshin.cachemission.DataStructure.WaitHttpRequest;
 import com.selectstar.hwshin.cachemission.Photoview.PhotoView;
@@ -21,13 +25,19 @@ import org.json.JSONObject;
 
 public class Controller_2DBox extends Controller {
 
-    Button boxBotton, sendBotton, completeBotton;
-    TextView testingText1, testingText2, testingText3;
-    View centerImage;
-    PhotoView photoView;
-    float originWidth, originHeight, originLeftMargin, originTopMargin;
-    TaskView_PhotoView mtaskView_PhotoView;
-    //float[][] answerCoordination;
+    private Button sendButton, completeButton;
+    private ImageView pinButton;
+    private TextView testingText1, testingText2, testingText3;
+    private View centerImage;
+    private PhotoView photoView;
+    private float originWidth, originHeight, originLeftMargin, originTopMargin;
+    private TaskView_PhotoView mtaskView_PhotoView;
+    private float[][] answerCoordinationtemp;
+    private int answerCount = 0;
+    boolean pinFlag;
+    private int getDeviceDpi;
+    private float dpScale;
+    private ConstraintLayout photoViewCL;
 
     public Controller_2DBox() {
         controllerID = R.layout.controller_2dbox;
@@ -35,124 +45,159 @@ public class Controller_2DBox extends Controller {
 
     @Override
     public void resetContent(final View view, final String taskID) {
-        //GPU가속 끄기 (그래픽 랜더링 문제 때문에 합니다.)
-        view.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-
         centerImage = view.findViewById(R.id.centerimage);
         mtaskView_PhotoView = (TaskView_PhotoView) parentActivity.getmTaskView();
-        //answerCoordination = mtaskView_PhotoView.getAnswerCoordination();
+        pinFlag = true;
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        parentActivity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        getDeviceDpi = displayMetrics.densityDpi;
+        dpScale = (float) getDeviceDpi / 160f;
+        photoViewCL = parentActivity.findViewById(R.id.photoViewCL);
 
         //처음에는 box가 없어야 합니다.
         final ConstraintLayout boxCL = view.findViewById(R.id.boxCL);
         if (boxCL.getVisibility() == boxCL.VISIBLE)
             boxCL.setVisibility(View.INVISIBLE);
 
-        boxBotton = view.findViewById(R.id.boxbtn);
-        boxBotton.setOnClickListener(new View.OnClickListener() {
+        pinButton = parentActivity.findViewById(R.id.pinbtn);
+        pinButton.setBackgroundResource(R.drawable.twodbox_icon_pin_on);
+        pinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (boxCL.getVisibility() == boxCL.VISIBLE) {
-                    boxCL.setVisibility(View.INVISIBLE);
-                    boxBotton.setText("BOX");
+                if (pinFlag){
+                    pinButton.setBackgroundResource(R.drawable.twodbox_icon_pin_off);
+                    pinFlag = false;
+                    Toast.makeText(parentActivity, "사진위치를 조절해주세요.", Toast.LENGTH_SHORT).show();
+                }else{
+                    pinButton.setBackgroundResource(R.drawable.twodbox_icon_pin_on);
+                    pinFlag = true;
+                    Toast.makeText(parentActivity, "박스를 조절해주세요.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+        sendButton = view.findViewById(R.id.sendbtn);
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (((TaskView_PhotoView) parentActivity.getmTaskView()).expandFlag) {
+                    Toast.makeText(parentActivity, "먼저 물체를 찾아주세요", Toast.LENGTH_SHORT).show();
                 } else {
-                    boxCL.setVisibility(View.VISIBLE);
-                    boxBotton.setText("OFF");
-                }
-            }
-        });
+                    JSONObject param = new JSONObject();
+                    try {
+                        param.put("answerID", ((TaskActivity) parentActivity).getAnswerID());
+                        param.put("taskID", taskID);
 
-        sendBotton = view.findViewById(R.id.sendbtn);
-        sendBotton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                JSONObject param = new JSONObject();
-                try {
-                    param.put("answerID", ((TaskActivity) parentActivity).getAnswerID());
-                    param.put("taskID", taskID);
+                        TaskView_PhotoView temp = (TaskView_PhotoView) parentActivity.getmTaskView();
+                        photoView = temp.getPhotoView();
 
-                    TaskView_PhotoView temp = (TaskView_PhotoView) parentActivity.getmTaskView();
-                    photoView = temp.getPhotoView();
+                        System.out.println("디스플레이 네모 : " + photoView.getDisplayRect());
+                        System.out.println("배율 : " + photoView.getScale());
+                        float widthCL = boxCL.getWidth();
+                        float heightCL = boxCL.getHeight();
+                        testingText1 = view.findViewById(R.id.testingtext1);
+                        testingText2 = view.findViewById(R.id.testingtext2);
+                        testingText3 = view.findViewById(R.id.testingtext3);
 
-                    System.out.println("디스플레이 네모 : " + photoView.getDisplayRect());
-                    System.out.println("배율 : " + photoView.getScale());
-                    float widthCL = boxCL.getWidth();
-                    float heightCL = boxCL.getHeight();
-                    testingText1 = view.findViewById(R.id.testingtext1);
-                    testingText2 = view.findViewById(R.id.testingtext2);
-                    testingText3 = view.findViewById(R.id.testingtext3);
+                        /********************************
+                         * (x1, y1) = crop box의 현재 좌상단 좌표
+                         * (x2, y2) = crop box의 현재 우하단 좌표
+                         * (x3, y3) = photoView를 담고있는 constraintlayout의 (0,0)의 좌표가 Scale = 1일 때는 뭔지 환산한 값
+                         * (x4, y4) = crop box의 scale = 1일 대 좌상단 좌표 환산값
+                         * (x5, y5) = crop box의 scale = 1일 대 우하단 좌표 환산값
+                         *********************************/
+                        float x1, x2, x3, x4, x5, y1, y2, y3, y4, y5;
+                        x1 = centerImage.getX();
+                        x2 = x1 + centerImage.getWidth();
+                        y1 = centerImage.getY();
+                        y2 = y1 + centerImage.getHeight();
+                        originWidth = (photoView.getDisplayRect().right - photoView.getDisplayRect().left) / photoView.getScale();
+                        originHeight = (photoView.getDisplayRect().bottom - photoView.getDisplayRect().top) / photoView.getScale();
+                        originLeftMargin = (widthCL / 2.0f) - (originWidth) / 2.0f;
+                        originTopMargin = (heightCL / 2.0f) - (originHeight) / 2.0f;
+                        x3 = originLeftMargin - photoView.getDisplayRect().left / photoView.getScale();
+                        y3 = originTopMargin - photoView.getDisplayRect().top / photoView.getScale();
+                        x4 = x3 + x1 / photoView.getScale();
+                        y4 = y3 + y1 / photoView.getScale();
+                        x5 = x3 + x2 / photoView.getScale();
+                        y5 = y3 + y2 / photoView.getScale();
 
-                    /********************************
-                     * (x1, y1) = crop box의 현재 좌상단 좌표
-                     * (x2, y2) = crop box의 현재 우하단 좌표
-                     * (x3, y3) = photoView를 담고있는 constraintlayout의 (0,0)의 좌표가 Scale = 1일 때는 뭔지 환산한 값
-                     * (x4, y4) = crop box의 scale = 1일 대 좌상단 좌표 환산값
-                     * (x5, y5) = crop box의 scale = 1일 대 우하단 좌표 환산값
-                     *********************************/
-                    float x1, x2, x3, x4, x5, y1, y2, y3, y4, y5;
-                    x1 = centerImage.getX();
-                    x2 = x1 + centerImage.getWidth();
-                    y1 = centerImage.getY();
-                    y2 = y1 + centerImage.getHeight();
-                    originWidth = (photoView.getDisplayRect().right - photoView.getDisplayRect().left) / photoView.getScale();
-                    originHeight = (photoView.getDisplayRect().bottom - photoView.getDisplayRect().top) / photoView.getScale();
-                    originLeftMargin = (widthCL / 2.0f) - (originWidth) / 2.0f;
-                    originTopMargin = (heightCL / 2.0f) - (originHeight) / 2.0f;
-                    x3 = originLeftMargin - photoView.getDisplayRect().left / photoView.getScale();
-                    y3 = originTopMargin - photoView.getDisplayRect().top / photoView.getScale();
-                    x4 = x3 + x1 / photoView.getScale();
-                    y4 = y3 + y1 / photoView.getScale();
-                    x5 = x3 + x2 / photoView.getScale();
-                    y5 = y3 + y2 / photoView.getScale();
-
-                    //보내야하는 데이타
-                    float leftPercent, topPercent, rightPercent, bottomPercent;
-                    String submit;
-                    leftPercent = (x4 - originLeftMargin) / originWidth;
-                    topPercent = (y4 - originTopMargin) / originHeight;
-                    rightPercent = (x5 - originLeftMargin) / originWidth;
-                    bottomPercent = (y5 - originTopMargin) / originHeight;
-                    submit = leftPercent + "," + topPercent + "," + rightPercent + "," + bottomPercent;
-                    param.put("submit", submit);
+                        //보내야하는 데이타
+                        final float leftPercent, topPercent, rightPercent, bottomPercent;
+                        String submit;
+                        leftPercent = (x4 - originLeftMargin) / originWidth;
+                        topPercent = (y4 - originTopMargin) / originHeight;
+                        rightPercent = (x5 - originLeftMargin) / originWidth;
+                        bottomPercent = (y5 - originTopMargin) / originHeight;
+                        submit = leftPercent + "," + topPercent + "," + rightPercent + "," + bottomPercent;
+                        param.put("submit", submit);
 
 
-                    new WaitHttpRequest(parentActivity) {
-                        @Override
-                        protected void onPostExecute(Object o) {
-                            super.onPostExecute(o);
+                        new WaitHttpRequest(parentActivity) {
+                            @Override
+                            protected void onPostExecute(Object o) {
+                                super.onPostExecute(o);
 
-                            try {
-                                JSONObject resultTemp = new JSONObject(result);
-                                if (resultTemp.get("success").toString().equals("false")) {
-                                    if (resultTemp.get("message").toString().equals("login")) {
-                                        Intent in = new Intent(parentActivity, LoginActivity.class);
-                                        parentActivity.startActivity(in);
-                                        Toast.makeText(parentActivity, "로그인이 만료되었습니다. 다시 로그인해주세요", Toast.LENGTH_SHORT).show();
-                                        parentActivity.finish();
-                                    } else if (resultTemp.get("message").toString().equals("task")) {
+                                try {
+                                    JSONObject resultTemp = new JSONObject(result);
+                                    if (resultTemp.get("success").toString().equals("false")) {
+                                        if (resultTemp.get("message").toString().equals("login")) {
+                                            Intent in = new Intent(parentActivity, LoginActivity.class);
+                                            parentActivity.startActivity(in);
+                                            Toast.makeText(parentActivity, "로그인이 만료되었습니다. 다시 로그인해주세요", Toast.LENGTH_SHORT).show();
+                                            parentActivity.finish();
+                                        } else if (resultTemp.get("message").toString().equals("task")) {
 
-                                        Toast.makeText(parentActivity, "테스크가 만료되었습니다. 다른 테스크를 선택해주세요", Toast.LENGTH_SHORT).show();
-                                        parentActivity.finish();
+                                            Toast.makeText(parentActivity, "테스크가 만료되었습니다. 다른 테스크를 선택해주세요", Toast.LENGTH_SHORT).show();
+                                            parentActivity.finish();
+                                        } else {
+                                            Toast.makeText(parentActivity, "남은 테스크가 없습니다.", Toast.LENGTH_SHORT).show();
+                                            parentActivity.finish();
+                                        }
                                     } else {
-                                        Toast.makeText(parentActivity, "남은 테스크가 없습니다.", Toast.LENGTH_SHORT).show();
-                                        parentActivity.finish();
+                                        answerCount++;
+                                        answerCoordinationtemp = mtaskView_PhotoView.answerCoordination;
+                                        mtaskView_PhotoView.answerCoordination = new float[answerCount][4];
+                                        mtaskView_PhotoView.changedCoordination = new float[mtaskView_PhotoView.answerCoordination.length][4];
+                                        if(answerCoordinationtemp != null){
+                                            for(int i = 0; i < answerCoordinationtemp.length; i++){
+                                                mtaskView_PhotoView.answerCoordination[i][0] = answerCoordinationtemp[i][0];
+                                                mtaskView_PhotoView.answerCoordination[i][1] = answerCoordinationtemp[i][1];
+                                                mtaskView_PhotoView.answerCoordination[i][2] = answerCoordinationtemp[i][2];
+                                                mtaskView_PhotoView.answerCoordination[i][3] = answerCoordinationtemp[i][3];
+                                            }
+                                        }
+                                        mtaskView_PhotoView.answerCoordination[answerCount-1][0] = leftPercent;
+                                        mtaskView_PhotoView.answerCoordination[answerCount-1][1] = topPercent;
+                                        mtaskView_PhotoView.answerCoordination[answerCount-1][2] = rightPercent;
+                                        mtaskView_PhotoView.answerCoordination[answerCount-1][3] = bottomPercent;
+
+                                        mtaskView_PhotoView.drawAnswer(mtaskView_PhotoView.answerCoordination);
+
+
+                                        ConstraintLayout textDragCL = parentActivity.findViewById(R.id.textDragCL);
+                                        Toast.makeText(parentActivity, "제출 완료! 계속 찾아주세요.", Toast.LENGTH_SHORT).show();
+                                        boxCL.setVisibility(View.INVISIBLE);
+                                        textDragCL.setVisibility(View.VISIBLE);
+                                        photoView.setScale(1);
+                                        ((TaskView_PhotoView) parentActivity.getmTaskView()).expandFlag = true;
                                     }
-                                } else {
-                                   //((TaskActivity) parentActivity).startTask();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
                             }
-                        }
-                    }.execute(parentActivity.getString(R.string.mainurl) + "/taskSubmit", param, ((TaskActivity) parentActivity).getLoginToken());
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                        }.execute(parentActivity.getString(R.string.mainurl) + "/taskSubmit", param, ((TaskActivity) parentActivity).getLoginToken());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
 
 
-        completeBotton = view.findViewById(R.id.completebtn);
-        completeBotton.setOnClickListener(new View.OnClickListener() {
+        completeButton = view.findViewById(R.id.completebtn);
+        completeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 photoView = mtaskView_PhotoView.getPhotoView();
@@ -204,8 +249,6 @@ public class Controller_2DBox extends Controller {
                 testingText1.setText(leftPercent + "," + topPercent + ",\n" + rightPercent + "," + bottomPercent);
 
 
-
-
             }
         });
 
@@ -227,6 +270,8 @@ public class Controller_2DBox extends Controller {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                if(!pinFlag)
+                    return false;
                 ConstraintLayout.LayoutParams mLayoutParams1 = (ConstraintLayout.LayoutParams) top_line.getLayoutParams();
                 ConstraintLayout.LayoutParams mLayoutParams2 = (ConstraintLayout.LayoutParams) topleft_corner.getLayoutParams();
                 ConstraintLayout.LayoutParams mLayoutParams3 = (ConstraintLayout.LayoutParams) topright_corner.getLayoutParams();
@@ -262,6 +307,8 @@ public class Controller_2DBox extends Controller {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                if(!pinFlag)
+                    return false;
                 ConstraintLayout.LayoutParams mLayoutParams1 = (ConstraintLayout.LayoutParams) bottom_line.getLayoutParams();
                 ConstraintLayout.LayoutParams mLayoutParams2 = (ConstraintLayout.LayoutParams) bottomleft_corner.getLayoutParams();
                 ConstraintLayout.LayoutParams mLayoutParams3 = (ConstraintLayout.LayoutParams) bottomright_corner.getLayoutParams();
@@ -297,6 +344,8 @@ public class Controller_2DBox extends Controller {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                if(!pinFlag)
+                    return false;
                 ConstraintLayout.LayoutParams mLayoutParams1 = (ConstraintLayout.LayoutParams) left_line.getLayoutParams();
                 ConstraintLayout.LayoutParams mLayoutParams2 = (ConstraintLayout.LayoutParams) topleft_corner.getLayoutParams();
                 ConstraintLayout.LayoutParams mLayoutParams3 = (ConstraintLayout.LayoutParams) bottomleft_corner.getLayoutParams();
@@ -332,6 +381,8 @@ public class Controller_2DBox extends Controller {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                if(!pinFlag)
+                    return false;
                 ConstraintLayout.LayoutParams mLayoutParams1 = (ConstraintLayout.LayoutParams) right_line.getLayoutParams();
                 ConstraintLayout.LayoutParams mLayoutParams2 = (ConstraintLayout.LayoutParams) topright_corner.getLayoutParams();
                 ConstraintLayout.LayoutParams mLayoutParams3 = (ConstraintLayout.LayoutParams) bottomright_corner.getLayoutParams();
@@ -367,6 +418,8 @@ public class Controller_2DBox extends Controller {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                if(!pinFlag)
+                    return false;
                 ConstraintLayout.LayoutParams mLayoutParams1 = (ConstraintLayout.LayoutParams) top_line.getLayoutParams();
                 ConstraintLayout.LayoutParams mLayoutParams2 = (ConstraintLayout.LayoutParams) left_line.getLayoutParams();
                 ConstraintLayout.LayoutParams mLayoutParams3 = (ConstraintLayout.LayoutParams) topleft_corner.getLayoutParams();
@@ -423,6 +476,8 @@ public class Controller_2DBox extends Controller {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                if(!pinFlag)
+                    return false;
                 ConstraintLayout.LayoutParams mLayoutParams1 = (ConstraintLayout.LayoutParams) top_line.getLayoutParams();
                 ConstraintLayout.LayoutParams mLayoutParams2 = (ConstraintLayout.LayoutParams) right_line.getLayoutParams();
                 ConstraintLayout.LayoutParams mLayoutParams3 = (ConstraintLayout.LayoutParams) topright_corner.getLayoutParams();
@@ -479,6 +534,8 @@ public class Controller_2DBox extends Controller {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                if(!pinFlag)
+                    return false;
                 ConstraintLayout.LayoutParams mLayoutParams1 = (ConstraintLayout.LayoutParams) bottom_line.getLayoutParams();
                 ConstraintLayout.LayoutParams mLayoutParams2 = (ConstraintLayout.LayoutParams) left_line.getLayoutParams();
                 ConstraintLayout.LayoutParams mLayoutParams3 = (ConstraintLayout.LayoutParams) bottomleft_corner.getLayoutParams();
@@ -535,6 +592,8 @@ public class Controller_2DBox extends Controller {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                if(!pinFlag)
+                    return false;
                 ConstraintLayout.LayoutParams mLayoutParams1 = (ConstraintLayout.LayoutParams) bottom_line.getLayoutParams();
                 ConstraintLayout.LayoutParams mLayoutParams2 = (ConstraintLayout.LayoutParams) right_line.getLayoutParams();
                 ConstraintLayout.LayoutParams mLayoutParams3 = (ConstraintLayout.LayoutParams) bottomright_corner.getLayoutParams();
@@ -616,11 +675,13 @@ public class Controller_2DBox extends Controller {
                 bottomright_corner.setLayoutParams(params[7]);
             }
 
-            float lastX;
-            float lastY;
+            int lastX;
+            int lastY;
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                if(!pinFlag)
+                    return false;
                 ConstraintLayout.LayoutParams mLayoutParams1 = (ConstraintLayout.LayoutParams) top_line.getLayoutParams();
                 ConstraintLayout.LayoutParams mLayoutParams2 = (ConstraintLayout.LayoutParams) bottom_line.getLayoutParams();
                 ConstraintLayout.LayoutParams mLayoutParams3 = (ConstraintLayout.LayoutParams) left_line.getLayoutParams();
@@ -631,8 +692,8 @@ public class Controller_2DBox extends Controller {
                 ConstraintLayout.LayoutParams mLayoutParams8 = (ConstraintLayout.LayoutParams) bottomright_corner.getLayoutParams();
 
                 int action = event.getAction();
-                float curX = event.getX();
-                float curY = event.getY();
+                int curX = (int) event.getX();
+                int curY = (int) event.getY();
                 //System.out.println("처음 X값(curX) : "+curX);
                 //System.out.println("처음 Y값(curY) : "+curY);
                 if (action == MotionEvent.ACTION_DOWN) {
@@ -641,14 +702,12 @@ public class Controller_2DBox extends Controller {
                     //System.out.println("움직임 X값(lastX) : "+lastX);
                     //System.out.println("움직임 Y값(lastY) : "+lastY);
                 } else if (action == MotionEvent.ACTION_MOVE) {
-                    float X = curX - lastX;
-                    float Y = curY - lastY;
+                    int X = curX - lastX;
+                    int Y = curY - lastY;
                     //System.out.println("계산한 X값(X) : "+X);
                     //System.out.println("계산한 Y값(Y) : "+Y);
                     int deviceW = boxCL.getWidth();
                     int deviceH = boxCL.getHeight();
-                    float temp1 = bottom_line.getY() + bottom_line.getHeight();
-                    float temp3 = right_line.getX() + right_line.getWidth();
 
                     if ((top_line.getY() <= 0 && Y < 0)
                             && !(bottom_line.getY() + bottom_line.getHeight() >= deviceH && Y > 0)
@@ -712,6 +771,8 @@ public class Controller_2DBox extends Controller {
         youcanttouchanymore.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                if(!pinFlag)
+                    return false;
                 return true;
             }
         });
@@ -720,10 +781,6 @@ public class Controller_2DBox extends Controller {
 
     @Override
     public void setLayout(View view, String taskID) {
-
-    }
-
-    public void drawAnswer(){
 
     }
 

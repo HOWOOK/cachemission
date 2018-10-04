@@ -20,10 +20,13 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_2DBox;
 import com.selectstar.hwshin.cachemission.DataStructure.HurryHttpRequest;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_Photo;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView;
+import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoView;
 import com.selectstar.hwshin.cachemission.DataStructure.UIHashMap;
 import com.selectstar.hwshin.cachemission.R;
 
@@ -56,6 +59,11 @@ public class TaskActivity extends PatherActivity {
     public TaskView getmTaskView() {
         return mTaskView;
     }
+
+    public Controller getmController() {
+        return mController;
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -389,6 +397,20 @@ public class TaskActivity extends PatherActivity {
 
     }
 
-
-
+    @Override
+    public void onBackPressed() {
+        if(taskType.equals("BOXCROP")){
+            TaskView_PhotoView temp = (TaskView_PhotoView) mTaskView;
+            if(!temp.expandFlag){
+                temp.expandFlag = true;
+                temp.getPhotoView().setScale(1);
+                findViewById(R.id.boxCL).setVisibility(View.INVISIBLE);
+                findViewById(R.id.textDragCL).setVisibility(View.VISIBLE);
+            } else{
+                super.onBackPressed();
+            }
+        }else{
+            super.onBackPressed();
+        }
+    }
 }

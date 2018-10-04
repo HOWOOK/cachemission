@@ -9,9 +9,11 @@ import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -27,12 +29,14 @@ import java.util.ArrayList;
 
 public class TaskView_PhotoView extends TaskView {
     private PhotoView photoView;
-    private float[][] answerCoordination;
-    private float[][] changedCoordination;
+    public float[][] answerCoordination;
+    public float[][] changedCoordination;
     private String[] array1, array2, array3;
     private ConstraintLayout photoViewCL;
     private ImageView[] answerList;
-    private boolean expandFlag, isExamFlag;
+    public boolean expandFlag, isExamFlag;
+    private int getDeviceDpi;
+    private float dpScale;
 
     public TaskView_PhotoView()
     {
@@ -64,13 +68,17 @@ public class TaskView_PhotoView extends TaskView {
             expandFlag = false;
 
         photoViewCL = parentActivity.findViewById(R.id.photoViewCL);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        parentActivity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        getDeviceDpi = displayMetrics.densityDpi;
+        dpScale = (float) getDeviceDpi / 160f;
 
         //box 좌표 구해서 저장
         array1 = content.split("&");
         if(array1.length==2) {//좌표를 찾은적이 있는 놈이라면..
             array2 = array1[1].split("\\(");
             answerCoordination = new float[array2.length-1][4];
-            changedCoordination = new float[array2.length-1][4];
+            changedCoordination = new float[answerCoordination.length][4];
             coordinationParsing(array2);
         }
 
@@ -84,7 +92,7 @@ public class TaskView_PhotoView extends TaskView {
                     public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
 
                         photoView.setImageDrawable(resource);
-                        if(answerCoordination != null && isExamFlag) {
+                        if(answerCoordination != null) {
 
 //                            System.out.print("-----안비어있지롱-----");
 //                            System.out.println("길이 : "+answerCoordination.length);
@@ -102,32 +110,35 @@ public class TaskView_PhotoView extends TaskView {
                     }
                 });
 
-
         photoView.setOnMatrixChangeListener(new OnMatrixChangedListener() {
             @Override
             public void onMatrixChanged(RectF rect) {
-                if(answerCoordination!= null && isExamFlag)
+                if(answerCoordination!= null)
                     drawAnswer(answerCoordination);
             }
         });
-        
         photoView.setOnTouchListener(new View.OnTouchListener() {
-            ImageView expandView = null;
+            ImageView expandView = parentActivity.findViewById(R.id.expandView);
             ConstraintLayout.LayoutParams expandViewParams;
-            ImageView expandView2 = null;
+            ImageView expandView2 = parentActivity.findViewById(R.id.expandView2);
             ConstraintLayout.LayoutParams expandView2Params;
+            View topFadeView = null;
+            View bottomFadeView = null;
+            View leftFadeView = null;
+            View rightFadeView = null;
+            ConstraintLayout.LayoutParams fadeViewParams;
             float initX = 0;
             float initY = 0;
             float pvRatio = 0;
-            int space = 50;
+            int space = 100;
             float saveWidth = 0;
             float saveHeight = 0;
             float saveX = 0;
             float saveY = 0;
 
-
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                ConstraintLayout testDragCL = parentActivity.findViewById(R.id.textDragCL);
                 photoView.getAttacher().onTouch(v, event);
                 if(expandFlag) {
                     switch (event.getAction()){
@@ -137,21 +148,12 @@ public class TaskView_PhotoView extends TaskView {
                             pvRatio = (float) photoViewCL.getWidth() / (float) photoViewCL.getHeight();
                             System.out.println("포토뷰 비율 : "+ pvRatio );
 
-                            expandView = new ImageView(parentActivity);
-                            expandViewParams = new ConstraintLayout.LayoutParams(0, 0);
-                            expandView.setId(View.generateViewId());
                             expandView.setBackgroundResource(R.drawable.box_2dbox);
-                            expandView.setLayoutParams(expandViewParams);
-                            photoViewCL.addView(expandView);
-                            updateConstraintSet(expandView, (int) initX, (int) initY);
+                            updateConstraintSet1(expandView, (int) initX, (int) initY);
 
-                            expandView2 = new ImageView(parentActivity);
-                            expandView2Params = new ConstraintLayout.LayoutParams(0,0);
-                            expandView2.setId(View.generateViewId());
                             expandView2.setBackgroundResource(R.drawable.box_2dbox2);
-                            expandView2.setLayoutParams(expandViewParams);
-                            photoViewCL.addView(expandView2);
-                            updateConstraintSet(expandView2, (int) initX, (int) initY);
+                            updateConstraintSet1(expandView2, (int) initX, (int) initY);
+                            testDragCL.setVisibility(View.INVISIBLE);
                             break;
 
                         case MotionEvent.ACTION_MOVE:
@@ -201,26 +203,24 @@ public class TaskView_PhotoView extends TaskView {
                             if(expandView != null && expandView2 != null) {
                                 expandViewParams = new ConstraintLayout.LayoutParams(width, height);
                                 expandView.setLayoutParams(expandViewParams);
-                                updateConstraintSet(expandView, (int)leftMargin, (int) topMargin);
+                                updateConstraintSet1(expandView, (int)leftMargin, (int) topMargin);
 
                                 expandView2Params = new ConstraintLayout.LayoutParams(width2, height2);
                                 expandView2.setLayoutParams(expandView2Params);
-                                ConstraintSet constraintSet = new ConstraintSet();
-                                constraintSet.clone(photoViewCL);
-                                constraintSet.connect(expandView2.getId(), ConstraintSet.START, expandView.getId(), ConstraintSet.START);
-                                constraintSet.connect(expandView2.getId(), ConstraintSet.END, expandView.getId(), ConstraintSet.END);
-                                constraintSet.connect(expandView2.getId(), ConstraintSet.TOP, expandView.getId(), ConstraintSet.TOP);
-                                constraintSet.connect(expandView2.getId(), ConstraintSet.BOTTOM, expandView.getId(), ConstraintSet.BOTTOM);
-                                constraintSet.applyTo(photoViewCL);
+                                updateConstraintSet2(expandView2, expandView);
                             }
                             break;
-
                         case MotionEvent.ACTION_UP:
                             Matrix newSuppMatrix = new Matrix();
                             updateSuppMatrix(newSuppMatrix, saveWidth, saveHeight, saveX, saveY);
+                            boxSetting(expandView, expandView2);
 
-                            photoViewCL.removeView(expandView);
-                            photoViewCL.removeView(expandView2);
+                            expandViewParams = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT);
+                            expandView.setLayoutParams(expandViewParams);
+                            expandView.setBackgroundColor(parentActivity.getResources().getColor(R.color.photoViewExpandHackColor));
+                            expandView2Params = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT);
+                            expandView2.setLayoutParams(expandView2Params);
+                            expandView2.setBackgroundColor(parentActivity.getResources().getColor(R.color.photoViewExpandHackColor));
                             expandFlag = false;
                             break;
                     }
@@ -229,15 +229,67 @@ public class TaskView_PhotoView extends TaskView {
 
             }
         });
+    }
 
+    private void boxSetting(View expandView, View expandView2) {
+        ConstraintLayout boxCL = parentActivity.findViewById(R.id.boxCL);
+        ConstraintLayout.LayoutParams expandViewParams = (ConstraintLayout.LayoutParams) expandView.getLayoutParams();
+        ConstraintLayout.LayoutParams expandView2Params = (ConstraintLayout.LayoutParams) expandView2.getLayoutParams();
+        float scale;
+        View topLine, bottomLine, leftLine, rightLine, topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner;
+        ConstraintLayout.LayoutParams topLineParams, bottomLineParams, leftLineParams, rightLineParams, topLeftCornerParams, topRightCornerParams, bottomLeftCornerParams, bottomRightCornerParams;
+        float setValTopBottom, setValLeftRight;
+
+        topLine = parentActivity.findViewById(R.id.top_line);
+        bottomLine = parentActivity.findViewById(R.id.bottom_line);
+        leftLine = parentActivity.findViewById(R.id.left_line);
+        rightLine = parentActivity.findViewById(R.id.right_line);
+        topLeftCorner = parentActivity.findViewById(R.id.topleft_corner);
+        topRightCorner = parentActivity.findViewById(R.id.topright_corner);
+        bottomLeftCorner = parentActivity.findViewById(R.id.bottomleft_corner);
+        bottomRightCorner = parentActivity.findViewById(R.id.bottomright_corner);
+        topLineParams = (ConstraintLayout.LayoutParams) topLine.getLayoutParams();
+        bottomLineParams = (ConstraintLayout.LayoutParams) bottomLine.getLayoutParams();
+        leftLineParams = (ConstraintLayout.LayoutParams) leftLine.getLayoutParams();
+        rightLineParams = (ConstraintLayout.LayoutParams) rightLine.getLayoutParams();
+        topLeftCornerParams = (ConstraintLayout.LayoutParams) topLeftCorner.getLayoutParams();
+        topRightCornerParams = (ConstraintLayout.LayoutParams) topRightCorner.getLayoutParams();
+        bottomLeftCornerParams = (ConstraintLayout.LayoutParams) bottomLeftCorner.getLayoutParams();
+        bottomRightCornerParams = (ConstraintLayout.LayoutParams) bottomRightCorner.getLayoutParams();
+
+        scale = photoView.getScale();
+        setValTopBottom = ((expandView2Params.height - expandViewParams.height) / 2) * scale ;
+        setValLeftRight = ((expandView2Params.width - expandViewParams.width) / 2) * scale;
+
+        topLineParams.setMargins(0, (int) (setValTopBottom - 11f*dpScale) ,0,0);
+        bottomLineParams.setMargins(0, 0 ,0,(int) (setValTopBottom - 11f*dpScale));
+        leftLineParams.setMargins((int) (setValLeftRight - 11f*dpScale), 0 ,0,0);
+        rightLineParams.setMargins(0, 0,(int) (setValLeftRight - 11f*dpScale),0);
+        topLeftCornerParams.setMargins((int) (setValLeftRight - 16f*dpScale), (int) (setValTopBottom - 16f*dpScale),0,0);
+        topRightCornerParams.setMargins(0, (int) (setValTopBottom - 16f*dpScale),(int) (setValLeftRight - 16f*dpScale),0);
+        bottomLeftCornerParams.setMargins((int) (setValLeftRight - 16f*dpScale), 0,0,(int) (setValTopBottom - 16f*dpScale));
+        bottomRightCornerParams.setMargins(0, 0,(int) (setValLeftRight - 16f*dpScale),(int) (setValTopBottom - 16f*dpScale));
+        topLine.requestLayout();
+
+        boxCL.setVisibility(View.VISIBLE);
     }
 
     //photoViewCL의 ConstraintSet을 업데이트한다.
-    private void updateConstraintSet(ImageView targetView, int leftMargin, int topMargin) {
+    private void updateConstraintSet1(ImageView targetView, int leftMargin, int topMargin) {
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(photoViewCL);
         constraintSet.connect(targetView.getId(), ConstraintSet.START, photoViewCL.getId(), ConstraintSet.START, leftMargin);
         constraintSet.connect(targetView.getId(), ConstraintSet.TOP, photoViewCL.getId(), ConstraintSet.TOP, topMargin);
+        constraintSet.applyTo(photoViewCL);
+    }
+
+    private void updateConstraintSet2(View targetView, View linkView) {
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(photoViewCL);
+        constraintSet.connect(targetView.getId(), ConstraintSet.TOP, linkView.getId(), ConstraintSet.TOP);
+        constraintSet.connect(targetView.getId(), ConstraintSet.BOTTOM, linkView.getId(), ConstraintSet.BOTTOM);
+        constraintSet.connect(targetView.getId(), ConstraintSet.START, linkView.getId(), ConstraintSet.START);
+        constraintSet.connect(targetView.getId(), ConstraintSet.END, linkView.getId(), ConstraintSet.END);
         constraintSet.applyTo(photoViewCL);
     }
 
@@ -276,7 +328,7 @@ public class TaskView_PhotoView extends TaskView {
     }
 
     //좌표를 토대로 photoview에 라벨링된 데이터를 그려준다.
-    private void drawAnswer(float[][] answerCoordination) {
+    public void drawAnswer(float[][] answerCoordination) {
         coordinationChange(answerCoordination);
 
 //        System.out.print("-----변환된 좌표-----");
@@ -326,16 +378,16 @@ public class TaskView_PhotoView extends TaskView {
         photoHeight = photoView.getDisplayRect().bottom - photoView.getDisplayRect().top;
         for (int i = 0; i<answerCoordination.length; i++){
             changedCoordination[i][0] = photoView.getDisplayRect().left + answerCoordination[i][0] * photoWidth; //left
-            changedCoordination[i][1] = photoView.getDisplayRect().top + answerCoordination[i][1] * photoHeight + 2; //top (+2는 box line의 두께)
+            changedCoordination[i][1] = photoView.getDisplayRect().top + answerCoordination[i][1] * photoHeight; //top
             changedCoordination[i][2] = photoView.getDisplayRect().left + answerCoordination[i][2] * photoWidth; //right
-            changedCoordination[i][3] = photoView.getDisplayRect().top + answerCoordination[i][3] * photoHeight + 2; //bottom (+2는 box line의 두께)
+            changedCoordination[i][3] = photoView.getDisplayRect().top + answerCoordination[i][3] * photoHeight; //bottom
         }
     }
 
     //String 형태로 서버에서 넘어온 좌표를 float[][] 형식으로 바꾸어 answerCoordination에 넣어줌
     private void coordinationParsing(String[] array) {
-        for(int i =1; i < array2.length; i++){
-            array3 = array2[i].split(",");
+        for(int i =1; i < array.length; i++){
+            array3 = array[i].split(",");
             answerCoordination[i-1][0] = (float) Float.parseFloat(array3[0]);
             answerCoordination[i-1][1] = (float) Float.parseFloat(array3[1]);
             answerCoordination[i-1][2] = (float) Float.parseFloat(array3[2]);

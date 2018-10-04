@@ -6,8 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/photoViewCL"
-    android:layout_marginBottom="50dp"
+    android:layout_marginBottom="86dp"
     >
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#1C2629"
+        />
 
     <com.selectstar.hwshin.cachemission.Photoview.PhotoView
         android:id="@+id/srcview"
@@ -20,5 +27,89 @@
         app:layout_constraintBottom_toBottomOf="parent"
         />
 
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/textDragCL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#80000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+
+        <TextView
+            android:id="@+id/textDrag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:textSize="15dp"
+            android:text="드래그로 박스를 쳐주세요"
+            android:textColor="#FFFFFF"
+            android:fontFamily="@font/bmjua_"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+    </android.support.constraint.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/expandView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#00FFFFFF"
+        />
+
+    <ImageView
+        android:id="@+id/expandView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#00FFFFFF"
+        />
+
+    <View
+        android:id="@+id/expandViewFadeTop"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#CDFFFFFF"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/expandView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <View
+        android:id="@+id/expandViewFadeBottom"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#CDFFFFFF"
+        app:layout_constraintTop_toBottomOf="@+id/expandView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <View
+        android:id="@+id/expandViewFadeLeft"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#CDFFFFFF"
+        app:layout_constraintTop_toBottomOf="@+id/expandViewFadeTop"
+        app:layout_constraintBottom_toTopOf="@+id/expandViewFadeBottom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/expandView"
+        />
+
+    <View
+        android:id="@+id/expandViewFadeRight"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#CDFFFFFF"
+        app:layout_constraintTop_toBottomOf="@+id/expandViewFadeTop"
+        app:layout_constraintBottom_toTopOf="@+id/expandViewFadeBottom"
+        app:layout_constraintStart_toEndOf="@+id/expandView"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
 </android.support.constraint.ConstraintLayout>
