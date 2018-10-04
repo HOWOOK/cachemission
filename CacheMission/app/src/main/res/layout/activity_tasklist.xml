@@ -191,6 +191,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/CL1">
 
+            <Button
+                android:id="@+id/refreshbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="463dp"
+                android:text="새로고침"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/drawer_usertable"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.51" />
             <ListView
                 android:id="@+id/taskList"
                 android:layout_width="match_parent"
@@ -216,6 +228,8 @@
         android:background="#FFFFFF"
         android:layout_gravity="left"
         >
+
+
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/drawer_usertable"
