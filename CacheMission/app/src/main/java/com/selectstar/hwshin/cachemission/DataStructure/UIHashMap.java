@@ -41,6 +41,7 @@ public class UIHashMap {
     int[][] parameters_DIALECT = new int[6][2];
     int[][] parameters_PHOTO = new int[6][2];
     int[][] parameters_BOXCROP = new int[6][2];
+    int[][] parameters_DIRECTRECORD = new int[6][2];
     //int[][] parameters_BOXCROP = new int[6][2];
 
     int[][] parameters_OCREXAM = new int[6][2];
@@ -51,6 +52,7 @@ public class UIHashMap {
     int[][] parameters_DIALECTEXAM = new int[6][2];
     int[][] parameters_PHOTOEXAM = new int[6][2];
     int[][] parameters_BOXCROPEXAM = new int[6][2];
+    int[][] parameters_DIRECTRECORDEXAM = new int[6][2];
 
     public HashMap<String, TaskView> taskViewHashMap = new HashMap();
     public HashMap<String, Controller> controllerHashMap = new HashMap();
@@ -120,6 +122,13 @@ public class UIHashMap {
         parameters_VOICE[4][0] = R.id.taskConstLayout; parameters_VOICE[4][1] = 4;
         parameters_VOICE[5][0] = 10;
         taskHashMap.put("RECORD", parameters_VOICE);
+        parameters_VOICE[0][0] = 20;
+        parameters_VOICE[1][0] = R.id.option; parameters_VOICE[1][1] = 4;
+        parameters_VOICE[2][0] = R.id.controller; parameters_VOICE[2][1] = 3;
+        parameters_VOICE[3][0] = R.id.taskview; parameters_VOICE[3][1] = 4;
+        parameters_VOICE[4][0] = R.id.taskConstLayout; parameters_VOICE[4][1] = 4;
+        parameters_VOICE[5][0] = 10;
+        taskHashMap.put("DIRECTRECORD", parameters_VOICE);
 
         parameters_VOICEEXAM[0][0] = 25;
         parameters_VOICEEXAM[1][0] = R.id.title; parameters_VOICEEXAM[1][1] = 4;
@@ -128,6 +137,13 @@ public class UIHashMap {
         parameters_VOICEEXAM[4][0] = R.id.taskConstLayoutexam; parameters_VOICEEXAM[4][1] = 4;
         parameters_VOICEEXAM[5][0] = 10;
         taskHashMap.put("RECORDEXAM", parameters_VOICEEXAM);
+        parameters_VOICEEXAM[0][0] = 25;
+        parameters_VOICEEXAM[1][0] = R.id.title; parameters_VOICEEXAM[1][1] = 4;
+        parameters_VOICEEXAM[2][0] = R.id.examview; parameters_VOICEEXAM[2][1] = 3;
+        parameters_VOICEEXAM[3][0] = R.id.taskviewexam; parameters_VOICEEXAM[3][1] = 4;
+        parameters_VOICEEXAM[4][0] = R.id.taskConstLayoutexam; parameters_VOICEEXAM[4][1] = 4;
+        parameters_VOICEEXAM[5][0] = 10;
+        taskHashMap.put("DIRECTRECORDEXAM", parameters_VOICEEXAM);
 
         parameters_DICTATION[0][0] = 5;
         parameters_DICTATION[1][0] = R.id.title; parameters_DICTATION[1][1] = 4;

@@ -82,15 +82,8 @@ public class SettingActivity extends AppCompatActivity {
 
         Switch pushOnOff = findViewById(R.id.pushonoffbtn);
         final SharedPreferences push = getSharedPreferences("push", MODE_PRIVATE);
-        String OnOff = push.getString("push", null);
-        boolean isOn = false;
-        if(OnOff!=null) {
-            if (OnOff.equals("true"))
-                isOn = true;
-            else
-                isOn = false;
-        }
-        pushOnOff.setChecked(isOn);
+        String OnOff = push.getString("push", "true");
+        pushOnOff.setChecked(OnOff.equals("true"));
         pushOnOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             SharedPreferences.Editor editor = push.edit();
             @Override

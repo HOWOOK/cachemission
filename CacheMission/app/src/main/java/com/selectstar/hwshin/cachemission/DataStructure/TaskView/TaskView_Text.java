@@ -41,7 +41,7 @@ public class TaskView_Text extends TaskView {
             textView2.setText(array[1]+"\n\n※ 억양만 사투리여도 그대로 적으시고, 원하는 호칭이나 이름으로 자연스럽게 써주세요.");
             textView2.setTextColor(ContextCompat.getColor(parentActivity, R.color.fontColorActive));
             textView2.setTextSize(18);
-        }else if(taskType.equals("RECORD") || taskType.equals("RECORDEXAM")){
+        }else if(taskType.equals("RECORD") || taskType.equals("RECORDEXAM") || taskType.equals("DIRECTRECORD")){
 
 
             if(!(content.indexOf("(")>0)){

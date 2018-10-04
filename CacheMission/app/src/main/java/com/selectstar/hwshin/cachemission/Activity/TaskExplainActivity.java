@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.selectstar.hwshin.cachemission.Adapter.Explain.SlideAdapter_ExplainTask_Dialect;
+import com.selectstar.hwshin.cachemission.Adapter.Explain.SlideAdapter_ExplainTask_DirectRecord;
 import com.selectstar.hwshin.cachemission.Adapter.Explain.SlideAdapter_ExplainTask_None;
 import com.selectstar.hwshin.cachemission.Adapter.Explain.SlideAdapter_ExplainTask_Numbering;
 import com.selectstar.hwshin.cachemission.Adapter.Explain.SlideAdapter_ExplainTask_Photo;
@@ -87,6 +88,8 @@ public class TaskExplainActivity extends AppCompatActivity {
             return new SlideAdapter_ExplainTask_Record_ExamType1(this);
         else if (tasktype.equals("RECORDEXAM") && examType == 2)
             return new SlideAdapter_ExplainTask_Record_ExamType2(this);
+        else if (tasktype.equals("DIRECTRECORD"))
+            return new SlideAdapter_ExplainTask_DirectRecord(this);
         else if (tasktype.equals("DICTATION"))
             return new SlideAdapter_ExplainTask_None(this);
         else if (tasktype.equals("DICTATIONEXAM"))
