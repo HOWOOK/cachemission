@@ -84,6 +84,12 @@ public class ListviewAdapter extends BaseAdapter {
             Glide.with(convertView).load(R.drawable.tasktype_voice).into(taskIv);
             Glide.with(convertView).load(R.drawable.tasktypeadd).into(tasklv_check);
         }
+        else if(taskType.equals("DIRECTRECORD"))
+            Glide.with(convertView).load(R.drawable.tasktype_voice).into(taskIv);
+        else if(taskType.equals("DIRECTRECORDEXAM")) {
+            Glide.with(convertView).load(R.drawable.tasktype_voice).into(taskIv);
+            Glide.with(convertView).load(R.drawable.tasktypeadd).into(tasklv_check);
+        }
         else if(taskType.equals("NUMBERING"))
             Glide.with(convertView).load(R.drawable.tasktype_numbering).into(taskIv);
         else if(taskType.equals("NUMBERINGEXAM")) {

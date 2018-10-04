@@ -76,6 +76,11 @@ public class TaskListActivity extends AppCompatActivity {
         //FirebaseMessaging.getInstance().subscribeToTopic("TestPush");
         //FirebaseMessaging.getInstance().unsubscribeFromTopic("TestPush");
 
+        final SharedPreferences push = getSharedPreferences("push", MODE_PRIVATE);
+        String OnOff = push.getString("push", "true");
+        if(OnOff.equals("true"))
+            FirebaseMessaging.getInstance().subscribeToTopic("RetentionPush");
+
 
         //버전가져오기
         try{

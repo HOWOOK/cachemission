@@ -66,9 +66,9 @@ public class PhotoViewAttacher implements View.OnTouchListener,
     private CustomGestureDetector mScaleDragDetector;
 
     // These are set so we don't keep allocating them on the heap
-    private final Matrix mBaseMatrix = new Matrix();
-    private final Matrix mDrawMatrix = new Matrix();
-    private final Matrix mSuppMatrix = new Matrix();
+    public final Matrix mBaseMatrix = new Matrix();
+    public final Matrix mDrawMatrix = new Matrix();
+    public final Matrix mSuppMatrix = new Matrix();
     private final RectF mDisplayRect = new RectF();
     private final float[] mMatrixValues = new float[9];
 
@@ -289,6 +289,7 @@ public class PhotoViewAttacher implements View.OnTouchListener,
         }
 
         mSuppMatrix.set(finalMatrix);
+        System.out.println("On setDisplayMatrix() mSuppMatrix is set with : "+finalMatrix);
         checkAndDisplayMatrix();
 
         return true;
@@ -571,7 +572,7 @@ public class PhotoViewAttacher implements View.OnTouchListener,
         checkMatrixBounds();
     }
 
-    private void setImageViewMatrix(Matrix matrix) {
+    public void setImageViewMatrix(Matrix matrix) {
         mImageView.setImageMatrix(matrix);
 
         // Call MatrixChangedListener if needed
@@ -681,14 +682,23 @@ public class PhotoViewAttacher implements View.OnTouchListener,
     private boolean checkMatrixBounds() {
 
         final RectF rect = getDisplayRect(getDrawMatrix());
+        System.out.println("On checkMatrixBounds() mBaseMatrix is : "+mBaseMatrix);
+        System.out.println("On checkMatrixBounds() mSuppMatirx is : "+mSuppMatrix);
+        System.out.println("On checkMatrixBounds() mDrawMatrix is : "+getDrawMatrix());
+        System.out.println("On checkMatrixBounds() Scale is : "+getScale());
+        System.out.println("On checkMatrixBounds() getDisplayRect(getDrawMatrix()) is : "+rect);
+
         if (rect == null) {
             return false;
         }
 
         final float height = rect.height(), width = rect.width();
+        System.out.println("On checkMatrixBounds() rect height & width is : "+height+", "+width);
         float deltaX = 0, deltaY = 0;
 
         final int viewHeight = getImageViewHeight(mImageView);
+        System.out.println("On checkMatrixBounds() view heigh is : "+viewHeight);
+
         if (height <= viewHeight) {
             switch (mScaleType) {
                 case FIT_START:
@@ -732,7 +742,10 @@ public class PhotoViewAttacher implements View.OnTouchListener,
         }
 
         // Finally actually translate the matrix
+        System.out.println("On checkMatrixBounds() mSuppMatrix : "+mSuppMatrix);
+        System.out.println("On checkMatrixBounds() deltaX & deltaY : "+deltaX+", "+deltaY);
         mSuppMatrix.postTranslate(deltaX, deltaY);
+        System.out.println("On checkMatrixBounds() mSuppMatrix after translate : "+mSuppMatrix);
         return true;
     }
 

@@ -64,7 +64,7 @@ public class TaskActivity extends PatherActivity {
         SharedPreferences tasktoken = getSharedPreferences("taskToken", MODE_PRIVATE);
         SharedPreferences explain = getSharedPreferences("region", MODE_PRIVATE);
         region = explain.getString("region", null);
-        if ((taskType.equals("DIALECT") || taskType.equals("RECORD")) && tasktoken.getInt(taskType + "taskToken", 0) == 100 && region == null) {
+        if ((taskType.equals("DIALECT") || taskType.equals("RECORD") || taskType.equals("DIRECTRECORD")) && tasktoken.getInt(taskType + "taskToken", 0) == 100 && region == null) {
             Intent intent_region = new Intent(TaskActivity.this, RegionActivity.class);
             intent_region.putExtra("wanttochange", "false");
             startActivity(intent_region);
@@ -76,7 +76,7 @@ public class TaskActivity extends PatherActivity {
         super.onStart();
 
         //지역 재 선택을 위한 인터페이스
-        if (taskType.equals("DIALECT") || taskType.equals("RECORD")) {
+        if (taskType.equals("DIALECT") || taskType.equals("RECORD") || taskType.equals("DIRECTRECORD")) {
             String region;
             TextView regionText = findViewById(R.id.regionText);
             SharedPreferences explain = getSharedPreferences("region", MODE_PRIVATE);

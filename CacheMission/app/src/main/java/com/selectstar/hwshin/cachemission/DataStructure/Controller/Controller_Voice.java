@@ -1,7 +1,9 @@
 package com.selectstar.hwshin.cachemission.DataStructure.Controller;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioRecord;
@@ -13,6 +15,7 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -581,6 +584,15 @@ public class Controller_Voice extends Controller {
                 conn.setDoOutput(true); // Allow Outputs
                 conn.setUseCaches(false); // Don't use a Cached Copy
                 conn.setRequestMethod("POST");
+                if(((TaskActivity)parentActivity).getTaskType().equals("DIRECTRECORD")) {//if task is dialect
+                    String region;
+                    SharedPreferences explain = parentActivity.getSharedPreferences("region", Context.MODE_PRIVATE);
+                    region = explain.getString("region",null);
+                    String baseRegion = Base64.encodeToString(region.getBytes(),0);
+                    conn.setRequestProperty("REGION",baseRegion);
+                    conn.setRequestProperty("charset","euc-kr");
+                    System.out.println("!");
+                }
                 conn.setRequestProperty("Connection", "Keep-Alive");
                 conn.setRequestProperty("ENCTYPE", "multipart/form-data");
                 conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
