@@ -173,7 +173,7 @@ public class TaskListActivity extends AppCompatActivity {
         SharedPreferences token = getSharedPreferences("token",MODE_PRIVATE);
         String stringtoken;
         stringtoken = token.getString("loginToken",null);
-        if(stringtoken==null){
+        if(stringtoken == null){
             stringtoken="";
         }
         final Button refresh=findViewById(R.id.refreshbutton);
@@ -487,8 +487,6 @@ if(isNetworkConnected(this)){
                             editor.apply();
                             System.out.println("통신실패하면 " + resulttemp);
                             if (resulttemp.get("success").toString().equals("login")) {
-
-
                                 Intent gotologin = new Intent(TaskListActivity.this, LoginActivity.class);
                                 startActivity(gotologin);
                                 finish();
