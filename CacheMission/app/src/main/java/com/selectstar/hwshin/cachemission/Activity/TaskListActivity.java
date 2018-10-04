@@ -359,8 +359,11 @@ public class TaskListActivity extends AppCompatActivity {
         Log.d("timeclose2",String.valueOf(nowTime));
         Log.d("timeclose3",ymd);
         Log.d("firrrr",lazyLoding.getString("isfirst",""));
+        SharedPreferences token2 = getSharedPreferences("token",MODE_PRIVATE);
 
-        if(((!lazyLoding.getString("isfirst","").equals("yes"))&&(ymd.equals(getDate)&&nowTime-hms<10)&&!token.getString("logintoken","").equals(""))||!isNetworkConnected(this)) {
+        Log.d("logintokenishere",token.getString("loginToken","def"));
+
+        if(((!lazyLoding.getString("isfirst","").equals("yes"))&&(ymd.equals(getDate)&&nowTime-hms<10)&&!token.getString("loginToken","").equals(""))||!isNetworkConnected(this)) {
 Log.d("timeclose",String.valueOf(nowTime-hms));
             try {
                 JSONObject resTemp=new JSONObject(lazyLoding.getString("preresult",""));
