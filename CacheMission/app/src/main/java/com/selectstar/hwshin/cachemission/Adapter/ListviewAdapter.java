@@ -186,7 +186,7 @@ public class ListviewAdapter extends RecyclerView.Adapter<ListviewAdapter.ItemVi
         //TextView dailyMission=convertView.findViewById(R.id.dailyMission);
         //dailyMission.setText(taskItem.getDailyMission());
     }
-    class ItemViewHolder extends RecyclerView.ViewHolder {
+    public class ItemViewHolder extends RecyclerView.ViewHolder {
         private ImageView taskIcon;
         private ImageView checkIcon;
         private TextView gold;
