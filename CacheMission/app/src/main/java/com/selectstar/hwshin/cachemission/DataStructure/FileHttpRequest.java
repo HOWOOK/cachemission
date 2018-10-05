@@ -91,7 +91,7 @@ public class FileHttpRequest extends AsyncTask {
             conn.setRequestProperty("ENCTYPE", "multipart/form-data");
             conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
             conn.setRequestProperty("uploaded_file", fileName);
-            conn.setRequestProperty("TOKEN",parentActivity.getLoginToken());
+            conn.setRequestProperty("Authorization","jwt " + parentActivity.getLoginToken());
             conn.setRequestProperty("ANSWERID",parentActivity.getAnswerID());
             conn.setRequestProperty("TASKID",parentActivity.getTaskID());
 

@@ -23,8 +23,12 @@ public class WaitHttpRequest extends AsyncTask{
     Context parent = null;
     String img_binary = null;
     public String result = "";
+
     public MyProgressDialog httpDialog;
     public MyProgressDialog httpDialogSomethingOptimizationFailed;
+
+    public int responseCode = 500;
+    
     private Context mContext;
 //    CountDownTimer adf= new AsyncTaskCancelTimerTask(this,1000,100,true,(Activity) mContext).start();
 
@@ -63,7 +67,7 @@ public class WaitHttpRequest extends AsyncTask{
             httpCon.setRequestProperty("X-Requested-With", "XMLHttpRequest");
             httpCon.setRequestProperty("X-CSRF-Token","Fetch");
             httpCon.setRequestProperty("Content-Type", "application/xml");
-            httpCon.setRequestProperty("TOKEN", token);//"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MzQxODU4MjEsImVtYWlsIjoiIiwidXNlcl9pZCI6MSwidXNlcm5hbWUiOiJhc2RmIn0.oGIBuWPo2qw0wciDqGqo3MCoiGNZFP7zX5lqpU3xPyM");
+            httpCon.setRequestProperty("Authorization", "jwt " + token);//"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MzQxODU4MjEsImVtYWlsIjoiIiwidXNlcl9pZCI6MSwidXNlcm5hbWUiOiJhc2RmIn0.oGIBuWPo2qw0wciDqGqo3MCoiGNZFP7zX5lqpU3xPyM");
 
 
             // OutputStream으로 POST 데이터를 넘겨주겠다는 옵션.
@@ -75,9 +79,10 @@ public class WaitHttpRequest extends AsyncTask{
             os.write(json.getBytes("utf-8"));
             os.flush();
 
-            if(httpCon.getResponseCode() != HttpURLConnection.HTTP_OK)
+            if(httpCon.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                responseCode = httpCon.getResponseCode();
                 return null;
-
+            }
             try {
                 is = httpCon.getInputStream();
                 // convert inputstream to string
