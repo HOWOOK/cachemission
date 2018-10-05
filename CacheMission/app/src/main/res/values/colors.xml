@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorWhite">#FFFFFF</color>
-    <color name="colorRed">#FF0000</color>
     <color name="colorBlack">#000000</color>
 
     <color name="colorPrimary">#FAB402</color>
@@ -20,4 +19,6 @@
 
     <color name="listSelectorBackgroundColor">#E9E9E9</color>
     <color name="photoViewExpandHackColor">#00FFFFFF</color>
+    <color name="colorOnServer">#FF0000</color>
+    <color name="colorOnClient">#0000FF</color>
 </resources>

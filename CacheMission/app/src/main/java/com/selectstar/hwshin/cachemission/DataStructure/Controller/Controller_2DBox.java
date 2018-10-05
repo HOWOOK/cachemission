@@ -1,10 +1,10 @@
 package com.selectstar.hwshin.cachemission.DataStructure.Controller;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
-import android.support.constraint.ConstraintSet;
 import android.util.DisplayMetrics;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -14,8 +14,6 @@ import android.widget.Toast;
 
 import com.selectstar.hwshin.cachemission.Activity.LoginActivity;
 import com.selectstar.hwshin.cachemission.Activity.TaskActivity;
-import com.selectstar.hwshin.cachemission.Activity.TaskListActivity;
-import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoView;
 import com.selectstar.hwshin.cachemission.DataStructure.WaitHttpRequest;
 import com.selectstar.hwshin.cachemission.Photoview.PhotoView;
@@ -33,8 +31,10 @@ public class Controller_2DBox extends Controller {
     private PhotoView photoView;
     private float originWidth, originHeight, originLeftMargin, originTopMargin;
     private TaskView_PhotoView mtaskView_PhotoView;
-    private float[][] answerCoordinationtemp;
+    private float[][] answerCoordinationTemp;
+    private int[] answerTypeTemp;
     private int answerCount = 0;
+    private int drawAnswerCount = 0;
     public boolean pinFlag;
     private int getDeviceDpi;
     private float dpScale;
@@ -58,6 +58,9 @@ public class Controller_2DBox extends Controller {
         getDeviceDpi = displayMetrics.densityDpi;
         dpScale = (float) getDeviceDpi / 160f;
         photoViewCL = parentActivity.findViewById(R.id.photoViewCL);
+        if(mtaskView_PhotoView.answerCoordination != null)
+            answerCount = mtaskView_PhotoView.answerCoordination.length;
+        System.out.println("서버에서 그려진 정답 수 : " + answerCount);
 
         //처음에는 box가 없어야 합니다.
         final ConstraintLayout boxCL = view.findViewById(R.id.boxCL);
@@ -159,24 +162,61 @@ public class Controller_2DBox extends Controller {
                                             parentActivity.finish();
                                         }
                                     } else {
-                                        answerCount++;
-                                        answerCoordinationtemp = mtaskView_PhotoView.answerCoordination;
+                                        drawAnswerCount++;
+                                        System.out.println("그려져있던 수 : "+answerCount+" 내가 그린 수 : "+drawAnswerCount);
+                                        answerCoordinationTemp = mtaskView_PhotoView.answerCoordination;
+                                        answerTypeTemp = mtaskView_PhotoView.answerType;
 
-                                        mtaskView_PhotoView.answerCoordination = new float[answerCount][4];
-                                        if(answerCoordinationtemp != null){
-                                            for(int i = 0; i < answerCoordinationtemp.length; i++){
-                                                mtaskView_PhotoView.answerCoordination[i][0] = answerCoordinationtemp[i][0];
-                                                mtaskView_PhotoView.answerCoordination[i][1] = answerCoordinationtemp[i][1];
-                                                mtaskView_PhotoView.answerCoordination[i][2] = answerCoordinationtemp[i][2];
-                                                mtaskView_PhotoView.answerCoordination[i][3] = answerCoordinationtemp[i][3];
+                                        System.out.println("---------추가 전 ----------");
+                                        for(int i = 0; i < mtaskView_PhotoView.answerCoordination.length; i++){
+                                            System.out.print("(");
+                                            for(int j = 0; j < 4; j++){
+                                                System.out.print(mtaskView_PhotoView.answerCoordination[i][j]+",");
+                                            }
+                                            System.out.print(" 타입 : " + mtaskView_PhotoView.answerType[i]);
+                                            System.out.println(")");
+                                        }
+
+                                        mtaskView_PhotoView.answerCoordination = new float[answerCount + drawAnswerCount][4];
+                                        mtaskView_PhotoView.answerType = new int[answerCount + drawAnswerCount];
+
+                                        if(answerCoordinationTemp != null){
+                                            for(int i = 0; i < answerCoordinationTemp.length; i++){
+                                                mtaskView_PhotoView.answerCoordination[i][0] = answerCoordinationTemp[i][0];
+                                                mtaskView_PhotoView.answerCoordination[i][1] = answerCoordinationTemp[i][1];
+                                                mtaskView_PhotoView.answerCoordination[i][2] = answerCoordinationTemp[i][2];
+                                                mtaskView_PhotoView.answerCoordination[i][3] = answerCoordinationTemp[i][3];
+                                                mtaskView_PhotoView.answerType[i] = answerTypeTemp[i];
                                             }
                                         }
 
-                                        mtaskView_PhotoView.answerCoordination[answerCount-1][0] = leftPercent;
-                                        mtaskView_PhotoView.answerCoordination[answerCount-1][1] = topPercent;
-                                        mtaskView_PhotoView.answerCoordination[answerCount-1][2] = rightPercent;
-                                        mtaskView_PhotoView.answerCoordination[answerCount-1][3] = bottomPercent;
+                                        System.out.println("---------복사 후----------");
+                                        for(int i = 0; i < mtaskView_PhotoView.answerCoordination.length; i++){
+                                            System.out.print("(");
+                                            for(int j = 0; j < 4; j++){
+                                                System.out.print(mtaskView_PhotoView.answerCoordination[i][j]+",");
+                                            }
+                                            System.out.print(" 타입 : " + mtaskView_PhotoView.answerType[i]);
+                                            System.out.println(")");
+                                        }
+
+
+                                        mtaskView_PhotoView.answerCoordination[answerCount + drawAnswerCount - 1][0] = leftPercent;
+                                        mtaskView_PhotoView.answerCoordination[answerCount + drawAnswerCount - 1][1] = topPercent;
+                                        mtaskView_PhotoView.answerCoordination[answerCount + drawAnswerCount - 1][2] = rightPercent;
+                                        mtaskView_PhotoView.answerCoordination[answerCount + drawAnswerCount - 1][3] = bottomPercent;
+                                        mtaskView_PhotoView.answerType[answerCount + drawAnswerCount - 1] = 1;
                                         mtaskView_PhotoView.changedCoordination = new float[mtaskView_PhotoView.answerCoordination.length][4];
+
+                                        System.out.println("---------추가 후----------");
+                                        for(int i = 0; i < mtaskView_PhotoView.answerCoordination.length; i++){
+                                            System.out.print("(");
+                                            for(int j = 0; j < 4; j++){
+                                                System.out.print(mtaskView_PhotoView.answerCoordination[i][j]+",");
+                                            }
+                                            System.out.print(" 타입 : " + mtaskView_PhotoView.answerType[i]);
+                                            System.out.println(")");
+                                        }
 
                                         mtaskView_PhotoView.drawAnswer(mtaskView_PhotoView.answerCoordination);
 
@@ -194,7 +234,7 @@ public class Controller_2DBox extends Controller {
                                     e.printStackTrace();
                                 }
                             }
-                        }.execute(parentActivity.getString(R.string.mainurl) + "/taskSubmit", param, ((TaskActivity) parentActivity).getLoginToken());
+                        }.execute(parentActivity.getString(R.string.mainurl) + "/testing/taskSubmit", param, ((TaskActivity) parentActivity).getLoginToken());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -207,51 +247,63 @@ public class Controller_2DBox extends Controller {
         completeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (((TaskView_PhotoView) parentActivity.getmTaskView()).expandFlag) {
-                    Toast.makeText(parentActivity, "먼저 물체를 찾아주세요", Toast.LENGTH_SHORT).show();
-                } else {
-                    JSONObject param = new JSONObject();
-                    try {
-                        param.put("answerID", ((TaskActivity) parentActivity).getAnswerID());
-                        param.put("taskID", taskID);
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(parentActivity);
+                    alertDialogBuilder.setTitle("모든 물체 제출 완료");
+                    alertDialogBuilder.setMessage("정말 모든 물체를 찾아졌나요?");
+                    alertDialogBuilder.setPositiveButton("네", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            JSONObject param = new JSONObject();
+                            try {
+                                param.put("answerID", ((TaskActivity) parentActivity).getAnswerID());
+                                param.put("taskID", taskID);
 
-                        //보내야하는 데이타
-                        String submit = "(allclear)";
-                        param.put("submit", submit);
+                                //보내야하는 데이타
+                                String submit = "(allclear)";
+                                param.put("submit", submit);
 
-                        new WaitHttpRequest(parentActivity) {
-                            @Override
-                            protected void onPostExecute(Object o) {
-                                super.onPostExecute(o);
-                                try {
-                                    JSONObject resultTemp = new JSONObject(result);
-                                    if (resultTemp.get("success").toString().equals("false")) {
-                                        if (resultTemp.get("message").toString().equals("login")) {
-                                            Intent in = new Intent(parentActivity, LoginActivity.class);
-                                            parentActivity.startActivity(in);
-                                            Toast.makeText(parentActivity, "로그인이 만료되었습니다. 다시 로그인해주세요", Toast.LENGTH_SHORT).show();
-                                            parentActivity.finish();
-                                        } else if (resultTemp.get("message").toString().equals("task")) {
-                                            Toast.makeText(parentActivity, "테스크가 만료되었습니다. 다른 테스크를 선택해주세요", Toast.LENGTH_SHORT).show();
-                                            parentActivity.finish();
-                                        } else {
-                                            Toast.makeText(parentActivity, "남은 테스크가 없습니다.", Toast.LENGTH_SHORT).show();
-                                            parentActivity.finish();
+                                new WaitHttpRequest(parentActivity) {
+                                    @Override
+                                    protected void onPostExecute(Object o) {
+                                        super.onPostExecute(o);
+                                        try {
+                                            JSONObject resultTemp = new JSONObject(result);
+                                            if (resultTemp.get("success").toString().equals("false")) {
+                                                if (resultTemp.get("message").toString().equals("login")) {
+                                                    Intent in = new Intent(parentActivity, LoginActivity.class);
+                                                    parentActivity.startActivity(in);
+                                                    Toast.makeText(parentActivity, "로그인이 만료되었습니다. 다시 로그인해주세요", Toast.LENGTH_SHORT).show();
+                                                    parentActivity.finish();
+                                                } else if (resultTemp.get("message").toString().equals("task")) {
+                                                    Toast.makeText(parentActivity, "테스크가 만료되었습니다. 다른 테스크를 선택해주세요", Toast.LENGTH_SHORT).show();
+                                                    parentActivity.finish();
+                                                } else {
+                                                    Toast.makeText(parentActivity, "남은 테스크가 없습니다.", Toast.LENGTH_SHORT).show();
+                                                    parentActivity.finish();
+                                                }
+                                            } else {
+                                                ((TaskActivity)parentActivity).startTask();
+                                                parentActivity.setGold(String.valueOf(resultTemp.get("gold")));
+                                                parentActivity.setMaybe(String.valueOf(resultTemp.get("maybe")));
+                                            }
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
                                         }
-                                    } else {
-                                        ((TaskActivity)parentActivity).startTask();
-                                        parentActivity.setGold(String.valueOf(resultTemp.get("gold")));
-                                        parentActivity.setMaybe(String.valueOf(resultTemp.get("maybe")));
                                     }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+                                }.execute(parentActivity.getString(R.string.mainurl) + "/testing/taskSubmit", param, ((TaskActivity) parentActivity).getLoginToken());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                        }.execute(parentActivity.getString(R.string.mainurl) + "/taskSubmit", param, ((TaskActivity) parentActivity).getLoginToken());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
+                        }
+                    });
+                    alertDialogBuilder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    alertDialogBuilder.show();
             }
         });
 
@@ -434,8 +486,6 @@ public class Controller_2DBox extends Controller {
                         bottomLeft_corner.setLayoutParams(mLayoutParams2);
                         bottomRight_corner.setLayoutParams(mLayoutParams3);
                     }
-                    lastX = curX;
-                    lastY = curY;
                 } else if (action == MotionEvent.ACTION_UP) {
 
                 }
@@ -602,8 +652,6 @@ public class Controller_2DBox extends Controller {
                         topRight_corner.setLayoutParams(mLayoutParams2);
                         bottomRight_corner.setLayoutParams(mLayoutParams3);
                     }
-                    lastX = curX;
-                    lastY = curY;
                 } else if (action == MotionEvent.ACTION_UP) {
 
                 }
@@ -854,7 +902,6 @@ public class Controller_2DBox extends Controller {
                         topRight_corner.setLayoutParams(mLayoutParams3);
                         bottomRight_corner.setLayoutParams(mLayoutParams5);
                     }
-                    lastX = curX;
                     lastY = curY;
                 } else if (action == MotionEvent.ACTION_UP) {
 
@@ -981,7 +1028,6 @@ public class Controller_2DBox extends Controller {
                         topLeft_corner.setLayoutParams(mLayoutParams5);
                     }
                     lastX = curX;
-                    lastY = curY;
                 } else if (action == MotionEvent.ACTION_UP) {
 
                 }
@@ -1106,8 +1152,6 @@ public class Controller_2DBox extends Controller {
                         bottomRight_corner.setLayoutParams(mLayoutParams3);
                         topRight_corner.setLayoutParams(mLayoutParams5);
                     }
-                    lastX = curX;
-                    lastY = curY;
                 } else if (action == MotionEvent.ACTION_UP) {
 
                 }

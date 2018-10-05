@@ -32,6 +32,7 @@ public class TaskView_PhotoView extends TaskView {
     private PhotoView photoView;
     public float[][] answerCoordination;
     public float[][] changedCoordination;
+    public int[] answerType; //0이면 서버에서 보내준거, 1이면 유저가 그린거
     private String[] array1, array2, array3;
     private ConstraintLayout photoViewCL;
     private ConstraintLayout[] answerList;
@@ -75,12 +76,16 @@ public class TaskView_PhotoView extends TaskView {
         getDeviceDpi = displayMetrics.densityDpi;
         dpScale = (float) getDeviceDpi / 160f;
 
+        if(isExamFlag)
+            parentActivity.findViewById(R.id.textDragCL).setVisibility(View.INVISIBLE);
+
         //box 좌표 구해서 저장
         array1 = content.split("&");
         if(array1.length==2) {//좌표를 찾은적이 있는 놈이라면..
             array2 = array1[1].split("\\(");
             answerCoordination = new float[array2.length-1][4];
             changedCoordination = new float[answerCoordination.length][4];
+            answerType = new int[answerCoordination.length];
             coordinationParsing(array2);
         }
 
@@ -108,6 +113,7 @@ public class TaskView_PhotoView extends TaskView {
 //                            System.out.println("----------------------");
 
                             drawAnswer(answerCoordination);
+                            parentActivity.findViewById(R.id.textDragCL).bringToFront();
                         }
                     }
                 });
@@ -115,8 +121,10 @@ public class TaskView_PhotoView extends TaskView {
         photoView.setOnMatrixChangeListener(new OnMatrixChangedListener() {
             @Override
             public void onMatrixChanged(RectF rect) {
-                if(answerCoordination!= null)
+                if(answerCoordination!= null) {
                     drawAnswer(answerCoordination);
+                    parentActivity.findViewById(R.id.textDragCL).bringToFront();
+                }
             }
         });
         photoView.setOnTouchListener(new View.OnTouchListener() {
@@ -337,6 +345,8 @@ public class TaskView_PhotoView extends TaskView {
         topRightCornerParams.setMargins(0, (int) (setValTop - cor2 + cor3),(int) (setValRight - cor2 + cor3),0);
         bottomLeftCornerParams.setMargins((int) (setValLeft - cor2 + cor3), 0,0,(int) (setValBottom - cor2 + cor3));
         bottomRightCornerParams.setMargins(0, 0,(int) (setValRight - cor2 + cor3),(int) (setValBottom - cor2 + cor3));
+
+        //아무나 하나 이렇게 자극을 줘야 레이아웃이 변경되더라고 ;;
         topLine.requestLayout();
 
         boxCL.setVisibility(View.VISIBLE);
@@ -454,10 +464,17 @@ public class TaskView_PhotoView extends TaskView {
                 answerLeftLine.setLayoutParams(leftRightParams);
                 answerRightLine.setLayoutParams(leftRightParams);
 
-                answerTopLine.setBackgroundColor(parentActivity.getResources().getColor(R.color.colorRed));
-                answerBottomLine.setBackgroundColor(parentActivity.getResources().getColor(R.color.colorRed));
-                answerLeftLine.setBackgroundColor(parentActivity.getResources().getColor(R.color.colorRed));
-                answerRightLine.setBackgroundColor(parentActivity.getResources().getColor(R.color.colorRed));
+                if(answerType[i] == 0) {
+                    answerTopLine.setBackgroundColor(parentActivity.getResources().getColor(R.color.colorOnServer));
+                    answerBottomLine.setBackgroundColor(parentActivity.getResources().getColor(R.color.colorOnServer));
+                    answerLeftLine.setBackgroundColor(parentActivity.getResources().getColor(R.color.colorOnServer));
+                    answerRightLine.setBackgroundColor(parentActivity.getResources().getColor(R.color.colorOnServer));
+                }else if(answerType[i] == 1){
+                    answerTopLine.setBackgroundColor(parentActivity.getResources().getColor(R.color.colorOnClient));
+                    answerBottomLine.setBackgroundColor(parentActivity.getResources().getColor(R.color.colorOnClient));
+                    answerLeftLine.setBackgroundColor(parentActivity.getResources().getColor(R.color.colorOnClient));
+                    answerRightLine.setBackgroundColor(parentActivity.getResources().getColor(R.color.colorOnClient));
+                }
 
                 answer.addView(answerTopLine);
                 answer.addView(answerBottomLine);
@@ -563,6 +580,7 @@ public class TaskView_PhotoView extends TaskView {
             answerCoordination[i-1][1] = (float) Float.parseFloat(array3[1]);
             answerCoordination[i-1][2] = (float) Float.parseFloat(array3[2]);
             answerCoordination[i-1][3] = (float) Float.parseFloat(array3[3]);
+            answerType[i-1] = 0;
         }
     }
 

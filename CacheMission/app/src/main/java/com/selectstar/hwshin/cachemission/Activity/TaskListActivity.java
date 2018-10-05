@@ -56,6 +56,7 @@ public class TaskListActivity extends AppCompatActivity {
         String OnOff = push.getString("push", "true");
         if(OnOff.equals("true"))
             FirebaseMessaging.getInstance().subscribeToTopic("RetentionPush");
+        FirebaseMessaging.getInstance().subscribeToTopic("testPush");
     }
     private void setVersion()
     {
@@ -135,6 +136,11 @@ public class TaskListActivity extends AppCompatActivity {
         try {
             JSONObject param = new JSONObject();
             param.put("id", mTaskList.get(i).get("id"));
+            String taskType = mTaskList.get(i).get("taskType").toString();
+            int examType = (int) mTaskList.get(i).get("examType");
+            if(taskType.contains("EXAM")){
+                param.put("examType", examType);
+            };
             final JSONObject pp = param;
             new HurryHttpRequest(TaskListActivity.this) {
                 @Override

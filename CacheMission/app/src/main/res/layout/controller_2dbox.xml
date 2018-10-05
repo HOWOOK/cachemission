@@ -139,7 +139,6 @@
             android:layout_width="0dp"
             android:layout_height="20dp"
             android:layout_marginTop="5dp"
-            android:background="#30FF00FF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -159,7 +158,6 @@
             android:layout_width="0dp"
             android:layout_height="20dp"
             android:layout_marginBottom="5dp"
-            android:background="#30FF00FF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -179,7 +177,6 @@
             android:layout_width="20dp"
             android:layout_height="0dp"
             android:layout_marginLeft="5dp"
-            android:background="#30FF00FF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -199,7 +196,6 @@
             android:layout_width="20dp"
             android:layout_height="0dp"
             android:layout_marginRight="5dp"
-            android:background="#30FF00FF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -208,7 +204,6 @@
             android:id="@+id/topleft_corner"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="#3000FFFF"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -216,7 +211,6 @@
             android:id="@+id/topright_corner"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="#3000FFFF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -224,7 +218,6 @@
             android:id="@+id/bottomright_corner"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="#3000FFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -232,7 +225,6 @@
             android:id="@+id/bottomleft_corner"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="#3000FFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
