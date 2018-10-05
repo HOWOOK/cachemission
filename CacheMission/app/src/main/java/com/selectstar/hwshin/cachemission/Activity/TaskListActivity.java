@@ -73,7 +73,6 @@ public class TaskListActivity extends AppCompatActivity {
                 jo.put("items",new JSONArray());
                 previousListJSON.put("content",jo);
             }
-                previousListJSON.put("content",new JSONObject());
             content=(JSONObject) previousListJSON.get("content");
             items=(JSONArray) content.get("items");
             items.put(item);
