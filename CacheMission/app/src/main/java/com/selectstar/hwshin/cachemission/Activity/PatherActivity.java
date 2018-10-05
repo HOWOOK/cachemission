@@ -12,6 +12,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.selectstar.hwshin.cachemission.Adapter.ListviewAdapter;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView;
 import com.selectstar.hwshin.cachemission.DataStructure.UIHashMap;
 import com.selectstar.hwshin.cachemission.R;
@@ -192,5 +193,33 @@ public abstract class PatherActivity extends AppCompatActivity {
         {
         }
         return null;
+    }
+
+    public JSONArray parseQuestList( JSONArray questList)
+    {
+
+        JSONObject[] questItem=new JSONObject[questList.length()];
+        String[] questName=new String[questList.length()];
+        int[] questReward=new int[questList.length()];
+
+        try {
+            if (questList.length() > 0) {
+                for (int i = 0; i < questList.length(); i++) {
+                    questItem[i] = (JSONObject) questList.get(i);
+                    if ((boolean) questItem[i].get("isClear")) {
+                        questName[i] = ((String) questItem[i].get("name")) + "(완료)";
+                        questReward[i] = (Integer) questItem[i].get("reward");
+
+                    } else {
+                        questName[i] = ((String) questItem[i].get("name")) + "[" + String.valueOf(questItem[i].get("questDone")) + "/" + String.valueOf(questItem[i].get("questTotal")) + "]";
+                        questReward[i] = (Integer) questItem[i].get("reward");
+                    }
+
+                }
+            }
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        return new JSONArray();
     }
 }
