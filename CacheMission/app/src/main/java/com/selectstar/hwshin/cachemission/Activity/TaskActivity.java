@@ -188,11 +188,9 @@ public class TaskActivity extends PatherActivity {
         {
             e.printStackTrace();
         }
-
-
-
-
     }
+
+    //데일리 퀘스트 관련
     public int getTaskCount()
     {
         String string = taskCount.getText().toString();
@@ -224,6 +222,8 @@ public class TaskActivity extends PatherActivity {
         intent_taskExplain.putExtra("taskType", taskType);
         startActivity(intent_taskExplain);
     }
+
+
     public int setDailyQuest(String rawText)
     {
         if(rawText.equals("-1")) {
@@ -263,6 +263,8 @@ public class TaskActivity extends PatherActivity {
         taskCount.setText(parseDailyQuest(rawText));
         return 0;
     }
+
+
     private String parseDailyQuest(String rawText) {
             if(rawText.contains("\n"))
         {
@@ -399,6 +401,8 @@ public class TaskActivity extends PatherActivity {
 
     @Override
     public void onBackPressed() {
+
+        //박스 테스크의 경우 확대 잘못하면 취소 눌렀을 때 다시 확대 할수있도록 해야함
         if(taskType.equals("BOXCROP")){
             TaskView_PhotoView temp = (TaskView_PhotoView) mTaskView;
             Controller_2DBox temp2 = (Controller_2DBox) mController;

@@ -71,10 +71,9 @@ public class TaskListActivity extends AppCompatActivity {
         Log.d("파이어베이스토큰", "Refreshed token: " + refreshedToken);
 
         //FirebaseMessaging.getInstance().subscribeToTopic("RetentionPush");
-
         //테스트를 위해 사용하는 푸시 Topic 'unsubscribeFromTopic 지우지 말것 (호욱)
         //FirebaseMessaging.getInstance().subscribeToTopic("TestPush");
-        //FirebaseMessaging.getInstance().unsubscribeFromTopic("TestPush");
+        FirebaseMessaging.getInstance().unsubscribeFromTopic("TestPush");
 
         final SharedPreferences push = getSharedPreferences("push", MODE_PRIVATE);
         String OnOff = push.getString("push", "true");
@@ -92,7 +91,7 @@ public class TaskListActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer) ;
+        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer);
 
         //메뉴버튼
         Button menuBtn = findViewById(R.id.drawviewbtn);

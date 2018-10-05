@@ -149,10 +149,10 @@ public class TaskView_PhotoView extends TaskView {
                             pvRatio = (float) photoViewCL.getWidth() / (float) photoViewCL.getHeight();
                             System.out.println("포토뷰 비율 : "+ pvRatio );
 
-                            expandView.setBackgroundResource(R.drawable.box_2dbox);
+                            expandView.setBackgroundResource(R.drawable.box_2dbox3);
                             updateConstraintSet1(expandView, (int) initX, (int) initY);
 
-                            expandView2.setBackgroundResource(R.drawable.box_2dbox2);
+                            //expandView2.setBackgroundResource(R.drawable.box_2dbox2);
                             updateConstraintSet1(expandView2, (int) initX, (int) initY);
                             testDragCL.setVisibility(View.INVISIBLE);
                             break;
@@ -351,6 +351,7 @@ public class TaskView_PhotoView extends TaskView {
         constraintSet.applyTo(photoViewCL);
     }
 
+    //photoViewCL의 ConstraintSet을 업데이트한다.
     private void updateConstraintSet2(View targetView, View linkView) {
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(photoViewCL);
