@@ -34,13 +34,17 @@ public class Controller_2DBox extends Controller {
     private TaskView_PhotoView mtaskView_PhotoView;
     private float[][] answerCoordinationtemp;
     private int answerCount = 0;
-    boolean pinFlag;
+    public boolean pinFlag;
     private int getDeviceDpi;
     private float dpScale;
     private ConstraintLayout photoViewCL;
 
     public Controller_2DBox() {
         controllerID = R.layout.controller_2dbox;
+    }
+
+    public ImageView getPinButton() {
+        return pinButton;
     }
 
     @Override
@@ -109,9 +113,9 @@ public class Controller_2DBox extends Controller {
                          *********************************/
                         float x1, x2, x3, x4, x5, y1, y2, y3, y4, y5;
                         x1 = centerImage.getX();
-                        x2 = x1 + centerImage.getWidth();
+                        x2 = centerImage.getX() + (float) centerImage.getWidth();
                         y1 = centerImage.getY();
-                        y2 = y1 + centerImage.getHeight();
+                        y2 = centerImage.getY() + (float) centerImage.getHeight();
                         originWidth = (photoView.getDisplayRect().right - photoView.getDisplayRect().left) / photoView.getScale();
                         originHeight = (photoView.getDisplayRect().bottom - photoView.getDisplayRect().top) / photoView.getScale();
                         originLeftMargin = (widthCL / 2.0f) - (originWidth) / 2.0f;
@@ -148,7 +152,6 @@ public class Controller_2DBox extends Controller {
                                             Toast.makeText(parentActivity, "로그인이 만료되었습니다. 다시 로그인해주세요", Toast.LENGTH_SHORT).show();
                                             parentActivity.finish();
                                         } else if (resultTemp.get("message").toString().equals("task")) {
-
                                             Toast.makeText(parentActivity, "테스크가 만료되었습니다. 다른 테스크를 선택해주세요", Toast.LENGTH_SHORT).show();
                                             parentActivity.finish();
                                         } else {
@@ -158,8 +161,8 @@ public class Controller_2DBox extends Controller {
                                     } else {
                                         answerCount++;
                                         answerCoordinationtemp = mtaskView_PhotoView.answerCoordination;
+
                                         mtaskView_PhotoView.answerCoordination = new float[answerCount][4];
-                                        mtaskView_PhotoView.changedCoordination = new float[mtaskView_PhotoView.answerCoordination.length][4];
                                         if(answerCoordinationtemp != null){
                                             for(int i = 0; i < answerCoordinationtemp.length; i++){
                                                 mtaskView_PhotoView.answerCoordination[i][0] = answerCoordinationtemp[i][0];
@@ -168,10 +171,12 @@ public class Controller_2DBox extends Controller {
                                                 mtaskView_PhotoView.answerCoordination[i][3] = answerCoordinationtemp[i][3];
                                             }
                                         }
+
                                         mtaskView_PhotoView.answerCoordination[answerCount-1][0] = leftPercent;
                                         mtaskView_PhotoView.answerCoordination[answerCount-1][1] = topPercent;
                                         mtaskView_PhotoView.answerCoordination[answerCount-1][2] = rightPercent;
                                         mtaskView_PhotoView.answerCoordination[answerCount-1][3] = bottomPercent;
+                                        mtaskView_PhotoView.changedCoordination = new float[mtaskView_PhotoView.answerCoordination.length][4];
 
                                         mtaskView_PhotoView.drawAnswer(mtaskView_PhotoView.answerCoordination);
 
@@ -180,6 +185,8 @@ public class Controller_2DBox extends Controller {
                                         Toast.makeText(parentActivity, "제출 완료! 계속 찾아주세요.", Toast.LENGTH_SHORT).show();
                                         boxCL.setVisibility(View.INVISIBLE);
                                         textDragCL.setVisibility(View.VISIBLE);
+                                        textDragCL.bringToFront();
+                                        pinFlag = true;
                                         photoView.setScale(1);
                                         ((TaskView_PhotoView) parentActivity.getmTaskView()).expandFlag = true;
                                     }

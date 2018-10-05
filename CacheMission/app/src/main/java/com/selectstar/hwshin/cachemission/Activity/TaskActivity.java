@@ -401,11 +401,15 @@ public class TaskActivity extends PatherActivity {
     public void onBackPressed() {
         if(taskType.equals("BOXCROP")){
             TaskView_PhotoView temp = (TaskView_PhotoView) mTaskView;
+            Controller_2DBox temp2 = (Controller_2DBox) mController;
             if(!temp.expandFlag){
                 temp.expandFlag = true;
+                temp2.getPinButton().setBackgroundResource(R.drawable.twodbox_icon_pin_on);
+                temp2.pinFlag = true;
                 temp.getPhotoView().setScale(1);
                 findViewById(R.id.boxCL).setVisibility(View.INVISIBLE);
                 findViewById(R.id.textDragCL).setVisibility(View.VISIBLE);
+                findViewById(R.id.textDragCL).bringToFront();
             } else{
                 super.onBackPressed();
             }

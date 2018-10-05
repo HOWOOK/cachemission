@@ -7,9 +7,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.Nullable;
+import android.support.constraint.Guideline;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,12 +30,14 @@ import static android.Manifest.permission.RECORD_AUDIO;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class LoginActivity extends AppCompatActivity {
+    Guideline viewGuideline;
     EditText idText;
     EditText pwText;
     Button loginButton;
     Button upButton;
     Button findid,findpw;
     final int P_RECORD_AUDIO=77;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +48,12 @@ public class LoginActivity extends AppCompatActivity {
 
         }
         setContentView(R.layout.activity_login);
+
+        viewGuideline = this.findViewById(R.id.guideline);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        this.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int getDeviceHeight_Pixel = displayMetrics.heightPixels;
+        viewGuideline.setGuidelineBegin(getDeviceHeight_Pixel / 2);
 
         //앱을 처음깔았다면 앱 설명띄워주는 것
         SharedPreferences explain = getSharedPreferences("explain", MODE_PRIVATE);
