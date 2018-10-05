@@ -68,6 +68,12 @@ public class TaskListActivity extends AppCompatActivity {
 
             previousList=listInfo.getString("listInfoData","{}");
             previousListJSON=new JSONObject(previousList);
+            if(!previousListJSON.has("content")) {
+                JSONObject jo = new JSONObject();
+                jo.put("item",new JSONArray());
+                previousListJSON.put("content",jo);
+            }
+                previousListJSON.put("content",new JSONObject());
             content=(JSONObject) previousListJSON.get("content");
             items=(JSONArray) content.get("items");
             items.put(item);
@@ -196,7 +202,10 @@ public class TaskListActivity extends AppCompatActivity {
         try {
 
             previousList = listInfo.getString("listInfoData", "{}");
+            if(previousList.equals("{}"))
+                return true;
             previousListJSON = new JSONObject(previousList);
+
             preTime = (Integer) previousListJSON.get("time");
             preDate = (String) previousListJSON.get("date");
 
@@ -272,8 +281,9 @@ public class TaskListActivity extends AppCompatActivity {
 
         try {
             previousList = listInfo.getString("listInfoData", "{}");
+            System.out.println(previousList);
+            System.out.println("----");
             previousListJSON = new JSONObject(previousList);
-
             content=(JSONObject)previousListJSON.get("content");
             items=(JSONArray)content.get("items");
             user=(JSONObject)content.get("user");
@@ -438,6 +448,7 @@ public class TaskListActivity extends AppCompatActivity {
                         if(resultTemp.get("success").toString().equals("true")) {
                             if (isNew) {
                                 adapter.addItem(mTaskList.get(i));
+                                insertItem(mTaskList.get(i));
                             }
                             else
                             {
@@ -459,8 +470,6 @@ public class TaskListActivity extends AppCompatActivity {
     }
     private void getTaskList(final String loginToken)
     {
-        clearItem();
-        insertTime();
         JSONObject param = new JSONObject();
         new WaitHttpRequest(this) {
             @Override
@@ -471,8 +480,11 @@ public class TaskListActivity extends AppCompatActivity {
                     Intent loginIntent = new Intent(TaskListActivity.this, LoginActivity.class);
                     startActivity(loginIntent);
                     finish();
+                    return;
                 }
                 mTaskList.clear();
+                clearItem();
+                insertTime();
                 try {
                     if (result == "")
                         return;
