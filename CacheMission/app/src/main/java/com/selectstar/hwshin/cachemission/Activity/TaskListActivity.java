@@ -62,24 +62,14 @@ public class TaskListActivity extends AppCompatActivity {
 
         String previousList="";
 
-        JSONObject previousListJSON=null;
+        JSONArray previousListJSON=null;
         JSONObject content=null;
-        JSONArray items=null;
 
         try {
 
-            previousList=listInfo.getString("listInfoData","{}");
-            previousListJSON=new JSONObject(previousList);
-            if(!previousListJSON.has("content")) {
-                JSONObject jo = new JSONObject();
-                jo.put("items",new JSONArray());
-                previousListJSON.put("content",jo);
-            }
-            content=(JSONObject) previousListJSON.get("content");
-            items=(JSONArray) content.get("items");
-            items.put(item);
-            content.put("items",items);
-            previousListJSON.put("content",content);
+            previousList=listInfo.getString("listInfoData","[]");
+            previousListJSON=new JSONArray(previousList);
+            previousListJSON.put(item);
 
             editor.putString("listInfoData",previousListJSON.toString());
             editor.apply();
@@ -150,29 +140,9 @@ public class TaskListActivity extends AppCompatActivity {
         SharedPreferences listInfo=getSharedPreferences("listInfo",MODE_PRIVATE);
         SharedPreferences.Editor editor=listInfo.edit();
 
-        String previousList="";
+        editor.putString("listInfoData","[]");
+        editor.apply();
 
-        JSONObject previousListJSON=null;
-        JSONObject content=null;
-        JSONArray items=null;
-
-        try {
-
-
-            previousList=listInfo.getString("listInfoData","{}");
-            previousListJSON=new JSONObject(previousList);
-            content=(JSONObject) previousListJSON.get("content");
-            ;
-            content.put("items",new JSONArray());
-            previousListJSON.put("content",content);
-
-            editor.putString("listInfoData",previousListJSON.toString());
-            editor.apply();
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
     }
 
@@ -202,11 +172,10 @@ public class TaskListActivity extends AppCompatActivity {
 
         try {
 
-            previousList = listInfo.getString("listInfoData", "{}");
+            previousList = listInfo.getString("listInfoTime", "{}");
             if(previousList.equals("{}"))
                 return true;
             previousListJSON = new JSONObject(previousList);
-
             preTime = (Integer) previousListJSON.get("time");
             preDate = (String) previousListJSON.get("date");
 
@@ -253,13 +222,13 @@ public class TaskListActivity extends AppCompatActivity {
 
         try {
 
-            previousList = listInfo.getString("listInfoData", "{}");
+            previousList = listInfo.getString("listInfoTime", "{}");
             previousListJSON = new JSONObject(previousList);
 
             previousListJSON.put("time",nowTime);
             previousListJSON.put("date",nowDate);
 
-            editor.putString("listInfoData",previousListJSON.toString());
+            editor.putString("listInfoTime",previousListJSON.toString());
             editor.apply();
 
         } catch (JSONException e) {
@@ -278,26 +247,21 @@ public class TaskListActivity extends AppCompatActivity {
 
         JSONObject content=null;
         JSONObject user = null;
-        JSONArray items=null;
 
         try {
             previousList = listInfo.getString("listInfoData", "{}");
 
+            getJustUserInfo(loginToken);
             System.out.println(previousList);
             System.out.println("----");
-            previousListJSON = new JSONObject(previousList);
-            content=(JSONObject)previousListJSON.get("content");
-            Log.d("content", content.toString());
-            items=(JSONArray)content.get("items");
-            Log.d("items", items.toString());
+            JSONArray items = new JSONArray(previousList);
 
-            user=(JSONObject)content.get("user");
             mTaskList.clear();
             for(int i=0; i<items.length(); i++){
                 mTaskList.add((JSONObject)items.get(i));
             }
             lv_main = findViewById(R.id.taskList);
-            adapter =new ListviewAdapter(getApplicationContext(),R.layout.task_lv,mTaskList,TaskListActivity.this,user);
+            adapter =new ListviewAdapter(getApplicationContext(),R.layout.task_lv,mTaskList,TaskListActivity.this);
             LinearLayoutManager layoutManager = new LinearLayoutManager(TaskListActivity.this);
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             lv_main.setLayoutManager(layoutManager);
@@ -306,7 +270,6 @@ public class TaskListActivity extends AppCompatActivity {
             {
                 getOneTask(i,loginToken,false);
             }
-            getJustUserInfo(loginToken);
         }
         catch(JSONException e)
         {
@@ -328,8 +291,8 @@ public class TaskListActivity extends AppCompatActivity {
                         return;
                     JSONObject resultTemp = new JSONObject(result);
                     JSONObject user = (JSONObject)resultTemp.get("user");
-                    insertUserInfo(user);
                     ImageView userRank = findViewById(R.id.userrank);
+                    adapter.setUserInfo(user);
                     TextView userGold = findViewById(R.id.mygold);
                     int allGold = (int) user.get("gold") + (int) user.get("maybe");
                     userGold.setText(String.valueOf(allGold));
@@ -476,16 +439,6 @@ public class TaskListActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(Object o) {
                 super.onPostExecute(o);
-                if(responseCode == 401)
-                {
-                    Intent loginIntent = new Intent(TaskListActivity.this, LoginActivity.class);
-                    startActivity(loginIntent);
-                    finish();
-                    return;
-                }
-                mTaskList.clear();
-                clearItem();
-                insertTime();
                 try {
                     if (result == "")
                         return;
@@ -496,7 +449,9 @@ public class TaskListActivity extends AppCompatActivity {
                     int allGold = (int) user.get("gold") + (int) user.get("maybe");
                     userGold.setText(String.valueOf(allGold));
                     TextView userNameDrawer = findViewById(R.id.usernamedrawer);
-                    insertUserInfo(user);
+                    mTaskList.clear();
+                    clearItem();
+                    insertTime();
                     userNameDrawer.setText(String.valueOf(user.get("name")));
                     setUserRankImage(userRank, (int)user.get("rank"));
                     ProgressBar progress = findViewById(R.id.mainProgressBar);

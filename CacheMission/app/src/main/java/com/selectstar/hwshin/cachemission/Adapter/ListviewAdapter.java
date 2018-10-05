@@ -13,6 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.selectstar.hwshin.cachemission.Activity.ExamActivity;
@@ -32,14 +33,36 @@ public class ListviewAdapter extends RecyclerView.Adapter<ListviewAdapter.ItemVi
     private LayoutInflater inflater;
     private ArrayList<JSONObject> mTaskList;
     private JSONObject userInfo;
+    public void setUserInfo(JSONObject  userInfo) {
+        this.userInfo = userInfo;
+        userLoaded = true;
+    }
     private int layout;
     private HashMap<String,Integer> iconIDMap;
     private Context mContext;
+    private boolean userLoaded;
+    public ListviewAdapter(Context context, int layout, ArrayList<JSONObject> taskList,Context mContext){
+        this.inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.mTaskList=taskList;
+        this.layout=layout;
+        this.userLoaded = false;
+        this.iconIDMap = new HashMap<>();
+        this.iconIDMap.put("OCR",R.drawable.tasktype_ocr);
+        this.iconIDMap.put("PHOTO",R.drawable.photoicon);
+        this.iconIDMap.put("VIDEO",R.drawable.tasktype_video);
+        this.iconIDMap.put("RECORD",R.drawable.tasktype_voice);
+        this.iconIDMap.put("DIRECTRECORD",R.drawable.tasktype_voice);
+        this.iconIDMap.put("NUMBERING",R.drawable.tasktype_numbering);
+        this.iconIDMap.put("DICTATION",R.drawable.tasktype_dictation);
+        this.iconIDMap.put("DIALECT",R.drawable.tasktype_dialect);
+        this.mContext = mContext;
+    }
     public ListviewAdapter(Context context, int layout, ArrayList<JSONObject> taskList,Context mContext,JSONObject user){
         this.inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.mTaskList=taskList;
         this.layout=layout;
         this.userInfo=user;
+        this.userLoaded=true;
         this.iconIDMap = new HashMap<>();
         this.iconIDMap.put("OCR",R.drawable.tasktype_ocr);
         this.iconIDMap.put("PHOTO",R.drawable.photoicon);
@@ -142,8 +165,6 @@ public class ListviewAdapter extends RecyclerView.Adapter<ListviewAdapter.ItemVi
         intent.putExtra("questList",questList.toString());
 
         try {
-            intent.putExtra("goldNow", userInfo.get("gold").toString());
-            intent.putExtra("goldPre", userInfo.get("maybe").toString());
             intent.putExtra("taskView",taskItem.get("taskView").toString());
             if(taskType.contains("EXAM")) {
                 intent.putExtra("examView", taskItem.get("controller").toString());
@@ -180,7 +201,19 @@ public class ListviewAdapter extends RecyclerView.Adapter<ListviewAdapter.ItemVi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mContext.startActivity(tent);
+                if(userLoaded) {
+                    try {
+                        tent.putExtra("goldNow", userInfo.get("gold").toString());
+                        tent.putExtra("goldPre", userInfo.get("maybe").toString());
+                    }
+                    catch(JSONException e)
+                    {
+                        e.printStackTrace();
+                    }
+                    mContext.startActivity(tent);
+                }
+                else
+                    Toast.makeText(mContext,"아직 로딩 중입니다!!",Toast.LENGTH_SHORT);
             }
         });
         //TextView dailyMission=convertView.findViewById(R.id.dailyMission);
