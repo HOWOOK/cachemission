@@ -20,13 +20,10 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_2DBox;
 import com.selectstar.hwshin.cachemission.DataStructure.HurryHttpRequest;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_Photo;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView;
-import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoView;
 import com.selectstar.hwshin.cachemission.DataStructure.UIHashMap;
 import com.selectstar.hwshin.cachemission.R;
 
@@ -59,11 +56,6 @@ public class TaskActivity extends PatherActivity {
     public TaskView getmTaskView() {
         return mTaskView;
     }
-
-    public Controller getmController() {
-        return mController;
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -155,7 +147,7 @@ public class TaskActivity extends PatherActivity {
 
 
                 }
-            }.execute(getString(R.string.mainurl) + "/newTaskGet", param, getLoginToken());
+            }.execute(getString(R.string.mainurl) + "/testing/taskGet", param, getLoginToken());
         } catch(JSONException e)
         {
             e.printStackTrace();
@@ -264,7 +256,7 @@ public class TaskActivity extends PatherActivity {
         return 0;
     }
     private String parseDailyQuest(String rawText) {
-            if(rawText.contains("\n"))
+        if(rawText.contains("\n"))
         {
             rawText = rawText.replace("\n"," (");
             rawText = rawText + ")";
@@ -312,7 +304,8 @@ public class TaskActivity extends PatherActivity {
         mController =  uiHashMap.controllerHashMap.get(intent.getStringExtra("controller"));
         mParameter =  (int[][]) uiHashMap.taskHashMap.get(intent.getStringExtra("taskType"));
         taskTitle = intent.getStringExtra("taskTitle");
-        buttons= intent.getStringExtra("buttons");
+        if(intent.hasExtra("buttons"))
+            buttons= intent.getStringExtra("buttons");
         TextView mTaskTitle = findViewById(R.id.tasktitletext);
         mTaskTitle.setText(taskTitle);
         taskViewID = mTaskView.taskViewID;
@@ -380,10 +373,10 @@ public class TaskActivity extends PatherActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 1 && resultCode == RESULT_OK) {
-    //        Bundle extras = data.getExtras();
+            //        Bundle extras = data.getExtras();
 //            Bitmap imageBitmap = (Bitmap) extras.get("data");
-                photoUri = mController.getPhotoUri();
-                ((Controller_Photo) mController).addPhoto(photoUri);
+            photoUri = mController.getPhotoUri();
+            ((Controller_Photo) mController).addPhoto(photoUri);
         }
         if(requestCode==999&& resultCode == RESULT_OK){
             pic= data.getStringArrayListExtra("result");
@@ -397,20 +390,6 @@ public class TaskActivity extends PatherActivity {
 
     }
 
-    @Override
-    public void onBackPressed() {
-        if(taskType.equals("BOXCROP")){
-            TaskView_PhotoView temp = (TaskView_PhotoView) mTaskView;
-            if(!temp.expandFlag){
-                temp.expandFlag = true;
-                temp.getPhotoView().setScale(1);
-                findViewById(R.id.boxCL).setVisibility(View.INVISIBLE);
-                findViewById(R.id.textDragCL).setVisibility(View.VISIBLE);
-            } else{
-                super.onBackPressed();
-            }
-        }else{
-            super.onBackPressed();
-        }
-    }
+
+
 }

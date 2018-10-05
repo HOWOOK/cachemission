@@ -1,117 +1,157 @@
 package com.selectstar.hwshin.cachemission.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.selectstar.hwshin.cachemission.Activity.ExamActivity;
+import com.selectstar.hwshin.cachemission.Activity.TaskActivity;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskListItem;
 import com.selectstar.hwshin.cachemission.R;
 
-import java.util.ArrayList;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-public class ListviewAdapter extends BaseAdapter {
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class ListviewAdapter extends RecyclerView.Adapter<ListviewAdapter.ItemViewHolder> {
 
     private LayoutInflater inflater;
-    private ArrayList<TaskListItem> mTaskList;
+    private ArrayList<JSONObject> mTaskList;
+    private JSONObject userInfo;
     private int layout;
-
-    public ListviewAdapter(Context context, int layout, ArrayList<TaskListItem> tasklist){
+    private HashMap<String,Integer> iconIDMap;
+    private Context mContext;
+    public ListviewAdapter(Context context, int layout, ArrayList<JSONObject> taskList,Context mContext,JSONObject user){
         this.inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.mTaskList=tasklist;
+        this.mTaskList=taskList;
         this.layout=layout;
+        this.userInfo=user;
+        this.iconIDMap = new HashMap<>();
+        this.iconIDMap.put("OCR",R.drawable.tasktype_ocr);
+        this.iconIDMap.put("PHOTO",R.drawable.photoicon);
+        this.iconIDMap.put("VIDEO",R.drawable.tasktype_video);
+        this.iconIDMap.put("RECORD",R.drawable.tasktype_voice);
+        this.iconIDMap.put("DIRECTRECORD",R.drawable.tasktype_voice);
+        this.iconIDMap.put("NUMBERING",R.drawable.tasktype_numbering);
+        this.iconIDMap.put("DICTATION",R.drawable.tasktype_dictation);
+        this.iconIDMap.put("DIALECT",R.drawable.tasktype_dialect);
+        this.mContext = mContext;
     }
 
 
     @Override
-    public int getCount() {
+    public int getItemCount() {
         return mTaskList.size();
     }
+    public void addItem(JSONObject item)
+    {
+        mTaskList.add(item);
 
-    @Override
-    public Object getItem(int position) {
-        return mTaskList.get(position);
+        notifyItemInserted(mTaskList.size()-1);
     }
 
     @Override
     public long getItemId(int position) {
         return position;
     }
-
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public ListviewAdapter.ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_lv, parent, false);
+        return new ListviewAdapter.ItemViewHolder(view);
+    }
+    @Override
+    public void onBindViewHolder(final @NonNull ListviewAdapter.ItemViewHolder holder, int pos) {
+        String taskType="";
+        String taskName="";
+        String taskGold="0";
+        JSONObject taskItem = mTaskList.get(pos);
 
-        convertView = inflater.inflate(layout, parent, false);
-        TaskListItem taskItem = mTaskList.get(position);
-        ImageView taskIv = (ImageView) convertView.findViewById(R.id.taskType);
-        ImageView tasklv_check = (ImageView) convertView.findViewById(R.id.taskTypeCheck);
-
-        String taskType = taskItem.getTaskType().toString();
-
-
-        if(taskType.equals("OCR"))
-            Glide.with(convertView).load(R.drawable.tasktype_ocr).into(taskIv);
-        else if(taskType.equals("PHOTO"))
-            Glide.with(convertView).load(R.drawable.photoicon).into(taskIv);
-        else if(taskType.equals("PHOTOEXAM"))
+        try {
+            taskType = taskItem.get("taskType").toString();
+            taskName = taskItem.get("taskName").toString();
+            taskGold = taskItem.get("gold").toString();
+        }
+        catch(JSONException e)
         {
-            Glide.with(convertView).load(R.drawable.photoicon).into(taskIv);
-            Glide.with(convertView).load(R.drawable.tasktypeadd).into(tasklv_check);
+            e.printStackTrace();
         }
-        else if(taskType.equals("OCREXAM")) {
-            Glide.with(convertView).load(R.drawable.tasktype_ocr).into(taskIv);
-            Glide.with(convertView).load(R.drawable.tasktypeadd).into(tasklv_check);
-        }
-        else if(taskType.equals("VIDEO"))
-            Glide.with(convertView).load(R.drawable.tasktype_video).into(taskIv);
-        else if(taskType.equals("VIDEOEXAM")) {
-            Glide.with(convertView).load(R.drawable.tasktype_video).into(taskIv);
-            Glide.with(convertView).load(R.drawable.tasktypeadd).into(tasklv_check);
-        }
-        else if(taskType.equals("DICTATION"))
-            Glide.with(convertView).load(R.drawable.tasktype_dictation).into(taskIv);
-        else if(taskType.equals("DICTATIONEXAM")) {
-            Glide.with(convertView).load(R.drawable.tasktype_dictation).into(taskIv);
-            Glide.with(convertView).load(R.drawable.tasktypeadd).into(tasklv_check);
-        }
-        else if(taskType.equals("RECORD"))
-            Glide.with(convertView).load(R.drawable.tasktype_voice).into(taskIv);
-        else if(taskType.equals("RECORDEXAM")) {
-            Glide.with(convertView).load(R.drawable.tasktype_voice).into(taskIv);
-            Glide.with(convertView).load(R.drawable.tasktypeadd).into(tasklv_check);
-        }
-        else if(taskType.equals("DIRECTRECORD"))
-            Glide.with(convertView).load(R.drawable.tasktype_voice).into(taskIv);
-        else if(taskType.equals("DIRECTRECORDEXAM")) {
-            Glide.with(convertView).load(R.drawable.tasktype_voice).into(taskIv);
-            Glide.with(convertView).load(R.drawable.tasktypeadd).into(tasklv_check);
-        }
-        else if(taskType.equals("NUMBERING"))
-            Glide.with(convertView).load(R.drawable.tasktype_numbering).into(taskIv);
-        else if(taskType.equals("NUMBERINGEXAM")) {
-            Glide.with(convertView).load(R.drawable.tasktype_numbering).into(taskIv);
-            Glide.with(convertView).load(R.drawable.tasktypeadd).into(tasklv_check);
-        }
-        else if(taskType.equals("DIALECT"))
-            Glide.with(convertView).load(R.drawable.tasktype_dialect).into(taskIv);
-        else if(taskType.equals("DIALECTEXAM")) {
-            Glide.with(convertView).load(R.drawable.tasktype_dialect).into(taskIv);
-            Glide.with(convertView).load(R.drawable.tasktypeadd).into(tasklv_check);
-        }
+        Intent intent;
+        if(taskType.contains("EXAM"))
+            intent = new Intent(mContext, ExamActivity.class);
         else
-            Glide.with(convertView).load(R.drawable.imagenotload).into(taskIv);
+            intent = new Intent(mContext, TaskActivity.class);
+        intent.putExtra("taskType",taskType);
+        intent.putExtra("taskTitle",taskName);
+        intent.putExtra("upGold","\uFFE6"+taskGold);
+        try {
+            intent.putExtra("goldNow", userInfo.get("gold").toString());
+            intent.putExtra("goldPre", userInfo.get("maybe").toString());
+            intent.putExtra("taskView",taskItem.get("taskView").toString());
+            if(taskType.contains("EXAM")) {
+                intent.putExtra("examView", taskItem.get("controller").toString());
+                intent.putExtra("examType", (int)taskItem.get("examType"));
+            }
+            else
+                intent.putExtra("controller",taskItem.get("controller").toString());
+            intent.putExtra("taskId",taskItem.get("id").toString());
+        } catch(JSONException e)
+        {
+            e.printStackTrace();
+        }
+        System.out.println("--");
+        System.out.println(taskType);
+        try {
+            System.out.println(taskItem.get("id"));
+        }catch(JSONException e)
+        {
+            e.printStackTrace();
+        }
+        System.out.println("--");
+        if(taskType.contains("EXAM")) {
+            taskType = taskType.substring(0, taskType.length() - 4);
+            Glide.with(holder.itemView).load(R.drawable.tasktypeadd).into(holder.checkIcon);
+        }
+        if(iconIDMap.containsKey(taskType))
+            Glide.with(holder.itemView).load(iconIDMap.get(taskType)).into(holder.taskIcon);
+        else
+            Glide.with(holder.itemView).load(R.drawable.imagenotload).into(holder.taskIcon);
 
-        TextView taskTv = (TextView) convertView.findViewById(R.id.taskTitle);
-        taskTv.setText(taskItem.getTaskName());
-        TextView gold=(TextView) convertView.findViewById(R.id.gold);
-        gold.setText(taskItem.getGold());
-        TextView dailyMission=(TextView) convertView.findViewById(R.id.dailyMission);
-        dailyMission.setText(taskItem.getDailyMission());
-
-        return convertView;
+        holder.taskTv.setText(taskName);
+        holder.gold.setText("\uFFE6"+taskGold);
+        final Intent tent = intent;
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mContext.startActivity(tent);
+            }
+        });
+        //TextView dailyMission=convertView.findViewById(R.id.dailyMission);
+        //dailyMission.setText(taskItem.getDailyMission());
+    }
+    class ItemViewHolder extends RecyclerView.ViewHolder {
+        private ImageView taskIcon;
+        private ImageView checkIcon;
+        private TextView gold;
+        private TextView taskTv;
+        private View itemView;
+        public ItemViewHolder(View itemView) {
+            super(itemView);
+            this.itemView = itemView;
+            taskIcon = itemView.findViewById(R.id.taskType);
+            checkIcon = itemView.findViewById(R.id.taskTypeCheck);
+            gold = itemView.findViewById(R.id.gold);
+            taskTv = itemView.findViewById(R.id.taskTitle);
+        }
     }
 }
