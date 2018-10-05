@@ -3,10 +3,13 @@ package com.selectstar.hwshin.cachemission.DataStructure;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.CountDownTimer;
 import android.widget.Toast;
+
+import com.selectstar.hwshin.cachemission.LoginHelper.TotalLoginActivity;
 
 import org.apache.http.params.HttpParams;
 
@@ -28,7 +31,7 @@ public class WaitHttpRequest extends AsyncTask{
     public MyProgressDialog httpDialogSomethingOptimizationFailed;
 
     public int responseCode = 500;
-    
+
     private Context mContext;
 //    CountDownTimer adf= new AsyncTaskCancelTimerTask(this,1000,100,true,(Activity) mContext).start();
 
@@ -78,7 +81,17 @@ public class WaitHttpRequest extends AsyncTask{
             OutputStream os = httpCon.getOutputStream();
             os.write(json.getBytes("utf-8"));
             os.flush();
+            if(httpCon.getResponseCode()==401){
+                Intent loginIntent=new Intent(mContext, TotalLoginActivity.class);
+                mContext.startActivity(loginIntent);
+                ((Activity)mContext).finish();
+            }
+            else if(httpCon.getResponseCode()==500){
+                responseCode = httpCon.getResponseCode();
+                Toast.makeText(mContext, "서버가 뻑갔습니다. 이윤택 화이팅을 한번씩만 외쳐주시기 바랍니다.",Toast.LENGTH_SHORT).show();
+                return null;
 
+            }
             if(httpCon.getResponseCode() != HttpURLConnection.HTTP_OK) {
                 responseCode = httpCon.getResponseCode();
                 return null;
@@ -110,6 +123,8 @@ public class WaitHttpRequest extends AsyncTask{
             System.out.println("InputStream" + e.getLocalizedMessage());
 
         }
+
+
         return result;
     }
 
@@ -132,6 +147,7 @@ public class WaitHttpRequest extends AsyncTask{
         return result;
 
     }
+
 
 
 

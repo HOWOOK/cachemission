@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.selectstar.hwshin.cachemission.R;
 import static android.support.constraint.Constraints.TAG;
 
