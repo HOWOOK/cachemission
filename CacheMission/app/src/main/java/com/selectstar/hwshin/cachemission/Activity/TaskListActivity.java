@@ -218,7 +218,7 @@ public class TaskListActivity extends AppCompatActivity {
 
         if (nowDate.equals(preDate)) {
             if (nowTime - preTime < 10) {
-                return false;
+                return true;
             }
             else {
                 return true;
