@@ -53,6 +53,7 @@ public class TaskActivity extends PatherActivity {
     ArrayList<String> pic=new ArrayList<>();
     //사투리특별전용옵션
     static String region_dialect;
+    int currentIndex=0;
 
 
 
@@ -97,6 +98,36 @@ public class TaskActivity extends PatherActivity {
             });
         }
 
+        try {
+            final TextView questText=findViewById(R.id.questText);
+            JSONArray questList=new JSONArray( intent.getStringExtra("questList"));
+            JSONArray parsedQuestList=parseQuestList(questList);
+            final JSONObject questName=(JSONObject) parsedQuestList.get(0);
+            final JSONObject questReward=(JSONObject) parsedQuestList.get(1);
+            if(questName.length()>0) {
+                questText.setText(questName.get(String.valueOf(0)).toString() + String.valueOf(questReward.get(String.valueOf(0))));
+
+
+                questText.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (currentIndex+1 < questName.length()) {
+                            currentIndex++;
+                        } else {
+                            currentIndex = 0;
+                        }
+                        try {
+                            questText.setText(questName.get(String.valueOf(currentIndex)).toString() + String.valueOf(questReward.get(String.valueOf(currentIndex))));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 

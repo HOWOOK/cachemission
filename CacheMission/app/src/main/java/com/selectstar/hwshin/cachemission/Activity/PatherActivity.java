@@ -197,7 +197,9 @@ public abstract class PatherActivity extends AppCompatActivity {
 
     public JSONArray parseQuestList( JSONArray questList)
     {
-
+        JSONArray result=new JSONArray();
+        JSONObject resultNameElem=new JSONObject();
+        JSONObject resultRewardElem=new JSONObject();
         JSONObject[] questItem=new JSONObject[questList.length()];
         String[] questName=new String[questList.length()];
         int[] questReward=new int[questList.length()];
@@ -215,11 +217,17 @@ public abstract class PatherActivity extends AppCompatActivity {
                         questReward[i] = (Integer) questItem[i].get("reward");
                     }
 
+                    resultNameElem.put(String.valueOf(i),questName[i]);
+
+                    resultRewardElem.put(String.valueOf(i),questReward[i]);
+
                 }
             }
         }catch (JSONException e){
             e.printStackTrace();
         }
-        return new JSONArray();
+        result.put(resultNameElem);
+        result.put(resultRewardElem);
+        return result;
     }
 }
