@@ -70,7 +70,7 @@ public class TaskListActivity extends AppCompatActivity {
             previousListJSON=new JSONObject(previousList);
             if(!previousListJSON.has("content")) {
                 JSONObject jo = new JSONObject();
-                jo.put("item",new JSONArray());
+                jo.put("items",new JSONArray());
                 previousListJSON.put("content",jo);
             }
                 previousListJSON.put("content",new JSONObject());
@@ -447,6 +447,7 @@ public class TaskListActivity extends AppCompatActivity {
                         JSONObject resultTemp = new JSONObject(result);
                         if(resultTemp.get("success").toString().equals("true")) {
                             if (isNew) {
+                                mTaskList.get(i).put("questList",resultTemp.get("questList"));
                                 adapter.addItem(mTaskList.get(i));
                                 insertItem(mTaskList.get(i));
                             }
