@@ -1,9 +1,14 @@
 package com.selectstar.hwshin.cachemission.DataStructure;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
+import android.os.CountDownTimer;
+import android.widget.Toast;
+
+import org.apache.http.params.HttpParams;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,9 +23,14 @@ public class WaitHttpRequest extends AsyncTask{
     Context parent = null;
     String img_binary = null;
     public String result = "";
-    private MyProgressDialog httpDialog;
-    private MyProgressDialog httpDialogSomethingOptimizationFailed;
+    public MyProgressDialog httpDialog;
+    public MyProgressDialog httpDialogSomethingOptimizationFailed;
     private Context mContext;
+//    CountDownTimer adf= new AsyncTaskCancelTimerTask(this,1000,100,true,(Activity) mContext).start();
+
+    public MyProgressDialog getHttpDialogSomethingOptimizationFailed() {
+        return httpDialogSomethingOptimizationFailed;
+    }
 
     public WaitHttpRequest(Context context){
         mContext= context;
@@ -35,6 +45,7 @@ public class WaitHttpRequest extends AsyncTask{
 
     @Override
     protected Object doInBackground(Object[] objects) {
+
         String url;
         InputStream is = null;
         //inputStream  = 바이트 단위로 데이터를 읽는다. 외부로부터 읽어 들이는기능관련 클래스들
@@ -53,6 +64,7 @@ public class WaitHttpRequest extends AsyncTask{
             httpCon.setRequestProperty("X-CSRF-Token","Fetch");
             httpCon.setRequestProperty("Content-Type", "application/xml");
             httpCon.setRequestProperty("TOKEN", token);//"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MzQxODU4MjEsImVtYWlsIjoiIiwidXNlcl9pZCI6MSwidXNlcm5hbWUiOiJhc2RmIn0.oGIBuWPo2qw0wciDqGqo3MCoiGNZFP7zX5lqpU3xPyM");
+
 
             // OutputStream으로 POST 데이터를 넘겨주겠다는 옵션.
             httpCon.setDoOutput(true);
@@ -96,7 +108,11 @@ public class WaitHttpRequest extends AsyncTask{
         return result;
     }
 
-
+    @Override
+    protected void onCancelled() {
+        super.onCancelled();
+        //연결 종료시 불리는 함수
+    }
     private String convertInputStreamToString(InputStream inputStream) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String line = "";

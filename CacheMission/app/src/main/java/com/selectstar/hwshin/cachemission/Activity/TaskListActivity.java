@@ -37,6 +37,7 @@ import com.selectstar.hwshin.cachemission.DataStructure.AsyncTaskCancelTimerTask
 import com.selectstar.hwshin.cachemission.DataStructure.TaskListItem;
 import com.selectstar.hwshin.cachemission.DataStructure.UIHashMap;
 import com.selectstar.hwshin.cachemission.DataStructure.WaitHttpRequest;
+import com.selectstar.hwshin.cachemission.LoginHelper.TotalLoginActivity;
 import com.selectstar.hwshin.cachemission.R;
 //import com.selectstar.hwshin.cachemission.DataStructure.
 
@@ -211,7 +212,7 @@ public class TaskListActivity extends AppCompatActivity {
                                         if (resulttemp.get("success").toString().equals("login")) {
 
 
-                                            Intent gotologin = new Intent(TaskListActivity.this, LoginActivity.class);
+                                            Intent gotologin = new Intent(TaskListActivity.this, TotalLoginActivity.class);
                                             startActivity(gotologin);
                                             finish();
                                         } else {
@@ -359,7 +360,6 @@ public class TaskListActivity extends AppCompatActivity {
         Log.d("timeclose2",String.valueOf(nowTime));
         Log.d("timeclose3",ymd);
         Log.d("firrrr",lazyLoding.getString("isfirst",""));
-        SharedPreferences token2 = getSharedPreferences("token",MODE_PRIVATE);
 
         Log.d("logintokenishere",token.getString("loginToken","def"));
 
@@ -487,7 +487,7 @@ if(isNetworkConnected(this)){
                             editor.apply();
                             System.out.println("통신실패하면 " + resulttemp);
                             if (resulttemp.get("success").toString().equals("login")) {
-                                Intent gotologin = new Intent(TaskListActivity.this, LoginActivity.class);
+                                Intent gotologin = new Intent(TaskListActivity.this, TotalLoginActivity.class);
                                 startActivity(gotologin);
                                 finish();
                             } else {

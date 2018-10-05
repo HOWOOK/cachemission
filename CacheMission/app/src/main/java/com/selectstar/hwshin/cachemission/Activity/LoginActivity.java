@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 
 import com.selectstar.hwshin.cachemission.DataStructure.WaitHttpRequest;
+import com.selectstar.hwshin.cachemission.LoginHelper.TotalLoginActivity;
 import com.selectstar.hwshin.cachemission.R;
 
 import org.json.JSONException;
@@ -149,5 +150,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         alertDialogBuilder.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent back = new Intent(LoginActivity.this, TotalLoginActivity.class);
+        startActivity(back);
+        finish();
+
     }
 }

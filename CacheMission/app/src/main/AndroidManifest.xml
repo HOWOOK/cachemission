@@ -1,41 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-
-
-
     package="com.selectstar.hwshin.cachemission">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-
-
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
+        android:name=".LoginHelper.GlobalApplication"
+
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@drawable/cashmissionicon"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@drawable/cashmissioniconround"
         android:supportsRtl="true"
-        android:largeHeap="true"
-        android:hardwareAccelerated="false"
         android:theme="@style/AppTheme">
-
-
-        <service
-            android:name="com.selectstar.hwshin.cachemission.Service.CashMissionFirebaseMessagingService">
+        <service android:name=".Service.CashMissionFirebaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service
-            android:name="com.selectstar.hwshin.cachemission.Service.CashMissionFirebaseInstanceIDService">
+        <service android:name=".Service.CashMissionFirebaseInstanceIDService">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
@@ -48,95 +41,100 @@
             android:resource="@color/colorAccent" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="@string/default_notification_channel_id"/>
+            android:value="@string/default_notification_channel_id" />
         <!-- 파이어베이스 푸시알림 default value들 끝 -->
 
-\
-
+        \
         <activity
-            android:name="com.selectstar.hwshin.cachemission.Activity.TaskListActivity"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:name=".Activity.TaskListActivity"
             android:screenOrientation="portrait"
-
-            >
-
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.selectstar.hwshin.cachemission.Activity.TaskActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustResize"
+
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="@string/kakao_app_key" />
+
+        <activity
+            android:name=".Activity.TaskActivity"
             android:screenOrientation="portrait"
-            ></activity>
-        <activity android:name="com.selectstar.hwshin.cachemission.Activity.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".Activity.LoginActivity"
             android:screenOrientation="portrait"
-            ></activity>
-        <activity android:name="com.selectstar.hwshin.cachemission.Activity.SignUpActivity"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.SignUpActivity"
             android:screenOrientation="portrait"
-            ></activity>
-        <activity android:name="com.selectstar.hwshin.cachemission.Activity.SettingActivity"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.SettingActivity"
             android:screenOrientation="portrait"
-            ></activity>
-        <activity android:name="com.selectstar.hwshin.cachemission.Activity.ExamActivity"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.ExamActivity"
             android:screenOrientation="portrait"
-            ></activity>
-        <activity android:name="com.selectstar.hwshin.cachemission.Activity.SuggestionActivity"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.SuggestionActivity"
             android:screenOrientation="portrait"
-            ></activity>
-        <activity android:name="com.selectstar.hwshin.cachemission.Activity.TaskExplainActivity"
-            android:theme="@style/AppTheme.Transparent.NoActionBar"
-            ></activity>
-        <activity android:name="com.selectstar.hwshin.cachemission.Activity.ExchangeActivity"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.TaskExplainActivity"
+            android:theme="@style/AppTheme.Transparent.NoActionBar" />
+        <activity
+            android:name=".Activity.ExchangeActivity"
             android:screenOrientation="portrait"
-            ></activity>
-        <activity android:name="com.selectstar.hwshin.cachemission.Activity.ExplainActivity"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.ExplainActivity"
             android:screenOrientation="portrait"
-            ></activity>
-        <activity android:name="com.selectstar.hwshin.cachemission.Activity.RegionActivity"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.RegionActivity"
             android:screenOrientation="portrait"
-            ></activity>
-        <activity android:name="com.selectstar.hwshin.cachemission.Activity.TestActivity"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.TestActivity"
             android:screenOrientation="portrait"
-            ></activity>
-        <activity android:name="com.selectstar.hwshin.cachemission.Activity.NoticeActivity"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.NoticeActivity"
             android:screenOrientation="portrait"
-            ></activity>
-        <activity android:name="com.selectstar.hwshin.cachemission.Activity.NoticePopUpActivity"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.NoticePopUpActivity"
             android:screenOrientation="portrait"
-            ></activity>
-        <activity android:name="com.selectstar.hwshin.cachemission.Activity.GalleryActivity"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.GalleryActivity"
             android:screenOrientation="portrait"
-            ></activity>
-        <activity android:name="com.selectstar.hwshin.cachemission.Activity.ImagePopupActivity"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.ImagePopupActivity"
             android:screenOrientation="portrait"
-            ></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".LoginHelper.TotalLoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.selectstar.hwshin.cachemission"
             android:exported="false"
             android:grantUriPermissions="true">
-
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
     </application>
 
 </manifest>
