@@ -20,10 +20,13 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_2DBox;
 import com.selectstar.hwshin.cachemission.DataStructure.HurryHttpRequest;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_Photo;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView;
+import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoView;
 import com.selectstar.hwshin.cachemission.DataStructure.UIHashMap;
 import com.selectstar.hwshin.cachemission.R;
 
@@ -180,11 +183,9 @@ public class TaskActivity extends PatherActivity {
         {
             e.printStackTrace();
         }
-
-
-
-
     }
+
+    //데일리 퀘스트 관련
     public int getTaskCount()
     {
         String string = taskCount.getText().toString();
@@ -216,6 +217,8 @@ public class TaskActivity extends PatherActivity {
         intent_taskExplain.putExtra("taskType", taskType);
         startActivity(intent_taskExplain);
     }
+
+
     public int setDailyQuest(String rawText)
     {
         if(rawText.equals("-1")) {
@@ -255,6 +258,8 @@ public class TaskActivity extends PatherActivity {
         taskCount.setText(parseDailyQuest(rawText));
         return 0;
     }
+
+
     private String parseDailyQuest(String rawText) {
         if(rawText.contains("\n"))
         {
@@ -390,6 +395,26 @@ public class TaskActivity extends PatherActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
 
-
+        //박스 테스크의 경우 확대 잘못하면 취소 눌렀을 때 다시 확대 할수있도록 해야함
+        if(taskType.equals("BOXCROP")){
+            TaskView_PhotoView temp = (TaskView_PhotoView) mTaskView;
+            Controller_2DBox temp2 = (Controller_2DBox) mController;
+            if(!temp.expandFlag){
+                temp.expandFlag = true;
+                temp2.getPinButton().setBackgroundResource(R.drawable.twodbox_icon_pin_on);
+                temp2.pinFlag = true;
+                temp.getPhotoView().setScale(1);
+                findViewById(R.id.boxCL).setVisibility(View.INVISIBLE);
+                findViewById(R.id.textDragCL).setVisibility(View.VISIBLE);
+                findViewById(R.id.textDragCL).bringToFront();
+            } else{
+                super.onBackPressed();
+            }
+        }else{
+            super.onBackPressed();
+        }
+    }
 }

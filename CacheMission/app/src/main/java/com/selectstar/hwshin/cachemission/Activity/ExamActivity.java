@@ -94,7 +94,7 @@ public class ExamActivity extends PatherActivity {
 
 
                 }
-            }.execute(getString(R.string.mainurl) + "/newExamGet", param, getLoginToken());
+            }.execute(getString(R.string.mainurl) + "/testing/examGet", param, getLoginToken());
         } catch(JSONException e)
         {
             e.printStackTrace();
@@ -280,7 +280,7 @@ public class ExamActivity extends PatherActivity {
 
 
                         }
-                    }.execute(getString(R.string.mainurl)+"/examSubmit", param, getLoginToken());
+                    }.execute(getString(R.string.mainurl)+"/testing/examSubmit", param, getLoginToken());
 
 
 
