@@ -324,6 +324,7 @@ public class TaskListActivity extends AppCompatActivity {
                         return;
                     JSONObject resultTemp = new JSONObject(result);
                     JSONObject user = (JSONObject)resultTemp.get("user");
+                    insertUserInfo(user);
                     ImageView userRank = findViewById(R.id.userrank);
                     TextView userGold = findViewById(R.id.mygold);
                     int allGold = (int) user.get("gold") + (int) user.get("maybe");
@@ -491,6 +492,7 @@ public class TaskListActivity extends AppCompatActivity {
                     int allGold = (int) user.get("gold") + (int) user.get("maybe");
                     userGold.setText(String.valueOf(allGold));
                     TextView userNameDrawer = findViewById(R.id.usernamedrawer);
+                    insertUserInfo(user);
                     userNameDrawer.setText(String.valueOf(user.get("name")));
                     setUserRankImage(userRank, (int)user.get("rank"));
                     ProgressBar progress = findViewById(R.id.mainProgressBar);
