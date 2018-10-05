@@ -95,7 +95,6 @@ public class Controller_Numbers extends Controller {
                                         Toast.makeText(parentActivity,"일일 퀘스트 완료! 추가 보상 \uFFE6" + String.valueOf(bonus),Toast.LENGTH_SHORT).show();
                                     }
 
-
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
