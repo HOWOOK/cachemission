@@ -31,6 +31,7 @@ import com.selectstar.hwshin.cachemission.Adapter.ListviewAdapter;
 import com.selectstar.hwshin.cachemission.DataStructure.HurryHttpRequest;
 import com.selectstar.hwshin.cachemission.DataStructure.UIHashMap;
 import com.selectstar.hwshin.cachemission.DataStructure.WaitHttpRequest;
+import com.selectstar.hwshin.cachemission.LoginHelper.TotalLoginActivity;
 import com.selectstar.hwshin.cachemission.R;
 
 import org.json.JSONArray;
@@ -217,7 +218,7 @@ public class TaskListActivity extends AppCompatActivity {
 
         if (nowDate.equals(preDate)) {
             if (nowTime - preTime < 10) {
-                return true;
+                return false;
             }
             else {
                 return true;
@@ -316,12 +317,7 @@ public class TaskListActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(Object o) {
                 super.onPostExecute(o);
-                if(responseCode == 401)
-                {
-                    Intent loginIntent = new Intent(TaskListActivity.this, LoginActivity.class);
-                    startActivity(loginIntent);
-                    finish();
-                }
+
                 mTaskList.clear();
                 try {
                     if (result == "")
