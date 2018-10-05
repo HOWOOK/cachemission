@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -98,7 +99,7 @@ public class TaskListActivity extends AppCompatActivity {
 
         JSONObject previousListJSON=null;
         JSONObject content=null;
-
+        Log.d("userinfo",userInfo.toString());
 
         try {
 
@@ -108,7 +109,7 @@ public class TaskListActivity extends AppCompatActivity {
 
             content.put("user",userInfo);
             previousListJSON.put("content",content);
-
+            Log.d("previous",previousListJSON.toString());
             editor.putString("listInfoData",previousListJSON.toString());
             editor.apply();
 
@@ -281,11 +282,15 @@ public class TaskListActivity extends AppCompatActivity {
 
         try {
             previousList = listInfo.getString("listInfoData", "{}");
+
             System.out.println(previousList);
             System.out.println("----");
             previousListJSON = new JSONObject(previousList);
             content=(JSONObject)previousListJSON.get("content");
+            Log.d("content", content.toString());
             items=(JSONArray)content.get("items");
+            Log.d("items", items.toString());
+
             user=(JSONObject)content.get("user");
             mTaskList.clear();
             for(int i=0; i<items.length(); i++){
@@ -318,7 +323,6 @@ public class TaskListActivity extends AppCompatActivity {
             protected void onPostExecute(Object o) {
                 super.onPostExecute(o);
 
-                mTaskList.clear();
                 try {
                     if (result == "")
                         return;
