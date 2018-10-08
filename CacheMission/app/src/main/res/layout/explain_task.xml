@@ -61,7 +61,7 @@
             app:layout_constraintGuide_percent="0.75" />
 
         <ImageView
-            android:id="@+id/explainTaskImage"
+            android:id="@+id/newExplainTaskImage"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginLeft="30dp"

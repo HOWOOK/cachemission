@@ -45,7 +45,7 @@ public class SlideAdapter_ExplainTask_None extends PagerAdapter {
         inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.explain_task,container,false);
 
-        ImageView img1 = (ImageView)view.findViewById(R.id.explainTaskImage);
+        ImageView img1 = (ImageView)view.findViewById(R.id.newExplainTaskImage);
         ImageView img2 = (ImageView)view.findViewById(R.id.explainTaskExit);
         TextView txt1 = (TextView)view.findViewById(R.id.explainTaskText);
         TextView txt2 = (TextView)view.findViewById(R.id.explainTaskPage);

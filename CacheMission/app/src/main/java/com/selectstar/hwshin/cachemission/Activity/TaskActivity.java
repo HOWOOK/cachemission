@@ -244,7 +244,12 @@ public class TaskActivity extends PatherActivity {
         SharedPreferences taskToken = getSharedPreferences("taskToken", MODE_PRIVATE);
         if(taskToken.getInt(taskType + "taskToken",0) == 100)
             return;
-        Intent intent_taskExplain = new Intent(TaskActivity.this, TaskExplainActivity.class);
+        Intent intent_taskExplain;
+        //if(taskType.equals("BOXCROP")){
+        //    intent_taskExplain = new Intent(TaskActivity.this, NewExplainActivity.class);
+      //  }else{
+            intent_taskExplain = new Intent(TaskActivity.this, TaskExplainActivity.class);
+      //  }
         intent_taskExplain.putExtra("taskType", taskType);
         startActivity(intent_taskExplain);
     }

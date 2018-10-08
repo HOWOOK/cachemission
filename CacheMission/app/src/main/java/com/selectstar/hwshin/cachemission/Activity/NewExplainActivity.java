@@ -24,6 +24,7 @@ import com.selectstar.hwshin.cachemission.Adapter.Explain.SlideAdapter_ExplainTa
 import com.selectstar.hwshin.cachemission.Adapter.Explain.SlideAdapter_ExplainTask_Record;
 import com.selectstar.hwshin.cachemission.Adapter.Explain.SlideAdapter_ExplainTask_Record_ExamType1;
 import com.selectstar.hwshin.cachemission.Adapter.Explain.SlideAdapter_ExplainTask_Record_ExamType2;
+import com.selectstar.hwshin.cachemission.Adapter.NewExplainAdapter;
 import com.selectstar.hwshin.cachemission.R;
 
 public class NewExplainActivity extends AppCompatActivity {
@@ -80,34 +81,7 @@ public class NewExplainActivity extends AppCompatActivity {
 
     private PagerAdapter findAdaptingTaskExplain(String tasktype) {
 
-        if(tasktype.equals("OCR"))
-            return new SlideAdapter_ExplainTask_None(this);
-        else if (tasktype.equals("OCREXAM"))
-            return new SlideAdapter_ExplainTask_None(this);
-        else if (tasktype.equals("VIDEO"))
-            return new SlideAdapter_ExplainTask_None(this);
-        else if (tasktype.equals("VIDEOEXAM"))
-            return new SlideAdapter_ExplainTask_None(this);
-        else if (tasktype.equals("RECORD"))
-            return new SlideAdapter_ExplainTask_Record(this);
-        else if (tasktype.equals("RECORDEXAM") && examType == 1)
-            return new SlideAdapter_ExplainTask_Record_ExamType1(this);
-        else if (tasktype.equals("RECORDEXAM") && examType == 2)
-            return new SlideAdapter_ExplainTask_Record_ExamType2(this);
-        else if (tasktype.equals("DIRECTRECORD"))
-            return new SlideAdapter_ExplainTask_DirectRecord(this);
-        else if (tasktype.equals("DICTATION"))
-            return new SlideAdapter_ExplainTask_None(this);
-        else if (tasktype.equals("DICTATIONEXAM"))
-            return new SlideAdapter_ExplainTask_None(this);
-        else if (tasktype.equals("NUMBERING"))
-            return new SlideAdapter_ExplainTask_Numbering(this);
-        else if (tasktype.equals("DIALECT"))
-            return new SlideAdapter_ExplainTask_Dialect(this);
-        else if (tasktype.equals("PHOTO"))
-            return new SlideAdapter_ExplainTask_Photo(this);
-        else
-            return new SlideAdapter_ExplainTask_None(this);
+        return new NewExplainAdapter(this,null);
     }
 
 }

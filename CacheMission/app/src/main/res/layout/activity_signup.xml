@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/linearLayoutSignup"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -193,6 +194,7 @@
                 android:layout_width="0dp"
                 android:text="가입하기"
                 app:layout_constraintBottom_toTopOf="@+id/nobutton"
+                app:layout_constraintTop_toBottomOf="@+id/agevalue"
                 app:layout_constraintEnd_toEndOf="@+id/guideline_signupright"
                 app:layout_constraintStart_toStartOf="@+id/guideline_signupleft" />
 
@@ -209,5 +211,6 @@
 
         </android.support.constraint.ConstraintLayout>
     </LinearLayout>
+
 
 </ScrollView>
