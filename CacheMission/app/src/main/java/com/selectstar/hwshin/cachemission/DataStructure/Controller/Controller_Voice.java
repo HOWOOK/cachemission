@@ -576,7 +576,7 @@ public class Controller_Voice extends Controller {
 
                 // open a URL connection to the Servlet
                 FileInputStream fileInputStream = new FileInputStream(sourceFile);
-                URL url = new URL(parentActivity.getString(R.string.mainurl)+"/taskSubmit");
+                URL url = new URL(parentActivity.getString(R.string.mainurl)+"/testing/taskSubmit");
 
                 // Open a HTTP  connection to  the URL
                 conn = (HttpURLConnection) url.openConnection();
@@ -597,7 +597,7 @@ public class Controller_Voice extends Controller {
                 conn.setRequestProperty("ENCTYPE", "multipart/form-data");
                 conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
                 conn.setRequestProperty("uploaded_file", fileName);
-                conn.setRequestProperty("TOKEN",parentActivity.getLoginToken());
+                conn.setRequestProperty("Authorization","jwt "+parentActivity.getLoginToken());
                 conn.setRequestProperty("ANSWERID",parentActivity.getAnswerID());
                 conn.setRequestProperty("TASKID",parentActivity.getTaskID());
 

@@ -2,6 +2,7 @@ package com.selectstar.hwshin.cachemission.DataStructure;
 
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_2DBox;
+import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_2DBoxLight;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_EditText;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_Numbers;
 import com.selectstar.hwshin.cachemission.DataStructure.ExamView.ExamView;
@@ -42,7 +43,7 @@ public class UIHashMap {
     int[][] parameters_PHOTO = new int[6][2];
     int[][] parameters_BOXCROP = new int[6][2];
     int[][] parameters_DIRECTRECORD = new int[6][2];
-    //int[][] parameters_BOXCROP = new int[6][2];
+    int[][] parameters_PREBOXCROP = new int[6][2];
 
     int[][] parameters_OCREXAM = new int[6][2];
     int[][] parameters_VIDEOEXAM = new int[6][2];
@@ -53,6 +54,7 @@ public class UIHashMap {
     int[][] parameters_PHOTOEXAM = new int[6][2];
     int[][] parameters_BOXCROPEXAM = new int[6][2];
     int[][] parameters_DIRECTRECORDEXAM = new int[6][2];
+    int[][] parameters_PREBOXCROPEXAM = new int[6][2];
 
     public HashMap<String, TaskView> taskViewHashMap = new HashMap();
     public HashMap<String, Controller> controllerHashMap = new HashMap();
@@ -71,6 +73,7 @@ public class UIHashMap {
         //Controller hashmap 종류들
         controllerHashMap.put("edittext", new Controller_EditText());
         controllerHashMap.put("2dbox", new Controller_2DBox());
+        controllerHashMap.put("2dboxlight", new Controller_2DBoxLight());
         //controllerHashMap.put("buttons", new Controller_Buttons());
         controllerHashMap.put("record", new Controller_Voice());
         controllerHashMap.put("numbers", new Controller_Numbers());
@@ -223,6 +226,22 @@ public class UIHashMap {
         parameters_BOXCROPEXAM[4][0] = R.id.taskConstLayoutexam; parameters_BOXCROPEXAM[4][1] = 4;
         parameters_BOXCROPEXAM[5][0] = 10;
         taskHashMap.put("BOXCROPEXAM", parameters_BOXCROPEXAM);
+
+        parameters_PREBOXCROP[0][0] = 10;
+        parameters_PREBOXCROP[1][0] = R.id.title; parameters_PREBOXCROP[1][1] = 4;
+        parameters_PREBOXCROP[2][0] = R.id.taskConstLayoutexam; parameters_PREBOXCROP[2][1] = 4;
+        parameters_PREBOXCROP[3][0] = R.id.title; parameters_PREBOXCROP[3][1] = 4;
+        parameters_PREBOXCROP[4][0] = R.id.taskConstLayoutexam; parameters_PREBOXCROP[4][1] = 4;
+        parameters_PREBOXCROP[5][0] = 10;
+        taskHashMap.put("PREBOXCROP", parameters_PREBOXCROP);
+
+        parameters_PREBOXCROPEXAM[0][0] = 10;
+        parameters_PREBOXCROPEXAM[1][0] = R.id.title; parameters_PREBOXCROPEXAM[1][1] = 4;
+        parameters_PREBOXCROPEXAM[2][0] = R.id.taskConstLayoutexam; parameters_PREBOXCROPEXAM[2][1] = 4;
+        parameters_PREBOXCROPEXAM[3][0] = R.id.title; parameters_PREBOXCROPEXAM[3][1] = 4;
+        parameters_PREBOXCROPEXAM[4][0] = R.id.taskConstLayoutexam; parameters_PREBOXCROPEXAM[4][1] = 4;
+        parameters_PREBOXCROPEXAM[5][0] = 10;
+        taskHashMap.put("PREBOXCROPEXAM", parameters_PREBOXCROPEXAM);
 
     }
 

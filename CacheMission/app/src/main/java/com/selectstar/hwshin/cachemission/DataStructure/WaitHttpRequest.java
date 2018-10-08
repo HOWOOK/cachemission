@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.selectstar.hwshin.cachemission.LoginHelper.TotalLoginActivity;
 
 import org.apache.http.params.HttpParams;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -46,8 +47,8 @@ public class WaitHttpRequest extends AsyncTask{
     @Override
     protected void onPreExecute() {
         httpDialogSomethingOptimizationFailed = httpDialog.show(mContext,"","",true,true,null);
-
         super.onPreExecute();
+        System.out.println("응...-2");
     }
 
     @Override
@@ -57,6 +58,7 @@ public class WaitHttpRequest extends AsyncTask{
         InputStream is = null;
         //inputStream  = 바이트 단위로 데이터를 읽는다. 외부로부터 읽어 들이는기능관련 클래스들
         //outputStream = 외부로 데이터를 전송합니다. 외부로 데이터를 전송하는 기능 관련 클래스들
+        System.out.println("응...-1");
         try {
             String token="";
             URL urlCon = new URL(objects[0].toString());
@@ -64,7 +66,9 @@ public class WaitHttpRequest extends AsyncTask{
             if(objects.length == 3)
             {
                 token = objects[2].toString();
+                System.out.println("응...0");
             }
+            System.out.println("응...1");
             //서버 response data를 json 형식의 타입으로 요청
             //httpCon.setRequestProperty("Accept", "application/json");
             httpCon.setRequestProperty("X-Requested-With", "XMLHttpRequest");
@@ -72,15 +76,19 @@ public class WaitHttpRequest extends AsyncTask{
             httpCon.setRequestProperty("Content-Type", "application/xml");
             httpCon.setRequestProperty("Authorization", "jwt " + token);//"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MzQxODU4MjEsImVtYWlsIjoiIiwidXNlcl9pZCI6MSwidXNlcm5hbWUiOiJhc2RmIn0.oGIBuWPo2qw0wciDqGqo3MCoiGNZFP7zX5lqpU3xPyM");
 
-
             // OutputStream으로 POST 데이터를 넘겨주겠다는 옵션.
             httpCon.setDoOutput(true);
             // InputStream으로 서버로 부터 응답을 받겠다는 옵션.
             httpCon.setDoInput(true);
             String json = objects[1].toString();
+            System.out.println("응...2");
             OutputStream os = httpCon.getOutputStream();
+            System.out.println("응...2.5");
             os.write(json.getBytes("utf-8"));
+            System.out.println("리스폰 코드 : "+httpCon.getResponseCode());
             os.flush();
+            System.out.println("응...3");
+
             if(httpCon.getResponseCode()==401){
                 Intent loginIntent=new Intent(mContext, TotalLoginActivity.class);
                 mContext.startActivity(loginIntent);
