@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.CountDownTimer;
 import android.widget.Toast;
 
+import com.selectstar.hwshin.cachemission.Activity.LoginActivity;
 import com.selectstar.hwshin.cachemission.LoginHelper.TotalLoginActivity;
 
 import org.apache.http.params.HttpParams;
@@ -82,7 +83,7 @@ public class WaitHttpRequest extends AsyncTask{
             os.write(json.getBytes("utf-8"));
             os.flush();
             if(httpCon.getResponseCode()==401){
-                Intent loginIntent=new Intent(mContext, TotalLoginActivity.class);
+                Intent loginIntent=new Intent(mContext, LoginActivity.class);
                 mContext.startActivity(loginIntent);
                 ((Activity)mContext).finish();
             }
