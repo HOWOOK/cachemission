@@ -167,21 +167,23 @@ public class Controller_2DBox extends Controller {
                                         answerCoordinationTemp = mtaskView_PhotoView.answerCoordination;
                                         answerTypeTemp = mtaskView_PhotoView.answerType;
 
-                                        System.out.println("---------추가 전 ----------");
-                                        for(int i = 0; i < mtaskView_PhotoView.answerCoordination.length; i++){
-                                            System.out.print("(");
-                                            for(int j = 0; j < 4; j++){
-                                                System.out.print(mtaskView_PhotoView.answerCoordination[i][j]+",");
+                                        if (mtaskView_PhotoView.answerCoordination!=null) {
+                                            System.out.println("---------추가 전 ----------");
+                                            for (int i = 0; i < mtaskView_PhotoView.answerCoordination.length; i++) {
+                                                System.out.print("(");
+                                                for (int j = 0; j < 4; j++) {
+                                                    System.out.print(mtaskView_PhotoView.answerCoordination[i][j] + ",");
+                                                }
+                                                System.out.print(" 타입 : " + mtaskView_PhotoView.answerType[i]);
+                                                System.out.println(")");
                                             }
-                                            System.out.print(" 타입 : " + mtaskView_PhotoView.answerType[i]);
-                                            System.out.println(")");
                                         }
 
                                         mtaskView_PhotoView.answerCoordination = new float[answerCount + drawAnswerCount][4];
                                         mtaskView_PhotoView.answerType = new int[answerCount + drawAnswerCount];
 
-                                        if(answerCoordinationTemp != null){
-                                            for(int i = 0; i < answerCoordinationTemp.length; i++){
+                                        if(answerCoordinationTemp != null) {
+                                            for (int i = 0; i < answerCoordinationTemp.length; i++) {
                                                 mtaskView_PhotoView.answerCoordination[i][0] = answerCoordinationTemp[i][0];
                                                 mtaskView_PhotoView.answerCoordination[i][1] = answerCoordinationTemp[i][1];
                                                 mtaskView_PhotoView.answerCoordination[i][2] = answerCoordinationTemp[i][2];
@@ -190,14 +192,16 @@ public class Controller_2DBox extends Controller {
                                             }
                                         }
 
-                                        System.out.println("---------복사 후----------");
-                                        for(int i = 0; i < mtaskView_PhotoView.answerCoordination.length; i++){
-                                            System.out.print("(");
-                                            for(int j = 0; j < 4; j++){
-                                                System.out.print(mtaskView_PhotoView.answerCoordination[i][j]+",");
+                                        if (mtaskView_PhotoView.answerCoordination!=null) {
+                                            System.out.println("---------복사 후----------");
+                                            for (int i = 0; i < mtaskView_PhotoView.answerCoordination.length; i++) {
+                                                System.out.print("(");
+                                                for (int j = 0; j < 4; j++) {
+                                                    System.out.print(mtaskView_PhotoView.answerCoordination[i][j] + ",");
+                                                }
+                                                System.out.print(" 타입 : " + mtaskView_PhotoView.answerType[i]);
+                                                System.out.println(")");
                                             }
-                                            System.out.print(" 타입 : " + mtaskView_PhotoView.answerType[i]);
-                                            System.out.println(")");
                                         }
 
 
@@ -208,14 +212,16 @@ public class Controller_2DBox extends Controller {
                                         mtaskView_PhotoView.answerType[answerCount + drawAnswerCount - 1] = 1;
                                         mtaskView_PhotoView.changedCoordination = new float[mtaskView_PhotoView.answerCoordination.length][4];
 
-                                        System.out.println("---------추가 후----------");
-                                        for(int i = 0; i < mtaskView_PhotoView.answerCoordination.length; i++){
-                                            System.out.print("(");
-                                            for(int j = 0; j < 4; j++){
-                                                System.out.print(mtaskView_PhotoView.answerCoordination[i][j]+",");
+                                        if (mtaskView_PhotoView.answerCoordination!=null) {
+                                            System.out.println("---------추가 후----------");
+                                            for (int i = 0; i < mtaskView_PhotoView.answerCoordination.length; i++) {
+                                                System.out.print("(");
+                                                for (int j = 0; j < 4; j++) {
+                                                    System.out.print(mtaskView_PhotoView.answerCoordination[i][j] + ",");
+                                                }
+                                                System.out.print(" 타입 : " + mtaskView_PhotoView.answerType[i]);
+                                                System.out.println(")");
                                             }
-                                            System.out.print(" 타입 : " + mtaskView_PhotoView.answerType[i]);
-                                            System.out.println(")");
                                         }
 
                                         mtaskView_PhotoView.drawAnswer(mtaskView_PhotoView.answerCoordination);
@@ -229,6 +235,8 @@ public class Controller_2DBox extends Controller {
                                         pinFlag = true;
                                         photoView.setScale(1);
                                         ((TaskView_PhotoView) parentActivity.getmTaskView()).expandFlag = true;
+                                        parentActivity.setGold(String.valueOf(resultTemp.get("gold")));
+                                        parentActivity.setMaybe(String.valueOf(resultTemp.get("maybe")));
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -286,6 +294,8 @@ public class Controller_2DBox extends Controller {
                                                 ((TaskActivity)parentActivity).startTask();
                                                 parentActivity.setGold(String.valueOf(resultTemp.get("gold")));
                                                 parentActivity.setMaybe(String.valueOf(resultTemp.get("maybe")));
+                                                answerCount=0;
+                                                drawAnswerCount=0;
                                             }
                                         } catch (JSONException e) {
                                             e.printStackTrace();
