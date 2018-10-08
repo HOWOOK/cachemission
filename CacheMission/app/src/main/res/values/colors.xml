@@ -9,8 +9,8 @@
     <color name="colorAccent">#00ADA9</color>
     <color name="colorSecondary">#474143</color>
 
-    <color name="gradientFirst">#E3AC1B</color>
-    <color name="gradientSecond">#FFA033</color>
+    <color name="gradientFirst">#FFEA0A</color>
+    <color name="gradientSecond">#FAB402</color>
 
     <color name="fontColorActive">#4D4D4D</color>
     <color name="fontColorActiveAlpha">#904D4D4D</color>

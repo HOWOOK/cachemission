@@ -5,7 +5,7 @@
         <shape>
             <corners android:radius="5dip" />
             <solid
-                android:color="@color/fontColorActiveAlpha"
+                android:color="#4D1C2629"
                 />
         </shape>
     </item>
@@ -15,7 +15,7 @@
             <shape>
                 <corners android:radius="5dip" />
                 <solid
-                    android:color="@color/fontColorActive"
+                    android:color="#1C2629"
                     />
             </shape>
         </clip>
@@ -26,7 +26,7 @@
             <shape>
                 <corners android:radius="5dip" />
                 <solid
-                    android:color="@color/fontColorActive"
+                    android:color="#1C2629"
                     />
             </shape>
         </clip>

@@ -80,6 +80,16 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
 
+        //테스트 페이지로 들어가기 위한 어둠의 경로
+        View testgogo = findViewById(R.id.testgogo);
+        testgogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent_testgogo = new Intent(SettingActivity.this, TestActivity.class);
+                startActivity(intent_testgogo);
+            }
+        });
+
         Switch pushOnOff = findViewById(R.id.pushonoffbtn);
         final SharedPreferences push = getSharedPreferences("push", MODE_PRIVATE);
         String OnOff = push.getString("push", "true");
