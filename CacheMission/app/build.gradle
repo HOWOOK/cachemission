@@ -33,7 +33,7 @@ android {
 
         applicationId 'com.selectstar.hwshin.cachemission'
 
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 27
         versionCode 13
         versionName "1.1.1"

@@ -40,6 +40,14 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/back"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/testgogo"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
         </android.support.constraint.ConstraintLayout>
 
         <TextView

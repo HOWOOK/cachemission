@@ -12,11 +12,11 @@
 
     <stroke
         android:width="50dp"
-        android:color="@color/colorPrimaryDark"
+        android:color="@color/colorPrimary"
         />
 
     <solid
-        android:color="@color/colorPrimaryDark"
+        android:color="@color/colorPrimary"
         />
 
     <corners
