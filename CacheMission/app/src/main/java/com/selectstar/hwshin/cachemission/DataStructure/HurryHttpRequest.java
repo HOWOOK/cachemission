@@ -41,6 +41,7 @@ public class HurryHttpRequest extends AsyncTask{
             {
                 token = objects[2].toString();
             }
+
             //서버 response data를 json 형식의 타입으로 요청
             //httpCon.setRequestProperty("Accept", "application/json");
             httpCon.setRequestProperty("X-Requested-With", "XMLHttpRequest");

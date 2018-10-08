@@ -506,7 +506,7 @@ public class TaskListActivity extends AppCompatActivity {
         if(checkIfTimePassed())
             getTaskList(loginToken);
         else
-            getPreviousList(loginToken);
+            getTaskList(loginToken);
 
     }
     private void setUserRankImage(ImageView userRank, TextView userLevel, int rank) {
