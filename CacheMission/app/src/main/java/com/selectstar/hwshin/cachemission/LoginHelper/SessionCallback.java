@@ -1,5 +1,7 @@
 package com.selectstar.hwshin.cachemission.LoginHelper;
 
+import android.content.SharedPreferences;
+
 import com.kakao.auth.ErrorCode;
 import com.kakao.auth.ISessionCallback;
 import com.kakao.network.ErrorResult;
@@ -52,6 +54,8 @@ public class SessionCallback implements ISessionCallback {
                 userEmail = userProfile.getEmail();
                 profileUrl = userProfile.getThumbnailImagePath();
                 userName = userProfile.getNickname();
+
+
 
 
 

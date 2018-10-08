@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 
 import android.widget.Button;
@@ -84,9 +85,12 @@ public class TotalLoginActivity extends AppCompatActivity {
 
                 session.open(AuthType.KAKAO_LOGIN_ALL, TotalLoginActivity.this);
 
+
                 try {
                     JSONObject param = new JSONObject();
                     JSONObject information=new JSONObject();
+                    //Log.d("email",sessionCallback.userEmail);
+                    //Log.d("username",sessionCallback.userName);
                     information.put("userEmail",sessionCallback.userEmail);
                     information.put("userName",sessionCallback.userName);
                     param.put("type", "kakao");
@@ -123,12 +127,21 @@ public class TotalLoginActivity extends AppCompatActivity {
 
 
 
+
             }
 
         });
 
 
-
+        btn_facebook_login=findViewById(R.id.btn_facebook_login);
+        btn_facebook_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent facebook=new Intent(TotalLoginActivity.this,FacebookLoginActivity.class);
+                startActivity(facebook);
+                finish();
+            }
+        });
 
     }
 

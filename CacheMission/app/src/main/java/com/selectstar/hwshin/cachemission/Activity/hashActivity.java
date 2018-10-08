@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 
+import com.selectstar.hwshin.cachemission.R;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -18,16 +20,13 @@ public class hashActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getHashKey();
-
-    }
-    private void getHashKey(){
+        setContentView(R.layout.activity_gallery);
         try {
             PackageInfo info = getPackageManager().getPackageInfo("com.selectstar.hwshin.cachemission", PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
                 MessageDigest md = MessageDigest.getInstance("SHA");
                 md.update(signature.toByteArray());
-                Log.d(TAG,"key_hash="+ Base64.encodeToString(md.digest(), Base64.DEFAULT));
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
             }
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
@@ -36,3 +35,4 @@ public class hashActivity extends Activity{
         }
     }
 }
+
