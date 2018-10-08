@@ -162,6 +162,8 @@ public class Controller_2DBox extends Controller {
                                             parentActivity.finish();
                                         }
                                     } else {
+                                        System.out.println("서버반응 : "+resultTemp.get("success").toString());
+
                                         drawAnswerCount++;
                                         System.out.println("그려져있던 수 : "+answerCount+" 내가 그린 수 : "+drawAnswerCount);
                                         answerCoordinationTemp = mtaskView_PhotoView.answerCoordination;
@@ -360,10 +362,8 @@ public class Controller_2DBox extends Controller {
                 } else if (action == MotionEvent.ACTION_MOVE) {
                     float X = curX - lastX;
                     float Y = curY - lastY;
-                    System.out.println("탑 라인");
-                    System.out.println("처음 x : "+lastX+" 처음 x : "+lastY);
-                    System.out.println("나중 x : "+curX+" 나중 y : "+curY);
-                    System.out.println("계산 x : "+X+" 계산 y : "+Y);                    if (!(centerImage.getHeight() < maxsize && Y > 0)) {
+
+                    if (!(centerImage.getHeight() < maxsize && Y > 0)) {
                         mLayoutParams1.topMargin += Y;
                         mLayoutParams2.topMargin += Y;
                         mLayoutParams3.topMargin += Y;
@@ -400,10 +400,6 @@ public class Controller_2DBox extends Controller {
                 } else if (action == MotionEvent.ACTION_MOVE) {
                     float X = curX - lastX;
                     float Y = curY - lastY;
-                    System.out.println("탑 페이드");
-                    System.out.println("처음 x : "+lastX+" 처음 x : "+lastY);
-                    System.out.println("나중 x : "+curX+" 나중 y : "+curY);
-                    System.out.println("계산 x : "+X+" 계산 y : "+Y);
                     if (!(centerImage.getHeight() < maxsize && Y > 0)) {
                         mLayoutParams1.topMargin += Y;
                         mLayoutParams2.topMargin += Y;
@@ -443,10 +439,6 @@ public class Controller_2DBox extends Controller {
                 } else if (action == MotionEvent.ACTION_MOVE) {
                     float X = curX - lastX;
                     float Y = curY - lastY;
-                    System.out.println("바텀 라인");
-                    System.out.println("처음 x : "+lastX+" 처음 x : "+lastY);
-                    System.out.println("나중 x : "+curX+" 나중 y : "+curY);
-                    System.out.println("계산 x : "+X+" 계산 y : "+Y);
                     if (!(centerImage.getHeight() < maxsize && Y < 0)) {
                         mLayoutParams1.bottomMargin -= Y;
                         mLayoutParams2.bottomMargin -= Y;
@@ -484,10 +476,6 @@ public class Controller_2DBox extends Controller {
                 } else if (action == MotionEvent.ACTION_MOVE) {
                     float X = curX - lastX;
                     float Y = curY - lastY;
-                    System.out.println("바텀 페이드");
-                    System.out.println("처음 x : "+lastX+" 처음 x : "+lastY);
-                    System.out.println("나중 x : "+curX+" 나중 y : "+curY);
-                    System.out.println("계산 x : "+X+" 계산 y : "+Y);
                     if (!(centerImage.getHeight() < maxsize && Y < 0)) {
                         mLayoutParams1.bottomMargin -= Y;
                         mLayoutParams2.bottomMargin -= Y;
@@ -525,10 +513,6 @@ public class Controller_2DBox extends Controller {
                 } else if (action == MotionEvent.ACTION_MOVE) {
                     float X = curX - lastX;
                     float Y = curY - lastY;
-                    System.out.println("레프트 라인");
-                    System.out.println("처음 x : "+lastX+" 처음 x : "+lastY);
-                    System.out.println("나중 x : "+curX+" 나중 y : "+curY);
-                    System.out.println("계산 x : "+X+" 계산 y : "+Y);
                     if (!(centerImage.getWidth() < maxsize && X > 0)) {
                         mLayoutParams1.leftMargin += X;
                         mLayoutParams2.leftMargin += X;
@@ -566,10 +550,6 @@ public class Controller_2DBox extends Controller {
                 } else if (action == MotionEvent.ACTION_MOVE) {
                     float X = curX - lastX;
                     float Y = curY - lastY;
-                    System.out.println("레프트 페이드");
-                    System.out.println("처음 x : "+lastX+" 처음 x : "+lastY);
-                    System.out.println("나중 x : "+curX+" 나중 y : "+curY);
-                    System.out.println("계산 x : "+X+" 계산 y : "+Y);
                     if (!(centerImage.getWidth() < maxsize && X > 0)) {
                         mLayoutParams1.leftMargin += X;
                         mLayoutParams2.leftMargin += X;
@@ -609,10 +589,6 @@ public class Controller_2DBox extends Controller {
                 } else if (action == MotionEvent.ACTION_MOVE) {
                     float X = curX - lastX;
                     float Y = curY - lastY;
-                    System.out.println("라이트 라인");
-                    System.out.println("처음 x : "+lastX+" 처음 x : "+lastY);
-                    System.out.println("나중 x : "+curX+" 나중 y : "+curY);
-                    System.out.println("계산 x : "+X+" 계산 y : "+Y);
                     if (!(centerImage.getWidth() < maxsize && X < 0)) {
                         mLayoutParams1.rightMargin -= X;
                         mLayoutParams2.rightMargin -= X;
@@ -650,10 +626,6 @@ public class Controller_2DBox extends Controller {
                 } else if (action == MotionEvent.ACTION_MOVE) {
                     float X = curX - lastX;
                     float Y = curY - lastY;
-                    System.out.println("라이트 페이드");
-                    System.out.println("처음 x : "+lastX+" 처음 x : "+lastY);
-                    System.out.println("나중 x : "+curX+" 나중 y : "+curY);
-                    System.out.println("계산 x : "+X+" 계산 y : "+Y);
                     if (!(centerImage.getWidth() < maxsize && X < 0)) {
                         mLayoutParams1.rightMargin -= X;
                         mLayoutParams2.rightMargin -= X;
@@ -693,10 +665,6 @@ public class Controller_2DBox extends Controller {
                 } else if (action == MotionEvent.ACTION_MOVE) {
                     float X = curX - lastX;
                     float Y = curY - lastY;
-                    System.out.println("탑레프트 코너");
-                    System.out.println("처음 x : "+lastX+" 처음 x : "+lastY);
-                    System.out.println("나중 x : "+curX+" 나중 y : "+curY);
-                    System.out.println("계산 x : "+X+" 계산 y : "+Y);
                     if (!(centerImage.getHeight() < maxsize && Y > 0) && !(centerImage.getWidth() < maxsize && X > 0)) {
                         mLayoutParams1.topMargin += Y;
                         mLayoutParams2.leftMargin += X;
@@ -755,10 +723,6 @@ public class Controller_2DBox extends Controller {
                 } else if (action == MotionEvent.ACTION_MOVE) {
                     float X = curX - lastX;
                     float Y = curY - lastY;
-                    System.out.println("탑레프트 페이드");
-                    System.out.println("처음 x : "+lastX+" 처음 x : "+lastY);
-                    System.out.println("나중 x : "+curX+" 나중 y : "+curY);
-                    System.out.println("계산 x : "+X+" 계산 y : "+Y);
                     if (!(centerImage.getHeight() < maxsize && Y > 0) && !(centerImage.getWidth() < maxsize && X > 0)) {
                         mLayoutParams1.topMargin += Y;
                         mLayoutParams2.leftMargin += X;
@@ -819,10 +783,6 @@ public class Controller_2DBox extends Controller {
                 } else if (action == MotionEvent.ACTION_MOVE) {
                     float X = curX - lastX;
                     float Y = curY - lastY;
-                    System.out.println("탑라이트 코너");
-                    System.out.println("처음 x : "+lastX+" 처음 x : "+lastY);
-                    System.out.println("나중 x : "+curX+" 나중 y : "+curY);
-                    System.out.println("계산 x : "+X+" 계산 y : "+Y);
                     if (!(centerImage.getHeight() < maxsize && Y > 0) && !(centerImage.getWidth() < maxsize && X < 0)) {
                         mLayoutParams1.topMargin += Y;
                         mLayoutParams2.rightMargin -= X;
@@ -881,10 +841,6 @@ public class Controller_2DBox extends Controller {
                 } else if (action == MotionEvent.ACTION_MOVE) {
                     float X = curX - lastX;
                     float Y = curY - lastY;
-                    System.out.println("탑라이트 페이드");
-                    System.out.println("처음 x : "+lastX+" 처음 x : "+lastY);
-                    System.out.println("나중 x : "+curX+" 나중 y : "+curY);
-                    System.out.println("계산 x : "+X+" 계산 y : "+Y);
                     if (!(centerImage.getHeight() < maxsize && Y > 0) && !(centerImage.getWidth() < maxsize && X < 0)) {
                         mLayoutParams1.topMargin += Y;
                         mLayoutParams2.rightMargin -= X;
@@ -944,10 +900,6 @@ public class Controller_2DBox extends Controller {
                 } else if (action == MotionEvent.ACTION_MOVE) {
                     float X = curX - lastX;
                     float Y = curY - lastY;
-                    System.out.println("바텀레프드 코너");
-                    System.out.println("처음 x : "+lastX+" 처음 x : "+lastY);
-                    System.out.println("나중 x : "+curX+" 나중 y : "+curY);
-                    System.out.println("계산 x : "+X+" 계산 y : "+Y);
                     if (!(centerImage.getHeight() < maxsize && Y < 0) && !(centerImage.getWidth() < maxsize && X > 0)) {
                         mLayoutParams1.bottomMargin -= Y;
                         mLayoutParams2.leftMargin += X;
@@ -1006,10 +958,6 @@ public class Controller_2DBox extends Controller {
                 } else if (action == MotionEvent.ACTION_MOVE) {
                     float X = curX - lastX;
                     float Y = curY - lastY;
-                    System.out.println("바텀레프드 페이드");
-                    System.out.println("처음 x : "+lastX+" 처음 x : "+lastY);
-                    System.out.println("나중 x : "+curX+" 나중 y : "+curY);
-                    System.out.println("계산 x : "+X+" 계산 y : "+Y);
                     if (!(centerImage.getHeight() < maxsize && Y < 0) && !(centerImage.getWidth() < maxsize && X > 0)) {
                         mLayoutParams1.bottomMargin -= Y;
                         mLayoutParams2.leftMargin += X;
@@ -1069,10 +1017,6 @@ public class Controller_2DBox extends Controller {
                 } else if (action == MotionEvent.ACTION_MOVE) {
                     float X = curX - lastX;
                     float Y = curY - lastY;
-                    System.out.println("바텀라이트 코너");
-                    System.out.println("처음 x : "+lastX+" 처음 x : "+lastY);
-                    System.out.println("나중 x : "+curX+" 나중 y : "+curY);
-                    System.out.println("계산 x : "+X+" 계산 y : "+Y);
                     if (!(centerImage.getHeight() < maxsize && Y < 0) && !(centerImage.getWidth() < maxsize && X < 0)) {
                         mLayoutParams1.bottomMargin -= Y;
                         mLayoutParams2.rightMargin -= X;
@@ -1131,10 +1075,6 @@ public class Controller_2DBox extends Controller {
                 } else if (action == MotionEvent.ACTION_MOVE) {
                     float X = curX - lastX;
                     float Y = curY - lastY;
-                    System.out.println("바텀라이트 페이드");
-                    System.out.println("처음 x : "+lastX+" 처음 x : "+lastY);
-                    System.out.println("나중 x : "+curX+" 나중 y : "+curY);
-                    System.out.println("계산 x : "+X+" 계산 y : "+Y);
                     if (!(centerImage.getHeight() < maxsize && Y < 0) && !(centerImage.getWidth() < maxsize && X < 0)) {
                         mLayoutParams1.bottomMargin -= Y;
                         mLayoutParams2.rightMargin -= X;

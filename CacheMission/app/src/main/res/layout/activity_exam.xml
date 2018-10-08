@@ -27,7 +27,7 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/colorPrimary"
             app:layout_constraintBottom_toTopOf="@+id/taskviewexam"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">

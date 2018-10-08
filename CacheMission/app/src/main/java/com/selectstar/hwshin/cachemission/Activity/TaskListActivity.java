@@ -6,10 +6,7 @@ import android.content.SharedPreferences;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.ExifInterface;
-import android.os.Build;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.DrawerLayout;
 
 import android.support.v7.app.AppCompatActivity;
@@ -21,7 +18,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,16 +28,12 @@ import com.selectstar.hwshin.cachemission.Adapter.ListviewAdapter;
 import com.selectstar.hwshin.cachemission.DataStructure.HurryHttpRequest;
 import com.selectstar.hwshin.cachemission.DataStructure.UIHashMap;
 import com.selectstar.hwshin.cachemission.DataStructure.WaitHttpRequest;
-import com.selectstar.hwshin.cachemission.LoginHelper.TotalLoginActivity;
 import com.selectstar.hwshin.cachemission.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -292,13 +284,14 @@ public class TaskListActivity extends AppCompatActivity {
                     JSONObject resultTemp = new JSONObject(result);
                     JSONObject user = (JSONObject)resultTemp.get("user");
                     ImageView userRank = findViewById(R.id.userrank);
+                    TextView userLevel = findViewById(R.id.userLevel);
                     adapter.setUserInfo(user);
                     TextView userGold = findViewById(R.id.mygold);
                     int allGold = (int) user.get("gold") + (int) user.get("maybe");
                     userGold.setText(String.valueOf(allGold));
                     TextView userNameDrawer = findViewById(R.id.usernamedrawer);
                     userNameDrawer.setText(String.valueOf(user.get("name")));
-                    setUserRankImage(userRank, (int)user.get("rank"));
+                    setUserRankImage(userRank, userLevel, (int)user.get("rank"));
                     ProgressBar progress = findViewById(R.id.mainProgressBar);
                     setUserProgressBar(progress,(int)user.get("rank"), (int)user.get("success_count"));
                 }
@@ -335,15 +328,19 @@ public class TaskListActivity extends AppCompatActivity {
         final DrawerLayout drawer = findViewById(R.id.drawer) ;
 
         //메뉴버튼
-        Button menuBtn = findViewById(R.id.drawviewbtn);
-        menuBtn.setOnClickListener(new View.OnClickListener(){
+        ConstraintLayout menuBtn = findViewById(R.id.drawviewbtn);
+        Button menuBtn2 = findViewById(R.id.drawviewbtnsrc);
+        View.OnClickListener menuClickListener =  new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 if (!drawer.isDrawerOpen(Gravity.LEFT)) {
                     drawer.openDrawer(Gravity.LEFT) ;
                 }
             }
-        });
+        };
+        menuBtn.setOnClickListener(menuClickListener);
+        menuBtn2.setOnClickListener(menuClickListener);
+
         ImageView settingBtn = findViewById(R.id.settingbtn);
         settingBtn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -445,6 +442,7 @@ public class TaskListActivity extends AppCompatActivity {
                     JSONObject resultTemp = new JSONObject(result);
                     JSONObject user = (JSONObject)resultTemp.get("user");
                     ImageView userRank = findViewById(R.id.userrank);
+                    TextView userLevel = findViewById(R.id.userLevel);
                     TextView userGold = findViewById(R.id.mygold);
                     int allGold = (int) user.get("gold") + (int) user.get("maybe");
                     userGold.setText(String.valueOf(allGold));
@@ -453,7 +451,7 @@ public class TaskListActivity extends AppCompatActivity {
                     clearItem();
                     insertTime();
                     userNameDrawer.setText(String.valueOf(user.get("name")));
-                    setUserRankImage(userRank, (int)user.get("rank"));
+                    setUserRankImage(userRank, userLevel, (int)user.get("rank"));
                     ProgressBar progress = findViewById(R.id.mainProgressBar);
                     setUserProgressBar(progress,(int)user.get("rank"), (int)user.get("success_count"));
 
@@ -469,6 +467,8 @@ public class TaskListActivity extends AppCompatActivity {
                     layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                     lv_main.setLayoutManager(layoutManager);
                     lv_main.setAdapter(adapter);
+
+                    System.out.println("붸뷉"+mTaskList.size());
                     for (int i =0;i < mTaskList.size(); i++)
                     {
                         getOneTask(i,loginToken,true);
@@ -509,18 +509,28 @@ public class TaskListActivity extends AppCompatActivity {
             getPreviousList(loginToken);
 
     }
-    private void setUserRankImage(ImageView userRank, int rank) {
+    private void setUserRankImage(ImageView userRank, TextView userLevel, int rank) {
 
-        if(rank==1)
-            Glide.with(this).load(R.drawable.rank_begginner).into(userRank);
-        else if(rank==2)
-            Glide.with(this).load(R.drawable.rank_intermediate).into(userRank);
-        else if(rank==3)
-            Glide.with(this).load(R.drawable.rank_master).into(userRank);
-        else if(rank==151)
-            Glide.with(this).load(R.drawable.rank_admin).into(userRank);
-        else
-            Glide.with(this).load(R.drawable.rank_begginner).into(userRank);
+        if(rank==1) {
+            Glide.with(this).load(R.drawable.main_flag_1).into(userRank);
+            userLevel.setText("Lv.01");
+        }
+        else if(rank==2) {
+            Glide.with(this).load(R.drawable.main_flag_2).into(userRank);
+            userLevel.setText("Lv.02");
+        }
+        else if(rank==3) {
+            Glide.with(this).load(R.drawable.main_flag_3).into(userRank);
+            userLevel.setText("Lv.03");
+        }
+        else if(rank==151){
+            Glide.with(this).load(R.drawable.main_flag151).into(userRank);
+            userLevel.setText("Lv.99");
+        }
+        else {
+            Glide.with(this).load(R.drawable.main_flag_1).into(userRank);
+            userLevel.setText("Lv.00");
+        }
     }
 
     private void setUserProgressBar(ProgressBar progressBar, int rank, int count) {

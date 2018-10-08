@@ -2,15 +2,14 @@ package com.selectstar.hwshin.cachemission.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
+import android.support.constraint.ConstraintSet;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,7 +17,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.selectstar.hwshin.cachemission.Activity.ExamActivity;
 import com.selectstar.hwshin.cachemission.Activity.TaskActivity;
-import com.selectstar.hwshin.cachemission.DataStructure.TaskListItem;
 import com.selectstar.hwshin.cachemission.R;
 
 import org.json.JSONArray;
@@ -47,14 +45,28 @@ public class ListviewAdapter extends RecyclerView.Adapter<ListviewAdapter.ItemVi
         this.layout=layout;
         this.userLoaded = false;
         this.iconIDMap = new HashMap<>();
-        this.iconIDMap.put("OCR",R.drawable.tasktype_ocr);
-        this.iconIDMap.put("PHOTO",R.drawable.photoicon);
-        this.iconIDMap.put("VIDEO",R.drawable.tasktype_video);
-        this.iconIDMap.put("RECORD",R.drawable.tasktype_voice);
-        this.iconIDMap.put("DIRECTRECORD",R.drawable.tasktype_voice);
-        this.iconIDMap.put("NUMBERING",R.drawable.tasktype_numbering);
-        this.iconIDMap.put("DICTATION",R.drawable.tasktype_dictation);
-        this.iconIDMap.put("DIALECT",R.drawable.tasktype_dialect);
+        this.iconIDMap.put("OCR",R.drawable.main_icon_tl);
+        this.iconIDMap.put("OCREXAM",R.drawable.main_icon_tl); //main_icon_te가 아직 없음
+        //this.iconIDMap.put("PHOTO",R.drawable.photoicon); 옛날 아이콘
+        this.iconIDMap.put("PHOTO",R.drawable.main_icon_ic);
+        this.iconIDMap.put("PHOTOEXAM",R.drawable.main_icon_ie);
+        //this.iconIDMap.put("VIDEO",R.drawable.tasktype_video); 옛날 아이콘
+        this.iconIDMap.put("VIDEO",R.drawable.main_icon_vl);
+        this.iconIDMap.put("VIDEOEXAM",R.drawable.main_icon_vl); //main_icon_ve이 아직 없음
+        //this.iconIDMap.put("RECORD",R.drawable.tasktype_voice); 옛날 아이콘
+        this.iconIDMap.put("RECORD",R.drawable.main_icon_sc);
+        //this.iconIDMap.put("DIRECTRECORD",R.drawable.tasktype_voice); 옛날 아이콘
+        this.iconIDMap.put("DIRECTRECORD",R.drawable.main_icon_sc);
+        this.iconIDMap.put("DIRECTRECORDEXAM",R.drawable.main_icon_se);
+        //this.iconIDMap.put("NUMBERING",R.drawable.tasktype_numbering); 옛날 아이콘
+        this.iconIDMap.put("NUMBERING",R.drawable.main_icon_il);
+        this.iconIDMap.put("NUMBERINGEXAM",R.drawable.main_icon_ie);
+        this.iconIDMap.put("DICTATION",R.drawable.main_icon_tl);
+        this.iconIDMap.put("DICTATIONEXAM",R.drawable.main_icon_tl); //main_icon_te가 아직 없음
+        this.iconIDMap.put("DIALECT",R.drawable.tasktype_dialect); // 그냥 아이콘 특이하니까 냅둠 원래는 main_icon_vc 여야할듯
+        this.iconIDMap.put("DIALECTEXAM",R.drawable.tasktype_dialect); //main_icon_ve이 아직 없음
+        this.iconIDMap.put("BOXCROP",R.drawable.main_icon_il);
+        this.iconIDMap.put("BOXCROPEXAM",R.drawable.main_icon_ie);
         this.mContext = mContext;
     }
     public ListviewAdapter(Context context, int layout, ArrayList<JSONObject> taskList,Context mContext,JSONObject user){
@@ -64,14 +76,28 @@ public class ListviewAdapter extends RecyclerView.Adapter<ListviewAdapter.ItemVi
         this.userInfo=user;
         this.userLoaded=true;
         this.iconIDMap = new HashMap<>();
-        this.iconIDMap.put("OCR",R.drawable.tasktype_ocr);
-        this.iconIDMap.put("PHOTO",R.drawable.photoicon);
-        this.iconIDMap.put("VIDEO",R.drawable.tasktype_video);
-        this.iconIDMap.put("RECORD",R.drawable.tasktype_voice);
-        this.iconIDMap.put("DIRECTRECORD",R.drawable.tasktype_voice);
-        this.iconIDMap.put("NUMBERING",R.drawable.tasktype_numbering);
-        this.iconIDMap.put("DICTATION",R.drawable.tasktype_dictation);
-        this.iconIDMap.put("DIALECT",R.drawable.tasktype_dialect);
+        this.iconIDMap.put("OCR",R.drawable.main_icon_tl);
+        this.iconIDMap.put("OCREXAM",R.drawable.main_icon_tl); //main_icon_te가 아직 없음
+        //this.iconIDMap.put("PHOTO",R.drawable.photoicon); 옛날 아이콘
+        this.iconIDMap.put("PHOTO",R.drawable.main_icon_ic);
+        this.iconIDMap.put("PHOTOEXAM",R.drawable.main_icon_ie);
+        //this.iconIDMap.put("VIDEO",R.drawable.tasktype_video); 옛날 아이콘
+        this.iconIDMap.put("VIDEO",R.drawable.main_icon_vl);
+        this.iconIDMap.put("VIDEOEXAM",R.drawable.main_icon_vl); //main_icon_ve이 아직 없음
+        //this.iconIDMap.put("RECORD",R.drawable.tasktype_voice); 옛날 아이콘
+        this.iconIDMap.put("RECORD",R.drawable.main_icon_sc);
+        //this.iconIDMap.put("DIRECTRECORD",R.drawable.tasktype_voice); 옛날 아이콘
+        this.iconIDMap.put("DIRECTRECORD",R.drawable.main_icon_sc);
+        this.iconIDMap.put("DIRECTRECORDEXAM",R.drawable.main_icon_se);
+        //this.iconIDMap.put("NUMBERING",R.drawable.tasktype_numbering); 옛날 아이콘
+        this.iconIDMap.put("NUMBERING",R.drawable.main_icon_il);
+        this.iconIDMap.put("NUMBERINGEXAM",R.drawable.main_icon_ie);
+        this.iconIDMap.put("DICTATION",R.drawable.main_icon_tl);
+        this.iconIDMap.put("DICTATIONEXAM",R.drawable.main_icon_tl); //main_icon_te가 아직 없음
+        this.iconIDMap.put("DIALECT",R.drawable.tasktype_dialect); // 그냥 아이콘 특이하니까 냅둠 원래는 main_icon_vc 여야할듯
+        this.iconIDMap.put("DIALECTEXAM",R.drawable.tasktype_dialect); //main_icon_ve이 아직 없음
+        this.iconIDMap.put("BOXCROP",R.drawable.main_icon_il);
+        this.iconIDMap.put("BOXCROPEXAM",R.drawable.main_icon_ie);
         this.mContext = mContext;
     }
 
@@ -118,13 +144,35 @@ public class ListviewAdapter extends RecyclerView.Adapter<ListviewAdapter.ItemVi
 
                 }
                 holder.quest1.setText(questName[0]);
-                holder.quest1money.setText("\uFFE6" + String.valueOf(questReward[0]));
+                holder.quest1money.setText("+\uFFE6" + String.valueOf(questReward[0]));
                 if (questList.length() == 2) {
                     holder.quest2.setText(questName[1]);
-                    holder.quest2money.setText("\uFFE6" + String.valueOf(questReward[1]));
+                    holder.quest2money.setText("+\uFFE6" + String.valueOf(questReward[1]));
+                }else{
+                    if(holder.itemCL != null) {
+                        holder.itemCL.removeView(holder.quest2);
+                        holder.itemCL.removeView(holder.quest2money);
+                        ConstraintSet itemCLset = new ConstraintSet();
+                        itemCLset.clone(holder.itemCL);
+                        itemCLset.connect(holder.taskTv.getId(), ConstraintSet.BOTTOM, holder.quest1.getId(), ConstraintSet.TOP);
+                        itemCLset.connect(holder.quest1.getId(), ConstraintSet.TOP, holder.taskTv.getId(), ConstraintSet.BOTTOM);
+                        itemCLset.connect(holder.quest1.getId(), ConstraintSet.BOTTOM, holder.gold.getId(), ConstraintSet.TOP);
+                        itemCLset.connect(holder.gold.getId(), ConstraintSet.TOP, holder.quest1.getId(), ConstraintSet.BOTTOM);
+                        itemCLset.applyTo(holder.itemCL);
+                    }
                 }
-
-
+            }else{
+                if(holder.itemCL != null) {
+                    holder.itemCL.removeView(holder.quest1);
+                    holder.itemCL.removeView(holder.quest1money);
+                    holder.itemCL.removeView(holder.quest2);
+                    holder.itemCL.removeView(holder.quest2money);
+                    ConstraintSet itemCLset = new ConstraintSet();
+                    itemCLset.clone(holder.itemCL);
+                    itemCLset.connect(holder.taskTv.getId(), ConstraintSet.BOTTOM, holder.gold.getId(), ConstraintSet.TOP);
+                    itemCLset.connect(holder.gold.getId(), ConstraintSet.TOP, holder.taskTv.getId(), ConstraintSet.BOTTOM);
+                    itemCLset.applyTo(holder.itemCL);
+                }
             }
         }catch (JSONException e){
             e.printStackTrace();
@@ -186,10 +234,7 @@ public class ListviewAdapter extends RecyclerView.Adapter<ListviewAdapter.ItemVi
             e.printStackTrace();
         }
         System.out.println("--");
-        if(taskType.contains("EXAM")) {
-            taskType = taskType.substring(0, taskType.length() - 4);
-            Glide.with(holder.itemView).load(R.drawable.tasktypeadd).into(holder.checkIcon);
-        }
+
         if(iconIDMap.containsKey(taskType))
             Glide.with(holder.itemView).load(iconIDMap.get(taskType)).into(holder.taskIcon);
         else
@@ -220,21 +265,21 @@ public class ListviewAdapter extends RecyclerView.Adapter<ListviewAdapter.ItemVi
         //dailyMission.setText(taskItem.getDailyMission());
     }
     public class ItemViewHolder extends RecyclerView.ViewHolder {
+        private ConstraintLayout itemCL;
         private ImageView taskIcon;
-        private ImageView checkIcon;
         private TextView gold;
         private TextView taskTv;
         private View itemView;
-        private  TextView quest1;
+        private TextView quest1;
         private TextView quest2;
         private TextView quest1money;
-        private  TextView quest2money;
+        private TextView quest2money;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             this.itemView = itemView;
+            itemCL = itemView.findViewById(R.id.itemCL);
             taskIcon = itemView.findViewById(R.id.taskType);
-            checkIcon = itemView.findViewById(R.id.taskTypeCheck);
             gold = itemView.findViewById(R.id.gold);
             taskTv = itemView.findViewById(R.id.taskTitle);
             quest1=itemView.findViewById(R.id.quest1);
