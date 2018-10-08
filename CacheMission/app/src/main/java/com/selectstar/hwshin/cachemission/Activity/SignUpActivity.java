@@ -46,10 +46,10 @@ public class SignUpActivity extends AppCompatActivity {
         pwText = findViewById(R.id.pwvalue);
         pw2Text = findViewById(R.id.pw2value);
         genderSpinner = (Spinner) findViewById(R.id.gendervalue);
-        nameText = findViewById(R.id.namevalue);
-        regionSpinner = (Spinner) findViewById(R.id.wherevalue);
+       // nameText = findViewById(R.id.namevalue);
+      //  regionSpinner = (Spinner) findViewById(R.id.wherevalue);
         ageSpinner = (Spinner) findViewById(R.id.agevalue);
-        descriptionText = findViewById(R.id.descriptionvalue);
+       // descriptionText = findViewById(R.id.descriptionvalue);
         okButton = findViewById(R.id.okbutton);
         backButton = findViewById(R.id.back);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -63,9 +63,9 @@ public class SignUpActivity extends AppCompatActivity {
         genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         genderSpinner.setAdapter(genderAdapter);
 
-        ArrayAdapter whereAdapter = ArrayAdapter.createFromResource(this,R.array.signup_where, R.layout.signup_si);
-        whereAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        regionSpinner.setAdapter(whereAdapter);
+       // ArrayAdapter whereAdapter = ArrayAdapter.createFromResource(this,R.array.signup_where, R.layout.signup_si);
+       // whereAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+       // regionSpinner.setAdapter(whereAdapter);
 
         ArrayAdapter ageAdapter = ArrayAdapter.createFromResource(this,R.array.signup_age, R.layout.signup_si);
         ageAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -83,11 +83,11 @@ public class SignUpActivity extends AppCompatActivity {
                      genderVal = "MALE";
                  else if(genderSpinner.getSelectedItem().toString().equals("여자"))
                      genderVal = "FEMALE";
-                String nameVal = nameText.getText().toString();
-                String regionVal = regionSpinner.getSelectedItem().toString();
+               // String nameVal = nameText.getText().toString();
+               // String regionVal = regionSpinner.getSelectedItem().toString();
                 int ageVal = (int) Integer.parseInt(ageSpinner.getSelectedItem().toString());
-                String descriptionVal = descriptionText.getText().toString();
-                if(errorCheck(idVal,pwVal,pw2Val,genderVal,nameVal,regionVal,descriptionVal))
+                //String descriptionVal = descriptionText.getText().toString();
+                if(errorCheck(idVal,pwVal,pw2Val,genderVal))
                     return;
                 try {
                     JSONObject param = new JSONObject();
@@ -95,9 +95,9 @@ public class SignUpActivity extends AppCompatActivity {
                     param.put("pw", pwVal);
                     param.put("gender", genderVal);
                     param.put("age", ageVal);
-                    param.put("nickname",nameVal);
-                    param.put("region",regionVal);
-                    param.put("description", descriptionVal);
+                    param.put("nickname","defNickName");
+                    param.put("region","defRegion");
+                    param.put("description", "defDescription");
                     new WaitHttpRequest(context){
                         @Override
                         protected void onPostExecute(Object o) {
@@ -186,7 +186,7 @@ public class SignUpActivity extends AppCompatActivity {
         });
         alertDialogBuilder.show();
     }
-    private Boolean errorCheck(String id1, String pw1, String pw2, String gender, String name, String region, String description)
+    private Boolean errorCheck(String id1, String pw1, String pw2, String gender)
     {
         boolean checkisemailformat = Pattern.matches("^(.+)(@)(.+)(\\.)(.+)$", id1);
         //TODO : 비밀번호 문자와 숫자 조합인건 어떻게 확인할 수 있을까..
@@ -220,21 +220,7 @@ public class SignUpActivity extends AppCompatActivity {
             getDialog("회원가입 양식에 문제가 있습니다.","4자 이상의 비밀번호를 설정해주세요.");
             return true;
         }
-        if(name.equals(""))
-        {
-            getDialog("회원가입 양식에 문제가 있습니다.","이름란을 채워주세요.");
-            return true;
-        }
-        if(region.equals("[ 선택 ]"))
-        {
-            getDialog("회원가입 양식에 문제가 있습니다.","출신지역을 선택해주세요.");
-            return true;
-        }
-        if(description.equals(""))
-        {
-            getDialog("회원가입 양식에 문제가 있습니다.","추천지인란을 채워주세요.");
-            return true;
-        }
+
         return false;
     }
 }

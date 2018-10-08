@@ -119,20 +119,21 @@ public class LoginActivity extends AppCompatActivity {
                 startActivityForResult(intent,1);
             }
         });
-        findid=findViewById(R.id.button_findid);
-        findpw=findViewById(R.id.button_findpw);
-        findid.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"알파테스트에서 구현되지 않은 사항입니다. 앱 추천인에게 문의하세요!",Toast.LENGTH_SHORT).show();
-            }
-        });
-        findpw.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"알파테스트에서 구현되지 않은 사항입니다. 앱 추천인에게 문의하세요!",Toast.LENGTH_SHORT).show();
-            }
-        });
+//
+//        findid=findViewById(R.id.button_findid);
+//        findpw=findViewById(R.id.button_findpw);
+//        findid.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(getApplicationContext(),"알파테스트에서 구현되지 않은 사항입니다. 앱 추천인에게 문의하세요!",Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        findpw.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(getApplicationContext(),"알파테스트에서 구현되지 않은 사항입니다. 앱 추천인에게 문의하세요!",Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
 
     }

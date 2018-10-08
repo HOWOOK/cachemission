@@ -126,44 +126,6 @@
                 app:layout_constraintStart_toStartOf="@+id/guideline_signupleft"
                 app:layout_constraintTop_toBottomOf="@+id/gendertag" />
 
-            <TextView
-                android:id="@+id/wheretag"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:gravity="center_vertical|center"
-                android:text="출신지역"
-                android:textSize="15dp"
-                android:textColor="@color/fontColorActive"
-                android:fontFamily="@font/nanumsquarer_"
-                app:layout_constraintEnd_toStartOf="@+id/wherevalue"
-                app:layout_constraintStart_toStartOf="@+id/guideline_signupleft"
-                app:layout_constraintTop_toBottomOf="@+id/agetag" />
-
-            <TextView
-                android:id="@+id/nametag"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:gravity="center_vertical|center"
-                android:text="이름"
-                android:textSize="15dp"
-                android:textColor="@color/fontColorActive"
-                android:fontFamily="@font/nanumsquarer_"
-                app:layout_constraintEnd_toStartOf="@+id/namevalue"
-                app:layout_constraintStart_toStartOf="@+id/guideline_signupleft"
-                app:layout_constraintTop_toBottomOf="@+id/wheretag" />
-
-            <TextView
-                android:id="@+id/descriptiontag"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:gravity="center_vertical|center"
-                android:text="추천지인"
-                android:textSize="15dp"
-                android:textColor="@color/fontColorActive"
-                android:fontFamily="@font/nanumsquarer_"
-                app:layout_constraintStart_toStartOf="@+id/guideline_signupleft"
-                app:layout_constraintTop_toBottomOf="@+id/nametag" />
-
             <EditText
                 android:id="@+id/idvalue"
                 style="@style/normalEditText"
@@ -225,47 +187,11 @@
                 app:layout_constraintStart_toEndOf="@+id/agetag"
                 app:layout_constraintTop_toBottomOf="@+id/gendervalue" />
 
-            <Spinner
-                android:id="@+id/wherevalue"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                app:layout_constraintEnd_toEndOf="@+id/guideline_signupright"
-                app:layout_constraintStart_toEndOf="@+id/wheretag"
-                app:layout_constraintTop_toBottomOf="@+id/agevalue" />
-
-            <EditText
-                android:id="@+id/namevalue"
-                style="@style/normalEditText"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:hint="본인 이름을 사용해 주세요."
-                app:layout_constraintEnd_toEndOf="@+id/guideline_signupright"
-                app:layout_constraintStart_toEndOf="@+id/nametag"
-                app:layout_constraintTop_toBottomOf="@+id/wherevalue" />
-
-            <EditText
-                android:id="@+id/descriptionvalue"
-                style="@style/normalEditText"
-                android:inputType="textMultiLine"
-                android:lines="5"
-                android:scrollbars="vertical"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:ems="10"
-                android:hint="이 앱을 소개해준 지인은 누구인가요?"
-                android:gravity="top"
-                app:layout_constraintEnd_toEndOf="@+id/guideline_signupright"
-                app:layout_constraintStart_toEndOf="@+id/guideline_signupleft"
-                app:layout_constraintTop_toBottomOf="@+id/descriptiontag" />
-
             <Button
                 android:id="@+id/okbutton"
                 style="@style/normalbtn3"
                 android:layout_width="0dp"
                 android:text="가입하기"
-                app:layout_constraintTop_toBottomOf="@+id/descriptionvalue"
                 app:layout_constraintBottom_toTopOf="@+id/nobutton"
                 app:layout_constraintEnd_toEndOf="@+id/guideline_signupright"
                 app:layout_constraintStart_toStartOf="@+id/guideline_signupleft" />

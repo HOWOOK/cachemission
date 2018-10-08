@@ -23,11 +23,11 @@ android {
 
 
 
-    lintOptions {
-
-        checkReleaseBuilds false
-
-    }
+//    lintOptions {
+//
+//        checkReleaseBuilds false
+//
+//    }
     compileSdkVersion 27
     defaultConfig {
 
@@ -42,7 +42,7 @@ android {
     }
     buildTypes {
         release {
-            signingConfig signingConfigs.release
+         //   signingConfig signingConfigs.release
 
 
             minifyEnabled false
