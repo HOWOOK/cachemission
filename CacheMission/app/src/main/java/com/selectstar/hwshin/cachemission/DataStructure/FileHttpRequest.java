@@ -86,7 +86,7 @@ public class FileHttpRequest extends AsyncTask {
                 inputStream =  new FileInputStream(fileName);
             }
             // open a URL connection to the Servlet
-            URL url = new URL(parentActivity.getString(R.string.mainurl)+"/taskSubmit");
+            URL url = new URL(parentActivity.getString(R.string.mainurl)+"/fileSubmit");
 
             // Open a HTTP  connection to  the URL
             conn = (HttpURLConnection) url.openConnection();

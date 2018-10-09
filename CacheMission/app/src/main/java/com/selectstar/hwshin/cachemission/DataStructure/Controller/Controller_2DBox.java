@@ -298,6 +298,8 @@ public class Controller_2DBox extends Controller {
                                             } else {
                                                 answerCount= 0;
                                                 drawAnswerCount = 0;
+                                                mtaskView_PhotoView.answerType=null;
+                                                mtaskView_PhotoView.answerCoordination=null;
                                                 if(mtaskView_PhotoView.answerList != null) {
                                                     for (int i = 0; i < mtaskView_PhotoView.answerList.length; i++) {
                                                         photoViewCL.removeView(mtaskView_PhotoView.answerList[i]);
