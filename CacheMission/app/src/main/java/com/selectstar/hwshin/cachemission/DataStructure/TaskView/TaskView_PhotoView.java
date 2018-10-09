@@ -35,8 +35,8 @@ public class TaskView_PhotoView extends TaskView {
     public int[] answerType; //0이면 서버에서 보내준거, 1이면 유저가 그린거
     private String[] array1, array2, array3;
     private ConstraintLayout photoViewCL;
-    private ConstraintLayout[] answerList;
-    private View[][] answerEdges;
+    public ConstraintLayout[] answerList;
+    public View[][] answerEdges;
     public boolean expandFlag, isExamFlag;
     private int getDeviceDpi;
     private float dpScale;

@@ -126,7 +126,6 @@
         <activity
             android:name=".Activity.TestActivity"
             android:screenOrientation="portrait"
-            android:hardwareAccelerated="false"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.NoticeActivity"
@@ -148,6 +147,7 @@
             android:name=".LoginHelper.TotalLoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity android:name=".LoginHelper.FacebookLoginActivity"
             android:screenOrientation="portrait"
 

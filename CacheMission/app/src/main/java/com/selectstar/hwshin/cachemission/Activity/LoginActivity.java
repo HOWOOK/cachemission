@@ -86,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
                             super.onPostExecute(o);
                             try {
                                 JSONObject res = new JSONObject(result);
-                                System.out.println(res);
+                                System.out.println("로그인 리스폰스 : "+res);
                                 Intent in=new Intent(LoginActivity.this, TaskListActivity.class);
                                 if (res.get("success").toString() == "true"){
                                     SharedPreferences token = getSharedPreferences("token", MODE_PRIVATE);

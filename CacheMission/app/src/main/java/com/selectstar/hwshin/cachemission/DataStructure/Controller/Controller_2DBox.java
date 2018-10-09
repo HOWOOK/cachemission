@@ -296,11 +296,21 @@ public class Controller_2DBox extends Controller {
                                                     parentActivity.finish();
                                                 }
                                             } else {
+                                                answerCount= 0;
+                                                drawAnswerCount = 0;
+                                                if(mtaskView_PhotoView.answerList != null) {
+                                                    for (int i = 0; i < mtaskView_PhotoView.answerList.length; i++) {
+                                                        photoViewCL.removeView(mtaskView_PhotoView.answerList[i]);
+                                                        photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][0]);
+                                                        photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][1]);
+                                                        photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][2]);
+                                                        photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][3]);
+                                                    }
+                                                }
                                                 ((TaskActivity)parentActivity).startTask();
                                                 parentActivity.setGold(String.valueOf(resultTemp.get("gold")));
                                                 parentActivity.setMaybe(String.valueOf(resultTemp.get("maybe")));
-                                                answerCount=0;
-                                                drawAnswerCount=0;
+
                                             }
                                         } catch (JSONException e) {
                                             e.printStackTrace();

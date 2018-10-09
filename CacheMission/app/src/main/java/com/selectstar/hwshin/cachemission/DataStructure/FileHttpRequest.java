@@ -63,12 +63,19 @@ public class FileHttpRequest extends AsyncTask {
         String lineEnd = "\r\n";
         String twoHyphens = "--";
         String boundary = "*****";
+
         int bytesRead, bytesAvailable, bufferSize;
         byte[] buffer;
         int maxBufferSize = 1 * 1024 * 1024;
         String fileName = uri.toString();
         InputStream inputStream;
         try {
+            String token="";
+            if(objects.length == 3)
+            {
+                token = objects[2].toString();
+            }
+
             System.out.println(fileName);
             if(fileName.substring(0,7).equals("content"))
             {
@@ -91,7 +98,8 @@ public class FileHttpRequest extends AsyncTask {
             conn.setRequestProperty("ENCTYPE", "multipart/form-data");
             conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
             conn.setRequestProperty("uploaded_file", fileName);
-            conn.setRequestProperty("Authorization","jwt " + parentActivity.getLoginToken());
+            conn.setRequestProperty("Token", "jwt " + token);
+            //conn.setRequestProperty("Authorization","jwt " + parentActivity.getLoginToken());
             conn.setRequestProperty("ANSWERID",parentActivity.getAnswerID());
             conn.setRequestProperty("TASKID",parentActivity.getTaskID());
 

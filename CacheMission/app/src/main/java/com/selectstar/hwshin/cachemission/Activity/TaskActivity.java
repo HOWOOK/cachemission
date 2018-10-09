@@ -433,7 +433,6 @@ public class TaskActivity extends PatherActivity {
 
     @Override
     public void onBackPressed() {
-
         //박스 테스크의 경우 확대 잘못하면 취소 눌렀을 때 다시 확대 할수있도록 해야함
         if(taskType.equals("BOXCROP")){
             TaskView_PhotoView temp = (TaskView_PhotoView) mTaskView;
