@@ -395,7 +395,7 @@ public class TaskListActivity extends AppCompatActivity {
     {
         try {
             JSONObject param = new JSONObject();
-            param.put("id", mTaskList.get(i).get("id"));
+            param.put("taskID", mTaskList.get(i).get("id"));
             String taskType = mTaskList.get(i).get("taskType").toString();
             int examType = (int) mTaskList.get(i).get("examType");
             if(taskType.contains("EXAM")){
