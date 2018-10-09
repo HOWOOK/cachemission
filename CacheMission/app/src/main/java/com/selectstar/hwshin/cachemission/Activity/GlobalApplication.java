@@ -1,4 +1,4 @@
-package com.selectstar.hwshin.cachemission.LoginHelper;
+package com.selectstar.hwshin.cachemission.Activity;
 
 import android.app.Activity;
 import android.app.Application;
@@ -6,6 +6,10 @@ import android.app.Application;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.kakao.auth.KakaoSDK;
+import com.selectstar.hwshin.cachemission.LoginHelper.KakaoSDKAdapter;
+import com.selectstar.hwshin.cachemission.R;
+
+import java.util.HashMap;
 
 public class GlobalApplication extends Application {
 
@@ -14,9 +18,28 @@ public class GlobalApplication extends Application {
 
     public static GoogleAnalytics analytics;
     public static Tracker tracker;
-    private final String trackingId = "<your Tracking ID>";
+    private final String trackingId = "UA-126880414-1";
 
+    private static final String PROPERTY_ID = "UA-126880414-1";
 
+    public enum TrackerName {
+        APP_TRACKER,           // 앱 별로 트래킹
+        GLOBAL_TRACKER,        // 모든 앱을 통틀어 트래킹
+        ECOMMERCE_TRACKER,     // 아마 유료 결재 트래킹 개념 같음
+    }
+
+    HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
+
+    synchronized Tracker getTracker(TrackerName trackerId){
+        if(!mTrackers.containsKey(trackerId)){
+            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+            Tracker t = (trackerId == TrackerName.APP_TRACKER) ? analytics.newTracker(PROPERTY_ID) :
+                    (trackerId == TrackerName.GLOBAL_TRACKER) ? analytics.newTracker(R.xml.global_tracker) :
+                            analytics.newTracker(R.xml.ecommerce_tracker);
+            mTrackers.put(trackerId, t);
+        }
+        return mTrackers.get(trackerId);
+    }
 
     @Override
     public void onCreate() {

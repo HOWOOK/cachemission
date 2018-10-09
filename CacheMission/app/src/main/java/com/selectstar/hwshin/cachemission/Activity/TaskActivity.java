@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -245,11 +246,12 @@ public class TaskActivity extends PatherActivity {
         if(taskToken.getInt(taskType + "taskToken",0) == 100)
             return;
         Intent intent_taskExplain;
-        //if(taskType.equals("BOXCROP")){
-        //    intent_taskExplain = new Intent(TaskActivity.this, NewExplainActivity.class);
-      //  }else{
+        Log.d("boxbox",taskType);
+        if(taskType.equals("BOXCROP")){
+            intent_taskExplain = new Intent(TaskActivity.this, NewExplainActivity.class);
+        }else{
             intent_taskExplain = new Intent(TaskActivity.this, TaskExplainActivity.class);
-      //  }
+        }
         intent_taskExplain.putExtra("taskType", taskType);
         startActivity(intent_taskExplain);
     }
@@ -393,7 +395,14 @@ public class TaskActivity extends PatherActivity {
         howbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent_taskExplain = new Intent(TaskActivity.this, TaskExplainActivity.class);
+                Intent intent_taskExplain;
+                Log.d("boxbox",taskType);
+                if(taskType.equals("BOXCROP")){
+                    intent_taskExplain = new Intent(TaskActivity.this, NewExplainActivity.class);
+                }else{
+                    intent_taskExplain = new Intent(TaskActivity.this, TaskExplainActivity.class);
+                }
+
                 intent_taskExplain.putExtra("taskType", taskType);
                 startActivity(intent_taskExplain);
             }
