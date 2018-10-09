@@ -6,6 +6,7 @@ import android.app.Application;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.kakao.auth.KakaoSDK;
+import com.kakao.usermgmt.response.model.User;
 import com.selectstar.hwshin.cachemission.LoginHelper.KakaoSDKAdapter;
 import com.selectstar.hwshin.cachemission.R;
 
@@ -16,7 +17,7 @@ public class GlobalApplication extends Application {
     private static volatile GlobalApplication obj = null;
     private static volatile Activity currentActivity = null;
 
-    public static GoogleAnalytics analytics;
+    //public static GoogleAnalytics analytics;
     public static Tracker tracker;
     private final String trackingId = "UA-126880414-1";
 
@@ -46,12 +47,13 @@ public class GlobalApplication extends Application {
         super.onCreate();
         obj = this;
         KakaoSDK.init(new KakaoSDKAdapter());
-        analytics = GoogleAnalytics.getInstance(this);
-        analytics.setLocalDispatchPeriod(1800);
-        tracker = getDefaultTracker();
+        //analytics = GoogleAnalytics.getInstance(this);
+        //analytics.setLocalDispatchPeriod(1800);
+        //tracker = getDefaultTracker();
 
 
     }
+
     synchronized public Tracker getDefaultTracker() {
         if (tracker == null) {
             GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);

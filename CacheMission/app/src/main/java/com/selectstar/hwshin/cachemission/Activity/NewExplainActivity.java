@@ -15,6 +15,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.selectstar.hwshin.cachemission.Adapter.Explain.SlideAdapter_ExplainMain;
 import com.selectstar.hwshin.cachemission.Adapter.Explain.SlideAdapter_ExplainTask_Dialect;
 import com.selectstar.hwshin.cachemission.Adapter.Explain.SlideAdapter_ExplainTask_DirectRecord;
@@ -44,7 +47,9 @@ public class NewExplainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_explain);
-
+        Tracker t = ((GlobalApplication)getApplication()).getTracker(GlobalApplication.TrackerName.APP_TRACKER);
+        t.setScreenName("NewExplainActivity");
+        t.send(new HitBuilders.AppViewBuilder().build());
         viewpager=(ViewPager)findViewById(R.id.newExplainViewpager);
         intent = getIntent();
         taskType = intent.getStringExtra("taskType");
@@ -85,5 +90,18 @@ public class NewExplainActivity extends AppCompatActivity {
 
         return new NewExplainAdapter(this,taskType);
     }
+    @Override
+    protected void onStart(){
+        super.onStart();
+        GoogleAnalytics.getInstance(this).reportActivityStart(this);
+
+
+    }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        GoogleAnalytics.getInstance(this).reportActivityStop(this);
+    }
+
 
 }

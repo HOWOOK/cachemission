@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.selectstar.hwshin.cachemission.Adapter.Explain.SlideAdapter_ExplainMain;
 import com.selectstar.hwshin.cachemission.R;
 
@@ -30,6 +33,10 @@ public class ExplainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_explain);
+
+        Tracker t = ((GlobalApplication)getApplication()).getTracker(GlobalApplication.TrackerName.APP_TRACKER);
+        t.setScreenName("ExplainActivity");
+        t.send(new HitBuilders.AppViewBuilder().build());
 
         viewPager=(ViewPager)findViewById(R.id.explainViewpager);
         liner=(LinearLayout)findViewById(R.id.dots);
@@ -126,5 +133,18 @@ public class ExplainActivity extends AppCompatActivity {
 
         }
     };
+    @Override
+    protected void onStart(){
+        super.onStart();
+        GoogleAnalytics.getInstance(this).reportActivityStart(this);
+
+
+    }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        GoogleAnalytics.getInstance(this).reportActivityStop(this);
+    }
+
 
 }

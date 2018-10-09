@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.selectstar.hwshin.cachemission.R;
 
 public class NoticePopUpActivity extends AppCompatActivity {
@@ -20,6 +23,9 @@ public class NoticePopUpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Tracker t = ((GlobalApplication)getApplication()).getTracker(GlobalApplication.TrackerName.APP_TRACKER);
+        t.setScreenName("NoticePopUpActivity");
+        t.send(new HitBuilders.AppViewBuilder().build());
         setContentView(R.layout.activity_noticepopup);
         String title = getIntent().getStringExtra("title");
         String date = getIntent().getStringExtra("date");
@@ -36,4 +42,17 @@ public class NoticePopUpActivity extends AppCompatActivity {
             }
         });
     }
+    @Override
+    protected void onStart(){
+        super.onStart();
+        GoogleAnalytics.getInstance(this).reportActivityStart(this);
+
+
+    }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        GoogleAnalytics.getInstance(this).reportActivityStop(this);
+    }
+
 }

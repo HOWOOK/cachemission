@@ -11,6 +11,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.selectstar.hwshin.cachemission.Adapter.NoticeviewAdapter;
 import com.selectstar.hwshin.cachemission.DataStructure.NoticeItem;
 import com.selectstar.hwshin.cachemission.DataStructure.WaitHttpRequest;
@@ -32,6 +35,9 @@ public class NoticeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Tracker t = ((GlobalApplication)getApplication()).getTracker(GlobalApplication.TrackerName.APP_TRACKER);
+        t.setScreenName("NoticeActivity");
+        t.send(new HitBuilders.AppViewBuilder().build());
         setContentView(R.layout.activity_notice);
         quitButton = findViewById(R.id.back);
         listView = findViewById(R.id.noticelist);
@@ -87,5 +93,18 @@ public class NoticeActivity extends AppCompatActivity {
         });
         alertDialogBuilder.show();
     }
+    @Override
+    protected void onStart(){
+        super.onStart();
+        GoogleAnalytics.getInstance(this).reportActivityStart(this);
+
+
+    }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        GoogleAnalytics.getInstance(this).reportActivityStop(this);
+    }
+
 
 }

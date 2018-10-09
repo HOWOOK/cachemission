@@ -12,6 +12,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.selectstar.hwshin.cachemission.DataStructure.WaitHttpRequest;
 import com.selectstar.hwshin.cachemission.R;
 
@@ -29,7 +32,9 @@ public class ExchangeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exchange);
-
+        Tracker t = ((GlobalApplication)getApplication()).getTracker(GlobalApplication.TrackerName.APP_TRACKER);
+        t.setScreenName("ExchangeActivity");
+        t.send(new HitBuilders.AppViewBuilder().build());
         exchangemain = findViewById(R.id.exchangemain);
         send_btn = findViewById(R.id.sendbtn);
 
@@ -118,4 +123,17 @@ public class ExchangeActivity extends AppCompatActivity {
 
         alertDialogBuilder.show();
     }
+    @Override
+    protected void onStart(){
+        super.onStart();
+        GoogleAnalytics.getInstance(this).reportActivityStart(this);
+
+
+    }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        GoogleAnalytics.getInstance(this).reportActivityStop(this);
+    }
+
 }

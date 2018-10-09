@@ -22,6 +22,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_2DBox;
 import com.selectstar.hwshin.cachemission.DataStructure.HurryHttpRequest;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller;
@@ -79,6 +82,7 @@ public class TaskActivity extends PatherActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        GoogleAnalytics.getInstance(this).reportActivityStart(this);
 
         //지역 재 선택을 위한 인터페이스
         if (taskType.equals("DIALECT") || taskType.equals("RECORD") || taskType.equals("DIRECTRECORD")) {
@@ -310,6 +314,9 @@ public class TaskActivity extends PatherActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Tracker t = ((GlobalApplication)getApplication()).getTracker(GlobalApplication.TrackerName.APP_TRACKER);
+        t.setScreenName("TaskActivity");
+        t.send(new HitBuilders.AppViewBuilder().build());
         setContentView(R.layout.activity_task);
         //캡쳐방지
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
@@ -461,4 +468,11 @@ public class TaskActivity extends PatherActivity {
             super.onBackPressed();
         }
     }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        GoogleAnalytics.getInstance(this).reportActivityStop(this);
+    }
+
 }

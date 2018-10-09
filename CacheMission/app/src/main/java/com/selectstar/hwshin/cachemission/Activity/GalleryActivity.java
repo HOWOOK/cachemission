@@ -11,6 +11,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.selectstar.hwshin.cachemission.Adapter.ChoiceImageAdapter;
 import com.selectstar.hwshin.cachemission.Adapter.GalleryImageAdapter;
 import com.selectstar.hwshin.cachemission.R;
@@ -31,6 +34,9 @@ public class GalleryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Tracker t = ((GlobalApplication)getApplication()).getTracker(GlobalApplication.TrackerName.APP_TRACKER);
+        t.setScreenName("GalleryActivity");
+        t.send(new HitBuilders.AppViewBuilder().build());
         Intent intent = getIntent();
         availNumber = intent.getIntExtra("avail",0);
         setContentView(R.layout.activity_gallery);
@@ -72,5 +78,18 @@ public class GalleryActivity extends AppCompatActivity {
             }
         });
     }
+    @Override
+    protected void onStart(){
+        super.onStart();
+        GoogleAnalytics.getInstance(this).reportActivityStart(this);
+
+
+    }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        GoogleAnalytics.getInstance(this).reportActivityStop(this);
+    }
+
 
 }

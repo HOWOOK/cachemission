@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
 import com.selectstar.hwshin.cachemission.R;
 
 import java.security.MessageDigest;
@@ -34,5 +35,18 @@ public class hashActivity extends Activity{
             e.printStackTrace();
         }
     }
+    @Override
+    protected void onStart(){
+        super.onStart();
+        GoogleAnalytics.getInstance(this).reportActivityStart(this);
+
+
+    }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        GoogleAnalytics.getInstance(this).reportActivityStop(this);
+    }
+
 }
 

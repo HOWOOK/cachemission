@@ -78,6 +78,12 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences token = getSharedPreferences("token", MODE_PRIVATE);
+                SharedPreferences.Editor editor = token.edit();
+                //logintoken이라는 key값으로 token을 저장한다.
+                editor.putString("loginID", idText.getText().toString());
+                editor.apply();
+
                 int id = view.getId();
                 Tracker t = ((GlobalApplication)getApplication()).getTracker(GlobalApplication.TrackerName.APP_TRACKER);
 
@@ -106,6 +112,7 @@ public class LoginActivity extends AppCompatActivity {
                                     //logintoken이라는 key값으로 token을 저장한다.
                                     editor.putString("loginToken", res.get("token").toString());
                                     editor.commit();
+                                    onUserSignIn();
                                     startActivity(in);
                                     finish();
                                 }
@@ -186,6 +193,23 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         alertDialogBuilder.show();
+    }
+    public void onUserSignIn() {
+
+        Tracker t = ((GlobalApplication)getApplication()).getTracker(GlobalApplication.TrackerName.APP_TRACKER);
+
+        // You only need to set User ID on a tracker once. By setting it on the tracker, the ID will be
+        // sent with all subsequent hits.
+        SharedPreferences token = getSharedPreferences("token", MODE_PRIVATE);
+        String loginID=token.getString("loginID","");
+        t.set("&uid", loginID);
+
+        // This hit will be sent with the User ID value and be visible in User-ID-enabled views (profiles).
+        t.send(new HitBuilders.EventBuilder()
+                .setCategory("UX")
+                .setAction("User Sign In")
+                .build()
+        );
     }
 
 //    @Override
