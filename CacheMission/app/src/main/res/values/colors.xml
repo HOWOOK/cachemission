@@ -17,6 +17,10 @@
     <color name="fontColorInactive">#B3B3B3</color>
     <color name="fontColor1">#DD8717</color>
 
+
+    <color name="loginColor">#fab402</color>
+    <color name="loginColorDark">#f5a511</color>
+
     <color name="listSelectorBackgroundColor">#E9E9E9</color>
     <color name="photoViewExpandHackColor">#00FFFFFF</color>
     <color name="colorOnServer">#FF0000</color>
