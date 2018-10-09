@@ -17,10 +17,10 @@
 
         <ImageView
             android:id="@+id/back"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="8dp"
-            android:src="@drawable/main_explain_left"
+            android:layout_width="12dp"
+            android:layout_height="13dp"
+            android:layout_marginStart="13dp"
+            android:src="@drawable/icon_arrow"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -28,7 +28,7 @@
         <TextView
             android:id="@+id/tasktitletext"
             style="@style/normalTitle"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="10dp"
             android:text="@string/textnotload"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/goldpre"
@@ -37,15 +37,15 @@
 
         <ImageView
             android:id="@+id/howbtn"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginEnd="10dp"
+            android:layout_width="19dp"
+            android:layout_height="19dp"
+            android:layout_marginEnd="13dp"
             android:alpha="0.7"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/goldnow"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/questionmark" />
+            app:srcCompat="@drawable/icon_question" />
 
         <TextView
             android:id="@+id/goldpre"

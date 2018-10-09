@@ -221,6 +221,10 @@ public class ListviewAdapter extends RecyclerView.Adapter<ListviewAdapter.ItemVi
             else
                 intent.putExtra("controller",taskItem.get("controller").toString());
             intent.putExtra("taskId",taskItem.get("id").toString());
+
+            System.out.println("하잇 : " + taskItem);
+
+
         } catch(JSONException e)
         {
             e.printStackTrace();

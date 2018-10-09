@@ -140,7 +140,7 @@ public class TaskActivity extends PatherActivity {
     {
         JSONObject param = new JSONObject();
         try {
-            param.put("id", taskID);
+            param.put("taskID", taskID);
             if(taskType.equals("RECORD")){//RECORD일때는 지역을 같이 넣어서 요청해야함
                 String region;
                 SharedPreferences explain = getSharedPreferences("region", Context.MODE_PRIVATE);

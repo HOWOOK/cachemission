@@ -23,10 +23,10 @@
 
             <ImageView
                 android:id="@+id/back"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginStart="8dp"
-                android:src="@drawable/main_explain_left"
+                android:layout_width="12dp"
+                android:layout_height="13dp"
+                android:layout_marginStart="13dp"
+                android:src="@drawable/icon_arrow"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -34,7 +34,7 @@
             <TextView
                 android:id="@+id/settingtitletext"
                 style="@style/normalTitle"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="10dp"
                 android:text="내 정보 및 환경설정"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
