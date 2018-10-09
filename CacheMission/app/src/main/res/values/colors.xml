@@ -3,9 +3,9 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
 
-    <color name="colorPrimary">#FAB402</color>
+    <color name="colorPrimary">#fab902</color>
 
-    <color name="colorPrimaryDark">#E3AC1B</color>
+    <color name="colorPrimaryDark">#f5a511</color>
     <color name="colorAccent">#00ADA9</color>
     <color name="colorSecondary">#474143</color>
 
