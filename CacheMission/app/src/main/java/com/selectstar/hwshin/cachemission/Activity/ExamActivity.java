@@ -61,6 +61,7 @@ public class ExamActivity extends PatherActivity {
                     JSONObject resultTemp;
                     try {
                         resultTemp = new JSONObject(result);
+                        System.out.println("오오오 : "+ resultTemp);
                         if ((boolean) resultTemp.get("success")) {
                             waitingTasks = new ArrayList<>();
                             JSONArray tempTasks = (JSONArray)resultTemp.get("answers");
@@ -161,6 +162,7 @@ public class ExamActivity extends PatherActivity {
         mTaskView = uiHashMap.taskViewHashMap.get(intent.getStringExtra("taskView"));
         mTaskView.setParentActivity(this);
         mExamView = uiHashMap.examViewHashMap.get(intent.getStringExtra("examView"));
+        System.out.println("하이하이 : " +intent.getStringArrayExtra("examView"));
         mExamView.setParentActivity(this);
         mParameter = uiHashMap.taskHashMap.get(intent.getStringExtra("taskType"));
         taskTitle = intent.getStringExtra("taskTitle");
