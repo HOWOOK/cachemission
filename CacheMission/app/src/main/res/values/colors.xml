@@ -23,6 +23,6 @@
 
     <color name="listSelectorBackgroundColor">#E9E9E9</color>
     <color name="photoViewExpandHackColor">#00FFFFFF</color>
-    <color name="colorOnServer">#FF0000</color>
-    <color name="colorOnClient">#0000FF</color>
+    <color name="colorOnServer">#FA484E</color>
+    <color name="colorOnClient">#0978f0</color>
 </resources>
