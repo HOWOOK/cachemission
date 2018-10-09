@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
-        android:name=".LoginHelper.GlobalApplication"
+        android:name=".Activity.GlobalApplication"
         android:allowBackup="true"
         android:hardwareAccelerated="false"
         android:icon="@drawable/cashmissionicon"
@@ -46,6 +46,9 @@
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" />
         <!-- 파이어베이스 푸시알림 default value들 끝 -->
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
 
 
         <activity
@@ -141,6 +144,10 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.ImagePopupActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.NewExplainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

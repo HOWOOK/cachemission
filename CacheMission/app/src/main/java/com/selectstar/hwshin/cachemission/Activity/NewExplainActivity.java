@@ -32,7 +32,7 @@ public class NewExplainActivity extends AppCompatActivity {
     String taskType="";
     int examType = 0;
 
-    private ViewPager viewpager;
+    public ViewPager viewpager;
     private PagerAdapter myadapter;
     private ImageView exit;
     private TextView pagecnt;
@@ -62,6 +62,7 @@ public class NewExplainActivity extends AppCompatActivity {
         viewpager.setAdapter(myadapter);
         viewpager.addOnPageChangeListener(viewlistener);
 
+
     }
 
     ViewPager.OnPageChangeListener viewlistener = new ViewPager.OnPageChangeListener() {
@@ -71,6 +72,7 @@ public class NewExplainActivity extends AppCompatActivity {
 
         @Override
         public void onPageSelected(int position) {
+
             mCurrentPage = position;
         }
 
@@ -81,7 +83,7 @@ public class NewExplainActivity extends AppCompatActivity {
 
     private PagerAdapter findAdaptingTaskExplain(String tasktype) {
 
-        return new NewExplainAdapter(this,null);
+        return new NewExplainAdapter(this,taskType);
     }
 
 }

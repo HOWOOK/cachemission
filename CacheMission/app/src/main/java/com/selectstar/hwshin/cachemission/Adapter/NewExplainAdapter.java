@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.selectstar.hwshin.cachemission.Activity.NewExplainActivity;
+import com.selectstar.hwshin.cachemission.DataStructure.ExplainHashMap;
 import com.selectstar.hwshin.cachemission.R;
 
 import java.util.ArrayList;
@@ -18,11 +20,13 @@ import java.util.ArrayList;
 public class NewExplainAdapter extends PagerAdapter {
     Context context;
     LayoutInflater inflater;
-    ArrayList<String> mImageList;
+    ArrayList<Integer> mImageList;
 
-    public NewExplainAdapter(Context context, ArrayList<String> imageList){
+    public NewExplainAdapter(Context context,String taskType){
         this.context=context;
-        this.mImageList=imageList;
+        ExplainHashMap explainHashMap=new ExplainHashMap();
+
+        this.mImageList=explainHashMap.taskTypeLinkImages.get(taskType);
     }
 
 
@@ -45,7 +49,7 @@ public class NewExplainAdapter extends PagerAdapter {
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(ViewGroup container, final int position) {
         inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.new_explain_task,container,false);
 
@@ -59,6 +63,16 @@ public class NewExplainAdapter extends PagerAdapter {
             @Override
             public void onClick(View v) {
                 ((Activity)context).finish();
+            }
+        });
+        img1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(position==mImageList.size()-1){
+                    ((Activity)context).finish();
+                }else {
+                    ((NewExplainActivity) context).viewpager.setCurrentItem(position + 1,false);
+                }
             }
         });
 

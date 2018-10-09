@@ -13,9 +13,7 @@ import com.kakao.auth.IApplicationConfig;
 import com.kakao.auth.ISessionConfig;
 
 import com.kakao.auth.KakaoAdapter;
-
-
-
+import com.selectstar.hwshin.cachemission.Activity.GlobalApplication;
 
 
 public class KakaoSDKAdapter extends KakaoAdapter {

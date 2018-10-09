@@ -15,11 +15,12 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.selectstar.hwshin.cachemission.DataStructure.WaitHttpRequest;
-import com.selectstar.hwshin.cachemission.LoginHelper.TotalLoginActivity;
 import com.selectstar.hwshin.cachemission.R;
 
 import org.json.JSONException;
@@ -49,6 +50,9 @@ public class LoginActivity extends AppCompatActivity {
 
         }
         setContentView(R.layout.activity_login);
+        Tracker t = ((GlobalApplication)getApplication()).getTracker(GlobalApplication.TrackerName.APP_TRACKER);
+        t.setScreenName("LoginActivity");
+        t.send(new HitBuilders.AppViewBuilder().build());
 
         viewGuideline = this.findViewById(R.id.guideline);
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -74,6 +78,14 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int id = view.getId();
+                Tracker t = ((GlobalApplication)getApplication()).getTracker(GlobalApplication.TrackerName.APP_TRACKER);
+
+                if(id == R.id.button_in){
+                    t.send(new HitBuilders.EventBuilder().setCategory("LoginActivity").setAction("Press Button").setLabel("LoginButton Click").build());
+
+                }
+
                 String idVal = idText.getText().toString();
                 String pwVal = pwText.getText().toString();
                 try {
@@ -111,6 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
         upButton = findViewById(R.id.button_up);
         upButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,6 +149,18 @@ public class LoginActivity extends AppCompatActivity {
 //        });
 
 
+    }
+    @Override
+    protected void onStart(){
+            super.onStart();
+        GoogleAnalytics.getInstance(this).reportActivityStart(this);
+
+
+    }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        GoogleAnalytics.getInstance(this).reportActivityStop(this);
     }
 
     @Override
@@ -163,12 +188,12 @@ public class LoginActivity extends AppCompatActivity {
         alertDialogBuilder.show();
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent back = new Intent(LoginActivity.this, TotalLoginActivity.class);
-        startActivity(back);
-        finish();
-
-    }
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//        Intent back = new Intent(LoginActivity.this, TotalLoginActivity.class);
+//        startActivity(back);
+//        finish();
+//
+//    }
 }

@@ -73,6 +73,8 @@ dependencies {
 
     compile group: project.KAKAO_SDK_GROUP, name: 'usermgmt', version: project.KAKAO_SDK_VERSION
     compile 'com.google.android.gms:play-services-analytics:16.0.1'
+   // compile 'com.google.android.gms:play-services:6.5.87'
+
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
 }
 apply plugin: 'com.google.gms.google-services'
