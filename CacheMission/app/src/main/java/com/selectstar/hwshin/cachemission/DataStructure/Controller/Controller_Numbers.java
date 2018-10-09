@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.selectstar.hwshin.cachemission.Activity.LoginActivity;
 import com.selectstar.hwshin.cachemission.Adapter.numbergridadapter;
 import com.selectstar.hwshin.cachemission.DataStructure.HurryHttpRequest;
+import com.selectstar.hwshin.cachemission.DataStructure.WaitHttpRequest;
 import com.selectstar.hwshin.cachemission.R;
 
 import org.json.JSONException;
@@ -60,19 +61,20 @@ public class Controller_Numbers extends Controller {
                     param.put("submit", Integer.parseInt(result));
                     parentActivity.updateWaitingTasks();
                     parentActivity.startTask();
-                    new HurryHttpRequest(parentActivity) {
+                    new WaitHttpRequest(parentActivity) {
                         @Override
                         protected void onPostExecute(Object o) {
                             super.onPostExecute(o);
                             try {
-                                JSONObject resulttemp = new JSONObject(result);
-                                if (resulttemp.get("success").toString().equals("false")) {
-                                    if (resulttemp.get("message").toString().equals("login")) {
+                                JSONObject resultTemp = new JSONObject(result);
+                                System.out.println("resultTemp : "+resultTemp);
+                                if (resultTemp.get("success").toString().equals("false")) {
+                                    if (resultTemp.get("message").toString().equals("login")) {
                                         Intent in = new Intent(parentActivity, LoginActivity.class);
                                         parentActivity.startActivity(in);
                                         Toast.makeText(parentActivity, "로그인이 만료되었습니다. 다시 로그인해주세요", Toast.LENGTH_SHORT).show();
                                         parentActivity.finish();
-                                    } else if (resulttemp.get("message").toString().equals("task")) {
+                                    } else if (resultTemp.get("message").toString().equals("task")) {
 
                                         Toast.makeText(parentActivity, "테스크가 만료되었습니다. 다른 테스크를 선택해주세요", Toast.LENGTH_SHORT).show();
                                         parentActivity.deleteWaitingTasks();
@@ -84,10 +86,10 @@ public class Controller_Numbers extends Controller {
                                     return;
 
                                 } else {
-                                    parentActivity.setGold(String.valueOf(resulttemp.get("gold")));
-                                    parentActivity.setMaybe(String.valueOf(resulttemp.get("maybe")));
-                                    parentActivity.setDailyQuest(String.valueOf(resulttemp.get("dailyQuest")));
-                                    int bonus = Integer.parseInt(String.valueOf(resulttemp.get("bonus_up")));
+                                    parentActivity.setGold(String.valueOf(resultTemp.get("gold")));
+                                    parentActivity.setMaybe(String.valueOf(resultTemp.get("maybe")));
+                                    parentActivity.setDailyQuest(String.valueOf(resultTemp.get("dailyQuest")));
+                                    int bonus = Integer.parseInt(String.valueOf(resultTemp.get("bonus_up")));
                                     System.out.println(bonus);
                                     System.out.println("----");
                                     if(bonus > 0)

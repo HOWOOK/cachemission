@@ -22,11 +22,10 @@ import com.selectstar.hwshin.cachemission.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Controller_2DBox extends Controller {
+public class Controller_2DBoxLight extends Controller {
 
     private Button sendButton, completeButton;
     private ImageView pinButton;
-    private TextView testingText1, testingText2, testingText3;
     private View centerImage;
     private PhotoView photoView;
     private float originWidth, originHeight, originLeftMargin, originTopMargin;
@@ -40,7 +39,7 @@ public class Controller_2DBox extends Controller {
     private float dpScale;
     private ConstraintLayout photoViewCL;
 
-    public Controller_2DBox() {
+    public Controller_2DBoxLight() {
         controllerID = R.layout.controller_2dbox;
     }
 
@@ -104,9 +103,6 @@ public class Controller_2DBox extends Controller {
                         System.out.println("배율 : " + photoView.getScale());
                         float widthCL = boxCL.getWidth();
                         float heightCL = boxCL.getHeight();
-                        testingText1 = view.findViewById(R.id.testingtext1);
-                        testingText2 = view.findViewById(R.id.testingtext2);
-                        testingText3 = view.findViewById(R.id.testingtext3);
 
                         /********************************
                          * (x1, y1) = crop box의 현재 좌상단 좌표
@@ -145,12 +141,9 @@ public class Controller_2DBox extends Controller {
                             @Override
                             protected void onPostExecute(Object o) {
                                 super.onPostExecute(o);
-                                System.out.println("나 여기 들어왔어");
 
                                 try {
                                     JSONObject resultTemp = new JSONObject(result);
-                                    System.out.println("resultTemp : "+resultTemp);
-                                    System.out.println("서버반응 : "+resultTemp.get("success").toString());
                                     if (resultTemp.get("success").toString().equals("false")) {
                                         if (resultTemp.get("message").toString().equals("login")) {
                                             Intent in = new Intent(parentActivity, LoginActivity.class);
@@ -165,7 +158,7 @@ public class Controller_2DBox extends Controller {
                                             parentActivity.finish();
                                         }
                                     } else {
-                                        System.out.println("서버반응 2: "+resultTemp.get("success").toString());
+                                        System.out.println("서버반응 : "+resultTemp.get("success").toString());
 
                                         drawAnswerCount++;
                                         System.out.println("그려져있던 수 : "+answerCount+" 내가 그린 수 : "+drawAnswerCount);
