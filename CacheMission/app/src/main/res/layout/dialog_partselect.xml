@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/dialogCL"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:background="#A01C2629"
+        >
+
+    <ImageView
+        android:id="@+id/cancelbtn"
+        android:layout_width="21dp"
+        android:layout_height="21dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="13dp"
+        android:src = "@drawable/twodbox_icon_x"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+    
+    <ImageView
+        android:id="@+id/part_pole"
+        android:layout_width="88dp"
+        android:layout_height="88dp"
+        android:layout_marginTop="72dp"
+        android:background="@drawable/part_pole"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/part_tree"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+    
+    <TextView
+        android:id="@+id/part_poleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="전신주"
+        android:textColor="#FFFFFF"
+        android:fontFamily="@font/nanumsquareb_"
+        app:layout_constraintTop_toBottomOf="@+id/part_pole"
+        app:layout_constraintStart_toStartOf="@+id/part_pole"
+        app:layout_constraintEnd_toEndOf="@+id/part_pole"
+        />
+
+    <ImageView
+        android:id="@+id/part_tree"
+        android:layout_width="88dp"
+        android:layout_height="88dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginLeft="67dp"
+        android:background="@drawable/part_tree"
+        app:layout_constraintStart_toEndOf="@+id/part_pole"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/part_treeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="나무"
+        android:textColor="#FFFFFF"
+        android:fontFamily="@font/nanumsquareb_"
+        app:layout_constraintTop_toBottomOf="@+id/part_tree"
+        app:layout_constraintStart_toStartOf="@+id/part_tree"
+        app:layout_constraintEnd_toEndOf="@+id/part_tree"
+        />
+
+    <ImageView
+        android:id="@+id/part_transformer"
+        android:layout_width="88dp"
+        android:layout_height="88dp"
+        android:layout_marginTop="72dp"
+        android:background="@drawable/part_transformer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/part_empty"
+        app:layout_constraintTop_toBottomOf="@+id/part_poleText"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        />
+
+    <TextView
+        android:id="@+id/part_transformerText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="변압기"
+        android:textColor="#FFFFFF"
+        android:fontFamily="@font/nanumsquareb_"
+        app:layout_constraintTop_toBottomOf="@+id/part_transformer"
+        app:layout_constraintStart_toStartOf="@+id/part_transformer"
+        app:layout_constraintEnd_toEndOf="@+id/part_transformer"
+        />
+
+    <ImageView
+        android:id="@+id/part_empty"
+        android:layout_width="88dp"
+        android:layout_height="88dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginLeft="67dp"
+        app:layout_constraintStart_toEndOf="@+id/part_transformer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>

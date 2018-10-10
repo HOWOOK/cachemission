@@ -10,6 +10,7 @@ import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Telephony;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +30,8 @@ import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_2D
 import com.selectstar.hwshin.cachemission.DataStructure.HurryHttpRequest;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_Photo;
+import com.selectstar.hwshin.cachemission.DataStructure.PartSelectDialog;
+import com.selectstar.hwshin.cachemission.DataStructure.PartSelectDialogListener;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoView;
 import com.selectstar.hwshin.cachemission.DataStructure.UIHashMap;
@@ -37,6 +40,7 @@ import com.selectstar.hwshin.cachemission.R;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -77,6 +81,42 @@ public class TaskActivity extends PatherActivity {
             intent_region.putExtra("wanttochange", "false");
             startActivity(intent_region);
         }
+
+        final TextView partText = findViewById(R.id.partText);
+        if((taskType.equals("BOXCROP"))){
+            findViewById(R.id.option).setBackgroundColor(this.getResources().getColor(R.color.colorBlack2));
+            partDialogShow(partText);
+        }
+        partText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if((taskType.equals("BOXCROP"))){
+                    partDialogShow(partText);
+                }
+            }
+        });
+    }
+
+    private void partDialogShow(TextView partText) {
+        final TextView partTextTemp = partText;
+        PartSelectDialog dialog = new PartSelectDialog(this, R.style.AppTheme_Transparent_Dialog);
+        dialog.setDialogListener(new PartSelectDialogListener() {
+            @Override
+            public void onPartPoleClicked() {
+                partTextTemp.setText("전신주");
+            }
+
+            @Override
+            public void onPartTreeClicked() {
+                partTextTemp.setText("나무");
+            }
+
+            @Override
+            public void onPartTransformerClicked() {
+                partTextTemp.setText("변압기");
+            }
+        });
+        dialog.show();
     }
 
     @Override
