@@ -11,8 +11,11 @@ import android.support.constraint.Guideline;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -38,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     Button loginButton;
     Button upButton;
     Button findid,findpw;
+    Guideline guideline;
     final int P_RECORD_AUDIO=77;
 
     @Override
@@ -74,6 +78,24 @@ public class LoginActivity extends AppCompatActivity {
 
         idText = findViewById(R.id.edit_id);
         pwText = findViewById(R.id.edit_pw);
+        guideline=findViewById(R.id.guideline);
+       // InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+
+        idText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //guideline.setGuidelinePercent(0);
+            }
+        });
+        pwText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // guideline.setGuidelinePercent(0);
+            }
+        });
+        pwText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         loginButton = findViewById(R.id.button_in);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -212,12 +234,10 @@ public class LoginActivity extends AppCompatActivity {
         );
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        super.onBackPressed();
-//        Intent back = new Intent(LoginActivity.this, TotalLoginActivity.class);
-//        startActivity(back);
-//        finish();
-//
-//    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        guideline.setGuidelinePercent((float) 0.42);
+
+    }
 }
