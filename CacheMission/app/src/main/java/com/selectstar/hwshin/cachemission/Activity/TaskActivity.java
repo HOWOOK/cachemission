@@ -10,6 +10,7 @@ import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Telephony;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +30,8 @@ import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_2D
 import com.selectstar.hwshin.cachemission.DataStructure.HurryHttpRequest;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_Photo;
+import com.selectstar.hwshin.cachemission.DataStructure.PartSelectDialog;
+import com.selectstar.hwshin.cachemission.DataStructure.PartSelectDialogListener;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoView;
 import com.selectstar.hwshin.cachemission.DataStructure.UIHashMap;
@@ -76,6 +79,28 @@ public class TaskActivity extends PatherActivity {
             Intent intent_region = new Intent(TaskActivity.this, RegionActivity.class);
             intent_region.putExtra("wanttochange", "false");
             startActivity(intent_region);
+        }
+
+        int part;
+        if((taskType.equals("BOXCROP"))){
+            PartSelectDialog dialog = new PartSelectDialog(this);
+            dialog.setDialogListener(new PartSelectDialogListener() {
+                @Override
+                public void onPartPoleClicked() {
+
+                }
+
+                @Override
+                public void onPartTreeClicked() {
+
+                }
+
+                @Override
+                public void onPartTransformerClicked() {
+
+                }
+            });
+            dialog.show();
         }
     }
 
