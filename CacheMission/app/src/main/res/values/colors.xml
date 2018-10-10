@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorTransparentWhite">#b4ffffff</color>
+    <color name="colorTransparentMoreWhite">#64ffffff</color>
     <color name="colorBlack">#000000</color>
 
     <color name="colorPrimary">#fab902</color>
@@ -20,6 +22,8 @@
 
     <color name="loginColor">#fab402</color>
     <color name="loginColorDark">#f5a511</color>
+
+    <color name="colorPointDark">#03284B</color>
 
     <color name="listSelectorBackgroundColor">#E9E9E9</color>
     <color name="photoViewExpandHackColor">#00FFFFFF</color>

@@ -18,6 +18,8 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 
 import com.google.android.gms.analytics.GoogleAnalytics;
@@ -42,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     Button upButton;
     Button findid,findpw;
     Guideline guideline;
+    ImageView backbutton;
     final int P_RECORD_AUDIO=77;
 
     @Override
@@ -81,6 +84,13 @@ public class LoginActivity extends AppCompatActivity {
         guideline=findViewById(R.id.guideline);
        // InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        backbutton=findViewById(R.id.loginBackButton);
+        backbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"최고의 개발자 신호욱 화이팅!",Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
         idText.setOnClickListener(new View.OnClickListener() {

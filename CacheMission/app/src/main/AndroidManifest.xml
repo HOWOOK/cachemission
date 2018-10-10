@@ -53,7 +53,7 @@
 
 
         <activity
-            android:name=".Activity.LoginActivity"
+            android:name=".Activity.TaskListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             >
@@ -94,7 +94,7 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".Activity.TaskListActivity"
+            android:name=".Activity.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -150,6 +150,10 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.NewExplainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.MyPageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

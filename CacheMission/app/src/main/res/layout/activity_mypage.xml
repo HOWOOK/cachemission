@@ -1,15 +1,248 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView
+        android:id="@+id/back3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/backcom3" />
 
     <ImageView
-        android:id="@+id/myPageBackgound"
-        android:layout_width="match_parent"
-        android:layout_height="470dp"
-        android:background="@drawable/mypage_background"
-        />
+        android:id="@+id/back1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/CL2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.24000001"
+        app:srcCompat="@drawable/backcom1" />
+
+    <ImageView
+        android:id="@+id/back2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.83"
+        app:srcCompat="@drawable/backcom2" />
+    <android.support.constraint.Guideline
+        android:id="@+id/guideLineMyPageHo1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_begin="242dp"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideLineMyPageHo2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_begin="476dp"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideLineMyPageVer1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintGuide_begin="18dp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideLineMyPageVer2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintGuide_end="18dp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/mypageCircle"
+        android:layout_width="118dp"
+        android:layout_height="118dp"
+        android:background="@drawable/mypage_circle"
+        app:layout_constraintBottom_toTopOf="@id/guideLineMyPageHo1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/mypageUserLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lv.03"
+        android:textColor="@color/colorWhite"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@id/guideLineMyPageHo1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="13dp"
+        android:layout_marginStart="13dp"
+        android:background="@drawable/mypage_dummy_rectangle"
+        app:layout_constraintBottom_toTopOf="@+id/guideLineMyPageHo1"
+        app:layout_constraintEnd_toEndOf="@+id/guideLineMyPageVer2"
+        app:layout_constraintStart_toStartOf="@+id/guideLineMyPageVer1" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:background="@drawable/mypage_dummy_rectangle_two"
+        app:layout_constraintBottom_toTopOf="@+id/guideLineMyPageHo1"
+        app:layout_constraintEnd_toEndOf="@+id/guideLineMyPageVer2"
+        app:layout_constraintStart_toStartOf="@+id/guideLineMyPageVer1" />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/shadow"
+        app:layout_constraintBottom_toTopOf="@+id/guideLineMyPageHo2"
+        app:layout_constraintEnd_toStartOf="@+id/guideLineMyPageVer2"
+        app:layout_constraintStart_toEndOf="@+id/guideLineMyPageVer1"
+        app:layout_constraintTop_toBottomOf="@+id/guideLineMyPageHo1">
+
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="33dp"
+            android:background="@drawable/mypage_won"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/myPageUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="11dp"
+            android:text="'전문휘'님의 통장"
+            android:fontFamily="@font/nanumsquareeb_"
+            android:textColor="@color/colorPointDark"
+            android:layout_marginEnd="40dp"
+            android:layout_marginTop="51dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+        <TextView
+            android:id="@+id/nowMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="33dp"
+            android:text="3500"
+            android:fontFamily="@font/nanumsquareeb_"
+            android:textColor="@color/colorPointDark"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="51dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+        <TextView
+            android:id="@+id/certainMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="3500"
+            android:fontFamily="@font/nanumsquareeb_"
+            android:textColor="@color/colorPointDark"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="117dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/delayedMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="117dp"
+            android:fontFamily="@font/nanumsquareeb_"
+            android:text="700"
+            android:textColor="@color/colorPointDark"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/totalMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="10070"
+            android:fontFamily="@font/nanumsquareeb_"
+            android:textColor="@color/colorPointDark"
+            android:layout_marginEnd="40dp"
+            android:layout_marginTop="117dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+        <TextView
+            android:id="@+id/certainMoneyText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="8dp"
+            android:text="현재 적립 금액"
+            android:fontFamily="@font/nanumsquareeb_"
+            android:textColor="@color/colorPointDark"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="143dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/delayedMoneyText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="143dp"
+            android:fontFamily="@font/nanumsquareeb_"
+            android:text="적립 예정 금액"
+            android:textColor="@color/colorPointDark"
+            android:textSize="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/totalMoneyText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="8dp"
+            android:text="누적 적립 금액"
+            android:fontFamily="@font/nanumsquareeb_"
+            android:textColor="@color/colorPointDark"
+            android:layout_marginEnd="40dp"
+            android:layout_marginTop="143dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+        <TextView
+            android:id="@+id/withdrawButton"
+            android:layout_width="match_parent"
+            android:layout_height="22dp"
+            android:text="환전신청"
+            android:textSize="11dp"
+            android:textColor="@color/colorWhite"
+            android:gravity="center"
+
+            android:background="@drawable/mypage_withdraw_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+             />
+    </android.support.constraint.ConstraintLayout>
+
+
 
     <TextView
         android:id="@+id/myPageTitle"

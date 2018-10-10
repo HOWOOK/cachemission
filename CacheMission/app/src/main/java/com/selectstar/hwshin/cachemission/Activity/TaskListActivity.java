@@ -50,6 +50,8 @@ public class TaskListActivity extends AppCompatActivity {
     private String versionCode;
     private Context mContext = this;
     private RecyclerView lv_main;
+    private TextView myPage;
+
     public void insertItem(JSONObject item){
 
         SharedPreferences listInfo=getSharedPreferences("listInfo",MODE_PRIVATE);
@@ -444,6 +446,12 @@ public class TaskListActivity extends AppCompatActivity {
                         return;
                     JSONObject resultTemp = new JSONObject(result);
                     JSONObject user = (JSONObject)resultTemp.get("user");
+
+                    SharedPreferences userInfo=getSharedPreferences("userInfo",MODE_PRIVATE);
+                    SharedPreferences.Editor editor=userInfo.edit();
+                    editor.putString("userInfo",user.toString());
+                    editor.apply();
+
                     ImageView userRank = findViewById(R.id.userrank);
                     TextView userLevel = findViewById(R.id.userLevel);
                     TextView userGold = findViewById(R.id.mygold);
@@ -491,15 +499,18 @@ public class TaskListActivity extends AppCompatActivity {
         t.setScreenName("TaskListActivity");
         t.send(new HitBuilders.AppViewBuilder().build());
         setContentView(R.layout.activity_tasklist);
+
         uiHashMap = new UIHashMap();
         subscribePush();
         setVersion();
         setDrawer();
-        TextView myPage = findViewById(R.id.mypage);
+
+        myPage=findViewById(R.id.mypage);
         myPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(TaskListActivity.this, "구현 중이에용~~",Toast.LENGTH_SHORT).show();
+                Intent myPageIntent=new Intent(TaskListActivity.this,MyPageActivity.class);
+                startActivity(myPageIntent);
             }
         });
     }
