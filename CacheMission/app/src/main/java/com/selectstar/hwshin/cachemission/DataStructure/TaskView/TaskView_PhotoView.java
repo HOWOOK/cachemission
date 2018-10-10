@@ -1,9 +1,12 @@
 package com.selectstar.hwshin.cachemission.DataStructure.TaskView;
 
+import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -26,6 +29,7 @@ import com.selectstar.hwshin.cachemission.Photoview.PhotoView;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class TaskView_PhotoView extends TaskView {
@@ -37,7 +41,7 @@ public class TaskView_PhotoView extends TaskView {
     private ConstraintLayout photoViewCL;
     public ConstraintLayout[] answerList;
     public View[][] answerEdges;
-    public boolean expandFlag, isExamFlag;
+    public boolean expandFlag, isExamFlag, ImageReady;
     private int getDeviceDpi;
     private float dpScale;
 
@@ -63,6 +67,7 @@ public class TaskView_PhotoView extends TaskView {
     public void setContent(String content)
     {
         //플래그 처리
+        ImageReady = false;
         isExamFlag = false;
         expandFlag = true;
         if(parentActivity.getTaskType().equals("BOXCROPEXAM"))
@@ -93,25 +98,14 @@ public class TaskView_PhotoView extends TaskView {
         photoView.setMaximumScale(10);
         photoView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         Glide.with(parentActivity)
+                .asBitmap()
                 .load(Uri.parse(parentActivity.getString(R.string.mainurl)+"/media/"+ array1[0]))
-                .into(new SimpleTarget<Drawable>(){
+                .into(new SimpleTarget<Bitmap>(){
                     @Override
-                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-
-                        photoView.setImageDrawable(resource);
+                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                        photoView.setImageBitmap(resource);
+                        ImageReady = true;
                         if(answerCoordination != null) {
-
-//                            System.out.print("-----안비어있지롱-----");
-//                            System.out.println("길이 : "+answerCoordination.length);
-//                            for (int i = 0; i<answerCoordination.length; i++){
-//                                System.out.println("ㅁ"+i+"+1번째ㅁ");
-//                                for (int j = 0; j<answerCoordination[i].length; j++) {
-//                                    System.out.print(answerCoordination[i][j]+", ");
-//                                }
-//                                System.out.print("\n");
-//                            }
-//                            System.out.println("----------------------");
-
                             drawAnswer(answerCoordination);
                             parentActivity.findViewById(R.id.textDragCL).bringToFront();
                         }
@@ -149,7 +143,7 @@ public class TaskView_PhotoView extends TaskView {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 ConstraintLayout testDragCL = parentActivity.findViewById(R.id.textDragCL);
-                if(expandFlag) {
+                if(expandFlag && ImageReady) {
                     switch (event.getAction()){
                         case MotionEvent.ACTION_DOWN :
                             initX = event.getX();

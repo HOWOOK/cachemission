@@ -211,10 +211,11 @@ public class UIHashMap {
         parameters_PHOTOEXAM[4][0] = R.id.taskConstLayoutexam; parameters_PHOTOEXAM[4][1] = 4;
         parameters_PHOTOEXAM[5][0] = 50;
         taskHashMap.put("PHOTOEXAM",parameters_PHOTOEXAM);
+
         parameters_BOXCROP[0][0] = 10;
-        parameters_BOXCROP[1][0] = R.id.title; parameters_BOXCROP[1][1] = 4;
+        parameters_BOXCROP[1][0] = R.id.option; parameters_BOXCROP[1][1] = 4;
         parameters_BOXCROP[2][0] = R.id.taskConstLayout; parameters_BOXCROP[2][1] = 4;
-        parameters_BOXCROP[3][0] = R.id.title; parameters_BOXCROP[3][1] = 4;
+        parameters_BOXCROP[3][0] = R.id.option; parameters_BOXCROP[3][1] = 4;
         parameters_BOXCROP[4][0] = R.id.taskConstLayout; parameters_BOXCROP[4][1] = 4;
         parameters_BOXCROP[5][0] = 10;
         taskHashMap.put("BOXCROP", parameters_BOXCROP);

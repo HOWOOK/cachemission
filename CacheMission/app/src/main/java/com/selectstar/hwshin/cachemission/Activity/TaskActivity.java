@@ -40,6 +40,7 @@ import com.selectstar.hwshin.cachemission.R;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -81,27 +82,41 @@ public class TaskActivity extends PatherActivity {
             startActivity(intent_region);
         }
 
-        int part;
+        final TextView partText = findViewById(R.id.partText);
         if((taskType.equals("BOXCROP"))){
-            PartSelectDialog dialog = new PartSelectDialog(this);
-            dialog.setDialogListener(new PartSelectDialogListener() {
-                @Override
-                public void onPartPoleClicked() {
-
-                }
-
-                @Override
-                public void onPartTreeClicked() {
-
-                }
-
-                @Override
-                public void onPartTransformerClicked() {
-
-                }
-            });
-            dialog.show();
+            findViewById(R.id.option).setBackgroundColor(this.getResources().getColor(R.color.colorBlack2));
+            partDialogShow(partText);
         }
+        partText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if((taskType.equals("BOXCROP"))){
+                    partDialogShow(partText);
+                }
+            }
+        });
+    }
+
+    private void partDialogShow(TextView partText) {
+        final TextView partTextTemp = partText;
+        PartSelectDialog dialog = new PartSelectDialog(this, R.style.AppTheme_Transparent_Dialog);
+        dialog.setDialogListener(new PartSelectDialogListener() {
+            @Override
+            public void onPartPoleClicked() {
+                partTextTemp.setText("전신주");
+            }
+
+            @Override
+            public void onPartTreeClicked() {
+                partTextTemp.setText("나무");
+            }
+
+            @Override
+            public void onPartTransformerClicked() {
+                partTextTemp.setText("변압기");
+            }
+        });
+        dialog.show();
     }
 
     @Override

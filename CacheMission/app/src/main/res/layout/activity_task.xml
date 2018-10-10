@@ -7,6 +7,7 @@
     android:id="@+id/taskConstLayout"
     tools:context="com.selectstar.hwshin.cachemission.Activity.TaskListActivity">
 
+
     <android.support.constraint.ConstraintLayout
         android:id="@+id/title"
         android:layout_width="match_parent"
@@ -86,13 +87,28 @@
         app:layout_constraintTop_toBottomOf="@+id/title"
         app:layout_constraintBottom_toTopOf="@+id/taskview"
         >
+
         <TextView
             android:id="@+id/regionText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:layout_margin="5dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="5dp"
+            android:fontFamily="@font/nanumsquareb_"
+            android:text=""
+            android:textSize="15dp"
+            android:textColor="@color/colorPrimaryDark"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/questText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginEnd="5dp"
             android:fontFamily="@font/nanumsquareb_"
             android:text=""
             android:textSize="15dp"
@@ -103,11 +119,20 @@
             />
 
         <TextView
-            android:id="@+id/questText"
+            android:id="@+id/partText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toStartOf="@+id/regionText"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:gravity="center_vertical"
+            android:layout_marginEnd="5dp"
+            android:fontFamily="@font/nanumsquareb_"
+            android:text=""
+            android:textSize="15dp"
+            android:textColor="@color/colorPrimaryDark"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
 
     </android.support.constraint.ConstraintLayout>
 
