@@ -51,7 +51,7 @@ public class TaskExplainActivity extends AppCompatActivity {
         SharedPreferences taskToken = getSharedPreferences("taskToken", MODE_PRIVATE);
         SharedPreferences.Editor editor = taskToken.edit();
         editor.putInt(taskType + "taskToken", 100);
-        if(taskType.equals("RECORDEXAM")) {
+        if(taskType.contains("EXAM")) {
             examType = intent.getIntExtra("examType", 0);
             editor.putInt(taskType + examType + "taskToken", 100);
         }

@@ -81,12 +81,6 @@ public class TaskActivity extends PatherActivity {
             intent_region.putExtra("wanttochange", "false");
             startActivity(intent_region);
         }
-
-        final TextView partText = findViewById(R.id.partText);
-        if((taskType.equals("BOXCROP"))){
-            findViewById(R.id.option).setBackgroundColor(this.getResources().getColor(R.color.colorBlack2));
-            partDialogShow(partText);
-        }
     }
 
     private void partDialogShow(TextView partText) {
@@ -307,9 +301,12 @@ public class TaskActivity extends PatherActivity {
         if(taskToken.getInt(taskType + "taskToken",0) == 100)
             return;
         Intent intent_taskExplain;
+        TextView partText = findViewById(R.id.partText);
         Log.d("boxbox",taskType);
         if(taskType.equals("BOXCROP")){
             intent_taskExplain = new Intent(TaskActivity.this, NewExplainActivity.class);
+            intent_taskExplain.putExtra("part", partText.getText());
+            System.out.println("가져온 텍스트 : "+partText.getText());
         }else{
             intent_taskExplain = new Intent(TaskActivity.this, TaskExplainActivity.class);
         }
@@ -454,6 +451,18 @@ public class TaskActivity extends PatherActivity {
         //해당 task가 처음이라면 설명서 띄워주는 것
         showDescription();
 
+        controllerView = findViewById(R.id.controller);
+        mController.setParentActivity(this);
+        mController.setLayout(controllerView,  taskID);
+        if(!taskType.equals("BOXCROP")) //boxcrop이면 파트 선택되고나서 로딩해야함
+            startTask();
+
+        final TextView partText = findViewById(R.id.partText);
+        if((taskType.equals("BOXCROP"))){
+            findViewById(R.id.option).setBackgroundColor(this.getResources().getColor(R.color.colorBlack2));
+            partDialogShow(partText);
+        }
+
         //물음표버튼누르면 설명서 띄워주는것
         ImageView howbtn = findViewById(R.id.howbtn);
         howbtn.setOnClickListener(new View.OnClickListener() {
@@ -463,6 +472,8 @@ public class TaskActivity extends PatherActivity {
                 Log.d("boxbox",taskType);
                 if(taskType.equals("BOXCROP")){
                     intent_taskExplain = new Intent(TaskActivity.this, NewExplainActivity.class);
+                    intent_taskExplain.putExtra("part", partText.getText());
+                    System.out.println("가져온 텍스트 : "+partText.getText());
                 }else{
                     intent_taskExplain = new Intent(TaskActivity.this, TaskExplainActivity.class);
                 }
@@ -471,12 +482,6 @@ public class TaskActivity extends PatherActivity {
                 startActivity(intent_taskExplain);
             }
         });
-        controllerView = findViewById(R.id.controller);
-        mController.setParentActivity(this);
-        mController.setLayout(controllerView,  taskID);
-        if(!taskType.equals("BOXCROP")) //boxcrop이면 파트 선택되고나서 로딩해야함
-            startTask();
-
     }
 
 

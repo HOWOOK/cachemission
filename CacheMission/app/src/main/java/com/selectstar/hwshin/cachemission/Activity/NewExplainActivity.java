@@ -33,6 +33,7 @@ import com.selectstar.hwshin.cachemission.R;
 public class NewExplainActivity extends AppCompatActivity {
     Intent intent;
     String taskType="";
+    String part="";
     int examType = 0;
 
     public ViewPager viewpager;
@@ -53,6 +54,9 @@ public class NewExplainActivity extends AppCompatActivity {
         viewpager=(ViewPager)findViewById(R.id.newExplainViewpager);
         intent = getIntent();
         taskType = intent.getStringExtra("taskType");
+        part = intent.getStringExtra("part");
+        part = partTranslation(part);
+        System.out.println("변환한 텍스트 : "+part);
 
         SharedPreferences taskToken = getSharedPreferences("taskToken", MODE_PRIVATE);
         SharedPreferences.Editor editor = taskToken.edit();
@@ -68,6 +72,17 @@ public class NewExplainActivity extends AppCompatActivity {
         viewpager.addOnPageChangeListener(viewlistener);
 
 
+    }
+
+    private String partTranslation(String part) {
+        String result ="";
+        if(part.equals("전신주"))
+            result = "pole";
+        if(part.equals("나무"))
+            result = "tree";
+        if(part.equals("변압기"))
+            result = "transformer";
+        return  result;
     }
 
     ViewPager.OnPageChangeListener viewlistener = new ViewPager.OnPageChangeListener() {
@@ -88,7 +103,7 @@ public class NewExplainActivity extends AppCompatActivity {
 
     private PagerAdapter findAdaptingTaskExplain(String tasktype) {
 
-        return new NewExplainAdapter(this,taskType);
+        return new NewExplainAdapter(this,taskType+part);
     }
     @Override
     protected void onStart(){

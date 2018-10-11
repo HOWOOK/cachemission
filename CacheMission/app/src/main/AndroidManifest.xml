@@ -149,8 +149,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.NewExplainActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.Transparent.NoActionBar" />
         <activity
             android:name=".Activity.MyPageActivity"
             android:screenOrientation="portrait"

@@ -24,19 +24,10 @@ public class NewExplainAdapter extends PagerAdapter {
 
     public NewExplainAdapter(Context context,String taskType){
         this.context=context;
-        ExplainHashMap explainHashMap=new ExplainHashMap();
+        ExplainHashMap explainHashMap =new ExplainHashMap();
 
-        this.mImageList=explainHashMap.taskTypeLinkImages.get(taskType);
+        this.mImageList= explainHashMap.taskTypeLinkImages.get(taskType);
     }
-
-
-    public int[] list_images={
-            R.drawable.cashmissionlogo1,
-    };
-    public String[] list_description={
-            "해당 테스크에 설명서가 없습니다ㅠㅠ",
-    };
-
 
     @Override
     public int getCount() {
