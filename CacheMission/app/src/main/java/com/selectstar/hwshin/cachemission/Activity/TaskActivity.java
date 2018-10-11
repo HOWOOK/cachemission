@@ -61,6 +61,7 @@ public class TaskActivity extends PatherActivity {
     ArrayList<String> pic=new ArrayList<>();
     //사투리특별전용옵션
     static String region_dialect;
+    String questString="";
     int currentIndex=0;
 
 
@@ -109,7 +110,7 @@ public class TaskActivity extends PatherActivity {
     }
     public void setQuestList(String questString)
     {
-
+this.questString=questString;
         try {
             final TextView questText=findViewById(R.id.questText);
             JSONArray questList=new JSONArray(questString);
@@ -117,7 +118,7 @@ public class TaskActivity extends PatherActivity {
             final JSONObject questName=(JSONObject) parsedQuestList.get(0);
             final JSONObject questReward=(JSONObject) parsedQuestList.get(1);
             if(questName.length()>0) {
-                questText.setText(questName.get(String.valueOf(0)).toString() + String.valueOf(questReward.get(String.valueOf(0))));
+                questText.setText(questName.get(String.valueOf(currentIndex)).toString() + " 보상 : \uFFE6" + String.valueOf(questReward.get(String.valueOf(currentIndex))));
 
 
                 questText.setOnClickListener(new View.OnClickListener() {
@@ -129,7 +130,7 @@ public class TaskActivity extends PatherActivity {
                             currentIndex = 0;
                         }
                         try {
-                            questText.setText(questName.get(String.valueOf(currentIndex)).toString() + String.valueOf(questReward.get(String.valueOf(currentIndex))));
+                            questText.setText(questName.get(String.valueOf(currentIndex)).toString() + " 보상 : \uFFE6"+String.valueOf(questReward.get(String.valueOf(currentIndex))));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -140,6 +141,19 @@ public class TaskActivity extends PatherActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+    public int getAvailableCount(){
+        JSONArray questList= null;
+        int count=0;
+        try {
+            questList = new JSONArray(questString);
+            JSONObject quest=(JSONObject) questList.get(0);
+            count=(int)quest.get("questTotal")-(int)quest.get("questDone");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return count;
     }
     @Override
     protected void onStart() {

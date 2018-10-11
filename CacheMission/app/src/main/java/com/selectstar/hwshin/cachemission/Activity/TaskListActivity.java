@@ -1,11 +1,16 @@
 package com.selectstar.hwshin.cachemission.Activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
+import android.os.CountDownTimer;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.DrawerLayout;
 
@@ -28,6 +33,7 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.selectstar.hwshin.cachemission.Adapter.ListviewAdapter;
+import com.selectstar.hwshin.cachemission.DataStructure.AsyncTaskCancelTimerTask;
 import com.selectstar.hwshin.cachemission.DataStructure.HurryHttpRequest;
 import com.selectstar.hwshin.cachemission.DataStructure.UIHashMap;
 import com.selectstar.hwshin.cachemission.DataStructure.WaitHttpRequest;
@@ -51,7 +57,49 @@ public class TaskListActivity extends AppCompatActivity {
     private Context mContext = this;
     private RecyclerView lv_main;
     private TextView myPage;
+    private Button refreshButton;
+    private  TextView refreshText;
+    public int runningHTTPRequest=0;
 
+
+    public static boolean isNetworkConnected(Context context){
+        ConnectivityManager manager=(ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo=manager.getActiveNetworkInfo();
+        if(activeNetworkInfo!=null){
+
+            if (activeNetworkInfo.getType() == ConnectivityManager.TYPE_WIFI && activeNetworkInfo.isConnectedOrConnecting()&&activeNetworkInfo.isAvailable()) {
+                return true;
+            } else if (activeNetworkInfo.getType() == ConnectivityManager.TYPE_MOBILE && activeNetworkInfo.isConnectedOrConnecting()&&activeNetworkInfo.isAvailable()) {
+                // 모바일 네트워크 연결중
+                return true;
+            }
+            else{
+                return false;
+            }
+
+
+        }else{
+            return false;
+        }
+
+    }
+    public class MyBroadCastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
+                Toast.makeText(context, "네트워크변화가 감지되었습니다. 4G사용시 데이터요금이 부과될 수 있습니다.", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    public void clearListForAccident(){
+        if(runningHTTPRequest==0)
+        mTaskList.clear();
+        refreshButton.setVisibility(View.VISIBLE);
+        refreshText.setVisibility(View.VISIBLE);
+
+
+    }
     public void insertItem(JSONObject item){
 
         SharedPreferences listInfo=getSharedPreferences("listInfo",MODE_PRIVATE);
@@ -181,7 +229,8 @@ public class TaskListActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
+Log.d("timeee",String.valueOf(nowTime));
+        Log.d("pretimeee",String.valueOf(preTime));
 
         if (nowDate.equals(preDate)) {
             if (nowTime - preTime < 10) {
@@ -276,9 +325,14 @@ public class TaskListActivity extends AppCompatActivity {
     }
     private void getJustUserInfo(final String loginToken)
     {
-
+        if(!isNetworkConnected(this)){
+            Toast.makeText(this,"네트워크연결이 끊어졌습니다. 연결상태를 확인하고 앱을 다시 실행해 주세요.",Toast.LENGTH_SHORT).show();
+            clearListForAccident();
+            return;
+        }
+runningHTTPRequest++;
         JSONObject param = new JSONObject();
-        new WaitHttpRequest(this) {
+        WaitHttpRequest asyncTask=new WaitHttpRequest(this) {
             @Override
             protected void onPostExecute(Object o) {
                 super.onPostExecute(o);
@@ -304,9 +358,12 @@ public class TaskListActivity extends AppCompatActivity {
                 {
                     e.printStackTrace();
                 }
+                runningHTTPRequest--;
 
             }
-        }.execute(getString(R.string.mainurl) + "/testing/getTaskList", param, loginToken);
+        };
+        CountDownTimer adf= new AsyncTaskCancelTimerTask(asyncTask,Integer.parseInt(getString(R.string.hTTPTimeOut)),1000,true,this).start();
+        asyncTask.execute(getString(R.string.mainurl) + "/testing/getTaskList", param, loginToken);
     }
     private void subscribePush()
     {
@@ -395,6 +452,12 @@ public class TaskListActivity extends AppCompatActivity {
     }
     private void getOneTask(final int i,final String loginToken,final boolean isNew)
     {
+        if(!isNetworkConnected(this)){
+            Toast.makeText(this,"네트워크연결이 끊어졌습니다. 연결상태를 확인하고 앱을 다시 실행해 주세요.",Toast.LENGTH_SHORT).show();
+            clearListForAccident();
+            return;
+        }
+        runningHTTPRequest++;
         try {
             JSONObject param = new JSONObject();
             param.put("taskID", mTaskList.get(i).get("id"));
@@ -404,7 +467,7 @@ public class TaskListActivity extends AppCompatActivity {
                 param.put("examType", examType);
             };
             final JSONObject pp = param;
-            new HurryHttpRequest(TaskListActivity.this) {
+            HurryHttpRequest asyncTask = new HurryHttpRequest(TaskListActivity.this) {
                 @Override
                 protected void onPostExecute(Object o) {
                     super.onPostExecute(o);
@@ -426,8 +489,13 @@ public class TaskListActivity extends AppCompatActivity {
                     {
                         e.printStackTrace();
                     }
+                    runningHTTPRequest--;
                 }
-            }.execute(getString(R.string.mainurl) + "/testing/taskValid", pp, loginToken);
+            };
+            CountDownTimer adf= new AsyncTaskCancelTimerTask(asyncTask,Integer.parseInt(getString(R.string.hTTPTimeOut)),1000,true,this).start();
+            asyncTask.execute(getString(R.string.mainurl) + "/testing/taskValid", pp, loginToken);
+
+
         }
         catch(JSONException e)
         {
@@ -436,8 +504,14 @@ public class TaskListActivity extends AppCompatActivity {
     }
     private void getTaskList(final String loginToken)
     {
+        if(!isNetworkConnected(this)){
+            Toast.makeText(this,"네트워크연결이 끊어졌습니다. 연결상태를 확인하고 앱을 다시 실행해 주세요.",Toast.LENGTH_SHORT).show();
+            clearListForAccident();
+            return;
+        }
+        runningHTTPRequest++;
         JSONObject param = new JSONObject();
-        new WaitHttpRequest(this) {
+        WaitHttpRequest asyncTask= new WaitHttpRequest(this) {
             @Override
             protected void onPostExecute(Object o) {
                 super.onPostExecute(o);
@@ -489,17 +563,40 @@ public class TaskListActivity extends AppCompatActivity {
                 {
                     e.printStackTrace();
                 }
+                runningHTTPRequest--;
 
             }
-        }.execute(getString(R.string.mainurl) + "/testing/getTaskList", param, loginToken);
+        };
+        CountDownTimer adf= new AsyncTaskCancelTimerTask(asyncTask,Integer.parseInt(getString(R.string.hTTPTimeOut)),1000,true,this).start();
+        asyncTask.execute(getString(R.string.mainurl) + "/testing/getTaskList", param, loginToken);
+
+
+
+
     }
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+       // initiateListInfo();
         Tracker t = ((GlobalApplication)getApplication()).getTracker(GlobalApplication.TrackerName.APP_TRACKER);
         t.setScreenName("TaskListActivity");
         t.send(new HitBuilders.AppViewBuilder().build());
         setContentView(R.layout.activity_tasklist);
+        refreshText=findViewById(R.id.refreshText);
+        refreshButton=findViewById(R.id.refreshbutton);
 
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refreshButton.setVisibility(View.GONE);
+                refreshText.setVisibility(View.GONE);
+                SharedPreferences token = getSharedPreferences("token",MODE_PRIVATE);
+                final String loginToken = token.getString("loginToken","");
+                if(checkIfTimePassed())
+                    getTaskList(loginToken);
+                else
+                    getPreviousList(loginToken);
+            }
+        });
         uiHashMap = new UIHashMap();
         subscribePush();
         setVersion();

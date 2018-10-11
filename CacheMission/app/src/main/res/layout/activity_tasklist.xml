@@ -187,17 +187,38 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/guideline5">
 
-            <Button
-                android:id="@+id/refreshbutton"
+            <TextView
+                android:id="@+id/refreshText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="463dp"
-                android:text="새로고침"
+                android:layout_marginBottom="14dp"
+
+                android:fontFamily="@font/bmjua_"
+                android:text="로딩에 실패하였습니다 T.T"
+                android:textColor="@color/colorWhite"
+                android:textSize="18dp"
                 android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/refreshbutton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.99" />
+            <Button
+                android:id="@+id/refreshbutton"
+                android:layout_width="180dp"
+                android:layout_height="46dp"
+                android:background="@drawable/rounded_loginbutton"
+                android:text="다시 연결하기"
+                android:textSize="18dp"
+                android:textColor="@color/colorPrimary"
+                android:fontFamily="@font/bmjua_"
+                android:visibility="gone"
+                android:elevation="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.51" />
+                 />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/taskList"

@@ -59,7 +59,7 @@ public class Controller_Photo extends Controller {
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(parentActivity.getTaskCount() <= adapter.getItemCount())
+                if(parentActivity.getAvailableCount() <= adapter.getItemCount())
                 {
                     Toast.makeText(parentActivity,"더 이상 사진을 추가할 수 없습니다!",Toast.LENGTH_SHORT).show();
                     return;
@@ -83,14 +83,14 @@ public class Controller_Photo extends Controller {
             @Override
             public void onClick(View v) {
 
-                if(parentActivity.getTaskCount() <= adapter.getItemCount())
+                if(parentActivity.getAvailableCount() <= adapter.getItemCount())
                 {
                     Toast.makeText(parentActivity,"더 이상 사진을 추가할 수 없습니다!",Toast.LENGTH_SHORT).show();
                     return;
                 }
                 Intent in=new Intent(parentActivity, GalleryActivity.class);
 
-                in.putExtra("avail",parentActivity.getTaskCount()-adapter.getItemCount());
+                in.putExtra("avail",parentActivity.getAvailableCount()-adapter.getItemCount());
                 parentActivity.startActivityForResult(in,999);
             }
         });
@@ -104,9 +104,9 @@ public class Controller_Photo extends Controller {
                     Toast.makeText(parentActivity, "사진을 올려주세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(allCount > parentActivity.getTaskCount())
+                if(allCount > parentActivity.getAvailableCount())
                 {
-                    int x = allCount - parentActivity.getTaskCount();
+                    int x = allCount - parentActivity.getAvailableCount();
                     Toast.makeText(parentActivity, "최대 10장까지만 가능합니다. " + String.valueOf(x) + "개를 빼주세요.",Toast.LENGTH_SHORT).show();
                     return;
                 }
