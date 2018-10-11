@@ -88,13 +88,13 @@ public class Controller_Numbers extends Controller {
                                 } else {
                                     parentActivity.setGold(String.valueOf(resultTemp.get("gold")));
                                     parentActivity.setMaybe(String.valueOf(resultTemp.get("maybe")));
-                                    parentActivity.setDailyQuest(String.valueOf(resultTemp.get("dailyQuest")));
+                                    parentActivity.setQuestList(String.valueOf(resultTemp.get("questList")));
                                     int bonus = Integer.parseInt(String.valueOf(resultTemp.get("bonus_up")));
                                     System.out.println(bonus);
                                     System.out.println("----");
                                     if(bonus > 0)
                                     {
-                                        Toast.makeText(parentActivity,"일일 퀘스트 완료! 추가 보상 \uFFE6" + String.valueOf(bonus),Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(parentActivity,"퀘스트 완료! 추가 보상 \uFFE6" + String.valueOf(bonus),Toast.LENGTH_SHORT).show();
                                     }
 
                                 }

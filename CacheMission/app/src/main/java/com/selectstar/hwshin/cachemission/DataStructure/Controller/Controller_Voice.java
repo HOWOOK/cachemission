@@ -576,7 +576,7 @@ public class Controller_Voice extends Controller {
 
                 // open a URL connection to the Servlet
                 FileInputStream fileInputStream = new FileInputStream(sourceFile);
-                URL url = new URL(parentActivity.getString(R.string.mainurl)+"/testing/taskSubmit");
+                URL url = new URL(parentActivity.getString(R.string.mainurl)+"/testing/fileSubmit");
 
                 // Open a HTTP  connection to  the URL
                 conn = (HttpURLConnection) url.openConnection();
