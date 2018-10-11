@@ -113,34 +113,12 @@ public class TaskActivity extends PatherActivity {
         });
         dialog.show();
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        GoogleAnalytics.getInstance(this).reportActivityStart(this);
-
-        //지역 재 선택을 위한 인터페이스
-        if (taskType.equals("DIALECT") || taskType.equals("RECORD") || taskType.equals("DIRECTRECORD")) {
-            String region;
-            TextView regionText = findViewById(R.id.regionText);
-            SharedPreferences explain = getSharedPreferences("region", MODE_PRIVATE);
-            region = explain.getString("region", null);
-
-            if (region != null)
-                regionText.setText("[선택지역] " + region);
-            regionText.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent_region = new Intent(TaskActivity.this, RegionActivity.class);
-                    intent_region.putExtra("wanttochange", "true");
-                    startActivity(intent_region);
-                }
-            });
-        }
+    public void setQuestList(String questString)
+    {
 
         try {
             final TextView questText=findViewById(R.id.questText);
-            JSONArray questList=new JSONArray( intent.getStringExtra("questList"));
+            JSONArray questList=new JSONArray(questString);
             JSONArray parsedQuestList=parseQuestList(questList);
             final JSONObject questName=(JSONObject) parsedQuestList.get(0);
             final JSONObject questReward=(JSONObject) parsedQuestList.get(1);
@@ -168,6 +146,32 @@ public class TaskActivity extends PatherActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        GoogleAnalytics.getInstance(this).reportActivityStart(this);
+
+        //지역 재 선택을 위한 인터페이스
+        if (taskType.equals("DIALECT") || taskType.equals("RECORD") || taskType.equals("DIRECTRECORD")) {
+            String region;
+            TextView regionText = findViewById(R.id.regionText);
+            SharedPreferences explain = getSharedPreferences("region", MODE_PRIVATE);
+            region = explain.getString("region", null);
+
+            if (region != null)
+                regionText.setText("[선택지역] " + region);
+            regionText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent_region = new Intent(TaskActivity.this, RegionActivity.class);
+                    intent_region.putExtra("wanttochange", "true");
+                    startActivity(intent_region);
+                }
+            });
+        }
+        setQuestList(intent.getStringExtra("questList"));
+
 
     }
 
