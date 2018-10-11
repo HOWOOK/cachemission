@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.selectstar.hwshin.cachemission.Photoview.OnMatrixChangedListener;
@@ -32,12 +33,15 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import jp.wasabeef.glide.transformations.BitmapTransformation;
+import jp.wasabeef.glide.transformations.CropTransformation;
+
 public class TaskView_PhotoView extends TaskView {
     private PhotoView photoView;
     public float[][] answerCoordination;
     public float[][] changedCoordination;
     public int[] answerType; //0이면 서버에서 보내준거, 1이면 유저가 그린거
-    private String[] array1, array2, array3;
+    private String[] array0, array1, array2, array3;
     private ConstraintLayout photoViewCL;
     public ConstraintLayout[] answerList;
     public View[][] answerEdges;
@@ -85,8 +89,11 @@ public class TaskView_PhotoView extends TaskView {
             parentActivity.findViewById(R.id.textDragCL).setVisibility(View.INVISIBLE);
 
         //box 좌표 구해서 저장
-        array1 = content.split("&");
-        if(array1.length==2) {//좌표를 찾은적이 있는 놈이라면..
+        // *content의 양식 =>    확대좌표)URI&(답(답(답...
+        //                      f,f,f,f)String&(f,f,f,f(f,f,f,f(f,f,f,f....
+        array0 = content.split("\\)");
+        array1 = array0[1].split("&");
+        if(array1.length == 2) {//좌표를 찾은적이 있는 놈이라면..
             array2 = array1[1].split("\\(");
             answerCoordination = new float[array2.length-1][4];
             changedCoordination = new float[answerCoordination.length][4];
@@ -103,7 +110,8 @@ public class TaskView_PhotoView extends TaskView {
                 .into(new SimpleTarget<Bitmap>(){
                     @Override
                     public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                        photoView.setImageBitmap(resource);
+                        Bitmap cropResource = cropBitmap(resource, array0[0]);
+                        photoView.setImageBitmap(cropResource);
                         ImageReady = true;
                         if(answerCoordination != null) {
                             drawAnswer(answerCoordination);
@@ -576,6 +584,23 @@ public class TaskView_PhotoView extends TaskView {
             answerCoordination[i-1][3] = (float) Float.parseFloat(array3[3]);
             answerType[i-1] = 0;
         }
+    }
+
+    private Bitmap cropBitmap(Bitmap original, String cropCoordination) {
+        String[] cropCoord = cropCoordination.split(",");
+        float[] cropCoordParse = new float[4];
+        for(int i = 0; i < cropCoord.length; i++){
+            cropCoordParse[i] = Float.parseFloat(cropCoord[i]);
+        }
+        Bitmap result = Bitmap.createBitmap(original
+                , (int)(original.getWidth() * cropCoordParse[0]) //X 시작위치
+                , (int)(original.getHeight() * cropCoordParse[1]) //Y 시작위치
+                , (int)(original.getWidth() * (cropCoordParse[3]-cropCoordParse[0])) // 넓이
+                , (int)(original.getHeight() * (cropCoordParse[4]-cropCoordParse[1]))); // 높이
+        if (result != original) {
+            original.recycle();
+        }
+        return result;
     }
 
 

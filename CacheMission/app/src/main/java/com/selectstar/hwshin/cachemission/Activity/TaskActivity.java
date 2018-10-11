@@ -87,14 +87,6 @@ public class TaskActivity extends PatherActivity {
             findViewById(R.id.option).setBackgroundColor(this.getResources().getColor(R.color.colorBlack2));
             partDialogShow(partText);
         }
-        partText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if((taskType.equals("BOXCROP"))){
-                    partDialogShow(partText);
-                }
-            }
-        });
     }
 
     private void partDialogShow(TextView partText) {
@@ -104,16 +96,19 @@ public class TaskActivity extends PatherActivity {
             @Override
             public void onPartPoleClicked() {
                 partTextTemp.setText("전신주");
+                startTask();
             }
 
             @Override
             public void onPartTreeClicked() {
                 partTextTemp.setText("나무");
+                startTask();
             }
 
             @Override
             public void onPartTransformerClicked() {
                 partTextTemp.setText("변압기");
+                startTask();
             }
         });
         dialog.show();
@@ -181,6 +176,10 @@ public class TaskActivity extends PatherActivity {
         JSONObject param = new JSONObject();
         try {
             param.put("taskID", taskID);
+            if(taskType.equals("BOXCROP")){//BOXCROP에서는 파트를 넣어서 요청해야함
+                int ans = partType();
+                param.put("partNum",null);
+            }
             if(taskType.equals("RECORD")){//RECORD일때는 지역을 같이 넣어서 요청해야함
                 String region;
                 SharedPreferences explain = getSharedPreferences("region", Context.MODE_PRIVATE);
@@ -232,6 +231,20 @@ public class TaskActivity extends PatherActivity {
             e.printStackTrace();
         }
     }
+
+    private int partType() {
+        int answer = -1;
+        TextView partType = findViewById(R.id.partText);
+        if(partType.getText().equals("전신주"))
+            answer = 2;
+        if(partType.getText().equals("나무"))
+            answer = 3;
+        if(partType.getText().equals("변압기"))
+            answer = 4;
+
+        return answer;
+    }
+
     @Override
     public void startTask()
     {
@@ -457,7 +470,8 @@ public class TaskActivity extends PatherActivity {
         controllerView = findViewById(R.id.controller);
         mController.setParentActivity(this);
         mController.setLayout(controllerView,  taskID);
-        startTask();
+        if(!taskType.equals("BOXCROP")) //boxcrop이면 파트 선택되고나서 로딩해야함
+            startTask();
 
     }
 
@@ -493,7 +507,7 @@ public class TaskActivity extends PatherActivity {
         if(taskType.equals("BOXCROP")){
             TaskView_PhotoView temp = (TaskView_PhotoView) mTaskView;
             Controller_2DBox temp2 = (Controller_2DBox) mController;
-            if(!temp.expandFlag){
+            if(!temp.expandFlag && temp.getPhotoView()!=null){
                 temp.expandFlag = true;
                 temp2.getPinButton().setBackgroundResource(R.drawable.twodbox_icon_pin_on);
                 temp2.pinFlag = true;

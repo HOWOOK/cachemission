@@ -8,7 +8,11 @@ import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.selectstar.hwshin.cachemission.R;
+
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class PartSelectDialog extends Dialog implements View.OnClickListener{
 
@@ -45,6 +49,19 @@ public class PartSelectDialog extends Dialog implements View.OnClickListener{
         partPole = findViewById(R.id.part_pole);
         partTree = findViewById(R.id.part_tree);
         partTransformer = findViewById(R.id.part_transformer);
+        Glide.with(this.context)
+                .load(R.drawable.part_pole)
+                .apply(new RequestOptions().circleCrop())
+                .into(partPole);
+        Glide.with(this.context)
+                .load(R.drawable.part_tree)
+                .apply(new RequestOptions().circleCrop())
+                .into(partTree);
+        Glide.with(this.context)
+                .load(R.drawable.part_transformer)
+                .apply(new RequestOptions().circleCrop())
+                .into(partTransformer);
+
 
         partPole.setOnClickListener(this);
         partTree.setOnClickListener(this);
