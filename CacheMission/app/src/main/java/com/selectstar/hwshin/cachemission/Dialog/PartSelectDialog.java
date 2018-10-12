@@ -57,6 +57,8 @@ public class PartSelectDialog extends Dialog{
         ArrayList<Integer> idList = new ArrayList<>();
         ArrayList<String> nameList = new ArrayList<>();
         idList.add(R.drawable.part_pole);
+        nameList.add("프리프로세스");
+        idList.add(R.drawable.part_pole);
         nameList.add("전신주");
         idList.add(R.drawable.part_tree);
         nameList.add("나무");

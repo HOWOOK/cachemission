@@ -604,7 +604,6 @@ runningHTTPRequest++;
                 if(checkIfTimePassed())
                     getTaskList(loginToken);
                 else {
-
                     getPreviousList(loginToken);
                 }
             }
@@ -633,7 +632,7 @@ runningHTTPRequest++;
         if(checkIfTimePassed())
             getTaskList(loginToken);
         else{
-            getPreviousList(loginToken);
+            getTaskList(loginToken);
         }
 
     }
