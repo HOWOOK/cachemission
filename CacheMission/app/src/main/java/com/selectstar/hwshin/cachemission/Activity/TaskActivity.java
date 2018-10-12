@@ -535,8 +535,12 @@ public class TaskActivity extends PatherActivity {
             final JSONObject questName=(JSONObject) parsedQuestList.get(0);
             final JSONObject questReward=(JSONObject) parsedQuestList.get(1);
             if(questName.length()>0) {
-                questText.setText(questName.get(String.valueOf(0)).toString() + String.valueOf(questReward.get(String.valueOf(0))));
 
+                if((int)questReward.get(String.valueOf(currentIndex))!=0) {
+                    questText.setText(questName.get(String.valueOf(currentIndex)).toString() + "+\uFFE6" + String.valueOf(questReward.get(String.valueOf(currentIndex))));
+                }else{
+                    questText.setText(questName.get(String.valueOf(currentIndex)).toString() );
+                }
 
                 questText.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -547,7 +551,11 @@ public class TaskActivity extends PatherActivity {
                             currentIndex = 0;
                         }
                         try {
-                            questText.setText(questName.get(String.valueOf(currentIndex)).toString() + String.valueOf(questReward.get(String.valueOf(currentIndex))));
+                            if((int)questReward.get(String.valueOf(currentIndex))!=0) {
+                                questText.setText(questName.get(String.valueOf(currentIndex)).toString() + "+\uFFE6" + String.valueOf(questReward.get(String.valueOf(currentIndex))));
+                            }else{
+                                questText.setText(questName.get(String.valueOf(currentIndex)).toString() );
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

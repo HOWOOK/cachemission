@@ -103,6 +103,20 @@ public class ListviewAdapter extends RecyclerView.Adapter<ListviewAdapter.ItemVi
         this.mContext = mContext;
     }
 
+    public ArrayList<JSONObject> getmTaskList() {
+        return mTaskList;
+    }
+    public void updateQuest(int position, JSONArray questList){
+        JSONObject targetItem = mTaskList.get(position);
+        try {
+            targetItem.put("questList",questList);
+
+            mTaskList.set(position,targetItem);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     @Override
     public int getItemCount() {
@@ -132,11 +146,6 @@ public class ListviewAdapter extends RecyclerView.Adapter<ListviewAdapter.ItemVi
     {
 Log.d("fullupdate",questList.toString());
 
-        if(holder==null){
-            holder=getHolder();
-
-        }
-        Log.d("fullupdatee",holder.toString());
         JSONObject[] questItem=new JSONObject[questList.length()];
         String[] questName=new String[questList.length()];
         int[] questReward=new int[questList.length()];
@@ -158,15 +167,16 @@ Log.d("fullupdate",questList.toString());
                 }
                 Log.d("quest11",questName[0]);
                 holder.quest1.setText(questName[0]);
-
+                if(questReward[0]!=0)
                 holder.quest1money.setText("+\uFFE6" + String.valueOf(questReward[0]));
                 if (questList.length() == 2) {
                     holder.quest2.setText(questName[1]);
+                    if(questReward[1]!=0)
                     holder.quest2money.setText("+\uFFE6" + String.valueOf(questReward[1]));
                     Log.d("getit","getin");
                 }else{
-                    holder.quest2.setText("");
-                    holder.quest2money.setText("");
+//                    holder.quest2.setText("");
+//                    holder.quest2money.setText("");
 //                    if(holder.itemCL != null) {
 //
 //                        ConstraintSet itemCLset = new ConstraintSet();
@@ -205,7 +215,7 @@ Log.d("fullupdate",questList.toString());
         String taskGold="0";
         JSONArray questList=new JSONArray();
         JSONObject taskItem = mTaskList.get(pos);
-
+        questReset(holder);
         try {
             taskType = taskItem.get("taskType").toString();
             taskName = taskItem.get("taskName").toString();
@@ -266,6 +276,7 @@ Log.d("fullupdate",questList.toString());
 
         holder.taskTv.setText(taskName);
         holder.gold.setText("\uFFE6"+taskGold);
+
         final Intent tent = intent;
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -287,6 +298,12 @@ Log.d("fullupdate",questList.toString());
         });
         //TextView dailyMission=convertView.findViewById(R.id.dailyMission);
         //dailyMission.setText(taskItem.getDailyMission());
+    }
+    public void questReset(ListviewAdapter.ItemViewHolder holder){
+        holder.quest1money.setText("");
+        holder.quest1.setText("");
+        holder.quest2.setText("");
+        holder.quest2money.setText("");
     }
     public class ItemViewHolder extends RecyclerView.ViewHolder {
         private ConstraintLayout itemCL;

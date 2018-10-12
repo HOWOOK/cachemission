@@ -112,7 +112,7 @@
             android:fontFamily="@font/nanumsquareb_"
             android:text=""
             android:textSize="15dp"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/colorDark1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

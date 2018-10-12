@@ -312,10 +312,13 @@ Log.d("timeee",String.valueOf(nowTime));
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             lv_main.setLayoutManager(layoutManager);
             lv_main.setAdapter(adapter);
-            for (int i =0;i < mTaskList.size(); i++)
+            adapter.notifyDataSetChanged();
+
+            for (int i =0;i < adapter.getItemCount(); i++)
             {
                 getOneTask(i,loginToken,false);
             }
+
         }
         catch(JSONException e)
         {
@@ -362,7 +365,7 @@ runningHTTPRequest++;
 
             }
         };
-        CountDownTimer adf= new AsyncTaskCancelTimerTask(asyncTask,Integer.parseInt(getString(R.string.hTTPTimeOut)),1000,true,this).start();
+        //CountDownTimer adf= new AsyncTaskCancelTimerTask(asyncTask,Integer.parseInt(getString(R.string.hTTPTimeOut)),1000,true,this).start();
         asyncTask.execute(getString(R.string.mainurl) + "/testing/getTaskList", param, loginToken);
     }
     private void subscribePush()
@@ -477,12 +480,19 @@ runningHTTPRequest++;
                             if (isNew) {
                                 mTaskList.get(i).put("questList",resultTemp.get("questList"));
                                 adapter.addItem(mTaskList.get(i));
-                                insertItem(mTaskList.get(i));
+                                clearItem();
+                                for(int k=0;k<adapter.getmTaskList().size();k++){
+
+                                    insertItem(adapter.getmTaskList().get(k));
+                                }
+
                             }
                             else
                             {
-                                ListviewAdapter.ItemViewHolder holder = (ListviewAdapter.ItemViewHolder)lv_main.findViewHolderForAdapterPosition(i);
-                                adapter.updateItem(holder,(JSONArray)resultTemp.get("questList"));
+                                adapter.updateQuest(i,(JSONArray)resultTemp.get("questList"));
+                                adapter.notifyItemChanged(i);
+                                //adapter.updateItem(holder,(JSONArray)resultTemp.get("questList"));
+
                             }
                         }
                     }catch(JSONException e)
@@ -492,7 +502,7 @@ runningHTTPRequest++;
                     runningHTTPRequest--;
                 }
             };
-            CountDownTimer adf= new AsyncTaskCancelTimerTask(asyncTask,Integer.parseInt(getString(R.string.hTTPTimeOut)),1000,true,this).start();
+           // CountDownTimer adf= new AsyncTaskCancelTimerTask(asyncTask,Integer.parseInt(getString(R.string.hTTPTimeOut)),1000,true,this).start();
             asyncTask.execute(getString(R.string.mainurl) + "/testing/taskValid", pp, loginToken);
 
 
@@ -567,7 +577,7 @@ runningHTTPRequest++;
 
             }
         };
-        CountDownTimer adf= new AsyncTaskCancelTimerTask(asyncTask,Integer.parseInt(getString(R.string.hTTPTimeOut)),1000,true,this).start();
+        CountDownTimer adf= new AsyncTaskCancelTimerTask(asyncTask,Integer.parseInt(getString(R.string.hTTPTimeOut)),100,true,this).start();
         asyncTask.execute(getString(R.string.mainurl) + "/testing/getTaskList", param, loginToken);
 
 
@@ -593,8 +603,10 @@ runningHTTPRequest++;
                 final String loginToken = token.getString("loginToken","");
                 if(checkIfTimePassed())
                     getTaskList(loginToken);
-                else
+                else {
+
                     getPreviousList(loginToken);
+                }
             }
         });
         uiHashMap = new UIHashMap();
@@ -620,8 +632,9 @@ runningHTTPRequest++;
         final String loginToken = token.getString("loginToken","");
         if(checkIfTimePassed())
             getTaskList(loginToken);
-        else
-            getTaskList(loginToken);
+        else{
+            getPreviousList(loginToken);
+        }
 
     }
     private void setUserRankImage(ImageView userRank, TextView userLevel, int rank) {
