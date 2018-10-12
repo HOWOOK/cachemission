@@ -17,4 +17,5 @@ public abstract class TaskView {
     public void setParentActivity(PatherActivity parentActivity) {
         this.parentActivity = parentActivity;
     }
+
 }
