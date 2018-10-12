@@ -61,7 +61,7 @@ public class Controller_Numbers extends Controller {
                     param.put("submit", Integer.parseInt(result));
                     parentActivity.updateWaitingTasks();
                     parentActivity.startTask();
-                    new WaitHttpRequest(parentActivity) {
+                    new HurryHttpRequest(parentActivity) {
                         @Override
                         protected void onPostExecute(Object o) {
                             super.onPostExecute(o);

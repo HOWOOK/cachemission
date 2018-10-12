@@ -9,6 +9,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.CountDownTimer;
 import android.support.constraint.ConstraintLayout;
@@ -233,7 +234,7 @@ Log.d("timeee",String.valueOf(nowTime));
         Log.d("pretimeee",String.valueOf(preTime));
 
         if (nowDate.equals(preDate)) {
-            if (nowTime - preTime < 10) {
+            if (nowTime - preTime < 1) {
                 return false;
             }
             else {
@@ -433,11 +434,45 @@ runningHTTPRequest++;
         exchangeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                runningHTTPRequest++;
+                SharedPreferences token = getSharedPreferences("token",MODE_PRIVATE);
+                final String loginToken = token.getString("loginToken","");
+                JSONObject param = new JSONObject();
+                WaitHttpRequest asyncTask=new WaitHttpRequest(mContext) {
+                    @Override
+                    protected void onPostExecute(Object o) {
+                        super.onPostExecute(o);
+
+                        try {
+                            if (result == "")
+                                return;
+                            JSONObject resultTemp = new JSONObject(result);
+                            String url=resultTemp.get("url").toString();
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setData(Uri.parse(url));
+                            startActivity(intent);
+
+
+
+                        }
+                        catch(JSONException e)
+                        {
+                            e.printStackTrace();
+                        }
+                        runningHTTPRequest--;
+
+                    }
+                };
+                //CountDownTimer adf= new AsyncTaskCancelTimerTask(asyncTask,Integer.parseInt(getString(R.string.hTTPTimeOut)),1000,true,this).start();
+                asyncTask.execute(getString(R.string.mainurl) + "/testing/exchange", param, loginToken);
+
+
+
                 Intent intent_exchange= new Intent(TaskListActivity.this, ExchangeActivity.class);
                 if (drawer.isDrawerOpen(Gravity.LEFT)) {
                     drawer.closeDrawer(Gravity.LEFT) ;
                 }
-                startActivity(intent_exchange);
+               // startActivity(intent_exchange);
             }
         });
 
@@ -549,7 +584,8 @@ runningHTTPRequest++;
                     setUserRankImage(userRank, userLevel, (int)user.get("rank"));
                     ProgressBar progress = findViewById(R.id.mainProgressBar);
                     setUserProgressBar(progress,(int)user.get("rank"), (int)user.get("success_count"));
-
+//                    if(!resultTemp.get("emergency").toString().equals(""))
+//                    Toast.makeText(mContext,resultTemp.get("emergency").toString(),Toast.LENGTH_SHORT);
                     JSONArray examList = (JSONArray) resultTemp.get("exam_data");
                     for (int i = 0; i < examList.length(); i++)
                         mTaskList.add((JSONObject) examList.get(i));
