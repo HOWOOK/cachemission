@@ -1,4 +1,4 @@
-package com.selectstar.hwshin.cachemission.DataStructure;
+package com.selectstar.hwshin.cachemission.Dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -11,8 +11,6 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.selectstar.hwshin.cachemission.R;
-
-import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class PartSelectDialog extends Dialog implements View.OnClickListener{
 

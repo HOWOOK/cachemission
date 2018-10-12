@@ -125,6 +125,7 @@ public class UIHashMap {
         parameters_VOICE[4][0] = R.id.taskConstLayout; parameters_VOICE[4][1] = 4;
         parameters_VOICE[5][0] = 10;
         taskHashMap.put("RECORD", parameters_VOICE);
+
         parameters_VOICE[0][0] = 20;
         parameters_VOICE[1][0] = R.id.option; parameters_VOICE[1][1] = 4;
         parameters_VOICE[2][0] = R.id.controller; parameters_VOICE[2][1] = 3;

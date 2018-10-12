@@ -1,4 +1,4 @@
-package com.selectstar.hwshin.cachemission.DataStructure;
+package com.selectstar.hwshin.cachemission.Dialog;
 
 public interface PartSelectDialogListener {
     public void onPartPoleClicked();

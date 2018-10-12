@@ -2,8 +2,23 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dialogCL"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginTop="50dp"
+    android:background="#A01C2629"
+    >
+
+    <ImageView
+        android:id="@+id/cancelbtn"
+        android:layout_width="21dp"
+        android:layout_height="21dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="13dp"
+        android:src = "@drawable/twodbox_icon_x"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
 
     <android.support.constraint.Guideline
@@ -23,85 +38,85 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/region1"
+            android:id="@+id/chungbuk"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/region4"
-            app:layout_constraintEnd_toStartOf="@+id/region2"
+            app:layout_constraintBottom_toTopOf="@+id/chungnam"
+            app:layout_constraintEnd_toStartOf="@+id/kyeongbuk"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/region1" />
 
         <ImageView
-            android:id="@+id/region2"
+            android:id="@+id/kyeongbuk"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/region4"
-            app:layout_constraintEnd_toStartOf="@+id/region3"
-            app:layout_constraintStart_toEndOf="@+id/region1"
+            app:layout_constraintBottom_toTopOf="@+id/chungnam"
+            app:layout_constraintEnd_toStartOf="@+id/jeonbuk"
+            app:layout_constraintStart_toEndOf="@+id/chungbuk"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/region2" />
 
         <ImageView
-            android:id="@+id/region3"
+            android:id="@+id/jeonbuk"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/region4"
+            app:layout_constraintBottom_toTopOf="@+id/chungnam"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/region2"
+            app:layout_constraintStart_toEndOf="@+id/kyeongbuk"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/region3" />
 
         <ImageView
-            android:id="@+id/region4"
+            android:id="@+id/chungnam"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/region7"
-            app:layout_constraintEnd_toStartOf="@+id/region5"
+            app:layout_constraintBottom_toTopOf="@+id/kangwon"
+            app:layout_constraintEnd_toStartOf="@+id/kyeongnam"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/region1"
+            app:layout_constraintTop_toBottomOf="@+id/chungbuk"
             app:srcCompat="@drawable/region4" />
 
         <ImageView
-            android:id="@+id/region5"
+            android:id="@+id/kyeongnam"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/region7"
-            app:layout_constraintEnd_toStartOf="@+id/region6"
-            app:layout_constraintStart_toEndOf="@+id/region4"
-            app:layout_constraintTop_toBottomOf="@+id/region1"
+            app:layout_constraintBottom_toTopOf="@+id/kangwon"
+            app:layout_constraintEnd_toStartOf="@+id/jeonnam"
+            app:layout_constraintStart_toEndOf="@+id/chungnam"
+            app:layout_constraintTop_toBottomOf="@+id/chungbuk"
             app:srcCompat="@drawable/region5" />
 
         <ImageView
-            android:id="@+id/region6"
+            android:id="@+id/jeonnam"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/region7"
+            app:layout_constraintBottom_toTopOf="@+id/kangwon"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/region5"
-            app:layout_constraintTop_toBottomOf="@+id/region1"
+            app:layout_constraintStart_toEndOf="@+id/kyeongnam"
+            app:layout_constraintTop_toBottomOf="@+id/chungbuk"
             app:srcCompat="@drawable/region6" />
 
         <ImageView
-            android:id="@+id/region7"
+            android:id="@+id/kangwon"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginLeft="50dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/region8"
+            app:layout_constraintEnd_toStartOf="@+id/jeju"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/region4"
+            app:layout_constraintTop_toBottomOf="@+id/chungnam"
             app:srcCompat="@drawable/region7" />
 
         <ImageView
-            android:id="@+id/region8"
+            android:id="@+id/jeju"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginRight="50dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/region7"
-            app:layout_constraintTop_toBottomOf="@+id/region4"
+            app:layout_constraintStart_toEndOf="@+id/kangwon"
+            app:layout_constraintTop_toBottomOf="@+id/chungnam"
             app:srcCompat="@drawable/region8" />
 
 

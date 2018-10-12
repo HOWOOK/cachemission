@@ -1,37 +1,23 @@
 package com.selectstar.hwshin.cachemission.DataStructure;
 
-import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.renderscript.ScriptGroup;
-import android.support.annotation.NonNull;
-import android.support.v4.provider.DocumentFile;
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
-import com.selectstar.hwshin.cachemission.Activity.LoginActivity;
 import com.selectstar.hwshin.cachemission.Activity.PatherActivity;
+import com.selectstar.hwshin.cachemission.Dialog.MyProgressDialog;
 import com.selectstar.hwshin.cachemission.R;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Path;
 
 public class FileHttpRequest extends AsyncTask {
 

@@ -1,19 +1,13 @@
 package com.selectstar.hwshin.cachemission.DataStructure;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
-import android.os.CountDownTimer;
 import android.widget.Toast;
 
 import com.selectstar.hwshin.cachemission.Activity.LoginActivity;
-import com.selectstar.hwshin.cachemission.LoginHelper.TotalLoginActivity;
-
-import org.apache.http.params.HttpParams;
-import org.json.JSONObject;
+import com.selectstar.hwshin.cachemission.Dialog.MyProgressDialog;
 
 import java.io.BufferedReader;
 import java.io.IOException;

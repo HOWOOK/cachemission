@@ -135,7 +135,7 @@
             android:textSize="11dp"
             android:text="'전문휘'님의 통장"
             android:fontFamily="@font/nanumsquareeb_"
-            android:textColor="@color/colorPointDark"
+            android:textColor="@color/colorDark"
             android:layout_marginEnd="40dp"
             android:layout_marginTop="51dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -147,7 +147,7 @@
             android:textSize="33dp"
             android:text="3500"
             android:fontFamily="@font/nanumsquareeb_"
-            android:textColor="@color/colorPointDark"
+            android:textColor="@color/colorDark"
             android:layout_marginStart="40dp"
             android:layout_marginTop="51dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -159,7 +159,7 @@
             android:textSize="20dp"
             android:text="3500"
             android:fontFamily="@font/nanumsquareeb_"
-            android:textColor="@color/colorPointDark"
+            android:textColor="@color/colorDark"
             android:layout_marginStart="40dp"
             android:layout_marginTop="117dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -172,7 +172,7 @@
             android:layout_marginTop="117dp"
             android:fontFamily="@font/nanumsquareeb_"
             android:text="700"
-            android:textColor="@color/colorPointDark"
+            android:textColor="@color/colorDark"
             android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -184,7 +184,7 @@
             android:textSize="20dp"
             android:text="10070"
             android:fontFamily="@font/nanumsquareeb_"
-            android:textColor="@color/colorPointDark"
+            android:textColor="@color/colorDark"
             android:layout_marginEnd="40dp"
             android:layout_marginTop="117dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -196,7 +196,7 @@
             android:textSize="8dp"
             android:text="현재 적립 금액"
             android:fontFamily="@font/nanumsquareeb_"
-            android:textColor="@color/colorPointDark"
+            android:textColor="@color/colorDark"
             android:layout_marginStart="40dp"
             android:layout_marginTop="143dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -209,11 +209,12 @@
             android:layout_marginTop="143dp"
             android:fontFamily="@font/nanumsquareeb_"
             android:text="적립 예정 금액"
-            android:textColor="@color/colorPointDark"
+            android:textColor="@color/colorDark"
             android:textSize="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/totalMoneyText"
             android:layout_width="wrap_content"
@@ -221,11 +222,12 @@
             android:textSize="8dp"
             android:text="누적 적립 금액"
             android:fontFamily="@font/nanumsquareeb_"
-            android:textColor="@color/colorPointDark"
+            android:textColor="@color/colorDark"
             android:layout_marginEnd="40dp"
             android:layout_marginTop="143dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
+
         <TextView
             android:id="@+id/withdrawButton"
             android:layout_width="match_parent"
@@ -234,14 +236,12 @@
             android:textSize="11dp"
             android:textColor="@color/colorWhite"
             android:gravity="center"
-
             android:background="@drawable/mypage_withdraw_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
              />
     </android.support.constraint.ConstraintLayout>
-
 
 
     <TextView

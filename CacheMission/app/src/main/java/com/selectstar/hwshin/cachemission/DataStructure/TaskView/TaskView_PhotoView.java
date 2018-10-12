@@ -467,15 +467,15 @@ public class TaskView_PhotoView extends TaskView {
                 answerRightLine.setLayoutParams(leftRightParams);
 
                 if(answerType[i] == 0) {
-                    answerTopLine.setBackgroundColor(parentActivity.getResources().getColor(R.color.colorOnServer));
-                    answerBottomLine.setBackgroundColor(parentActivity.getResources().getColor(R.color.colorOnServer));
-                    answerLeftLine.setBackgroundColor(parentActivity.getResources().getColor(R.color.colorOnServer));
-                    answerRightLine.setBackgroundColor(parentActivity.getResources().getColor(R.color.colorOnServer));
+                    answerTopLine.setBackgroundColor(parentActivity.getResources().getColor(R.color.colorPoint2));
+                    answerBottomLine.setBackgroundColor(parentActivity.getResources().getColor(R.color.colorPoint2));
+                    answerLeftLine.setBackgroundColor(parentActivity.getResources().getColor(R.color.colorPoint2));
+                    answerRightLine.setBackgroundColor(parentActivity.getResources().getColor(R.color.colorPoint2));
                 }else if(answerType[i] == 1){
-                    answerTopLine.setBackgroundColor(parentActivity.getResources().getColor(R.color.colorOnClient));
-                    answerBottomLine.setBackgroundColor(parentActivity.getResources().getColor(R.color.colorOnClient));
-                    answerLeftLine.setBackgroundColor(parentActivity.getResources().getColor(R.color.colorOnClient));
-                    answerRightLine.setBackgroundColor(parentActivity.getResources().getColor(R.color.colorOnClient));
+                    answerTopLine.setBackgroundColor(parentActivity.getResources().getColor(R.color.colorPoint1));
+                    answerBottomLine.setBackgroundColor(parentActivity.getResources().getColor(R.color.colorPoint1));
+                    answerLeftLine.setBackgroundColor(parentActivity.getResources().getColor(R.color.colorPoint1));
+                    answerRightLine.setBackgroundColor(parentActivity.getResources().getColor(R.color.colorPoint1));
                 }
 
                 answer.addView(answerTopLine);

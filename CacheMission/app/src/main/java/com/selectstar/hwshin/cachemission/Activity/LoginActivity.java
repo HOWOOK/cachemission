@@ -155,7 +155,7 @@ public class LoginActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                         }
-                    }.execute(getString(R.string.mainurl)+"/testing/sginin",param);
+                    }.execute(getString(R.string.mainurl)+"/testing/signin",param);
                 }catch(JSONException e)
                 {
                     e.printStackTrace();

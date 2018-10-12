@@ -75,7 +75,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp"
                 android:fontFamily="@font/nanumsquareb_"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/colorPoint1"
                 android:textSize="12dp"
                 android:text=""
                 app:layout_constraintStart_toEndOf="@+id/quest1"

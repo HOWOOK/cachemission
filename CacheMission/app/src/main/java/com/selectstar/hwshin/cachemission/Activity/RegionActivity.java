@@ -21,16 +21,16 @@ public class RegionActivity extends AppCompatActivity {
         t.setScreenName("RegionActivity");
         t.send(new HitBuilders.AppViewBuilder().build());
 
-        setContentView(R.layout.activity_region);
+        setContentView(R.layout.dialog_regionselect);
 
-        ImageView iv1 = findViewById(R.id.region1);
-        ImageView iv2 = findViewById(R.id.region2);
-        ImageView iv3 = findViewById(R.id.region3);
-        ImageView iv4 = findViewById(R.id.region4);
-        ImageView iv5 = findViewById(R.id.region5);
-        ImageView iv6 = findViewById(R.id.region6);
-        ImageView iv7 = findViewById(R.id.region7);
-        ImageView iv8 = findViewById(R.id.region8);
+        ImageView iv1 = findViewById(R.id.chungbuk);
+        ImageView iv2 = findViewById(R.id.kyeongbuk);
+        ImageView iv3 = findViewById(R.id.jeonbuk);
+        ImageView iv4 = findViewById(R.id.chungnam);
+        ImageView iv5 = findViewById(R.id.kyeongnam);
+        ImageView iv6 = findViewById(R.id.jeonnam);
+        ImageView iv7 = findViewById(R.id.kangwon);
+        ImageView iv8 = findViewById(R.id.jeju);
         String region;
         SharedPreferences explain = getSharedPreferences("region", MODE_PRIVATE);
         region = explain.getString("region",null);
