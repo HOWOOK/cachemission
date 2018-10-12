@@ -595,8 +595,8 @@ public class TaskView_PhotoView extends TaskView {
         Bitmap result = Bitmap.createBitmap(original
                 , (int)(original.getWidth() * cropCoordParse[0]) //X 시작위치
                 , (int)(original.getHeight() * cropCoordParse[1]) //Y 시작위치
-                , (int)(original.getWidth() * (cropCoordParse[3]-cropCoordParse[0])) // 넓이
-                , (int)(original.getHeight() * (cropCoordParse[4]-cropCoordParse[1]))); // 높이
+                , (int)(original.getWidth() * (cropCoordParse[2]-cropCoordParse[0])) // 넓이
+                , (int)(original.getHeight() * (cropCoordParse[3]-cropCoordParse[1]))); // 높이
         if (result != original) {
             original.recycle();
         }

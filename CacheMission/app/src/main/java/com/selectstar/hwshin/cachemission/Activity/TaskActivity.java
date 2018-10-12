@@ -190,13 +190,13 @@ this.questString=questString;
             param.put("taskID", taskID);
             if(taskType.equals("BOXCROP")){//BOXCROP에서는 파트를 넣어서 요청해야함
                 int ans = partType();
-                param.put("partNum",null);
+                param.put("option",ans);
             }
             if(taskType.equals("RECORD")){//RECORD일때는 지역을 같이 넣어서 요청해야함
                 String region;
                 SharedPreferences explain = getSharedPreferences("region", Context.MODE_PRIVATE);
                 region = explain.getString("region",null);
-                param.put("region", region);
+                param.put("option", region);
             }
             new HurryHttpRequest(this) {
                 @Override
@@ -244,7 +244,7 @@ this.questString=questString;
         }
     }
 
-    private int partType() {
+    public int partType() {
         int answer = -1;
         TextView partType = findViewById(R.id.partText);
         if(partType.getText().equals("전신주"))
