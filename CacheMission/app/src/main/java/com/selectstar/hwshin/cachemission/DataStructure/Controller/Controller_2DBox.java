@@ -152,7 +152,8 @@ public class Controller_2DBox extends Controller {
                             topPercent = (y4 - originTopMargin) / originHeight;
                             rightPercent = (x5 - originLeftMargin) / originWidth;
                             bottomPercent = (y5 - originTopMargin) / originHeight;
-                            int ans = partType();
+                            int ans = parentActivity.partType();
+                            System.out.println("!"+ans);
                             submit = "("+ans+")"+leftPercent + "," + topPercent + "," + rightPercent + "," + bottomPercent;
                             param.put("submit", submit);
 
@@ -332,7 +333,7 @@ public class Controller_2DBox extends Controller {
                                 topPercent = (y4 - originTopMargin) / originHeight;
                                 rightPercent = (x5 - originLeftMargin) / originWidth;
                                 bottomPercent = (y5 - originTopMargin) / originHeight;
-                                int ans = partType();
+                                int ans = parentActivity.partType();
                                 submit = "("+ans+")"+leftPercent + "," + topPercent + "," + rightPercent + "," + bottomPercent;
                                 param.put("submit", submit);
 
@@ -1395,18 +1396,6 @@ public class Controller_2DBox extends Controller {
     }
 
     //어떤 파트를 찾았는지 알아내서 서버로 보내줘야합니다.
-    private int partType() {
-        int answer = -1;
-        TextView partType = parentActivity.findViewById(R.id.partText);
-        if(partType.getText().equals("전신주"))
-            answer = 2;
-        if(partType.getText().equals("나무"))
-            answer = 3;
-        if(partType.getText().equals("변압기"))
-            answer = 4;
-
-        return answer;
-    }
 
     @Override
     public void setLayout(View view, String taskID) {

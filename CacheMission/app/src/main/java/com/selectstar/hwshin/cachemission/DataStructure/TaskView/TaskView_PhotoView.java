@@ -113,6 +113,7 @@ public class TaskView_PhotoView extends TaskView {
         photoView = parentActivity.findViewById(R.id.srcview);
         photoView.setMaximumScale(10);
         photoView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        System.out.println("뭐누아ㅣㅁ너ㅜ이ㅏ"+parentActivity.getString(R.string.mainurl)+"/media/"+array1[0]);
         Glide.with(parentActivity)
                 .asBitmap()
                 .load(Uri.parse(parentActivity.getString(R.string.mainurl)+"/media/"+ array1[0]))
@@ -591,11 +592,18 @@ public class TaskView_PhotoView extends TaskView {
     }
 
     private Bitmap cropBitmap(Bitmap original, String cropCoordination) {
+        System.out.println("------------");
+        System.out.println(cropCoordination);
         String[] cropCoord = cropCoordination.split(",");
         float[] cropCoordParse = new float[4];
+
+        System.out.print("확대좌표 (");
         for(int i = 0; i < cropCoord.length; i++){
             cropCoordParse[i] = Float.parseFloat(cropCoord[i]);
+            System.out.print(cropCoordParse[i]+",");
         }
+        System.out.println(")");
+        System.out.println("------------");
         original = Bitmap.createBitmap(original
                 , (int)(original.getWidth() * cropCoordParse[0]) //X 시작위치
                 , (int)(original.getHeight() * cropCoordParse[1]) //Y 시작위치

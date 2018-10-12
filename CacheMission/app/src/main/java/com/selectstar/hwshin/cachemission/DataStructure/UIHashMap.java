@@ -216,10 +216,10 @@ public class UIHashMap {
         taskHashMap.put("BOXCROP", parameters_BOXCROP);
 
         parameters_BOXCROPEXAM[0][0] = 10;
-        parameters_BOXCROPEXAM[1][0] = R.id.title; parameters_BOXCROPEXAM[1][1] = 4;
-        parameters_BOXCROPEXAM[2][0] = R.id.option; parameters_BOXCROPEXAM[2][1] = 4;
-        parameters_BOXCROPEXAM[3][0] = R.id.title; parameters_BOXCROPEXAM[3][1] = 4;
-        parameters_BOXCROPEXAM[4][0] = R.id.option; parameters_BOXCROPEXAM[4][1] = 4;
+        parameters_BOXCROPEXAM[1][0] = R.id.option; parameters_BOXCROPEXAM[1][1] = 4;
+        parameters_BOXCROPEXAM[2][0] = R.id.taskConstLayoutexam; parameters_BOXCROPEXAM[2][1] = 4;
+        parameters_BOXCROPEXAM[3][0] = R.id.option; parameters_BOXCROPEXAM[3][1] = 4;
+        parameters_BOXCROPEXAM[4][0] = R.id.taskConstLayoutexam; parameters_BOXCROPEXAM[4][1] = 4;
         parameters_BOXCROPEXAM[5][0] = 10;
         taskHashMap.put("BOXCROPEXAM", parameters_BOXCROPEXAM);
 

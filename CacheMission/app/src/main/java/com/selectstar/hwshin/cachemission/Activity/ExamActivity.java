@@ -212,12 +212,12 @@ public class ExamActivity extends PatherActivity {
         params2.verticalWeight = mParameter[5][0];
         parent2.setLayoutParams(params2);
 
-        if(!taskType.equals("BOXCROP")) //boxcrop이면 파트 선택되고나서 로딩해야함
+        if(!taskType.equals("BOXCROPEXAM")) //boxcrop이면 파트 선택되고나서 로딩해야함
             startTask();
 
         //boxcrop이면 partSelectDialog를 띄워줘야한다.
         final TextView partText = findViewById(R.id.partText);
-        if((taskType.equals("BOXCROP"))){
+        if((taskType.equals("BOXCROPEXAM"))){
             findViewById(R.id.option).setBackgroundColor(this.getResources().getColor(R.color.colorDark2));
             partDialogShow(partText);
         }
@@ -279,6 +279,7 @@ public class ExamActivity extends PatherActivity {
                     param.put("answerID", answerID);
                     param.put("examType", intent.getIntExtra("examType",0));
                     param.put("submit", answer);
+                    param.put("option",partType());
                     new WaitHttpRequest(ExamActivity.this) {
                         @Override
                         protected void onPostExecute(Object o) {
