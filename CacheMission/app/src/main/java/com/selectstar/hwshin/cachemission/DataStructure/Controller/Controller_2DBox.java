@@ -1398,6 +1398,7 @@ public class Controller_2DBox extends Controller {
     private int partType() {
         int answer = -1;
         TextView partType = parentActivity.findViewById(R.id.partText);
+
         if(partType.getText().equals("전신주"))
             answer = 2;
         if(partType.getText().equals("나무"))
