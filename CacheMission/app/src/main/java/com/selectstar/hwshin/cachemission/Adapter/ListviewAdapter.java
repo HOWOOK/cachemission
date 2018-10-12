@@ -175,6 +175,7 @@ Log.d("fullupdate",questList.toString());
                     holder.quest2money.setText("+\uFFE6" + String.valueOf(questReward[1]));
                     Log.d("getit","getin");
                 }else{
+
 //                    holder.quest2.setText("");
 //                    holder.quest2money.setText("");
 //                    if(holder.itemCL != null) {
@@ -189,6 +190,7 @@ Log.d("fullupdate",questList.toString());
 //                        holder.itemCL.removeView(holder.quest2);
 //                        holder.itemCL.removeView(holder.quest2money);
 //                    }
+
                 }
             }else{
 //                Log.d("how?","??");

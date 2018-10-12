@@ -417,6 +417,7 @@ public class TaskActivity extends PatherActivity {
         });
         dialog.show();
     }
+
     private void regionDialogShow(TextView optionText) {
         final TextView optionTextTemp = optionText;
         RegionSelectDialog dialog = new RegionSelectDialog(this, R.style.AppTheme_Transparent_Dialog);
