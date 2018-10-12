@@ -146,15 +146,27 @@ public class Controller_2DBox extends Controller {
                             y5 = y3 + y2 / photoView.getScale();
 
                             //보내야하는 데이타
-                            final float leftPercent, topPercent, rightPercent, bottomPercent;
+                            float leftPercent, topPercent, rightPercent, bottomPercent;
+                            final float leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend;
                             String submit;
                             leftPercent = (x4 - originLeftMargin) / originWidth;
                             topPercent = (y4 - originTopMargin) / originHeight;
                             rightPercent = (x5 - originLeftMargin) / originWidth;
                             bottomPercent = (y5 - originTopMargin) / originHeight;
+                            if(leftPercent < 0f )
+                                leftPercent = 0f;
+                            if(rightPercent > 1f )
+                                rightPercent = 1f;
+                            if(topPercent < 0f )
+                                topPercent = 0f;
+                            if(bottomPercent > 1f )
+                                bottomPercent = 1f;
+                            leftPercentSend = leftPercent;
+                            topPercentSend = topPercent;
+                            rightPercentSend = rightPercent;
+                            bottomPercentSend = bottomPercent;
                             int ans = parentActivity.partType();
-                            System.out.println("!"+ans);
-                            submit = "("+ans+")"+leftPercent + "," + topPercent + "," + rightPercent + "," + bottomPercent;
+                            submit = "<"+ans+">"+leftPercent + "," + topPercent + "," + rightPercent + "," + bottomPercent;
                             param.put("submit", submit);
 
                             new WaitHttpRequest(parentActivity) {
@@ -227,10 +239,10 @@ public class Controller_2DBox extends Controller {
                                             }
 
 
-                                            mtaskView_PhotoView.answerCoordination[answerCount + drawAnswerCount - 1][0] = leftPercent;
-                                            mtaskView_PhotoView.answerCoordination[answerCount + drawAnswerCount - 1][1] = topPercent;
-                                            mtaskView_PhotoView.answerCoordination[answerCount + drawAnswerCount - 1][2] = rightPercent;
-                                            mtaskView_PhotoView.answerCoordination[answerCount + drawAnswerCount - 1][3] = bottomPercent;
+                                            mtaskView_PhotoView.answerCoordination[answerCount + drawAnswerCount - 1][0] = leftPercentSend;
+                                            mtaskView_PhotoView.answerCoordination[answerCount + drawAnswerCount - 1][1] = topPercentSend;
+                                            mtaskView_PhotoView.answerCoordination[answerCount + drawAnswerCount - 1][2] = rightPercentSend;
+                                            mtaskView_PhotoView.answerCoordination[answerCount + drawAnswerCount - 1][3] = bottomPercentSend;
                                             mtaskView_PhotoView.answerType[answerCount + drawAnswerCount - 1] = 1;
                                             mtaskView_PhotoView.changedCoordination = new float[mtaskView_PhotoView.answerCoordination.length][4];
 
@@ -327,14 +339,27 @@ public class Controller_2DBox extends Controller {
                                 y5 = y3 + y2 / photoView.getScale();
 
                                 //보내야하는 데이타
-                                final float leftPercent, topPercent, rightPercent, bottomPercent;
+                                float leftPercent, topPercent, rightPercent, bottomPercent;
+                                final float leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend;
                                 String submit;
                                 leftPercent = (x4 - originLeftMargin) / originWidth;
                                 topPercent = (y4 - originTopMargin) / originHeight;
                                 rightPercent = (x5 - originLeftMargin) / originWidth;
                                 bottomPercent = (y5 - originTopMargin) / originHeight;
+                                if(leftPercent < 0f )
+                                    leftPercent = 0f;
+                                if(rightPercent > 1f )
+                                    rightPercent = 1f;
+                                if(topPercent < 0f )
+                                    topPercent = 0f;
+                                if(bottomPercent > 1f )
+                                    bottomPercent = 1f;
+                                leftPercentSend = leftPercent;
+                                topPercentSend = topPercent;
+                                rightPercentSend = rightPercent;
+                                bottomPercentSend = bottomPercent;
                                 int ans = parentActivity.partType();
-                                submit = "("+ans+")"+leftPercent + "," + topPercent + "," + rightPercent + "," + bottomPercent;
+                                submit = "<"+ans+">"+leftPercent + "," + topPercent + "," + rightPercent + "," + bottomPercent;
                                 param.put("submit", submit);
 
                                 new WaitHttpRequest(parentActivity) {
