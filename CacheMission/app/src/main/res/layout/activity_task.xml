@@ -81,7 +81,7 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/option"
         android:layout_width="match_parent"
-        android:layout_height="18dp"
+        android:layout_height="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title"
@@ -96,8 +96,8 @@
             android:layout_marginStart="5dp"
             android:fontFamily="@font/nanumsquareb_"
             android:text=""
-            android:textSize="15dp"
-            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20dp"
+            android:textColor="@color/colorDark1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -107,16 +107,16 @@
             android:id="@+id/questText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:layout_marginEnd="5dp"
+            android:layout_marginTop="5dp"
             android:fontFamily="@font/nanumsquareb_"
+            android:gravity="center_vertical"
             android:text=""
-            android:textSize="15dp"
             android:textColor="@color/colorDark1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/partText"

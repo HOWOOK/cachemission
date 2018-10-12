@@ -9,17 +9,6 @@
     android:background="#A01C2629"
     >
 
-    <ImageView
-        android:id="@+id/cancelbtn"
-        android:layout_width="21dp"
-        android:layout_height="21dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="13dp"
-        android:src = "@drawable/twodbox_icon_x"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
-
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_region"
@@ -121,6 +110,16 @@
 
 
     </android.support.constraint.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/cancelbtn"
+        android:layout_width="21dp"
+        android:layout_height="21dp"
+        android:layout_marginRight="13dp"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/twodbox_icon_x"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView4"

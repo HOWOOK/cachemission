@@ -187,6 +187,7 @@ public class Controller_Voice extends Controller {
             taskID = params[0].taskID;
 
             uploadFile(mPath + ".wav",this);
+            Log.d("voicevoice",mPath + ".wav");
 
             Uri i = Uri.parse(mPath + ".pcm");
             File f = new File(i.getPath());

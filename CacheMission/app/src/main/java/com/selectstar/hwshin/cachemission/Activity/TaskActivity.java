@@ -62,6 +62,19 @@ public class TaskActivity extends PatherActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences explain = getSharedPreferences("region", Context.MODE_PRIVATE);
+        SharedPreferences tasktoken = getSharedPreferences("taskToken", MODE_PRIVATE);
+        if((taskType.equals("DIALECT") || taskType.equals("RECORD") || taskType.equals("DIRECTRECORD"))
+                && tasktoken.getInt(taskType + "taskToken", 0) == 100){
+            if(explain.getString("region","").equals("")){
+                regionDialogShow((TextView) findViewById(R.id.regionText));
+            }
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Tracker t = ((GlobalApplication)getApplication()).getTracker(GlobalApplication.TrackerName.APP_TRACKER);
@@ -114,6 +127,7 @@ public class TaskActivity extends PatherActivity {
 //        controllerID = mController.controllerID;
 
         taskType = intent.getStringExtra("taskType");
+        questString=intent.getStringExtra("questList");
 
         // TaskView Inflating
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -163,8 +177,8 @@ public class TaskActivity extends PatherActivity {
         //DIALECT, RECOR, DIRECTRECORD이면 regionSelectDialog를 띄워줘야한다.
         String regionText;
         SharedPreferences tasktoken = getSharedPreferences("taskToken", MODE_PRIVATE);
-        SharedPreferences explain = getSharedPreferences("regionText", MODE_PRIVATE);
-        regionText = explain.getString("regionText", null);
+        SharedPreferences explain = getSharedPreferences("region", MODE_PRIVATE);
+        regionText = explain.getString("region", null);
         final TextView optionText = findViewById(R.id.regionText);
         if((taskType.equals("DIALECT") || taskType.equals("RECORD") || taskType.equals("DIRECTRECORD"))
                 && tasktoken.getInt(taskType + "taskToken", 0) == 100){

@@ -164,11 +164,19 @@ Log.d("fullupdate",questList.toString());
                         questReward[i] = (Integer) questItem[i].get("reward");
                     }
 
+                    if((int)questItem[i].get("questTotal")==10000){
+                        Log.d("10000",String.valueOf(questItem[i].get("questTotal")));
+                        questName[i]="";
+                        questReward[i]=0;
+                    }
+
                 }
                 Log.d("quest11",questName[0]);
-                holder.quest1.setText(questName[0]);
-                if(questReward[0]!=0)
-                holder.quest1money.setText("+\uFFE6" + String.valueOf(questReward[0]));
+                if((int)questItem[0].get("questTotal")!=10000) {
+                    holder.quest1.setText(questName[0]);
+                    if (questReward[0] != 0)
+                        holder.quest1money.setText("+\uFFE6" + String.valueOf(questReward[0]));
+                }
                 if (questList.length() == 2) {
                     holder.quest2.setText(questName[1]);
                     if(questReward[1]!=0)
