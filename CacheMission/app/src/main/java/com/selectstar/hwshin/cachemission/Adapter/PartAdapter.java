@@ -1,5 +1,6 @@
 package com.selectstar.hwshin.cachemission.Adapter;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -31,6 +32,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import static android.content.Context.MODE_PRIVATE;
 import static android.support.constraint.Constraints.TAG;
 
 public class PartAdapter extends RecyclerView.Adapter<PartAdapter.ItemViewHolder> {
@@ -65,6 +67,36 @@ public class PartAdapter extends RecyclerView.Adapter<PartAdapter.ItemViewHolder
                 TextView tv = mActivity.findViewById(R.id.partText);
                 tv.setText(nameList.get(position));
                 mDialog.dismiss();
+                System.out.println("bbbbb");
+                String taskName="a";
+                if(nameList.get(position).equals("변압기"))
+                    taskName="transformer";
+                if(nameList.get(position).equals("나무"))
+                    taskName="tree";
+                if(nameList.get(position).equals("전신주"))
+                    taskName="pole";
+                if(nameList.get(position).equals("프리프로세스"))
+                    taskName="preProcess";
+                if(nameList.get(position).equals("부품 A"))
+                    taskName="partA";
+                if(nameList.get(position).equals("부품 B"))
+                    taskName="partB";
+                if(nameList.get(position).equals("부품 C"))
+                    taskName="partC";
+                if(nameList.get(position).equals("부품 D"))
+                    taskName="partD";
+                if(nameList.get(position).equals("부품 E"))
+                    taskName="partE";
+                if(nameList.get(position).equals("부품 G"))
+                    taskName="partG";
+
+                mActivity.forcedShowDescription(taskName);
+                SharedPreferences firstTimeExplain = mActivity.getSharedPreferences("firstTimeExplain", MODE_PRIVATE);
+                SharedPreferences.Editor editor=firstTimeExplain.edit();
+
+                editor.putString(taskName,"notFirst");
+                editor.commit();
+                System.out.println("aaaaaa");
             }
         });
 

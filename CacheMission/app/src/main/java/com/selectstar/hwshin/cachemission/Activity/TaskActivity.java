@@ -383,15 +383,19 @@ public class TaskActivity extends PatherActivity {
 
 
     //해당 task가 처음이라면 설명서 띄워주는 것
+
     public void showDescription()
-    {
+    {System.out.println("11111");
         SharedPreferences taskToken = getSharedPreferences("taskToken", MODE_PRIVATE);
         if(taskToken.getInt(taskType + "taskToken",0) == 100)
             return;
+
+        System.out.println("222");
         Intent intent_taskExplain;
         TextView partText = findViewById(R.id.partText);
         Log.d("boxbox",taskType);
         if(taskType.equals("BOXCROP")){
+            System.out.println("3333");
             intent_taskExplain = new Intent(TaskActivity.this, NewExplainActivity.class);
             intent_taskExplain.putExtra("part", partText.getText());
             System.out.println("가져온 텍스트 : "+partText.getText());

@@ -326,4 +326,25 @@ public abstract class PatherActivity extends AppCompatActivity {
             }
         }
     }
+
+    public void forcedShowDescription(String taskName)
+    {
+
+        SharedPreferences firstTimeExplain = getSharedPreferences("firstTimeExplain", MODE_PRIVATE);
+        if(firstTimeExplain.getString(taskName,"").equals("notFirst"))
+            return;
+        Intent intent_taskExplain;
+        TextView partText = findViewById(R.id.partText);
+        Log.d("boxbox",taskType);
+        if(taskType.equals("BOXCROP")){
+            System.out.println("3333");
+            intent_taskExplain = new Intent(PatherActivity.this, NewExplainActivity.class);
+            intent_taskExplain.putExtra("part", partText.getText());
+            System.out.println("가져온 텍스트 : "+partText.getText());
+        }else{
+            intent_taskExplain = new Intent(PatherActivity.this, TaskExplainActivity.class);
+        }
+        intent_taskExplain.putExtra("taskType", taskType);
+        startActivity(intent_taskExplain);
+    }
 }
