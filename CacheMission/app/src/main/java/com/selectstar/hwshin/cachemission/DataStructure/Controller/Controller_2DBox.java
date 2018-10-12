@@ -154,7 +154,7 @@ public class Controller_2DBox extends Controller {
                             bottomPercent = (y5 - originTopMargin) / originHeight;
                             int ans = parentActivity.partType();
                             System.out.println("!"+ans);
-                            submit = "("+ans+")"+leftPercent + "," + topPercent + "," + rightPercent + "," + bottomPercent;
+                            submit = "<"+ans+">"+leftPercent + "," + topPercent + "," + rightPercent + "," + bottomPercent;
                             param.put("submit", submit);
 
                             new WaitHttpRequest(parentActivity) {
@@ -334,7 +334,7 @@ public class Controller_2DBox extends Controller {
                                 rightPercent = (x5 - originLeftMargin) / originWidth;
                                 bottomPercent = (y5 - originTopMargin) / originHeight;
                                 int ans = parentActivity.partType();
-                                submit = "("+ans+")"+leftPercent + "," + topPercent + "," + rightPercent + "," + bottomPercent;
+                                submit = "<"+ans+">"+leftPercent + "," + topPercent + "," + rightPercent + "," + bottomPercent;
                                 param.put("submit", submit);
 
                                 new WaitHttpRequest(parentActivity) {
