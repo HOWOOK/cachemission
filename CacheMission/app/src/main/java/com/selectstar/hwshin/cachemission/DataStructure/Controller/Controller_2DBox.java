@@ -75,12 +75,9 @@ public class Controller_2DBox extends Controller {
 
             ConstraintSet constraintSet = new ConstraintSet();
             constraintSet.clone(btnCL);
-            constraintSet.connect(view.findViewById(R.id.completebtn).getId(), constraintSet.TOP, btnCL.getId(), constraintSet.TOP);
+            constraintSet.connect(view.findViewById(R.id.completebtn).getId(),
+                    constraintSet.TOP, boxCL.getId(), constraintSet.TOP);
             constraintSet.applyTo(btnCL);
-
-            ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(
-                    ConstraintLayout.LayoutParams.MATCH_PARENT, (int) (43 * dpScale));
-            btnCL.setLayoutParams(params);
         }
 
         pinButton = parentActivity.findViewById(R.id.pinbtn);
@@ -278,9 +275,10 @@ public class Controller_2DBox extends Controller {
 
         completeButton = view.findViewById(R.id.completebtn);
         if(parentActivity.getPartNum() == 2)
-            completeButton.setText("찾을 부품 없음");
-        else
             completeButton.setText("제출완료");
+        else
+            completeButton.setText("찾을 부품 없음");
+
         completeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
