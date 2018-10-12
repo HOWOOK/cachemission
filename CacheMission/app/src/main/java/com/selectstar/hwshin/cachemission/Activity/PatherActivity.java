@@ -55,6 +55,16 @@ public abstract class PatherActivity extends AppCompatActivity {
     protected TextView nowGold;
     protected TextView pendingGold;
     protected int upGold;
+    protected int partNum;
+
+    public int getPartNum() {
+        return partNum;
+    }
+
+    public void setPartNum(int partNum) {
+        this.partNum = partNum;
+    }
+
     public String getNumberInString(String rawText)
     {
         return rawText.replaceAll("\\D+","");

@@ -42,6 +42,7 @@ import java.util.Date;
 
 import static java.lang.Integer.parseInt;
 
+
 public class TaskActivity extends PatherActivity {
 
     View controllerView;
@@ -58,7 +59,7 @@ public class TaskActivity extends PatherActivity {
     int currentIndex=0;
 
     public TaskView getmTaskView() {
-        return mTaskView;
+        return this.mTaskView;
     }
 
     @Override
@@ -281,8 +282,8 @@ public class TaskActivity extends PatherActivity {
         try {
             param.put("taskID", taskID);
             if(taskType.equals("BOXCROP")){//BOXCROP에서는 파트를 넣어서 요청해야함
-                int ans = partType();
-                param.put("option",ans);
+                partNum = partType();
+                param.put("option",partNum);
             }
             if(taskType.equals("RECORD")){//RECORD일때는 지역을 같이 넣어서 요청해야함
                 String region;
@@ -368,12 +369,14 @@ public class TaskActivity extends PatherActivity {
     public int partType() {
         int answer = -1;
         TextView partType = findViewById(R.id.partText);
+        if(partType.getText().equals("프리프로세싱"))
+            answer = 2;
         if(partType.getText().equals("전신주"))
             answer = 2;
         if(partType.getText().equals("나무"))
-            answer = 3;
-        if(partType.getText().equals("변압기"))
             answer = 4;
+        if(partType.getText().equals("변압기"))
+            answer = 5;
         return answer;
     }
 

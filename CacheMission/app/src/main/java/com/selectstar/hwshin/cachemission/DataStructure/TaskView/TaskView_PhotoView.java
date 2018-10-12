@@ -74,16 +74,25 @@ public class TaskView_PhotoView extends TaskView {
         ImageReady = false;
         isExamFlag = false;
         expandFlag = true;
-        if(parentActivity.getTaskType().equals("BOXCROPEXAM")||parentActivity.getTaskType().equals("PREBOXCROPEXAM"))
+        if(parentActivity.getTaskType().equals("BOXCROPEXAM"))
             isExamFlag = true;
         if(isExamFlag == true)
             expandFlag = false;
 
-        photoViewCL = parentActivity.findViewById(R.id.photoViewCL);
         DisplayMetrics displayMetrics = new DisplayMetrics();
         parentActivity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         getDeviceDpi = displayMetrics.densityDpi;
         dpScale = (float) getDeviceDpi / 160f;
+
+        photoViewCL = parentActivity.findViewById(R.id.photoViewCL);
+        if(parentActivity.getPartNum() == 2){ // 프리프로세싱은 레이아웃이 좀 달라야함
+            ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(
+                            ConstraintLayout.LayoutParams.MATCH_PARENT,
+                            ConstraintLayout.LayoutParams.MATCH_PARENT);
+            params.bottomMargin= (int) (43 * dpScale);
+            photoViewCL.setLayoutParams(params);
+        }
+
 
         if(isExamFlag)
             parentActivity.findViewById(R.id.textDragCL).setVisibility(View.INVISIBLE);
@@ -91,12 +100,8 @@ public class TaskView_PhotoView extends TaskView {
         //box 좌표 구해서 저장
         // *content의 양식 =>    확대좌표)URI&(답(답(답...
         //                      f,f,f,f)String&(f,f,f,f(f,f,f,f(f,f,f,f....
-        if(parentActivity.getTaskType().equals("BOXCROPEXAM")||parentActivity.getTaskType().equals("BOXCROP")) {
-            array0 = content.split("\\)");
-            array1 = array0[1].split("&");
-        }else{//PREBOXCROPEXAM
-            array1 = content.split("&");
-        }
+        array0 = content.split("\\)");
+        array1 = array0[1].split("&");
         if(array1.length == 2) {//좌표를 찾은적이 있는 놈이라면..
             array2 = array1[1].split("\\(");
             answerCoordination = new float[array2.length-1][4];
@@ -114,10 +119,7 @@ public class TaskView_PhotoView extends TaskView {
                 .into(new SimpleTarget<Bitmap>(){
                     @Override
                     public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                        Bitmap cropResource = null;
-                        if(parentActivity.getTaskType().equals("BOXCROPEXAM")||parentActivity.getTaskType().equals("BOXCROP")) {
-                             resource = cropBitmap(resource, array0[0]);
-                        }
+                        resource = cropBitmap(resource, array0[0]);
                         photoView.setImageBitmap(resource);
                         ImageReady = true;
                         if(answerCoordination != null) {
