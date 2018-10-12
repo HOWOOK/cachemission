@@ -42,6 +42,7 @@ import java.util.Date;
 
 import static java.lang.Integer.parseInt;
 
+
 public class TaskActivity extends PatherActivity {
 
     View controllerView;
@@ -58,7 +59,7 @@ public class TaskActivity extends PatherActivity {
     int currentIndex=0;
 
     public TaskView getmTaskView() {
-        return mTaskView;
+        return this.mTaskView;
     }
 
     @Override
@@ -295,8 +296,8 @@ public class TaskActivity extends PatherActivity {
         try {
             param.put("taskID", taskID);
             if(taskType.equals("BOXCROP")){//BOXCROP에서는 파트를 넣어서 요청해야함
-                int ans = partType();
-                param.put("option",ans);
+                partNum = partType();
+                param.put("option",partNum);
             }
             if(taskType.equals("RECORD")){//RECORD일때는 지역을 같이 넣어서 요청해야함
                 String region;
@@ -379,17 +380,7 @@ public class TaskActivity extends PatherActivity {
         }
     }
 
-    public int partType() {
-        int answer = -1;
-        TextView partType = findViewById(R.id.partText);
-        if(partType.getText().equals("전신주"))
-            answer = 2;
-        if(partType.getText().equals("나무"))
-            answer = 3;
-        if(partType.getText().equals("변압기"))
-            answer = 4;
-        return answer;
-    }
+
 
     //해당 task가 처음이라면 설명서 띄워주는 것
     public void showDescription()
@@ -411,26 +402,6 @@ public class TaskActivity extends PatherActivity {
         startActivity(intent_taskExplain);
     }
 
-    private void partDialogShow(TextView partText) {
-        final TextView partTextTemp = partText;
-        PartSelectDialog dialog = new PartSelectDialog(this, R.style.AppTheme_Transparent_Dialog);
-        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                if(partTextTemp.getText().toString().equals(""))
-                    finish();
-            }
-        });
-        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                if(partTextTemp.getText().toString().equals(""))
-                    finish();
-                startTask();
-            }
-        });
-        dialog.show();
-    }
 
     private void regionDialogShow(TextView optionText) {
         final TextView optionTextTemp = optionText;
