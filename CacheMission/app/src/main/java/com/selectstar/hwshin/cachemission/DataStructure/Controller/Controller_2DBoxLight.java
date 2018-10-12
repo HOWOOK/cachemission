@@ -26,6 +26,7 @@ public class Controller_2DBoxLight extends Controller {
 
     private Button sendButton, completeButton;
     private ImageView pinButton;
+    private TextView testingText1, testingText2, testingText3;
     private View centerImage;
     private PhotoView photoView;
     private float originWidth, originHeight, originLeftMargin, originTopMargin;
@@ -103,7 +104,9 @@ public class Controller_2DBoxLight extends Controller {
                         System.out.println("배율 : " + photoView.getScale());
                         float widthCL = boxCL.getWidth();
                         float heightCL = boxCL.getHeight();
-
+                        testingText1 = view.findViewById(R.id.testingtext1);
+                        testingText2 = view.findViewById(R.id.testingtext2);
+                        testingText3 = view.findViewById(R.id.testingtext3);
                         /********************************
                          * (x1, y1) = crop box의 현재 좌상단 좌표
                          * (x2, y2) = crop box의 현재 우하단 좌표
@@ -134,16 +137,20 @@ public class Controller_2DBoxLight extends Controller {
                         topPercent = (y4 - originTopMargin) / originHeight;
                         rightPercent = (x5 - originLeftMargin) / originWidth;
                         bottomPercent = (y5 - originTopMargin) / originHeight;
-                        submit = leftPercent + "," + topPercent + "," + rightPercent + "," + bottomPercent;
+                        int ans = partType();
+                        submit = "("+ans+")"+leftPercent + "," + topPercent + "," + rightPercent + "," + bottomPercent;
                         param.put("submit", submit);
 
                         new WaitHttpRequest(parentActivity) {
                             @Override
                             protected void onPostExecute(Object o) {
                                 super.onPostExecute(o);
+                                System.out.println("나 여기 들어왔어");
 
                                 try {
                                     JSONObject resultTemp = new JSONObject(result);
+                                    System.out.println("resultTemp : "+resultTemp);
+                                    System.out.println("서버반응 : "+resultTemp.get("success").toString());
                                     if (resultTemp.get("success").toString().equals("false")) {
                                         if (resultTemp.get("message").toString().equals("login")) {
                                             Intent in = new Intent(parentActivity, LoginActivity.class);
@@ -158,9 +165,10 @@ public class Controller_2DBoxLight extends Controller {
                                             parentActivity.finish();
                                         }
                                     } else {
-                                        System.out.println("서버반응 : "+resultTemp.get("success").toString());
+                                        System.out.println("서버반응 2: "+resultTemp.get("success").toString());
 
                                         drawAnswerCount++;
+                                        completeButton.setText("모든 부품 제출 완료");
                                         System.out.println("그려져있던 수 : "+answerCount+" 내가 그린 수 : "+drawAnswerCount);
                                         answerCoordinationTemp = mtaskView_PhotoView.answerCoordination;
                                         answerTypeTemp = mtaskView_PhotoView.answerType;
@@ -250,12 +258,13 @@ public class Controller_2DBoxLight extends Controller {
 
 
         completeButton = view.findViewById(R.id.completebtn);
+        completeButton.setText("찾을 부품 없음");
         completeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(parentActivity);
-                    alertDialogBuilder.setTitle("모든 물체 제출 완료");
-                    alertDialogBuilder.setMessage("정말 모든 물체를 찾아졌나요?");
+                    //alertDialogBuilder.setTitle("모든 물체 제출 완료");
+                    alertDialogBuilder.setMessage("더 이상 찾아야 할 물체가 없나요?");
                     alertDialogBuilder.setPositiveButton("네", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -266,7 +275,7 @@ public class Controller_2DBoxLight extends Controller {
                                 param.put("taskID", taskID);
 
                                 //보내야하는 데이타
-                                String submit = "(allclear)";
+                                String submit = "("+String.valueOf(parentActivity.partType())+")(allclear)";
                                 param.put("submit", submit);
 
                                 new WaitHttpRequest(parentActivity) {
@@ -289,11 +298,23 @@ public class Controller_2DBoxLight extends Controller {
                                                     parentActivity.finish();
                                                 }
                                             } else {
+                                                answerCount= 0;
+                                                drawAnswerCount = 0;
+                                                mtaskView_PhotoView.answerType=null;
+                                                mtaskView_PhotoView.answerCoordination=null;
+                                                if(mtaskView_PhotoView.answerList != null) {
+                                                    for (int i = 0; i < mtaskView_PhotoView.answerList.length; i++) {
+                                                        photoViewCL.removeView(mtaskView_PhotoView.answerList[i]);
+                                                        photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][0]);
+                                                        photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][1]);
+                                                        photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][2]);
+                                                        photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][3]);
+                                                    }
+                                                }
                                                 ((TaskActivity)parentActivity).startTask();
                                                 parentActivity.setGold(String.valueOf(resultTemp.get("gold")));
                                                 parentActivity.setMaybe(String.valueOf(resultTemp.get("maybe")));
-                                                answerCount=0;
-                                                drawAnswerCount=0;
+
                                             }
                                         } catch (JSONException e) {
                                             e.printStackTrace();
@@ -1238,6 +1259,20 @@ public class Controller_2DBoxLight extends Controller {
             }
         });
 
+    }
+
+    //어떤 파트를 찾았는지 알아내서 서버로 보내줘야합니다.
+    private int partType() {
+        int answer = -1;
+        TextView partType = parentActivity.findViewById(R.id.partText);
+        if(partType.getText().equals("전신주"))
+            answer = 2;
+        if(partType.getText().equals("나무"))
+            answer = 3;
+        if(partType.getText().equals("변압기"))
+            answer = 4;
+
+        return answer;
     }
 
     @Override

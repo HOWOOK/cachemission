@@ -74,7 +74,7 @@ public class TaskView_PhotoView extends TaskView {
         ImageReady = false;
         isExamFlag = false;
         expandFlag = true;
-        if(parentActivity.getTaskType().equals("BOXCROPEXAM"))
+        if(parentActivity.getTaskType().equals("BOXCROPEXAM")||parentActivity.getTaskType().equals("PREBOXCROPEXAM"))
             isExamFlag = true;
         if(isExamFlag == true)
             expandFlag = false;
@@ -91,8 +91,12 @@ public class TaskView_PhotoView extends TaskView {
         //box 좌표 구해서 저장
         // *content의 양식 =>    확대좌표)URI&(답(답(답...
         //                      f,f,f,f)String&(f,f,f,f(f,f,f,f(f,f,f,f....
-        array0 = content.split("\\)");
-        array1 = array0[1].split("&");
+        if(parentActivity.getTaskType().equals("BOXCROPEXAM")||parentActivity.getTaskType().equals("BOXCROP")) {
+            array0 = content.split("\\)");
+            array1 = array0[1].split("&");
+        }else{//PREBOXCROPEXAM
+            array1 = content.split("&");
+        }
         if(array1.length == 2) {//좌표를 찾은적이 있는 놈이라면..
             array2 = array1[1].split("\\(");
             answerCoordination = new float[array2.length-1][4];
@@ -110,8 +114,11 @@ public class TaskView_PhotoView extends TaskView {
                 .into(new SimpleTarget<Bitmap>(){
                     @Override
                     public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                        Bitmap cropResource = cropBitmap(resource, array0[0]);
-                        photoView.setImageBitmap(cropResource);
+                        Bitmap cropResource = null;
+                        if(parentActivity.getTaskType().equals("BOXCROPEXAM")||parentActivity.getTaskType().equals("BOXCROP")) {
+                             resource = cropBitmap(resource, array0[0]);
+                        }
+                        photoView.setImageBitmap(resource);
                         ImageReady = true;
                         if(answerCoordination != null) {
                             drawAnswer(answerCoordination);
@@ -134,11 +141,6 @@ public class TaskView_PhotoView extends TaskView {
             ConstraintLayout.LayoutParams expandViewParams;
             ImageView expandView2 = parentActivity.findViewById(R.id.expandView2);
             ConstraintLayout.LayoutParams expandView2Params;
-            View topFadeView = null;
-            View bottomFadeView = null;
-            View leftFadeView = null;
-            View rightFadeView = null;
-            ConstraintLayout.LayoutParams fadeViewParams;
             float initX = 0;
             float initY = 0;
             float pvRatio = 0;
@@ -592,15 +594,12 @@ public class TaskView_PhotoView extends TaskView {
         for(int i = 0; i < cropCoord.length; i++){
             cropCoordParse[i] = Float.parseFloat(cropCoord[i]);
         }
-        Bitmap result = Bitmap.createBitmap(original
+        original = Bitmap.createBitmap(original
                 , (int)(original.getWidth() * cropCoordParse[0]) //X 시작위치
                 , (int)(original.getHeight() * cropCoordParse[1]) //Y 시작위치
                 , (int)(original.getWidth() * (cropCoordParse[2]-cropCoordParse[0])) // 넓이
                 , (int)(original.getHeight() * (cropCoordParse[3]-cropCoordParse[1]))); // 높이
-        if (result != original) {
-            original.recycle();
-        }
-        return result;
+        return original;
     }
 
 
