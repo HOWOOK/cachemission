@@ -369,12 +369,14 @@ public class TaskActivity extends PatherActivity {
     public int partType() {
         int answer = -1;
         TextView partType = findViewById(R.id.partText);
+        if(partType.getText().equals("프리프로세싱"))
+            answer = 2;
         if(partType.getText().equals("전신주"))
             answer = 2;
         if(partType.getText().equals("나무"))
-            answer = 3;
-        if(partType.getText().equals("변압기"))
             answer = 4;
+        if(partType.getText().equals("변압기"))
+            answer = 5;
         return answer;
     }
 

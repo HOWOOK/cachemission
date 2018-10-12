@@ -79,16 +79,20 @@ public class TaskView_PhotoView extends TaskView {
         if(isExamFlag == true)
             expandFlag = false;
 
-        photoViewCL = parentActivity.findViewById(R.id.photoViewCL);
-        if(parentActivity.getPartNum() == 2){
-            ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(0,0);
-            params.bottomMargin= (int) (43 * dpScale);
-            photoViewCL.setLayoutParams(params);
-        }
         DisplayMetrics displayMetrics = new DisplayMetrics();
         parentActivity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         getDeviceDpi = displayMetrics.densityDpi;
         dpScale = (float) getDeviceDpi / 160f;
+
+        photoViewCL = parentActivity.findViewById(R.id.photoViewCL);
+        if(parentActivity.getPartNum() == 2){ // 프리프로세싱은 레이아웃이 좀 달라야함
+            ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(
+                            ConstraintLayout.LayoutParams.MATCH_PARENT,
+                            ConstraintLayout.LayoutParams.MATCH_PARENT);
+            params.bottomMargin= (int) (43 * dpScale);
+            photoViewCL.setLayoutParams(params);
+        }
+
 
         if(isExamFlag)
             parentActivity.findViewById(R.id.textDragCL).setVisibility(View.INVISIBLE);

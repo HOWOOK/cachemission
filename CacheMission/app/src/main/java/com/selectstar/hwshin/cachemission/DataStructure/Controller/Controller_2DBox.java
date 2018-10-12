@@ -78,7 +78,8 @@ public class Controller_2DBox extends Controller {
             constraintSet.connect(view.findViewById(R.id.completebtn).getId(), constraintSet.TOP, btnCL.getId(), constraintSet.TOP);
             constraintSet.applyTo(btnCL);
 
-            ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(0, (int) (43 * dpScale));
+            ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(
+                    ConstraintLayout.LayoutParams.MATCH_PARENT, (int) (43 * dpScale));
             btnCL.setLayoutParams(params);
         }
 
@@ -333,7 +334,8 @@ public class Controller_2DBox extends Controller {
                                 topPercent = (y4 - originTopMargin) / originHeight;
                                 rightPercent = (x5 - originLeftMargin) / originWidth;
                                 bottomPercent = (y5 - originTopMargin) / originHeight;
-                                submit = leftPercent + "," + topPercent + "," + rightPercent + "," + bottomPercent;
+                                int ans = partType();
+                                submit = "("+ans+")"+leftPercent + "," + topPercent + "," + rightPercent + "," + bottomPercent;
                                 param.put("submit", submit);
 
                                 new WaitHttpRequest(parentActivity) {
