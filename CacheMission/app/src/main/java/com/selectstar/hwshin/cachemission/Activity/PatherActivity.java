@@ -64,25 +64,25 @@ public abstract class PatherActivity extends AppCompatActivity {
     public int partType() {
         int answer = -1;
         TextView partType = findViewById(R.id.partText);
-        if(partType.getText().equals("프리프로세스"))
+        if(partType.getText().toString().equals("프리프로세스"))
             answer = 2;
-        if(partType.getText().equals("전신주"))
+        if(partType.getText().toString().equals("전신주"))
             answer = 3;
-        if(partType.getText().equals("나무"))
+        if(partType.getText().toString().equals("나무"))
             answer = 4;
-        if(partType.getText().equals("변압기"))
+        if(partType.getText().toString().equals("변압기"))
             answer = 5;
-        if(partType.getText().equals("부품 A"))
+        if(partType.getText().toString().equals("부품 A"))
             answer = 6;
-        if(partType.getText().equals("부품 B"))
+        if(partType.getText().toString().equals("부품 B"))
             answer = 7;
-        if(partType.getText().equals("부품 C"))
+        if(partType.getText().toString().equals("부품 C"))
             answer = 8;
-        if(partType.getText().equals("부품 D"))
+        if(partType.getText().toString().equals("부품 D"))
             answer = 9;
-        if(partType.getText().equals("부품 E"))
+        if(partType.getText().toString().equals("부품 E"))
             answer = 10;
-        if(partType.getText().equals("부품 G"))
+        if(partType.getText().toString().equals("부품 G"))
             answer = 11;
         return answer;
     }

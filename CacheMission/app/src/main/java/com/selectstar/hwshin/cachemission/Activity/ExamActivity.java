@@ -57,7 +57,7 @@ public class ExamActivity extends PatherActivity {
         try {
             param.put("taskID", taskID);
             param.put("examType",examType);
-            if(taskType.equals("BOXCROP")){//BOXCROP에서는 파트를 넣어서 요청해야함
+            if(taskType.equals("BOXCROPEXAM")){//BOXCROP에서는 파트를 넣어서 요청해야함
                 partNum = partType();
                 param.put("option",partNum);
             }
