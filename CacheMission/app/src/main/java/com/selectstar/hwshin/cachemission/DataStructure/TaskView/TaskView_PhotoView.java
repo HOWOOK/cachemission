@@ -340,8 +340,8 @@ public class TaskView_PhotoView extends TaskView {
         System.out.println("위 델타 : " + deltaSettingValue[1] + " 아래 델타 : " + deltaSettingValue[3] + " 왼 델타 : " + deltaSettingValue[0] + " 오른 델타 : " + deltaSettingValue[2]);
         System.out.println("위 셋벨 : " + setValTop + " 아래 셋벨 : " + setValBottom + " 왼 셋벨 : " + setValLeft + " 오른 셋벨 : " + setValRight);
 
-        float cor1 = 11.0f * dpScale; // 라인 두께로 인해 보정
-        float cor2 = 16.0f * dpScale; // 코너 두께로 인해 보정
+        float cor1 = 0f * dpScale; // 라인 두께로 인해 보정
+        float cor2 = 0f * dpScale; // 코너 두께로 인해 보정
         float cor3 = 3.0f *dpScale; // 확대하는 뷰 라인 두께로 인한 보정
 
         topLineParams.setMargins(0, (int) (setValTop - cor1 + cor3) ,0,0);
