@@ -129,7 +129,6 @@
             android:layout_width="0dp"
             android:layout_height="3dp"
             android:background="#FFFFFF"
-            android:layout_marginBottom="9dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/top_line" />
@@ -137,8 +136,7 @@
         <View
             android:id="@+id/top_line"
             android:layout_width="0dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="5dp"
+            android:layout_height="3dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -148,7 +146,6 @@
             android:layout_width="0dp"
             android:layout_height="3dp"
             android:background="#FFFFFF"
-            android:layout_marginTop="9dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/bottom_line" />
@@ -156,8 +153,7 @@
         <View
             android:id="@+id/bottom_line"
             android:layout_width="0dp"
-            android:layout_height="20dp"
-            android:layout_marginBottom="5dp"
+            android:layout_height="3dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -167,16 +163,14 @@
             android:layout_width="3dp"
             android:layout_height="0dp"
             android:background="#FFFFFF"
-            android:layout_marginRight="9dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/left_line"/>
 
         <View
             android:id="@+id/left_line"
-            android:layout_width="20dp"
+            android:layout_width="3dp"
             android:layout_height="0dp"
-            android:layout_marginLeft="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -186,49 +180,45 @@
             android:layout_width="3dp"
             android:layout_height="0dp"
             android:background="#FFFFFF"
-            android:layout_marginLeft="9dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="@+id/right_line"/>
 
         <View
             android:id="@+id/right_line"
-            android:layout_width="20dp"
+            android:layout_width="3dp"
             android:layout_height="0dp"
-            android:layout_marginRight="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:id="@+id/topleft_corner"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="3dp"
+            android:layout_height="3dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:id="@+id/topright_corner"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="3dp"
+            android:layout_height="3dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:id="@+id/bottomright_corner"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="3dp"
+            android:layout_height="3dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <View
             android:id="@+id/bottomleft_corner"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="3dp"
+            android:layout_height="3dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-
-
 
        <ImageView
            android:id="@+id/pinbtn"

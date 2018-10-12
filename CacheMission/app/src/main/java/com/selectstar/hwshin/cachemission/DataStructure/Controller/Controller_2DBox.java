@@ -432,7 +432,7 @@ public class Controller_2DBox extends Controller {
                                 param.put("taskID", taskID);
 
                                 //보내야하는 데이타
-                                String submit = "(" + String.valueOf(parentActivity.partType()) + ")(allclear)";
+                                String submit = "<" + String.valueOf(parentActivity.partType()) + "><allclear>";
                                 param.put("submit", submit);
 
                                 new WaitHttpRequest(parentActivity) {
@@ -495,7 +495,7 @@ public class Controller_2DBox extends Controller {
 
         });
 
-        final int maxsize = 150;
+        final int maxsize = 75;
         final View top_line = view.findViewById(R.id.top_line);
         final View bottom_line = view.findViewById(R.id.bottom_line);
         final View left_line = view.findViewById(R.id.left_line);
