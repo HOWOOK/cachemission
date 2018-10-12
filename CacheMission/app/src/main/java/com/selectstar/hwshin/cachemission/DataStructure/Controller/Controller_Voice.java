@@ -589,7 +589,7 @@ public class Controller_Voice extends Controller {
                     SharedPreferences explain = parentActivity.getSharedPreferences("region", Context.MODE_PRIVATE);
                     region = explain.getString("region",null);
                     String baseRegion = Base64.encodeToString(region.getBytes(),0);
-                    conn.setRequestProperty("REGION",baseRegion);
+                    conn.setRequestProperty("OPTION",baseRegion);
                     conn.setRequestProperty("charset","euc-kr");
                     System.out.println("!");
                 }

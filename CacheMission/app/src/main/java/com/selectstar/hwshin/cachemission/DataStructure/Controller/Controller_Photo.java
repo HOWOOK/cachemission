@@ -131,7 +131,7 @@ public class Controller_Photo extends Controller {
                                         adapter.clearItem();
                                         adapter.notifyDataSetChanged();
                                         parentActivity.startTask();
-                                        parentActivity.taskCount.setText(String.valueOf(resultTemp.get("dailyQuest")));
+                                        parentActivity.setQuestList(String.valueOf(resultTemp.get("questList")));
                                     }
                                     parentActivity.setGold(String.valueOf(resultTemp.get("gold")));
                                     parentActivity.setMaybe(String.valueOf(resultTemp.get("maybe")));
@@ -167,7 +167,7 @@ public class Controller_Photo extends Controller {
                                 httpDialog.dismiss();
                             httpDialogSomethingOptimizationFailed.dismiss();
                         }
-                    }.execute(uri);
+                    }.execute(uri,parentActivity.getLoginToken());
                 }
 
 

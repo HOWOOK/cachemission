@@ -71,9 +71,9 @@ public class FileHttpRequest extends AsyncTask {
         InputStream inputStream;
         try {
             String token="";
-            if(objects.length == 3)
+            if(objects.length == 2)
             {
-                token = objects[2].toString();
+                token = objects[1].toString();
             }
 
             System.out.println(fileName);
