@@ -2,6 +2,7 @@ package com.selectstar.hwshin.cachemission.Activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
@@ -60,9 +61,53 @@ public abstract class PatherActivity extends AppCompatActivity {
     public int getPartNum() {
         return partNum;
     }
-
+    public int partType() {
+        int answer = -1;
+        TextView partType = findViewById(R.id.partText);
+        if(partType.getText().equals("프리프로세스"))
+            answer = 2;
+        if(partType.getText().equals("전신주"))
+            answer = 3;
+        if(partType.getText().equals("나무"))
+            answer = 4;
+        if(partType.getText().equals("변압기"))
+            answer = 5;
+        if(partType.getText().equals("부품 A"))
+            answer = 6;
+        if(partType.getText().equals("부품 B"))
+            answer = 7;
+        if(partType.getText().equals("부품 C"))
+            answer = 8;
+        if(partType.getText().equals("부품 D"))
+            answer = 9;
+        if(partType.getText().equals("부품 E"))
+            answer = 10;
+        if(partType.getText().equals("부품 G"))
+            answer = 11;
+        return answer;
+    }
     public void setPartNum(int partNum) {
         this.partNum = partNum;
+    }
+    protected void partDialogShow(TextView partText) {
+        final TextView partTextTemp = partText;
+        com.selectstar.hwshin.cachemission.DataStructure.Dialog.PartSelectDialog dialog = new com.selectstar.hwshin.cachemission.DataStructure.Dialog.PartSelectDialog(this, R.style.AppTheme_Transparent_Dialog);
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                if(partTextTemp.getText().toString().equals(""))
+                    finish();
+            }
+        });
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                if(partTextTemp.getText().toString().equals(""))
+                    finish();
+                startTask();
+            }
+        });
+        dialog.show();
     }
 
     public String getNumberInString(String rawText)
