@@ -54,6 +54,7 @@ public class TaskActivity extends PatherActivity {
     ArrayList<String> pic=new ArrayList<>();
     //사투리특별전용옵션
     static String region_dialect;
+    String questString="";
     int currentIndex=0;
 
     public TaskView getmTaskView() {
@@ -180,6 +181,7 @@ public class TaskActivity extends PatherActivity {
             }
         });
 
+
         //물음표버튼누르면 설명서 띄워주는것
         ImageView howbtn = findViewById(R.id.howbtn);
         howbtn.setOnClickListener(new View.OnClickListener() {
@@ -197,8 +199,23 @@ public class TaskActivity extends PatherActivity {
 
                 intent_taskExplain.putExtra("taskType", taskType);
                 startActivity(intent_taskExplain);
+
             }
         });
+    }
+
+    public int getAvailableCount(){
+        JSONArray questList= null;
+        int count=0;
+        try {
+            questList = new JSONArray(questString);
+            JSONObject quest=(JSONObject) questList.get(0);
+            count=(int)quest.get("questTotal")-(int)quest.get("questDone");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 
     @Override
@@ -265,13 +282,13 @@ public class TaskActivity extends PatherActivity {
             param.put("taskID", taskID);
             if(taskType.equals("BOXCROP")){//BOXCROP에서는 파트를 넣어서 요청해야함
                 int ans = partType();
-                param.put("partNum",null);
+                param.put("option",ans);
             }
             if(taskType.equals("RECORD")){//RECORD일때는 지역을 같이 넣어서 요청해야함
                 String region;
                 SharedPreferences explain = getSharedPreferences("region", Context.MODE_PRIVATE);
                 region = explain.getString("region",null);
-                param.put("region", region);
+                param.put("option", region);
             }
             new HurryHttpRequest(this) {
                 @Override
@@ -348,7 +365,7 @@ public class TaskActivity extends PatherActivity {
         }
     }
 
-    private int partType() {
+    public int partType() {
         int answer = -1;
         TextView partType = findViewById(R.id.partText);
         if(partType.getText().equals("전신주"))

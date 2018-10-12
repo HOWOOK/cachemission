@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.selectstar.hwshin.cachemission.Activity.ExamActivity;
+import com.selectstar.hwshin.cachemission.Activity.LoginActivity;
 import com.selectstar.hwshin.cachemission.Activity.TaskActivity;
 import com.selectstar.hwshin.cachemission.R;
 
@@ -39,6 +40,7 @@ public class ListviewAdapter extends RecyclerView.Adapter<ListviewAdapter.ItemVi
     private HashMap<String,Integer> iconIDMap;
     private Context mContext;
     private boolean userLoaded;
+    private ListviewAdapter.ItemViewHolder mHolder;
     public ListviewAdapter(Context context, int layout, ArrayList<JSONObject> taskList,Context mContext){
         this.inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.mTaskList=taskList;
@@ -120,17 +122,28 @@ public class ListviewAdapter extends RecyclerView.Adapter<ListviewAdapter.ItemVi
     @Override
     public ListviewAdapter.ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_lv, parent, false);
-        return new ListviewAdapter.ItemViewHolder(view);
+        this.mHolder=new ListviewAdapter.ItemViewHolder(view);
+        return mHolder;
+    }
+    public ListviewAdapter.ItemViewHolder getHolder(){
+        return mHolder;
     }
     public void updateItem( ListviewAdapter.ItemViewHolder holder, JSONArray questList)
     {
+Log.d("fullupdate",questList.toString());
 
+        if(holder==null){
+            holder=getHolder();
+
+        }
+        Log.d("fullupdatee",holder.toString());
         JSONObject[] questItem=new JSONObject[questList.length()];
         String[] questName=new String[questList.length()];
         int[] questReward=new int[questList.length()];
 
         try {
             if (questList.length() > 0) {
+
                 for (int i = 0; i < questList.length(); i++) {
                     questItem[i] = (JSONObject) questList.get(i);
                     if ((boolean) questItem[i].get("isClear")) {
@@ -143,36 +156,43 @@ public class ListviewAdapter extends RecyclerView.Adapter<ListviewAdapter.ItemVi
                     }
 
                 }
+                Log.d("quest11",questName[0]);
                 holder.quest1.setText(questName[0]);
+
                 holder.quest1money.setText("+\uFFE6" + String.valueOf(questReward[0]));
                 if (questList.length() == 2) {
                     holder.quest2.setText(questName[1]);
                     holder.quest2money.setText("+\uFFE6" + String.valueOf(questReward[1]));
+                    Log.d("getit","getin");
                 }else{
-                    if(holder.itemCL != null) {
-                        holder.itemCL.removeView(holder.quest2);
-                        holder.itemCL.removeView(holder.quest2money);
-                        ConstraintSet itemCLset = new ConstraintSet();
-                        itemCLset.clone(holder.itemCL);
-                        itemCLset.connect(holder.taskTv.getId(), ConstraintSet.BOTTOM, holder.quest1.getId(), ConstraintSet.TOP);
-                        itemCLset.connect(holder.quest1.getId(), ConstraintSet.TOP, holder.taskTv.getId(), ConstraintSet.BOTTOM);
-                        itemCLset.connect(holder.quest1.getId(), ConstraintSet.BOTTOM, holder.gold.getId(), ConstraintSet.TOP);
-                        itemCLset.connect(holder.gold.getId(), ConstraintSet.TOP, holder.quest1.getId(), ConstraintSet.BOTTOM);
-                        itemCLset.applyTo(holder.itemCL);
-                    }
+                    holder.quest2.setText("");
+                    holder.quest2money.setText("");
+//                    if(holder.itemCL != null) {
+//
+//                        ConstraintSet itemCLset = new ConstraintSet();
+//                        itemCLset.clone(holder.itemCL);
+//                        itemCLset.connect(holder.taskTv.getId(), ConstraintSet.BOTTOM, holder.quest1.getId(), ConstraintSet.TOP);
+//                        itemCLset.connect(holder.quest1.getId(), ConstraintSet.TOP, holder.taskTv.getId(), ConstraintSet.BOTTOM);
+//                        itemCLset.connect(holder.quest1.getId(), ConstraintSet.BOTTOM, holder.gold.getId(), ConstraintSet.TOP);
+//                        itemCLset.connect(holder.gold.getId(), ConstraintSet.TOP, holder.quest1.getId(), ConstraintSet.BOTTOM);
+//                        itemCLset.applyTo(holder.itemCL);
+//                        holder.itemCL.removeView(holder.quest2);
+//                        holder.itemCL.removeView(holder.quest2money);
+//                    }
                 }
             }else{
-                if(holder.itemCL != null) {
-                    holder.itemCL.removeView(holder.quest1);
-                    holder.itemCL.removeView(holder.quest1money);
-                    holder.itemCL.removeView(holder.quest2);
-                    holder.itemCL.removeView(holder.quest2money);
-                    ConstraintSet itemCLset = new ConstraintSet();
-                    itemCLset.clone(holder.itemCL);
-                    itemCLset.connect(holder.taskTv.getId(), ConstraintSet.BOTTOM, holder.gold.getId(), ConstraintSet.TOP);
-                    itemCLset.connect(holder.gold.getId(), ConstraintSet.TOP, holder.taskTv.getId(), ConstraintSet.BOTTOM);
-                    itemCLset.applyTo(holder.itemCL);
-                }
+//                Log.d("how?","??");
+//                if(holder.itemCL != null) {
+//                    holder.itemCL.removeView(holder.quest1);
+//                    holder.itemCL.removeView(holder.quest1money);
+//                    holder.itemCL.removeView(holder.quest2);
+//                    holder.itemCL.removeView(holder.quest2money);
+//                    ConstraintSet itemCLset = new ConstraintSet();
+//                    itemCLset.clone(holder.itemCL);
+//                    itemCLset.connect(holder.taskTv.getId(), ConstraintSet.BOTTOM, holder.gold.getId(), ConstraintSet.TOP);
+//                    itemCLset.connect(holder.gold.getId(), ConstraintSet.TOP, holder.taskTv.getId(), ConstraintSet.BOTTOM);
+//                    itemCLset.applyTo(holder.itemCL);
+//                }
             }
         }catch (JSONException e){
             e.printStackTrace();

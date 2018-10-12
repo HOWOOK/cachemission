@@ -148,7 +148,6 @@ public class UIHashMap {
         parameters_VOICEEXAM[4][0] = R.id.taskConstLayoutexam; parameters_VOICEEXAM[4][1] = 4;
         parameters_VOICEEXAM[5][0] = 10;
         taskHashMap.put("DIRECTRECORDEXAM", parameters_VOICEEXAM);
-
         parameters_DICTATION[0][0] = 5;
         parameters_DICTATION[1][0] = R.id.title; parameters_DICTATION[1][1] = 4;
         parameters_DICTATION[2][0] = R.id.taskConstLayout; parameters_DICTATION[2][1] = 4;

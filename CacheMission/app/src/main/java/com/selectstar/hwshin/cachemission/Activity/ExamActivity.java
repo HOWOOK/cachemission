@@ -277,6 +277,8 @@ public class ExamActivity extends PatherActivity {
 
                                 if ((boolean) resultTemp.get("success")) {
                                     startTask();
+                                    setGold(String.valueOf(resultTemp.get("gold")));
+                                    setMaybe(String.valueOf(resultTemp.get("maybe")));
 
                                 } else {
                                     Toast.makeText(getApplicationContext(),"남은 검수작업이 없습니다. 테스크리스트로 돌아갑니다.",Toast.LENGTH_SHORT).show();

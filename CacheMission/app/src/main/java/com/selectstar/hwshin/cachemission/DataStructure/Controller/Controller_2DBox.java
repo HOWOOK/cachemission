@@ -263,7 +263,7 @@ public class Controller_2DBox extends Controller {
             public void onClick(View v) {
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(parentActivity);
                     alertDialogBuilder.setTitle("모든 물체 제출 완료");
-                    alertDialogBuilder.setMessage("정말 모든 물체를 찾아졌나요?");
+                    alertDialogBuilder.setMessage("더 이상 찾아야 할 물체가 더 없나요?");
                     alertDialogBuilder.setPositiveButton("네", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -274,7 +274,7 @@ public class Controller_2DBox extends Controller {
                                 param.put("taskID", taskID);
 
                                 //보내야하는 데이타
-                                String submit = "(allclear)";
+                                String submit = "("+String.valueOf(parentActivity.partType())+")(allclear)";
                                 param.put("submit", submit);
 
                                 new WaitHttpRequest(parentActivity) {

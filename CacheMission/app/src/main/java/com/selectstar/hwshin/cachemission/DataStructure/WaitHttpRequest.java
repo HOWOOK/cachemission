@@ -128,6 +128,7 @@ public class WaitHttpRequest extends AsyncTask{
     @Override
     protected void onCancelled() {
         super.onCancelled();
+
         //연결 종료시 불리는 함수
     }
     private String convertInputStreamToString(InputStream inputStream) throws IOException {

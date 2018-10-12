@@ -57,9 +57,9 @@ public class FileHttpRequest extends AsyncTask {
         InputStream inputStream;
         try {
             String token="";
-            if(objects.length == 3)
+            if(objects.length == 2)
             {
-                token = objects[2].toString();
+                token = objects[1].toString();
             }
 
             System.out.println(fileName);
@@ -72,7 +72,7 @@ public class FileHttpRequest extends AsyncTask {
                 inputStream =  new FileInputStream(fileName);
             }
             // open a URL connection to the Servlet
-            URL url = new URL(parentActivity.getString(R.string.mainurl)+"/fileSubmit");
+            URL url = new URL(parentActivity.getString(R.string.mainurl)+"/testing/fileSubmit");
 
             // Open a HTTP  connection to  the URL
             conn = (HttpURLConnection) url.openConnection();
@@ -86,7 +86,7 @@ public class FileHttpRequest extends AsyncTask {
             conn.setRequestProperty("uploaded_file", fileName);
             conn.setRequestProperty("Token", "jwt " + token);
             //conn.setRequestProperty("Authorization","jwt " + parentActivity.getLoginToken());
-            conn.setRequestProperty("ANSWERID",parentActivity.getAnswerID());
+            conn.setRequestProperty("ANSWERID",parentActivity.answerID);
             conn.setRequestProperty("TASKID",parentActivity.getTaskID());
 
             // conn.setRequestProperty("GPSX",GPSX);

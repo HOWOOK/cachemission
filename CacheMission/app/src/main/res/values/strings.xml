@@ -13,6 +13,9 @@
     <string name="default_notification_channel_id">none</string>
     <string name="facebook_app_id">916035911927110</string>
     <string name="fb_login_protocol_scheme">fb916035911927110</string>
+    <string name="wonunicode">\uFFE6</string>
+    <string name="hTTPTimeOut">10000</string>
+
 
 
 </resources>

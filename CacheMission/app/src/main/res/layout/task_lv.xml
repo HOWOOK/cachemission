@@ -82,33 +82,28 @@
                 app:layout_constraintBaseline_toBaselineOf="@+id/quest1"
                 />
 
-            <TextView
-                android:id="@+id/quest2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:layout_marginTop="3dp"
-                android:fontFamily="@font/bmjua_"
-                android:textColor="#4E6A71"
-                android:textSize="12dp"
-                app:layout_constraintStart_toEndOf="@+id/taskType"
-                app:layout_constraintTop_toBottomOf="@+id/quest1"
-                app:layout_constraintBottom_toTopOf="@+id/gold"
-                />
+        <TextView
+            android:id="@+id/quest2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:fontFamily="@font/bmjua_"
+            android:textColor="#4E6A71"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toTopOf="@+id/gold"
+            app:layout_constraintStart_toEndOf="@+id/taskType"
+            app:layout_constraintTop_toBottomOf="@+id/quest1" />
 
-            <TextView
-                android:id="@+id/quest2money"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:layout_marginLeft="5dp"
-                android:fontFamily="@font/nanumsquareb_"
-                android:textColor="@color/colorAccent"
-                android:textSize="12dp"
-                android:text=""
-                app:layout_constraintStart_toEndOf="@+id/quest2"
-                app:layout_constraintBaseline_toBaselineOf="@+id/quest2"
-                />
+        <TextView
+            android:id="@+id/quest2money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:fontFamily="@font/nanumsquareb_"
+            android:textColor="@color/colorAccent"
+            android:textSize="12dp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/quest2"
+            app:layout_constraintStart_toEndOf="@+id/quest2" />
 
             <TextView
                 android:id="@+id/gold"

@@ -1,16 +1,21 @@
 package com.selectstar.hwshin.cachemission.Activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.selectstar.hwshin.cachemission.Adapter.ListviewAdapter;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView;
@@ -29,7 +34,7 @@ public abstract class PatherActivity extends AppCompatActivity {
 
     protected int controllerID, taskViewID;
     protected JSONObject currentTask;
-    protected String answerID;
+    public String answerID;
     protected String taskID;
     protected int[][] mParameter;
     public String getTaskID() {
@@ -130,6 +135,10 @@ public abstract class PatherActivity extends AppCompatActivity {
 
     public String getAnswerID() {
         try {
+            Log.d("notnull?",currentTask.toString());
+            if(currentTask==null){
+                Log.d("null?",currentTask.toString());
+            }
             return currentTask.get("id").toString();
         }
         catch(JSONException e)
@@ -229,5 +238,35 @@ public abstract class PatherActivity extends AppCompatActivity {
         result.put(resultNameElem);
         result.put(resultRewardElem);
         return result;
+    }
+    public static boolean isNetworkConnected(Context context){
+        ConnectivityManager manager=(ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo=manager.getActiveNetworkInfo();
+        if(activeNetworkInfo!=null){
+
+            if (activeNetworkInfo.getType() == ConnectivityManager.TYPE_WIFI && activeNetworkInfo.isConnectedOrConnecting()&&activeNetworkInfo.isAvailable()) {
+                return true;
+            } else if (activeNetworkInfo.getType() == ConnectivityManager.TYPE_MOBILE && activeNetworkInfo.isConnectedOrConnecting()&&activeNetworkInfo.isAvailable()) {
+                // 모바일 네트워크 연결중
+                return true;
+            }
+            else{
+                return false;
+            }
+
+
+        }else{
+            return false;
+        }
+
+    }
+    public class MyBroadCastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
+                Toast.makeText(context, "네트워크변화가 감지되었습니다. 4G사용시 데이터요금이 부과될 수 있습니다.", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }
