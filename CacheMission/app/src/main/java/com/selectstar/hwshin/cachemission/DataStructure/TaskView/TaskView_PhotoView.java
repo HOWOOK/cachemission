@@ -604,6 +604,14 @@ public class TaskView_PhotoView extends TaskView {
         }
         System.out.println(")");
         System.out.println("------------");
+        if(cropCoordParse[0] < 0f)
+            cropCoordParse[0] = 0f;
+        if(cropCoordParse[1] < 0f)
+            cropCoordParse[1] = 0f;
+        if(cropCoordParse[2] > 1f)
+            cropCoordParse[2] = 1f;
+        if(cropCoordParse[3] > 1f)
+            cropCoordParse[3] = 1f;
         original = Bitmap.createBitmap(original
                 , (int)(original.getWidth() * cropCoordParse[0]) //X 시작위치
                 , (int)(original.getHeight() * cropCoordParse[1]) //Y 시작위치
