@@ -84,7 +84,7 @@ public abstract class PatherActivity extends AppCompatActivity {
         if(partType.getText().toString().equals("부품 E"))
             answer = 10;
         if(partType.getText().toString().equals("부품 G"))
-            answer = 11;
+            answer = 1;
         System.out.println(answer);
         return answer;
     }
