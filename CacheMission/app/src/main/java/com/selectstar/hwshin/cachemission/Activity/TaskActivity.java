@@ -2,6 +2,7 @@ package com.selectstar.hwshin.cachemission.Activity;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -24,8 +25,7 @@ import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_2D
 import com.selectstar.hwshin.cachemission.DataStructure.HurryHttpRequest;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_Photo;
-import com.selectstar.hwshin.cachemission.Dialog.PartSelectDialog;
-import com.selectstar.hwshin.cachemission.Dialog.PartSelectDialogListener;
+import com.selectstar.hwshin.cachemission.DataStructure.Dialog.PartSelectDialog;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoView;
 import com.selectstar.hwshin.cachemission.DataStructure.UIHashMap;
@@ -400,28 +400,23 @@ public class TaskActivity extends PatherActivity {
     private void partDialogShow(TextView partText) {
         final TextView partTextTemp = partText;
         PartSelectDialog dialog = new PartSelectDialog(this, R.style.AppTheme_Transparent_Dialog);
-        dialog.setDialogListener(new PartSelectDialogListener() {
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
-            public void onPartPoleClicked() {
-                partTextTemp.setText("전신주");
-                startTask();
+            public void onCancel(DialogInterface dialog) {
+                if(partTextTemp.getText().toString().equals(""))
+                    finish();
             }
-
+        });
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
-            public void onPartTreeClicked() {
-                partTextTemp.setText("나무");
-                startTask();
-            }
-
-            @Override
-            public void onPartTransformerClicked() {
-                partTextTemp.setText("변압기");
+            public void onDismiss(DialogInterface dialog) {
+                if(partTextTemp.getText().toString().equals(""))
+                    finish();
                 startTask();
             }
         });
         dialog.show();
     }
-
     private void regionDialogShow(TextView optionText) {
         final TextView optionTextTemp = optionText;
         RegionSelectDialog dialog = new RegionSelectDialog(this, R.style.AppTheme_Transparent_Dialog);

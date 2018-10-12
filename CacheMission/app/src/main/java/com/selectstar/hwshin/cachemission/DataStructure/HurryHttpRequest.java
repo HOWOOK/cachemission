@@ -2,6 +2,8 @@ package com.selectstar.hwshin.cachemission.DataStructure;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -41,7 +43,7 @@ public class HurryHttpRequest extends AsyncTask{
             {
                 token = objects[2].toString();
             }
-
+            httpCon.setConnectTimeout(100000);
             //서버 response data를 json 형식의 타입으로 요청
             //httpCon.setRequestProperty("Accept", "application/json");
             httpCon.setRequestProperty("X-Requested-With", "XMLHttpRequest");
@@ -59,10 +61,11 @@ public class HurryHttpRequest extends AsyncTask{
             OutputStream os = httpCon.getOutputStream();
             os.write(json.getBytes("utf-8"));
             os.flush();
-
-            if(httpCon.getResponseCode() != HttpURLConnection.HTTP_OK)
+            if(httpCon.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                Toast.makeText(mContext, "서버와 통신 중 에러가 발생했습니다.",Toast.LENGTH_SHORT).show();
+                ((AppCompatActivity)mContext).finish();
                 return null;
-
+            }
             try {
                 is = httpCon.getInputStream();
                 // convert inputstream to string

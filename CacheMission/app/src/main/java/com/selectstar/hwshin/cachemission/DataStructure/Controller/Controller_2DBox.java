@@ -107,7 +107,6 @@ public class Controller_2DBox extends Controller {
                         testingText1 = view.findViewById(R.id.testingtext1);
                         testingText2 = view.findViewById(R.id.testingtext2);
                         testingText3 = view.findViewById(R.id.testingtext3);
-
                         /********************************
                          * (x1, y1) = crop box의 현재 좌상단 좌표
                          * (x2, y2) = crop box의 현재 우하단 좌표
@@ -169,6 +168,7 @@ public class Controller_2DBox extends Controller {
                                         System.out.println("서버반응 2: "+resultTemp.get("success").toString());
 
                                         drawAnswerCount++;
+                                        completeButton.setText("모든 부품 제출 완료");
                                         System.out.println("그려져있던 수 : "+answerCount+" 내가 그린 수 : "+drawAnswerCount);
                                         answerCoordinationTemp = mtaskView_PhotoView.answerCoordination;
                                         answerTypeTemp = mtaskView_PhotoView.answerType;
@@ -258,12 +258,13 @@ public class Controller_2DBox extends Controller {
 
 
         completeButton = view.findViewById(R.id.completebtn);
+        completeButton.setText("찾을 부품 없음");
         completeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(parentActivity);
-                    alertDialogBuilder.setTitle("모든 물체 제출 완료");
-                    alertDialogBuilder.setMessage("더 이상 찾아야 할 물체가 더 없나요?");
+                    //alertDialogBuilder.setTitle("모든 물체 제출 완료");
+                    alertDialogBuilder.setMessage("더 이상 찾아야 할 물체가 없나요?");
                     alertDialogBuilder.setPositiveButton("네", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {

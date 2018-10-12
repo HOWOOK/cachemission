@@ -1,21 +1,28 @@
-package com.selectstar.hwshin.cachemission.Dialog;
+package com.selectstar.hwshin.cachemission.DataStructure.Dialog;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.selectstar.hwshin.cachemission.Activity.PatherActivity;
+import com.selectstar.hwshin.cachemission.Adapter.PartAdapter;
 import com.selectstar.hwshin.cachemission.R;
 
-public class PartSelectDialog extends Dialog implements View.OnClickListener{
+import java.util.ArrayList;
+
+
+public class PartSelectDialog extends Dialog{
 
     private Context context;
-    private PartSelectDialogListener dialogListener;
 
     private ImageView cancelbtn;
     private ImageView partPole;
@@ -33,9 +40,6 @@ public class PartSelectDialog extends Dialog implements View.OnClickListener{
         this.context = context;
     }
 
-    public void setDialogListener(PartSelectDialogListener dialogListener){
-        this.dialogListener = dialogListener;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,52 +47,38 @@ public class PartSelectDialog extends Dialog implements View.OnClickListener{
         setContentView(R.layout.dialog_partselect);
         dialogCL = findViewById(R.id.dialogCL);
         cancelbtn = findViewById(R.id.cancelbtn);
+        cancelbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PartSelectDialog.this.dismiss();
+            }
+        });
+        RecyclerView partRecycler = findViewById(R.id.partRecycler);
+        ArrayList<Integer> idList = new ArrayList<>();
+        ArrayList<String> nameList = new ArrayList<>();
+        idList.add(R.drawable.part_pole);
+        nameList.add("전신주");
+        idList.add(R.drawable.part_tree);
+        nameList.add("나무");
+        idList.add(R.drawable.part_transformer);
+        nameList.add("변압기");
+        idList.add(R.drawable.part_transformer);
+        nameList.add("절연체 A");
+        idList.add(R.drawable.part_transformer);
+        nameList.add("절연체 B");
+        idList.add(R.drawable.part_transformer);
+        nameList.add("절연체 C");
+        idList.add(R.drawable.part_transformer);
+        nameList.add("절연체 D");
+        PartAdapter mAdapter = new PartAdapter((PatherActivity)context, idList,nameList,this);
+        partRecycler.setLayoutManager(new GridLayoutManager(context,2));
+        partRecycler.setAdapter(mAdapter);
 
-        partPole = findViewById(R.id.part_pole);
-        partTree = findViewById(R.id.part_tree);
-        partTransformer = findViewById(R.id.part_transformer);
-        Glide.with(this.context)
-                .load(R.drawable.part_pole)
-                .apply(new RequestOptions().circleCrop())
-                .into(partPole);
-        Glide.with(this.context)
-                .load(R.drawable.part_tree)
-                .apply(new RequestOptions().circleCrop())
-                .into(partTree);
-        Glide.with(this.context)
-                .load(R.drawable.part_transformer)
-                .apply(new RequestOptions().circleCrop())
-                .into(partTransformer);
 
 
-        partPole.setOnClickListener(this);
-        partTree.setOnClickListener(this);
-        partTransformer.setOnClickListener(this);
-
-    }
-
-
-    @Override
-    public void onClick(View v) {
-
-        switch(v.getId()){
-            case R.id.cancelbtn:
-                dismiss();
-            case R.id.part_pole:
-                dialogListener.onPartPoleClicked();
-                dismiss();
-                break;
-            case R.id.part_tree:
-                dialogListener.onPartTreeClicked();
-                dismiss();
-                break;
-            case R.id.part_transformer:
-                dialogListener.onPartTransformerClicked();
-                dismiss();
-                break;
-        }
 
     }
+
 }
 
 
