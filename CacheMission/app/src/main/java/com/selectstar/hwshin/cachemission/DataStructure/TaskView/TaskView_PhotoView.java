@@ -32,6 +32,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import jp.wasabeef.glide.transformations.BitmapTransformation;
 import jp.wasabeef.glide.transformations.CropTransformation;
@@ -48,6 +50,8 @@ public class TaskView_PhotoView extends TaskView {
     public boolean expandFlag, isExamFlag, ImageReady;
     private int getDeviceDpi;
     private float dpScale;
+    private int answerCount = 0;
+    private int drawAnswerCount = 0;
 
     public TaskView_PhotoView()
     {
@@ -108,6 +112,7 @@ public class TaskView_PhotoView extends TaskView {
                 answerCoordination = new float[array2.length - 1][4];
                 changedCoordination = new float[answerCoordination.length][4];
                 answerType = new int[answerCoordination.length];
+                answerCount = answerCoordination.length;
                 coordinationParsing(array2);
             }
         }
@@ -125,7 +130,17 @@ public class TaskView_PhotoView extends TaskView {
                         resource = cropBitmap(resource, array0[0]);
                         photoView.setImageBitmap(resource);
                         ImageReady = true;
+
                         if(answerCoordination != null) {
+                            System.out.println("그릴때");
+                                for (int i = 0; i < answerCoordination.length; i++) {
+                                    System.out.print("(");
+                                    for (int j = 0; j < 4; j++) {
+                                        System.out.print(answerCoordination[i][j] + ",");
+                                    }
+                                    System.out.print(" 타입 : " + answerType[i]);
+                                    System.out.println(")");
+                                }
                             drawAnswer(answerCoordination);
                             parentActivity.findViewById(R.id.textDragCL).bringToFront();
                         }
@@ -473,6 +488,7 @@ public class TaskView_PhotoView extends TaskView {
                 answerLeftLine.setLayoutParams(leftRightParams);
                 answerRightLine.setLayoutParams(leftRightParams);
 
+                System.out.println("엔서 타입 : " +answerType[i]);
                 if(answerType[i] == 0) {
                     answerTopLine.setBackgroundColor(parentActivity.getResources().getColor(R.color.colorPoint2));
                     answerBottomLine.setBackgroundColor(parentActivity.getResources().getColor(R.color.colorPoint2));
@@ -622,7 +638,79 @@ public class TaskView_PhotoView extends TaskView {
         return original;
     }
 
+    public void addAnswer(float left, float top, float right, float bottom){
+        drawAnswerCount++;
+        float[][] answerCoordinationTemp = answerCoordination;
+        int[] answerTypeTemp = answerType;
+        answerCoordination = new float[answerCount + drawAnswerCount][4];
+        answerType = new int[answerCount + drawAnswerCount];
 
+        if(answerCoordinationTemp != null) {
+            for (int i = 0; i < answerCoordinationTemp.length; i++) {
+                answerCoordination[i][0] = answerCoordinationTemp[i][0];
+                answerCoordination[i][1] = answerCoordinationTemp[i][1];
+                answerCoordination[i][2] = answerCoordinationTemp[i][2];
+                answerCoordination[i][3] = answerCoordinationTemp[i][3];
+                answerType[i] = answerTypeTemp[i];
+
+            }
+        }
+
+
+        answerCoordination[answerCount + drawAnswerCount - 1][0] = left;
+        answerCoordination[answerCount + drawAnswerCount - 1][1] = top;
+        answerCoordination[answerCount + drawAnswerCount - 1][2] = right;
+        answerCoordination[answerCount + drawAnswerCount - 1][3] = bottom;
+        answerType[answerCount + drawAnswerCount - 1] = 1;
+        changedCoordination = new float[answerCoordination.length][4];
+    }
+
+    public void removeAnswer(){
+        answerCount= 0;
+        drawAnswerCount = 0;
+        answerType = null;
+        answerCoordination = null;
+        if(answerList != null) {
+            for (int i = 0; i < answerList.length; i++) {
+                photoViewCL.removeView(answerList[i]);
+                photoViewCL.removeView(answerEdges[i][0]);
+                photoViewCL.removeView(answerEdges[i][1]);
+                photoViewCL.removeView(answerEdges[i][2]);
+                photoViewCL.removeView(answerEdges[i][3]);
+            }
+        }
+    }
+
+    //size도 함께 생각해야한다........
+    private  void similarityTest(float left, float top, float right, float bottom){
+        Boolean rtnVal = false;
+        float error = 0.1f;
+        for (int i = 0; i < answerCoordination.length; i++){
+            if(answerCoordination[i][0] - left < error &&
+                    answerCoordination[i][1] - top < error &&
+                    answerCoordination[i][2] - right < error &&
+                    answerCoordination[i][3] - bottom < error);
+        }
+
+    };
+
+
+//    public void answerReset(){
+//        answerCount= 0;
+//        drawAnswerCount = 0;
+//        mtaskView_PhotoView.answerType=null;
+//        mtaskView_PhotoView.answerCoordination=null;
+//        if(mtaskView_PhotoView.answerList != null) {
+//            for (int i = 0; i < mtaskView_PhotoView.answerList.length; i++) {
+//                photoViewCL.removeView(mtaskView_PhotoView.answerList[i]);
+//                photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][0]);
+//                photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][1]);
+//                photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][2]);
+//                photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][3]);
+//            }
+//        }
+//        ((TaskActivity)parentActivity).startTask();
+//    }
 
 
 }
