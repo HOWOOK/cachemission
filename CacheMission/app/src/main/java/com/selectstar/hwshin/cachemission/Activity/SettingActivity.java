@@ -1,9 +1,11 @@
 package com.selectstar.hwshin.cachemission.Activity;
 
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -19,10 +21,14 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
+import com.selectstar.hwshin.cachemission.DataStructure.WaitHttpRequest;
 import com.selectstar.hwshin.cachemission.R;
 
-public class SettingActivity extends AppCompatActivity {
+import org.json.JSONException;
+import org.json.JSONObject;
 
+public class SettingActivity extends AppCompatActivity {
+Context mContext=this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,8 +78,40 @@ public class SettingActivity extends AppCompatActivity {
         exchange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent_exchange = new Intent(SettingActivity.this, ExchangeActivity.class);
-                startActivity(intent_exchange);
+                SharedPreferences token = getSharedPreferences("token",MODE_PRIVATE);
+                final String loginToken = token.getString("loginToken","");
+                JSONObject param = new JSONObject();
+                WaitHttpRequest asyncTask=new WaitHttpRequest(mContext) {
+                    @Override
+                    protected void onPostExecute(Object o) {
+                        super.onPostExecute(o);
+
+                        try {
+                            if (result == "")
+                                return;
+                            JSONObject resultTemp = new JSONObject(result);
+                            String url=resultTemp.get("url").toString();
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setData(Uri.parse(url));
+                            startActivity(intent);
+
+
+
+                        }
+                        catch(JSONException e)
+                        {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                };
+                //CountDownTimer adf= new AsyncTaskCancelTimerTask(asyncTask,Integer.parseInt(getString(R.string.hTTPTimeOut)),1000,true,this).start();
+                asyncTask.execute(getString(R.string.mainurl) + "/testing/exchange", param, loginToken);
+                //Toast.makeText(getApplicationContext(),"알파테스트에서 구현되지 않은 사항입니다! 챔피언의 충실한 보조 조하영 화이팅!",Toast.LENGTH_SHORT).show();
+
+//                Intent intent_exchange = new Intent(SettingActivity.this, ExchangeActivity.class);
+//                startActivity(intent_exchange);
             }
         });
 
