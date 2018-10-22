@@ -71,6 +71,8 @@ public class TaskActivity extends PatherActivity {
                 && tasktoken.getInt(taskType + "taskToken", 0) == 100){
             if(explain.getString("region","").equals("")){
                 regionDialogShow((TextView) findViewById(R.id.regionText));
+            }else{
+                ((TextView) findViewById(R.id.regionText)).setText(explain.getString("region",""));
             }
         }
     }
