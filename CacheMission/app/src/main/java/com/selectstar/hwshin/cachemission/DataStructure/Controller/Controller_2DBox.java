@@ -59,9 +59,11 @@ public class Controller_2DBox extends Controller {
         getDeviceDpi = displayMetrics.densityDpi;
         dpScale = (float) getDeviceDpi / 160f;
         photoViewCL = parentActivity.findViewById(R.id.photoViewCL);
-        if(mtaskView_PhotoView.answerCoordination != null)
-            answerCount = mtaskView_PhotoView.answerCoordination.length;
-        System.out.println("서버에서 그려진 정답 수 : " + answerCount);
+
+        //photoView쪽으로 이동
+//        if(mtaskView_PhotoView.answerCoordination != null)
+//            answerCount = mtaskView_PhotoView.answerCoordination.length;
+//        System.out.println("서버에서 그려진 정답 수 : " + answerCount);
 
         //처음에는 box가 없어야 합니다.
         final ConstraintLayout boxCL = view.findViewById(R.id.boxCL);
@@ -195,68 +197,71 @@ public class Controller_2DBox extends Controller {
                                         } else {
                                             System.out.println("서버반응 2: "+resultTemp.get("success").toString());
 
-                                            drawAnswerCount++;
+                                            mtaskView_PhotoView.addAnswer(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend);
                                             completeButton.setText("모든 부품 제출 완료");
-                                            System.out.println("그려져있던 수 : "+answerCount+" 내가 그린 수 : "+drawAnswerCount);
-                                            answerCoordinationTemp = mtaskView_PhotoView.answerCoordination;
-                                            answerTypeTemp = mtaskView_PhotoView.answerType;
 
-                                            if (mtaskView_PhotoView.answerCoordination!=null) {
-                                                System.out.println("---------추가 전 ----------");
-                                                for (int i = 0; i < mtaskView_PhotoView.answerCoordination.length; i++) {
-                                                    System.out.print("(");
-                                                    for (int j = 0; j < 4; j++) {
-                                                        System.out.print(mtaskView_PhotoView.answerCoordination[i][j] + ",");
-                                                    }
-                                                    System.out.print(" 타입 : " + mtaskView_PhotoView.answerType[i]);
-                                                    System.out.println(")");
-                                                }
-                                            }
-
-                                            mtaskView_PhotoView.answerCoordination = new float[answerCount + drawAnswerCount][4];
-                                            mtaskView_PhotoView.answerType = new int[answerCount + drawAnswerCount];
-
-                                            if(answerCoordinationTemp != null) {
-                                                for (int i = 0; i < answerCoordinationTemp.length; i++) {
-                                                    mtaskView_PhotoView.answerCoordination[i][0] = answerCoordinationTemp[i][0];
-                                                    mtaskView_PhotoView.answerCoordination[i][1] = answerCoordinationTemp[i][1];
-                                                    mtaskView_PhotoView.answerCoordination[i][2] = answerCoordinationTemp[i][2];
-                                                    mtaskView_PhotoView.answerCoordination[i][3] = answerCoordinationTemp[i][3];
-                                                    mtaskView_PhotoView.answerType[i] = answerTypeTemp[i];
-                                                }
-                                            }
-
-                                            if (mtaskView_PhotoView.answerCoordination!=null) {
-                                                System.out.println("---------복사 후----------");
-                                                for (int i = 0; i < mtaskView_PhotoView.answerCoordination.length; i++) {
-                                                    System.out.print("(");
-                                                    for (int j = 0; j < 4; j++) {
-                                                        System.out.print(mtaskView_PhotoView.answerCoordination[i][j] + ",");
-                                                    }
-                                                    System.out.print(" 타입 : " + mtaskView_PhotoView.answerType[i]);
-                                                    System.out.println(")");
-                                                }
-                                            }
-
-
-                                            mtaskView_PhotoView.answerCoordination[answerCount + drawAnswerCount - 1][0] = leftPercentSend;
-                                            mtaskView_PhotoView.answerCoordination[answerCount + drawAnswerCount - 1][1] = topPercentSend;
-                                            mtaskView_PhotoView.answerCoordination[answerCount + drawAnswerCount - 1][2] = rightPercentSend;
-                                            mtaskView_PhotoView.answerCoordination[answerCount + drawAnswerCount - 1][3] = bottomPercentSend;
-                                            mtaskView_PhotoView.answerType[answerCount + drawAnswerCount - 1] = 1;
-                                            mtaskView_PhotoView.changedCoordination = new float[mtaskView_PhotoView.answerCoordination.length][4];
-
-                                            if (mtaskView_PhotoView.answerCoordination!=null) {
-                                                System.out.println("---------추가 후----------");
-                                                for (int i = 0; i < mtaskView_PhotoView.answerCoordination.length; i++) {
-                                                    System.out.print("(");
-                                                    for (int j = 0; j < 4; j++) {
-                                                        System.out.print(mtaskView_PhotoView.answerCoordination[i][j] + ",");
-                                                    }
-                                                    System.out.print(" 타입 : " + mtaskView_PhotoView.answerType[i]);
-                                                    System.out.println(")");
-                                                }
-                                            }
+                                            //addAnswer함수로 이동
+//                                            drawAnswerCount++;
+//                                            System.out.println("그려져있던 수 : "+answerCount+" 내가 그린 수 : "+drawAnswerCount);
+//                                            answerCoordinationTemp = mtaskView_PhotoView.answerCoordination;
+//                                            answerTypeTemp = mtaskView_PhotoView.answerType;
+//
+//                                            if (mtaskView_PhotoView.answerCoordination!=null) {
+//                                                System.out.println("---------추가 전 ----------");
+//                                                for (int i = 0; i < mtaskView_PhotoView.answerCoordination.length; i++) {
+//                                                    System.out.print("(");
+//                                                    for (int j = 0; j < 4; j++) {
+//                                                        System.out.print(mtaskView_PhotoView.answerCoordination[i][j] + ",");
+//                                                    }
+//                                                    System.out.print(" 타입 : " + mtaskView_PhotoView.answerType[i]);
+//                                                    System.out.println(")");
+//                                                }
+//                                            }
+//
+//                                            mtaskView_PhotoView.answerCoordination = new float[answerCount + drawAnswerCount][4];
+//                                            mtaskView_PhotoView.answerType = new int[answerCount + drawAnswerCount];
+//
+//                                            if(answerCoordinationTemp != null) {
+//                                                for (int i = 0; i < answerCoordinationTemp.length; i++) {
+//                                                    mtaskView_PhotoView.answerCoordination[i][0] = answerCoordinationTemp[i][0];
+//                                                    mtaskView_PhotoView.answerCoordination[i][1] = answerCoordinationTemp[i][1];
+//                                                    mtaskView_PhotoView.answerCoordination[i][2] = answerCoordinationTemp[i][2];
+//                                                    mtaskView_PhotoView.answerCoordination[i][3] = answerCoordinationTemp[i][3];
+//                                                    mtaskView_PhotoView.answerType[i] = answerTypeTemp[i];
+//                                                }
+//                                            }
+//
+//                                            if (mtaskView_PhotoView.answerCoordination!=null) {
+//                                                System.out.println("---------복사 후----------");
+//                                                for (int i = 0; i < mtaskView_PhotoView.answerCoordination.length; i++) {
+//                                                    System.out.print("(");
+//                                                    for (int j = 0; j < 4; j++) {
+//                                                        System.out.print(mtaskView_PhotoView.answerCoordination[i][j] + ",");
+//                                                    }
+//                                                    System.out.print(" 타입 : " + mtaskView_PhotoView.answerType[i]);
+//                                                    System.out.println(")");
+//                                                }
+//                                            }
+//
+//
+//                                            mtaskView_PhotoView.answerCoordination[answerCount + drawAnswerCount - 1][0] = leftPercentSend;
+//                                            mtaskView_PhotoView.answerCoordination[answerCount + drawAnswerCount - 1][1] = topPercentSend;
+//                                            mtaskView_PhotoView.answerCoordination[answerCount + drawAnswerCount - 1][2] = rightPercentSend;
+//                                            mtaskView_PhotoView.answerCoordination[answerCount + drawAnswerCount - 1][3] = bottomPercentSend;
+//                                            mtaskView_PhotoView.answerType[answerCount + drawAnswerCount - 1] = 1;
+//                                            mtaskView_PhotoView.changedCoordination = new float[mtaskView_PhotoView.answerCoordination.length][4];
+//
+//                                            if (mtaskView_PhotoView.answerCoordination!=null) {
+//                                                System.out.println("---------추가 후----------");
+//                                                for (int i = 0; i < mtaskView_PhotoView.answerCoordination.length; i++) {
+//                                                    System.out.print("(");
+//                                                    for (int j = 0; j < 4; j++) {
+//                                                        System.out.print(mtaskView_PhotoView.answerCoordination[i][j] + ",");
+//                                                    }
+//                                                    System.out.print(" 타입 : " + mtaskView_PhotoView.answerType[i]);
+//                                                    System.out.println(")");
+//                                                }
+//                                            }
 
                                             mtaskView_PhotoView.drawAnswer(mtaskView_PhotoView.answerCoordination);
 
@@ -382,19 +387,22 @@ public class Controller_2DBox extends Controller {
                                                     parentActivity.finish();
                                                 }
                                             } else {
-                                                answerCount= 0;
-                                                drawAnswerCount = 0;
-                                                mtaskView_PhotoView.answerType=null;
-                                                mtaskView_PhotoView.answerCoordination=null;
-                                                if(mtaskView_PhotoView.answerList != null) {
-                                                    for (int i = 0; i < mtaskView_PhotoView.answerList.length; i++) {
-                                                        photoViewCL.removeView(mtaskView_PhotoView.answerList[i]);
-                                                        photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][0]);
-                                                        photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][1]);
-                                                        photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][2]);
-                                                        photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][3]);
-                                                    }
-                                                }
+
+                                                mtaskView_PhotoView.removeAnswer();
+                                                //romoveAnswer함수로 이동
+//                                                answerCount= 0;
+//                                                drawAnswerCount = 0;
+//                                                mtaskView_PhotoView.answerType=null;
+//                                                mtaskView_PhotoView.answerCoordination=null;
+//                                                if(mtaskView_PhotoView.answerList != null) {
+//                                                    for (int i = 0; i < mtaskView_PhotoView.answerList.length; i++) {
+//                                                        photoViewCL.removeView(mtaskView_PhotoView.answerList[i]);
+//                                                        photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][0]);
+//                                                        photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][1]);
+//                                                        photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][2]);
+//                                                        photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][3]);
+//                                                    }
+//                                                }
                                                 ((TaskActivity)parentActivity).startTask();
                                                 parentActivity.setGold(String.valueOf(resultTemp.get("gold")));
                                                 parentActivity.setMaybe(String.valueOf(resultTemp.get("maybe")));

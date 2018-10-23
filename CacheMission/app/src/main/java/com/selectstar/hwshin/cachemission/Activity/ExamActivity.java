@@ -23,6 +23,7 @@ import com.google.android.gms.analytics.Tracker;
 import com.selectstar.hwshin.cachemission.DataStructure.ExamView.ExamView;
 import com.selectstar.hwshin.cachemission.DataStructure.HurryHttpRequest;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView;
+import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoView;
 import com.selectstar.hwshin.cachemission.DataStructure.UIHashMap;
 import com.selectstar.hwshin.cachemission.DataStructure.WaitHttpRequest;
 import com.selectstar.hwshin.cachemission.R;
@@ -289,6 +290,9 @@ public class ExamActivity extends PatherActivity {
                                 resultTemp = new JSONObject(result);
 
                                 if ((boolean) resultTemp.get("success")) {
+                                    if(taskType.equals("BOXCROPEXAM")){
+                                        ((TaskView_PhotoView)mTaskView).removeAnswer();
+                                    }
                                     startTask();
                                     setGold(String.valueOf(resultTemp.get("gold")));
                                     setMaybe(String.valueOf(resultTemp.get("maybe")));
