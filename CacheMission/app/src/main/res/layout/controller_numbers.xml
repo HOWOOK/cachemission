@@ -21,6 +21,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/warningText"
         android:layout_width="wrap_content"
@@ -35,6 +36,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/numbersText"
         />
+
     <GridView
         android:id="@+id/gridViewff"
         android:layout_width="match_parent"
@@ -45,16 +47,17 @@
         android:layout_marginRight="30dp"
         android:stretchMode="columnWidth"
         android:listSelector="@drawable/listselector"
-        app:layout_constraintBottom_toTopOf="@+id/numberbutton"
+        app:layout_constraintBottom_toTopOf="@+id/btnCL"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/numbersText"
         />
+
     <ImageView
         android:id="@+id/imageAnimation"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        app:layout_constraintBottom_toTopOf="@+id/numberbutton"
+        app:layout_constraintBottom_toTopOf="@+id/btnCL"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         />
@@ -64,23 +67,40 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-
         android:textSize="25dp"
         android:fontFamily="@font/nanumsquareb_"
         android:textColor="@color/colorAccent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gridViewff"
-        app:layout_constraintLeft_toRightOf="@+id/numberbutton" />
-
-
-    <Button
-        android:id="@+id/numberbutton"
-        style="@style/normalbtn3"
-        android:text="보내기"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnCL"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gridViewff" />
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/btnCL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+
+        <Button
+            android:id="@+id/numberbutton"
+            android:layout_width="match_parent"
+            android:layout_height="43dp"
+            android:background="@color/colorPrimary"
+            android:text="제출하기"
+            android:textSize="15dp"
+            android:textColor="#FFFFFF"
+            android:fontFamily="@font/bmjua_"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+    </android.support.constraint.ConstraintLayout>
+
 
 
 

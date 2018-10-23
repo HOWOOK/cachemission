@@ -6,40 +6,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline_controllervoice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
-
     <Button
         android:id="@+id/recb"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginRight="30dp"
         android:background="@drawable/recordstartbtn"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/post"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_controllervoice"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/stream"
         />
 
     <Button
         android:id="@+id/stream"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginLeft="30dp"
         android:background="@drawable/voiceplaybtn"
-        app:layout_constraintBottom_toTopOf="@+id/post"
-        app:layout_constraintStart_toEndOf="@+id/guideline_controllervoice"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/recb"
+        app:layout_constraintEnd_toEndOf="parent"
         />
+
     <ImageView
         android:id="@+id/imageAnimation"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        app:layout_constraintBottom_toTopOf="@+id/post"
+        app:layout_constraintBottom_toTopOf="@+id/btnCL"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         />
@@ -48,23 +41,38 @@
         android:id="@+id/textAnimation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
         android:textSize="25dp"
         android:fontFamily="@font/nanumsquareb_"
         android:textColor="@color/colorAccent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recb"
-        app:layout_constraintLeft_toRightOf="@+id/post" />
-    <Button
-        android:id="@+id/post"
-        style="@style/normalbtn3"
-        android:layout_width="150dp"
-        android:text="제출하기"
-        app:layout_constraintTop_toBottomOf="@+id/recb"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnCL"
         />
 
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/btnCL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+
+        <Button
+            android:id="@+id/post"
+            android:layout_width="match_parent"
+            android:layout_height="43dp"
+            android:background="@color/colorPrimary"
+            android:text="제출하기"
+            android:textSize="15dp"
+            android:textColor="#FFFFFF"
+            android:fontFamily="@font/bmjua_"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

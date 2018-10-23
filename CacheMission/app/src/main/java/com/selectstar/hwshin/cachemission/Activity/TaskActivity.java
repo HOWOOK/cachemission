@@ -118,6 +118,7 @@ public class TaskActivity extends PatherActivity {
         mTaskView =  uiHashMap.taskViewHashMap.get(intent.getStringExtra("taskView"));
         mTaskView.setParentActivity(this);
         mController =  uiHashMap.controllerHashMap.get(intent.getStringExtra("controller"));
+        findViewById(R.id.howbtn).bringToFront();
         mParameter =  (int[][]) uiHashMap.taskHashMap.get(intent.getStringExtra("taskType"));
         taskTitle = intent.getStringExtra("taskTitle");
         if(intent.hasExtra("buttons"))
@@ -126,8 +127,6 @@ public class TaskActivity extends PatherActivity {
         mTaskTitle.setText(taskTitle);
         taskViewID = mTaskView.taskViewID;
         controllerID = mController.controllerID;
-//        taskViewID = mTaskView.taskViewID;
-//        controllerID = mController.controllerID;
 
         taskType = intent.getStringExtra("taskType");
         questString=intent.getStringExtra("questList");
