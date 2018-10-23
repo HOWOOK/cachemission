@@ -71,10 +71,9 @@ public class Controller_2DBox extends Controller {
             boxCL.setVisibility(View.INVISIBLE);
 
         //프리프로세싱은 레이아웃이 좀 달라야함
+        ConstraintLayout btnCL = view.findViewById(R.id.btnCL);
         if(parentActivity.getPartNum() == 2 ) {
-            ConstraintLayout btnCL = view.findViewById(R.id.btnCL);
             btnCL.removeView(view.findViewById(R.id.sendbtn));
-
             ConstraintSet constraintSet = new ConstraintSet();
             constraintSet.clone(btnCL);
             constraintSet.connect(view.findViewById(R.id.completebtn).getId(),
@@ -103,192 +102,129 @@ public class Controller_2DBox extends Controller {
             //프리프로세싱은 버튼이 하나 뿐일거임
         }else{
             sendButton = view.findViewById(R.id.sendbtn);
-            sendButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (((TaskView_PhotoView) parentActivity.getmTaskView()).expandFlag) {
-                        Toast.makeText(parentActivity, "먼저 물체를 찾아주세요", Toast.LENGTH_SHORT).show();
-                    } else {
-                        JSONObject param = new JSONObject();
-                        try {
-                            param.put("answerID", ((TaskActivity) parentActivity).getAnswerID());
-                            param.put("taskID", taskID);
+            if(sendButton != null) {
+                sendButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (((TaskView_PhotoView) parentActivity.getmTaskView()).expandFlag) {
+                            Toast.makeText(parentActivity, "먼저 물체를 찾아주세요", Toast.LENGTH_SHORT).show();
+                        } else {
+                            JSONObject param = new JSONObject();
+                            try {
+                                param.put("answerID", ((TaskActivity) parentActivity).getAnswerID());
+                                param.put("taskID", taskID);
 
-                            TaskView_PhotoView temp = (TaskView_PhotoView) parentActivity.getmTaskView();
-                            photoView = temp.getPhotoView();
+                                TaskView_PhotoView temp = (TaskView_PhotoView) parentActivity.getmTaskView();
+                                photoView = temp.getPhotoView();
 
-                            System.out.println("디스플레이 네모 : " + photoView.getDisplayRect());
-                            System.out.println("배율 : " + photoView.getScale());
-                            float widthCL = boxCL.getWidth();
-                            float heightCL = boxCL.getHeight();
-                            testingText1 = view.findViewById(R.id.testingtext1);
-                            testingText2 = view.findViewById(R.id.testingtext2);
-                            testingText3 = view.findViewById(R.id.testingtext3);
-                            /********************************
-                             * (x1, y1) = crop box의 현재 좌상단 좌표
-                             * (x2, y2) = crop box의 현재 우하단 좌표
-                             * (x3, y3) = photoView를 담고있는 constraintlayout의 (0,0)의 좌표가 Scale = 1일 때는 뭔지 환산한 값
-                             * (x4, y4) = crop box의 scale = 1일 대 좌상단 좌표 환산값
-                             * (x5, y5) = crop box의 scale = 1일 대 우하단 좌표 환산값
-                             *********************************/
-                            float x1, x2, x3, x4, x5, y1, y2, y3, y4, y5;
-                            x1 = centerImage.getX();
-                            x2 = centerImage.getX() + (float) centerImage.getWidth();
-                            y1 = centerImage.getY();
-                            y2 = centerImage.getY() + (float) centerImage.getHeight();
-                            originWidth = (photoView.getDisplayRect().right - photoView.getDisplayRect().left) / photoView.getScale();
-                            originHeight = (photoView.getDisplayRect().bottom - photoView.getDisplayRect().top) / photoView.getScale();
-                            originLeftMargin = (widthCL / 2.0f) - (originWidth) / 2.0f;
-                            originTopMargin = (heightCL / 2.0f) - (originHeight) / 2.0f;
-                            x3 = originLeftMargin - photoView.getDisplayRect().left / photoView.getScale();
-                            y3 = originTopMargin - photoView.getDisplayRect().top / photoView.getScale();
-                            x4 = x3 + x1 / photoView.getScale();
-                            y4 = y3 + y1 / photoView.getScale();
-                            x5 = x3 + x2 / photoView.getScale();
-                            y5 = y3 + y2 / photoView.getScale();
+                                System.out.println("디스플레이 네모 : " + photoView.getDisplayRect());
+                                System.out.println("배율 : " + photoView.getScale());
+                                float widthCL = boxCL.getWidth();
+                                float heightCL = boxCL.getHeight();
+                                testingText1 = view.findViewById(R.id.testingtext1);
+                                testingText2 = view.findViewById(R.id.testingtext2);
+                                testingText3 = view.findViewById(R.id.testingtext3);
+                                /********************************
+                                 * (x1, y1) = crop box의 현재 좌상단 좌표
+                                 * (x2, y2) = crop box의 현재 우하단 좌표
+                                 * (x3, y3) = photoView를 담고있는 constraintlayout의 (0,0)의 좌표가 Scale = 1일 때는 뭔지 환산한 값
+                                 * (x4, y4) = crop box의 scale = 1일 대 좌상단 좌표 환산값
+                                 * (x5, y5) = crop box의 scale = 1일 대 우하단 좌표 환산값
+                                 *********************************/
+                                float x1, x2, x3, x4, x5, y1, y2, y3, y4, y5;
+                                x1 = centerImage.getX();
+                                x2 = centerImage.getX() + (float) centerImage.getWidth();
+                                y1 = centerImage.getY();
+                                y2 = centerImage.getY() + (float) centerImage.getHeight();
+                                originWidth = (photoView.getDisplayRect().right - photoView.getDisplayRect().left) / photoView.getScale();
+                                originHeight = (photoView.getDisplayRect().bottom - photoView.getDisplayRect().top) / photoView.getScale();
+                                originLeftMargin = (widthCL / 2.0f) - (originWidth) / 2.0f;
+                                originTopMargin = (heightCL / 2.0f) - (originHeight) / 2.0f;
+                                x3 = originLeftMargin - photoView.getDisplayRect().left / photoView.getScale();
+                                y3 = originTopMargin - photoView.getDisplayRect().top / photoView.getScale();
+                                x4 = x3 + x1 / photoView.getScale();
+                                y4 = y3 + y1 / photoView.getScale();
+                                x5 = x3 + x2 / photoView.getScale();
+                                y5 = y3 + y2 / photoView.getScale();
 
-                            //보내야하는 데이타
-                            float leftPercent, topPercent, rightPercent, bottomPercent;
-                            final float leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend;
-                            String submit;
-                            leftPercent = (x4 - originLeftMargin) / originWidth;
-                            topPercent = (y4 - originTopMargin) / originHeight;
-                            rightPercent = (x5 - originLeftMargin) / originWidth;
-                            bottomPercent = (y5 - originTopMargin) / originHeight;
-                            if(leftPercent < 0f )
-                                leftPercent = 0f;
-                            if(rightPercent > 1f )
-                                rightPercent = 1f;
-                            if(topPercent < 0f )
-                                topPercent = 0f;
-                            if(bottomPercent > 1f )
-                                bottomPercent = 1f;
-                            leftPercentSend = leftPercent;
-                            topPercentSend = topPercent;
-                            rightPercentSend = rightPercent;
-                            bottomPercentSend = bottomPercent;
-                            int ans = parentActivity.partType();
-                            submit = "<"+ans+">"+leftPercent + "," + topPercent + "," + rightPercent + "," + bottomPercent;
-                            param.put("submit", submit);
+                                //보내야하는 데이타
+                                float leftPercent, topPercent, rightPercent, bottomPercent;
+                                final float leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend;
+                                String submit;
+                                leftPercent = (x4 - originLeftMargin) / originWidth;
+                                topPercent = (y4 - originTopMargin) / originHeight;
+                                rightPercent = (x5 - originLeftMargin) / originWidth;
+                                bottomPercent = (y5 - originTopMargin) / originHeight;
+                                if (leftPercent < 0f)
+                                    leftPercent = 0f;
+                                if (rightPercent > 1f)
+                                    rightPercent = 1f;
+                                if (topPercent < 0f)
+                                    topPercent = 0f;
+                                if (bottomPercent > 1f)
+                                    bottomPercent = 1f;
+                                leftPercentSend = leftPercent;
+                                topPercentSend = topPercent;
+                                rightPercentSend = rightPercent;
+                                bottomPercentSend = bottomPercent;
+                                int ans = parentActivity.partType();
+                                submit = "<" + ans + ">" + leftPercent + "," + topPercent + "," + rightPercent + "," + bottomPercent;
+                                param.put("submit", submit);
 
-                            new WaitHttpRequest(parentActivity) {
-                                @Override
-                                protected void onPostExecute(Object o) {
-                                    super.onPostExecute(o);
-                                    System.out.println("나 여기 들어왔어");
+                                new WaitHttpRequest(parentActivity) {
+                                    @Override
+                                    protected void onPostExecute(Object o) {
+                                        super.onPostExecute(o);
+                                        System.out.println("나 여기 들어왔어");
 
-                                    try {
-                                        JSONObject resultTemp = new JSONObject(result);
-                                        System.out.println("resultTemp : "+resultTemp);
-                                        System.out.println("서버반응 : "+resultTemp.get("success").toString());
-                                        if (resultTemp.get("success").toString().equals("false")) {
-                                            if (resultTemp.get("message").toString().equals("login")) {
-                                                Intent in = new Intent(parentActivity, LoginActivity.class);
-                                                parentActivity.startActivity(in);
-                                                Toast.makeText(parentActivity, "로그인이 만료되었습니다. 다시 로그인해주세요", Toast.LENGTH_SHORT).show();
-                                                parentActivity.finish();
-                                            } else if (resultTemp.get("message").toString().equals("task")) {
-                                                Toast.makeText(parentActivity, "테스크가 만료되었습니다. 다른 테스크를 선택해주세요", Toast.LENGTH_SHORT).show();
-                                                parentActivity.finish();
+                                        try {
+                                            JSONObject resultTemp = new JSONObject(result);
+                                            System.out.println("resultTemp : " + resultTemp);
+                                            System.out.println("서버반응 : " + resultTemp.get("success").toString());
+                                            if (resultTemp.get("success").toString().equals("false")) {
+                                                if (resultTemp.get("message").toString().equals("login")) {
+                                                    Intent in = new Intent(parentActivity, LoginActivity.class);
+                                                    parentActivity.startActivity(in);
+                                                    Toast.makeText(parentActivity, "로그인이 만료되었습니다. 다시 로그인해주세요", Toast.LENGTH_SHORT).show();
+                                                    parentActivity.finish();
+                                                } else if (resultTemp.get("message").toString().equals("task")) {
+                                                    Toast.makeText(parentActivity, "테스크가 만료되었습니다. 다른 테스크를 선택해주세요", Toast.LENGTH_SHORT).show();
+                                                    parentActivity.finish();
+                                                } else {
+                                                    Toast.makeText(parentActivity, "남은 테스크가 없습니다.", Toast.LENGTH_SHORT).show();
+                                                    parentActivity.finish();
+                                                }
                                             } else {
-                                                Toast.makeText(parentActivity, "남은 테스크가 없습니다.", Toast.LENGTH_SHORT).show();
-                                                parentActivity.finish();
+                                                System.out.println("서버반응 2: " + resultTemp.get("success").toString());
+
+                                                mtaskView_PhotoView.addAnswer(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend);
+                                                completeButton.setText("모든 부품 제출 완료");
+
+                                                mtaskView_PhotoView.drawAnswer(mtaskView_PhotoView.answerCoordination);
+
+                                                ConstraintLayout textDragCL = parentActivity.findViewById(R.id.textDragCL);
+                                                Toast.makeText(parentActivity, "제출 완료! 계속 찾아주세요.", Toast.LENGTH_SHORT).show();
+                                                boxCL.setVisibility(View.INVISIBLE);
+                                                textDragCL.setVisibility(View.VISIBLE);
+                                                textDragCL.bringToFront();
+                                                pinFlag = true;
+                                                photoView.setScale(1);
+                                                ((TaskView_PhotoView) parentActivity.getmTaskView()).expandFlag = true;
+                                                parentActivity.setGold(String.valueOf(resultTemp.get("gold")));
+                                                parentActivity.setMaybe(String.valueOf(resultTemp.get("maybe")));
                                             }
-                                        } else {
-                                            System.out.println("서버반응 2: "+resultTemp.get("success").toString());
-
-                                            mtaskView_PhotoView.addAnswer(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend);
-                                            completeButton.setText("모든 부품 제출 완료 +3원");
-
-                                            //addAnswer함수로 이동
-//                                            drawAnswerCount++;
-//                                            System.out.println("그려져있던 수 : "+answerCount+" 내가 그린 수 : "+drawAnswerCount);
-//                                            answerCoordinationTemp = mtaskView_PhotoView.answerCoordination;
-//                                            answerTypeTemp = mtaskView_PhotoView.answerType;
-//
-//                                            if (mtaskView_PhotoView.answerCoordination!=null) {
-//                                                System.out.println("---------추가 전 ----------");
-//                                                for (int i = 0; i < mtaskView_PhotoView.answerCoordination.length; i++) {
-//                                                    System.out.print("(");
-//                                                    for (int j = 0; j < 4; j++) {
-//                                                        System.out.print(mtaskView_PhotoView.answerCoordination[i][j] + ",");
-//                                                    }
-//                                                    System.out.print(" 타입 : " + mtaskView_PhotoView.answerType[i]);
-//                                                    System.out.println(")");
-//                                                }
-//                                            }
-//
-//                                            mtaskView_PhotoView.answerCoordination = new float[answerCount + drawAnswerCount][4];
-//                                            mtaskView_PhotoView.answerType = new int[answerCount + drawAnswerCount];
-//
-//                                            if(answerCoordinationTemp != null) {
-//                                                for (int i = 0; i < answerCoordinationTemp.length; i++) {
-//                                                    mtaskView_PhotoView.answerCoordination[i][0] = answerCoordinationTemp[i][0];
-//                                                    mtaskView_PhotoView.answerCoordination[i][1] = answerCoordinationTemp[i][1];
-//                                                    mtaskView_PhotoView.answerCoordination[i][2] = answerCoordinationTemp[i][2];
-//                                                    mtaskView_PhotoView.answerCoordination[i][3] = answerCoordinationTemp[i][3];
-//                                                    mtaskView_PhotoView.answerType[i] = answerTypeTemp[i];
-//                                                }
-//                                            }
-//
-//                                            if (mtaskView_PhotoView.answerCoordination!=null) {
-//                                                System.out.println("---------복사 후----------");
-//                                                for (int i = 0; i < mtaskView_PhotoView.answerCoordination.length; i++) {
-//                                                    System.out.print("(");
-//                                                    for (int j = 0; j < 4; j++) {
-//                                                        System.out.print(mtaskView_PhotoView.answerCoordination[i][j] + ",");
-//                                                    }
-//                                                    System.out.print(" 타입 : " + mtaskView_PhotoView.answerType[i]);
-//                                                    System.out.println(")");
-//                                                }
-//                                            }
-//
-//
-//                                            mtaskView_PhotoView.answerCoordination[answerCount + drawAnswerCount - 1][0] = leftPercentSend;
-//                                            mtaskView_PhotoView.answerCoordination[answerCount + drawAnswerCount - 1][1] = topPercentSend;
-//                                            mtaskView_PhotoView.answerCoordination[answerCount + drawAnswerCount - 1][2] = rightPercentSend;
-//                                            mtaskView_PhotoView.answerCoordination[answerCount + drawAnswerCount - 1][3] = bottomPercentSend;
-//                                            mtaskView_PhotoView.answerType[answerCount + drawAnswerCount - 1] = 1;
-//                                            mtaskView_PhotoView.changedCoordination = new float[mtaskView_PhotoView.answerCoordination.length][4];
-//
-//                                            if (mtaskView_PhotoView.answerCoordination!=null) {
-//                                                System.out.println("---------추가 후----------");
-//                                                for (int i = 0; i < mtaskView_PhotoView.answerCoordination.length; i++) {
-//                                                    System.out.print("(");
-//                                                    for (int j = 0; j < 4; j++) {
-//                                                        System.out.print(mtaskView_PhotoView.answerCoordination[i][j] + ",");
-//                                                    }
-//                                                    System.out.print(" 타입 : " + mtaskView_PhotoView.answerType[i]);
-//                                                    System.out.println(")");
-//                                                }
-//                                            }
-
-                                            mtaskView_PhotoView.drawAnswer(mtaskView_PhotoView.answerCoordination);
-
-
-                                            ConstraintLayout textDragCL = parentActivity.findViewById(R.id.textDragCL);
-                                            Toast.makeText(parentActivity, "제출 완료! 계속 찾아주세요.", Toast.LENGTH_SHORT).show();
-                                            boxCL.setVisibility(View.INVISIBLE);
-                                            textDragCL.setVisibility(View.VISIBLE);
-                                            textDragCL.bringToFront();
-                                            pinFlag = true;
-                                            photoView.setScale(1);
-                                            ((TaskView_PhotoView) parentActivity.getmTaskView()).expandFlag = true;
-                                            parentActivity.setGold(String.valueOf(resultTemp.get("gold")));
-                                            parentActivity.setMaybe(String.valueOf(resultTemp.get("maybe")));
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
                                         }
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
                                     }
-                                }
-                            }.execute(parentActivity.getString(R.string.mainurl) + "/testing/taskSubmit", param, ((TaskActivity) parentActivity).getLoginToken());
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                                }.execute(parentActivity.getString(R.string.mainurl) + "/testing/taskSubmit", param, ((TaskActivity) parentActivity).getLoginToken());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
-                }
-            });
-
+                });
+            }
         }
 
         completeButton = view.findViewById(R.id.completebtn);
@@ -387,22 +323,7 @@ public class Controller_2DBox extends Controller {
                                                     parentActivity.finish();
                                                 }
                                             } else {
-
                                                 mtaskView_PhotoView.removeAnswer();
-                                                //romoveAnswer함수로 이동
-//                                                answerCount= 0;
-//                                                drawAnswerCount = 0;
-//                                                mtaskView_PhotoView.answerType=null;
-//                                                mtaskView_PhotoView.answerCoordination=null;
-//                                                if(mtaskView_PhotoView.answerList != null) {
-//                                                    for (int i = 0; i < mtaskView_PhotoView.answerList.length; i++) {
-//                                                        photoViewCL.removeView(mtaskView_PhotoView.answerList[i]);
-//                                                        photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][0]);
-//                                                        photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][1]);
-//                                                        photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][2]);
-//                                                        photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][3]);
-//                                                    }
-//                                                }
                                                 ((TaskActivity)parentActivity).startTask();
                                                 parentActivity.setGold(String.valueOf(resultTemp.get("gold")));
                                                 parentActivity.setMaybe(String.valueOf(resultTemp.get("maybe")));
@@ -463,19 +384,7 @@ public class Controller_2DBox extends Controller {
                                                     parentActivity.finish();
                                                 }
                                             } else {
-                                                answerCount = 0;
-                                                drawAnswerCount = 0;
-                                                mtaskView_PhotoView.answerType = null;
-                                                mtaskView_PhotoView.answerCoordination = null;
-                                                if (mtaskView_PhotoView.answerList != null) {
-                                                    for (int i = 0; i < mtaskView_PhotoView.answerList.length; i++) {
-                                                        photoViewCL.removeView(mtaskView_PhotoView.answerList[i]);
-                                                        photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][0]);
-                                                        photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][1]);
-                                                        photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][2]);
-                                                        photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][3]);
-                                                    }
-                                                }
+                                                mtaskView_PhotoView.removeAnswer();
                                                 ((TaskActivity) parentActivity).startTask();
                                                 parentActivity.setGold(String.valueOf(resultTemp.get("gold")));
                                                 parentActivity.setMaybe(String.valueOf(resultTemp.get("maybe")));

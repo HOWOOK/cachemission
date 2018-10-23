@@ -93,7 +93,7 @@ public abstract class PatherActivity extends AppCompatActivity {
     }
     protected void partDialogShow(TextView partText) {
         final TextView partTextTemp = partText;
-        com.selectstar.hwshin.cachemission.DataStructure.Dialog.PartSelectDialog dialog = new com.selectstar.hwshin.cachemission.DataStructure.Dialog.PartSelectDialog(this, R.style.AppTheme_Transparent_Dialog);
+        com.selectstar.hwshin.cachemission.Dialog.PartSelectDialog dialog = new com.selectstar.hwshin.cachemission.Dialog.PartSelectDialog(this, R.style.AppTheme_Transparent_Dialog);
         dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {

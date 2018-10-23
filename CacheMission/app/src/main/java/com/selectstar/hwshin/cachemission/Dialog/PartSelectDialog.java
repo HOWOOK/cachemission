@@ -1,4 +1,4 @@
-package com.selectstar.hwshin.cachemission.DataStructure.Dialog;
+package com.selectstar.hwshin.cachemission.Dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -45,6 +45,7 @@ public class PartSelectDialog extends Dialog{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_partselect);
+        getWindow().setStatusBarColor(getContext().getResources().getColor(R.color.colorPrimary));
         dialogCL = findViewById(R.id.dialogCL);
         cancelbtn = findViewById(R.id.cancelbtn);
         cancelbtn.setOnClickListener(new View.OnClickListener() {

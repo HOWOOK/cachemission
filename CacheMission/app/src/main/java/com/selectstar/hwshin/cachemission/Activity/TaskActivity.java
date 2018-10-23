@@ -25,7 +25,7 @@ import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_2D
 import com.selectstar.hwshin.cachemission.DataStructure.HurryHttpRequest;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_Photo;
-import com.selectstar.hwshin.cachemission.DataStructure.Dialog.PartSelectDialog;
+import com.selectstar.hwshin.cachemission.Dialog.PartSelectDialog;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoView;
 import com.selectstar.hwshin.cachemission.DataStructure.UIHashMap;
@@ -71,6 +71,8 @@ public class TaskActivity extends PatherActivity {
                 && tasktoken.getInt(taskType + "taskToken", 0) == 100){
             if(explain.getString("region","").equals("")){
                 regionDialogShow((TextView) findViewById(R.id.regionText));
+            }else{
+                ((TextView) findViewById(R.id.regionText)).setText(explain.getString("region",""));
             }
         }
     }
@@ -266,17 +268,22 @@ public class TaskActivity extends PatherActivity {
     public void onBackPressed() {
         //박스 테스크의 경우 확대 잘못하면 취소 눌렀을 때 다시 확대 할수있도록 해야함
         if(taskType.equals("BOXCROP")){
-            TaskView_PhotoView temp = (TaskView_PhotoView) mTaskView;
-            Controller_2DBox temp2 = (Controller_2DBox) mController;
-            if(!temp.expandFlag && temp.getPhotoView()!=null){
-                temp.expandFlag = true;
-                temp2.getPinButton().setBackgroundResource(R.drawable.twodbox_icon_pin_on);
-                temp2.pinFlag = true;
-                temp.getPhotoView().setScale(1);
+            TaskView_PhotoView taskView = (TaskView_PhotoView) mTaskView;
+            Controller_2DBox controller = (Controller_2DBox) mController;
+            TextView partText = findViewById(R.id.partText);
+            if(!taskView.expandFlag && taskView.getPhotoView()!=null){
+                taskView.expandFlag = true;
+                controller.getPinButton().setBackgroundResource(R.drawable.twodbox_icon_pin_on);
+                controller.pinFlag = true;
+                taskView.getPhotoView().setScale(1);
                 findViewById(R.id.boxCL).setVisibility(View.INVISIBLE);
                 findViewById(R.id.textDragCL).setVisibility(View.VISIBLE);
                 findViewById(R.id.textDragCL).bringToFront();
-            } else{
+            } else if(taskView.expandFlag){
+                partText.setText("");
+                partDialogShow(partText);
+                taskView.removeAnswer();
+            }else{
                 super.onBackPressed();
             }
         }else{
@@ -385,20 +392,17 @@ public class TaskActivity extends PatherActivity {
     //해당 task가 처음이라면 설명서 띄워주는 것
 
     public void showDescription()
-    {System.out.println("11111");
+    {
         SharedPreferences taskToken = getSharedPreferences("taskToken", MODE_PRIVATE);
         if(taskToken.getInt(taskType + "taskToken",0) == 100)
             return;
-
-        System.out.println("222");
         Intent intent_taskExplain;
         TextView partText = findViewById(R.id.partText);
         Log.d("boxbox",taskType);
         if(taskType.equals("BOXCROP")){
-
-//            intent_taskExplain = new Intent(TaskActivity.this, NewExplainActivity.class);
-//            intent_taskExplain.putExtra("part", partText.getText());
-
+            intent_taskExplain = new Intent(TaskActivity.this, NewExplainActivity.class);
+            intent_taskExplain.putExtra("part", partText.getText());
+            System.out.println("가져온 텍스트 : "+partText.getText());
         }else{
             intent_taskExplain = new Intent(TaskActivity.this, TaskExplainActivity.class);
             intent_taskExplain.putExtra("taskType", taskType);
