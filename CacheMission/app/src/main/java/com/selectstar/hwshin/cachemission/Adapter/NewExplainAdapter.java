@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.PagerAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ public class NewExplainAdapter extends PagerAdapter {
 
     public NewExplainAdapter(Context context,String taskType){
         this.context=context;
+        Log.d("tasktypehere",taskType);
         ExplainHashMap explainHashMap =new ExplainHashMap();
 
         this.mImageList= explainHashMap.taskTypeLinkImages.get(taskType);

@@ -118,7 +118,7 @@ public class NewExplainActivity extends AppCompatActivity {
 
     private PagerAdapter findAdaptingTaskExplain(String tasktype) {
 
-        return new NewExplainAdapter(this,taskType+part);
+        return new NewExplainAdapter(this,tasktype+part);
     }
     @Override
     protected void onStart(){

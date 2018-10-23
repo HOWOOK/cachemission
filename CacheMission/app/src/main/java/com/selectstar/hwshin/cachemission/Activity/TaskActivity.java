@@ -395,15 +395,16 @@ public class TaskActivity extends PatherActivity {
         TextView partText = findViewById(R.id.partText);
         Log.d("boxbox",taskType);
         if(taskType.equals("BOXCROP")){
-            System.out.println("3333");
-            intent_taskExplain = new Intent(TaskActivity.this, NewExplainActivity.class);
-            intent_taskExplain.putExtra("part", partText.getText());
-            System.out.println("가져온 텍스트 : "+partText.getText());
+
+//            intent_taskExplain = new Intent(TaskActivity.this, NewExplainActivity.class);
+//            intent_taskExplain.putExtra("part", partText.getText());
+
         }else{
             intent_taskExplain = new Intent(TaskActivity.this, TaskExplainActivity.class);
+            intent_taskExplain.putExtra("taskType", taskType);
+            startActivity(intent_taskExplain);
         }
-        intent_taskExplain.putExtra("taskType", taskType);
-        startActivity(intent_taskExplain);
+
     }
 
 
