@@ -337,7 +337,6 @@ public abstract class PatherActivity extends AppCompatActivity {
         TextView partText = findViewById(R.id.partText);
         Log.d("boxbox",taskType);
         if(taskType.equals("BOXCROP")){
-            System.out.println("3333");
             intent_taskExplain = new Intent(PatherActivity.this, NewExplainActivity.class);
             intent_taskExplain.putExtra("part", partText.getText());
             System.out.println("가져온 텍스트 : "+partText.getText());

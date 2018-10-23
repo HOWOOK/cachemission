@@ -684,16 +684,19 @@ public class TaskView_PhotoView extends TaskView {
     }
 
     //size도 함께 생각해야한다........
-    private  void similarityTest(float left, float top, float right, float bottom){
-        Boolean rtnVal = false;
-        float error = 0.1f;
-        for (int i = 0; i < answerCoordination.length; i++){
-            if(answerCoordination[i][0] - left < error &&
-                    answerCoordination[i][1] - top < error &&
-                    answerCoordination[i][2] - right < error &&
-                    answerCoordination[i][3] - bottom < error);
+    public boolean similarityTest(float left, float top, float right, float bottom){
+        Boolean rtnVal = true;
+        float error = 0.05f;
+        if(answerCoordination!=null) {
+            for (int i = 0; i < answerCoordination.length; i++) {
+                if (Math.abs(answerCoordination[i][0] - left) < error &&
+                        Math.abs(answerCoordination[i][1] - top) < error &&
+                        Math.abs(answerCoordination[i][2] - right) < error &&
+                        Math.abs(answerCoordination[i][3] - bottom) < error)
+                    rtnVal = false;
+            }
         }
-
+        return  rtnVal;
     };
 
 

@@ -171,53 +171,57 @@ public class Controller_2DBox extends Controller {
                                 submit = "<" + ans + ">" + leftPercent + "," + topPercent + "," + rightPercent + "," + bottomPercent;
                                 param.put("submit", submit);
 
-                                new WaitHttpRequest(parentActivity) {
-                                    @Override
-                                    protected void onPostExecute(Object o) {
-                                        super.onPostExecute(o);
-                                        System.out.println("나 여기 들어왔어");
+                                if(mtaskView_PhotoView.similarityTest(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend)) {
+                                    new WaitHttpRequest(parentActivity) {
+                                        @Override
+                                        protected void onPostExecute(Object o) {
+                                            super.onPostExecute(o);
+                                            System.out.println("나 여기 들어왔어");
 
-                                        try {
-                                            JSONObject resultTemp = new JSONObject(result);
-                                            System.out.println("resultTemp : " + resultTemp);
-                                            System.out.println("서버반응 : " + resultTemp.get("success").toString());
-                                            if (resultTemp.get("success").toString().equals("false")) {
-                                                if (resultTemp.get("message").toString().equals("login")) {
-                                                    Intent in = new Intent(parentActivity, LoginActivity.class);
-                                                    parentActivity.startActivity(in);
-                                                    Toast.makeText(parentActivity, "로그인이 만료되었습니다. 다시 로그인해주세요", Toast.LENGTH_SHORT).show();
-                                                    parentActivity.finish();
-                                                } else if (resultTemp.get("message").toString().equals("task")) {
-                                                    Toast.makeText(parentActivity, "테스크가 만료되었습니다. 다른 테스크를 선택해주세요", Toast.LENGTH_SHORT).show();
-                                                    parentActivity.finish();
+                                            try {
+                                                JSONObject resultTemp = new JSONObject(result);
+                                                System.out.println("resultTemp : " + resultTemp);
+                                                System.out.println("서버반응 : " + resultTemp.get("success").toString());
+                                                if (resultTemp.get("success").toString().equals("false")) {
+                                                    if (resultTemp.get("message").toString().equals("login")) {
+                                                        Intent in = new Intent(parentActivity, LoginActivity.class);
+                                                        parentActivity.startActivity(in);
+                                                        Toast.makeText(parentActivity, "로그인이 만료되었습니다. 다시 로그인해주세요", Toast.LENGTH_SHORT).show();
+                                                        parentActivity.finish();
+                                                    } else if (resultTemp.get("message").toString().equals("task")) {
+                                                        Toast.makeText(parentActivity, "테스크가 만료되었습니다. 다른 테스크를 선택해주세요", Toast.LENGTH_SHORT).show();
+                                                        parentActivity.finish();
+                                                    } else {
+                                                        Toast.makeText(parentActivity, "남은 테스크가 없습니다.", Toast.LENGTH_SHORT).show();
+                                                        parentActivity.finish();
+                                                    }
                                                 } else {
-                                                    Toast.makeText(parentActivity, "남은 테스크가 없습니다.", Toast.LENGTH_SHORT).show();
-                                                    parentActivity.finish();
+                                                    System.out.println("서버반응 2: " + resultTemp.get("success").toString());
+
+                                                    mtaskView_PhotoView.addAnswer(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend);
+                                                    completeButton.setText("모든 부품 제출 완료");
+
+                                                    mtaskView_PhotoView.drawAnswer(mtaskView_PhotoView.answerCoordination);
+
+                                                    ConstraintLayout textDragCL = parentActivity.findViewById(R.id.textDragCL);
+                                                    Toast.makeText(parentActivity, "제출 완료! 계속 찾아주세요.", Toast.LENGTH_SHORT).show();
+                                                    boxCL.setVisibility(View.INVISIBLE);
+                                                    textDragCL.setVisibility(View.VISIBLE);
+                                                    textDragCL.bringToFront();
+                                                    pinFlag = true;
+                                                    photoView.setScale(1);
+                                                    ((TaskView_PhotoView) parentActivity.getmTaskView()).expandFlag = true;
+                                                    parentActivity.setGold(String.valueOf(resultTemp.get("gold")));
+                                                    parentActivity.setMaybe(String.valueOf(resultTemp.get("maybe")));
                                                 }
-                                            } else {
-                                                System.out.println("서버반응 2: " + resultTemp.get("success").toString());
-
-                                                mtaskView_PhotoView.addAnswer(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend);
-                                                completeButton.setText("모든 부품 제출 완료");
-
-                                                mtaskView_PhotoView.drawAnswer(mtaskView_PhotoView.answerCoordination);
-
-                                                ConstraintLayout textDragCL = parentActivity.findViewById(R.id.textDragCL);
-                                                Toast.makeText(parentActivity, "제출 완료! 계속 찾아주세요.", Toast.LENGTH_SHORT).show();
-                                                boxCL.setVisibility(View.INVISIBLE);
-                                                textDragCL.setVisibility(View.VISIBLE);
-                                                textDragCL.bringToFront();
-                                                pinFlag = true;
-                                                photoView.setScale(1);
-                                                ((TaskView_PhotoView) parentActivity.getmTaskView()).expandFlag = true;
-                                                parentActivity.setGold(String.valueOf(resultTemp.get("gold")));
-                                                parentActivity.setMaybe(String.valueOf(resultTemp.get("maybe")));
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
                                             }
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
                                         }
-                                    }
-                                }.execute(parentActivity.getString(R.string.mainurl) + "/testing/taskSubmit", param, ((TaskActivity) parentActivity).getLoginToken());
+                                    }.execute(parentActivity.getString(R.string.mainurl) + "/testing/taskSubmit", param, ((TaskActivity) parentActivity).getLoginToken());
+                                }else{
+                                    Toast.makeText(parentActivity, "이미 박스를 친 곳인 것 같네요 T^T", Toast.LENGTH_SHORT).show();
+                                }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
