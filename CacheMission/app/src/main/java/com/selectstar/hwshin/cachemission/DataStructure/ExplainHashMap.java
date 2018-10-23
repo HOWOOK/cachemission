@@ -86,7 +86,7 @@ public class ExplainHashMap {
         images_BOXCROP_partC.add(R.drawable.small_c_7);
 
 
-        taskTypeLinkImages.put("BOXCROPpartD", images_BOXCROP_partB);
+        taskTypeLinkImages.put("BOXCROPpartD", images_BOXCROP_partD);
         images_BOXCROP_partD.add(R.drawable.small_d_1);
         images_BOXCROP_partD.add(R.drawable.small_d_2);
         images_BOXCROP_partD.add(R.drawable.small_d_3);

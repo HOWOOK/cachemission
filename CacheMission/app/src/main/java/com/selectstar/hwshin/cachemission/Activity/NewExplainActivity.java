@@ -76,9 +76,9 @@ public class NewExplainActivity extends AppCompatActivity {
 
     private String partTranslation(String part) {
         String result ="";
-        if(part.equals("프리프로세스"))
+        if(part.equals("전봇대 부품들"))
             result = "preProcess";
-        if(part.equals("전신주"))
+        if(part.equals("전봇대"))
             result = "pole";
         if(part.equals("나무"))
             result = "tree";

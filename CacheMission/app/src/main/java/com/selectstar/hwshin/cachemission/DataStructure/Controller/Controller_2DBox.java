@@ -198,7 +198,7 @@ public class Controller_2DBox extends Controller {
                                             System.out.println("서버반응 2: "+resultTemp.get("success").toString());
 
                                             mtaskView_PhotoView.addAnswer(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend);
-                                            completeButton.setText("모든 부품 제출 완료");
+                                            completeButton.setText("모든 부품 제출 완료 +3원");
 
                                             //addAnswer함수로 이동
 //                                            drawAnswerCount++;
@@ -295,7 +295,7 @@ public class Controller_2DBox extends Controller {
         if(parentActivity.getPartNum() == 2)
             completeButton.setText("제출완료");
         else
-            completeButton.setText("찾을 부품 없음");
+            completeButton.setText("찾을 부품 없음 +3원");
 
         completeButton.setOnClickListener(new View.OnClickListener() {
             @Override

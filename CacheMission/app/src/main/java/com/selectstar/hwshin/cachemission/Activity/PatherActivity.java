@@ -65,9 +65,9 @@ public abstract class PatherActivity extends AppCompatActivity {
         int answer = -1;
         TextView partType = findViewById(R.id.partText);
         System.out.println(partType.getText().toString());
-        if(partType.getText().toString().equals("프리프로세스"))
+        if(partType.getText().toString().equals("전봇대 부품들"))
             answer = 2;
-        if(partType.getText().toString().equals("전신주"))
+        if(partType.getText().toString().equals("전봇대"))
             answer = 3;
         if(partType.getText().toString().equals("나무"))
             answer = 4;
