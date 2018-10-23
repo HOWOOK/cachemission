@@ -199,7 +199,7 @@ public class Controller_2DBox extends Controller {
                                                     System.out.println("서버반응 2: " + resultTemp.get("success").toString());
 
                                                     mtaskView_PhotoView.addAnswer(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend);
-                                                    completeButton.setText("모든 부품 제출 완료");
+                                                    completeButton.setText("모든 부품 제출 완료 +3원");
 
                                                     mtaskView_PhotoView.drawAnswer(mtaskView_PhotoView.answerCoordination);
 
