@@ -2,6 +2,13 @@ package com.selectstar.hwshin.cachemission.Activity;
 
 import android.app.Activity;
 import android.app.Application;
+import android.app.LauncherActivity;
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.support.v4.app.NotificationCompat;
+
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
@@ -10,6 +17,7 @@ import com.kakao.usermgmt.response.model.User;
 import com.selectstar.hwshin.cachemission.LoginHelper.KakaoSDKAdapter;
 import com.selectstar.hwshin.cachemission.R;
 
+import java.util.Date;
 import java.util.HashMap;
 
 public class GlobalApplication extends Application {
@@ -66,6 +74,7 @@ public class GlobalApplication extends Application {
     }
 
 
+
     public static GlobalApplication getGlobalApplicationContext() {
         return obj;
     }
@@ -78,4 +87,5 @@ public class GlobalApplication extends Application {
     public static void setCurrentActivity(Activity currentActivity) {
         GlobalApplication.currentActivity = currentActivity;
     }
+
 }

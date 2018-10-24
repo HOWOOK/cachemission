@@ -1,5 +1,9 @@
 package com.selectstar.hwshin.cachemission.Activity;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -7,12 +11,15 @@ import android.content.SharedPreferences;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.CountDownTimer;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.DrawerLayout;
 
 import android.support.v7.app.AppCompatActivity;
@@ -61,6 +68,8 @@ public class TaskListActivity extends AppCompatActivity {
     private Button refreshButton;
     private  TextView refreshText;
     public int runningHTTPRequest=0;
+    NotificationCompat.Builder mBuilder;
+    NotificationManager notifManager = (NotificationManager) getSystemService  (Context.NOTIFICATION_SERVICE);
 
 
     public static boolean isNetworkConnected(Context context){
@@ -618,6 +627,69 @@ runningHTTPRequest++;
 
 
 
+
+    }
+    public synchronized void topBarSetting(String todayMoney,boolean notificationFlag){
+
+        Bitmap mLargeIcon= BitmapFactory.decodeResource(getResources(),R.drawable.cashmissioniconround);
+        PendingIntent mPendingIntent=PendingIntent.getActivity(
+                TaskListActivity.this,
+                0,
+                new Intent(getApplicationContext(),TaskListActivity.class),
+                PendingIntent.FLAG_UPDATE_CURRENT
+
+                );
+
+
+        String channelId = "channel";
+        String channelName = "Channel Name";
+
+
+
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+
+            NotificationChannel mChannel = new NotificationChannel(
+                    channelId, channelName, importance);
+
+            notifManager.createNotificationChannel(mChannel);
+
+        }
+
+        mBuilder =
+                new NotificationCompat.Builder(getApplicationContext(), channelId);
+
+        Intent notificationIntent = new Intent(getApplicationContext()
+
+                , TaskListActivity.class);
+
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+        int requestID = (int) System.currentTimeMillis();
+
+        PendingIntent pendingIntent
+                = PendingIntent.getActivity(getApplicationContext()
+
+                , requestID
+
+                , notificationIntent
+
+                , PendingIntent.FLAG_UPDATE_CURRENT);
+
+        mBuilder
+                .setSmallIcon(R.drawable.cashmissioniconround)
+                .setContentTitle("캐시미션")
+                .setContentText("오늘번돈 : "+R.string.wonunicode+todayMoney)
+                .setDefaults(Notification.DEFAULT_SOUND)
+                .setLargeIcon(mLargeIcon)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(false)
+                .setContentIntent(pendingIntent);
+
+        notifManager.notify(0, mBuilder.build());
 
     }
     protected void onCreate(Bundle savedInstanceState) {
