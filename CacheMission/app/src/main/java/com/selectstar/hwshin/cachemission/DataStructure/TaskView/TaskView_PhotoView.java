@@ -433,7 +433,7 @@ public class TaskView_PhotoView extends TaskView {
     //좌표를 토대로 photoview에 라벨링된 데이터를 그려준다.
     public void drawAnswer(float[][] answerCoordination) {
         coordinationChange(answerCoordination);
-
+        System.out.println("그린다.");
 //        System.out.print("-----변환된 좌표-----");
 //        System.out.println("길이 : "+answerCoordination.length);
 //        for (int i = 0; i<answerCoordination.length; i++){
@@ -446,6 +446,7 @@ public class TaskView_PhotoView extends TaskView {
 
         if(answerList == null || (answerList.length != changedCoordination.length)) {
             //일전에 그려져있던건 싹 지워야한다.
+            System.out.println("지운다.");
             if(answerList != null){
                 for (int i = 0; i < answerList.length; i++){
                     photoViewCL.removeView(answerList[i]);
@@ -679,19 +680,23 @@ public class TaskView_PhotoView extends TaskView {
                 photoViewCL.removeView(answerEdges[i][3]);
             }
         }
+        answerList = null;
     }
 
     //size도 함께 생각해야한다........
-    private  void similarityTest(float left, float top, float right, float bottom){
-        Boolean rtnVal = false;
-        float error = 0.1f;
-        for (int i = 0; i < answerCoordination.length; i++){
-            if(answerCoordination[i][0] - left < error &&
-                    answerCoordination[i][1] - top < error &&
-                    answerCoordination[i][2] - right < error &&
-                    answerCoordination[i][3] - bottom < error);
+    public boolean similarityTest(float left, float top, float right, float bottom){
+        Boolean rtnVal = true;
+        float error = 0.015f;
+        if(answerCoordination!=null) {
+            for (int i = 0; i < answerCoordination.length; i++) {
+                if (Math.abs(answerCoordination[i][0] - left) < error &&
+                        Math.abs(answerCoordination[i][1] - top) < error &&
+                        Math.abs(answerCoordination[i][2] - right) < error &&
+                        Math.abs(answerCoordination[i][3] - bottom) < error)
+                    rtnVal = false;
+            }
         }
-
+        return  rtnVal;
     };
 
 

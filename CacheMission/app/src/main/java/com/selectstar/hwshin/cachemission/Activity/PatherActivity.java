@@ -65,9 +65,9 @@ public abstract class PatherActivity extends AppCompatActivity {
         int answer = -1;
         TextView partType = findViewById(R.id.partText);
         System.out.println(partType.getText().toString());
-        if(partType.getText().toString().equals("프리프로세스"))
+        if(partType.getText().toString().equals("전봇대 부품들"))
             answer = 2;
-        if(partType.getText().toString().equals("전신주"))
+        if(partType.getText().toString().equals("전봇대"))
             answer = 3;
         if(partType.getText().toString().equals("나무"))
             answer = 4;
@@ -93,7 +93,7 @@ public abstract class PatherActivity extends AppCompatActivity {
     }
     protected void partDialogShow(TextView partText) {
         final TextView partTextTemp = partText;
-        com.selectstar.hwshin.cachemission.DataStructure.Dialog.PartSelectDialog dialog = new com.selectstar.hwshin.cachemission.DataStructure.Dialog.PartSelectDialog(this, R.style.AppTheme_Transparent_Dialog);
+        com.selectstar.hwshin.cachemission.Dialog.PartSelectDialog dialog = new com.selectstar.hwshin.cachemission.Dialog.PartSelectDialog(this, R.style.AppTheme_Transparent_Dialog);
         dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
@@ -337,7 +337,6 @@ public abstract class PatherActivity extends AppCompatActivity {
         TextView partText = findViewById(R.id.partText);
         Log.d("boxbox",taskType);
         if(taskType.equals("BOXCROP")){
-            System.out.println("3333");
             intent_taskExplain = new Intent(PatherActivity.this, NewExplainActivity.class);
             intent_taskExplain.putExtra("part", partText.getText());
             System.out.println("가져온 텍스트 : "+partText.getText());

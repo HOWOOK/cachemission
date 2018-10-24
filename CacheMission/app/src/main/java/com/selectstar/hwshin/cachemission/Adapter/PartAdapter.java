@@ -15,25 +15,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.common.util.ArrayUtils;
-import com.selectstar.hwshin.cachemission.Activity.GalleryActivity;
 import com.selectstar.hwshin.cachemission.Activity.PatherActivity;
-import com.selectstar.hwshin.cachemission.Activity.TaskActivity;
-import com.selectstar.hwshin.cachemission.DataStructure.Dialog.PartSelectDialog;
-import com.selectstar.hwshin.cachemission.DataStructure.RecyclerItem;
+import com.selectstar.hwshin.cachemission.Dialog.PartSelectDialog;
 import com.selectstar.hwshin.cachemission.R;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import static android.content.Context.MODE_PRIVATE;
-import static android.support.constraint.Constraints.TAG;
 
 public class PartAdapter extends RecyclerView.Adapter<PartAdapter.ItemViewHolder> {
     Context context;
@@ -67,7 +57,6 @@ public class PartAdapter extends RecyclerView.Adapter<PartAdapter.ItemViewHolder
                 TextView tv = mActivity.findViewById(R.id.partText);
                 tv.setText(nameList.get(position));
                 mDialog.dismiss();
-                System.out.println("bbbbb");
                 String taskName="a";
                 if(nameList.get(position).equals("변압기"))
                     taskName="transformer";
@@ -93,10 +82,8 @@ public class PartAdapter extends RecyclerView.Adapter<PartAdapter.ItemViewHolder
                 mActivity.forcedShowDescription(taskName);
                 SharedPreferences firstTimeExplain = mActivity.getSharedPreferences("firstTimeExplain", MODE_PRIVATE);
                 SharedPreferences.Editor editor=firstTimeExplain.edit();
-
                 editor.putString(taskName,"notFirst");
                 editor.commit();
-                System.out.println("aaaaaa");
             }
         });
 

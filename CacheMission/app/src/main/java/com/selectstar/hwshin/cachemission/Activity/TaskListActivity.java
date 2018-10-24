@@ -564,7 +564,19 @@ runningHTTPRequest++;
             return;
         }
         runningHTTPRequest++;
+        String version = null;
+        try {
+            PackageInfo i = this.getPackageManager().getPackageInfo(this.getPackageName(), 0);
+            version = i.versionName;
+        } catch(PackageManager.NameNotFoundException e) {
+
+        }
         JSONObject param = new JSONObject();
+        try {
+            param.put("version", version);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         WaitHttpRequest asyncTask= new WaitHttpRequest(this) {
             @Override
             protected void onPostExecute(Object o) {
@@ -594,7 +606,7 @@ runningHTTPRequest++;
                     ProgressBar progress = findViewById(R.id.mainProgressBar);
                     setUserProgressBar(progress,(int)user.get("rank"), (int)user.get("success_count"));
 //                    if(!resultTemp.get("emergency").toString().equals(""))
-//                    Toast.makeText(mContext,resultTemp.get("emergency").toString(),Toast.LENGTH_SHORT);
+//                        Toast.makeText(mContext,resultTemp.get("emergency").toString(),Toast.LENGTH_SHORT);
                     JSONArray examList = (JSONArray) resultTemp.get("exam_data");
                     for (int i = 0; i < examList.length(); i++)
                         mTaskList.add((JSONObject) examList.get(i));

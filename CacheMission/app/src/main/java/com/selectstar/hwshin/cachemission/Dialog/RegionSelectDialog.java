@@ -61,6 +61,7 @@ public class RegionSelectDialog extends Dialog implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_regionselect);
+        getWindow().setStatusBarColor(getContext().getResources().getColor(R.color.colorPrimary));
         String region="";
         final SharedPreferences explain = context.getSharedPreferences("region", Context.MODE_PRIVATE);
 
