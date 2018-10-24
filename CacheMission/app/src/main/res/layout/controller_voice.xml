@@ -12,7 +12,7 @@
         android:layout_height="100dp"
         android:background="@drawable/recordstartbtn"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnCL"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/stream"
         />
@@ -23,7 +23,7 @@
         android:layout_height="100dp"
         android:background="@drawable/voiceplaybtn"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnCL"
         app:layout_constraintStart_toEndOf="@+id/recb"
         app:layout_constraintEnd_toEndOf="parent"
         />
