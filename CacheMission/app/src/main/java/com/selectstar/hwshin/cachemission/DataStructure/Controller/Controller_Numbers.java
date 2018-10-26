@@ -51,7 +51,6 @@ public class Controller_Numbers extends Controller {
                     System.out.println(taskID);
                     System.out.println(Integer.parseInt(result));
                     parentActivity.setGold("-1");
-
                     param.put("answerID", parentActivity.getAnswerID());
                     param.put("taskID", taskID);
                     param.put("submit", Integer.parseInt(result));
@@ -71,7 +70,6 @@ public class Controller_Numbers extends Controller {
                                         Toast.makeText(parentActivity, "로그인이 만료되었습니다. 다시 로그인해주세요", Toast.LENGTH_SHORT).show();
                                         parentActivity.finish();
                                     } else if (resultTemp.get("message").toString().equals("task")) {
-
                                         Toast.makeText(parentActivity, "테스크가 만료되었습니다. 다른 테스크를 선택해주세요", Toast.LENGTH_SHORT).show();
                                         parentActivity.deleteWaitingTasks();
                                         parentActivity.finish();
@@ -92,7 +90,7 @@ public class Controller_Numbers extends Controller {
                                     {
                                         Toast.makeText(parentActivity,"퀘스트 완료! 추가 보상 \uFFE6" + String.valueOf(bonus),Toast.LENGTH_SHORT).show();
                                     }
-
+                                    parentActivity.showAnimation(R.drawable.coin_animation_list,parentActivity.getUpGold());
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();

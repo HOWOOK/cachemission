@@ -181,38 +181,32 @@ Log.d("fullupdate",questList.toString());
                     holder.quest2.setText(questName[1]);
                     if(questReward[1]!=0)
                     holder.quest2money.setText("+\uFFE6" + String.valueOf(questReward[1]));
-                    Log.d("getit","getin");
                 }else{
-
-//                    holder.quest2.setText("");
-//                    holder.quest2money.setText("");
-//                    if(holder.itemCL != null) {
-//
-//                        ConstraintSet itemCLset = new ConstraintSet();
-//                        itemCLset.clone(holder.itemCL);
-//                        itemCLset.connect(holder.taskTv.getId(), ConstraintSet.BOTTOM, holder.quest1.getId(), ConstraintSet.TOP);
-//                        itemCLset.connect(holder.quest1.getId(), ConstraintSet.TOP, holder.taskTv.getId(), ConstraintSet.BOTTOM);
-//                        itemCLset.connect(holder.quest1.getId(), ConstraintSet.BOTTOM, holder.gold.getId(), ConstraintSet.TOP);
-//                        itemCLset.connect(holder.gold.getId(), ConstraintSet.TOP, holder.quest1.getId(), ConstraintSet.BOTTOM);
-//                        itemCLset.applyTo(holder.itemCL);
-//                        holder.itemCL.removeView(holder.quest2);
-//                        holder.itemCL.removeView(holder.quest2money);
-//                    }
+                    if(holder.itemCL != null) {
+                        ConstraintSet itemCLset = new ConstraintSet();
+                        itemCLset.clone(holder.itemCL);
+                        itemCLset.connect(holder.taskTv.getId(), ConstraintSet.BOTTOM, holder.quest1.getId(), ConstraintSet.TOP);
+                        itemCLset.connect(holder.quest1.getId(), ConstraintSet.TOP, holder.taskTv.getId(), ConstraintSet.BOTTOM);
+                        itemCLset.connect(holder.quest1.getId(), ConstraintSet.BOTTOM, holder.gold.getId(), ConstraintSet.TOP);
+                        itemCLset.connect(holder.gold.getId(), ConstraintSet.TOP, holder.quest1.getId(), ConstraintSet.BOTTOM);
+                        itemCLset.applyTo(holder.itemCL);
+                        holder.itemCL.removeView(holder.quest2);
+                        holder.itemCL.removeView(holder.quest2money);
+                    }
 
                 }
             }else{
-//                Log.d("how?","??");
-//                if(holder.itemCL != null) {
-//                    holder.itemCL.removeView(holder.quest1);
-//                    holder.itemCL.removeView(holder.quest1money);
-//                    holder.itemCL.removeView(holder.quest2);
-//                    holder.itemCL.removeView(holder.quest2money);
-//                    ConstraintSet itemCLset = new ConstraintSet();
-//                    itemCLset.clone(holder.itemCL);
-//                    itemCLset.connect(holder.taskTv.getId(), ConstraintSet.BOTTOM, holder.gold.getId(), ConstraintSet.TOP);
-//                    itemCLset.connect(holder.gold.getId(), ConstraintSet.TOP, holder.taskTv.getId(), ConstraintSet.BOTTOM);
-//                    itemCLset.applyTo(holder.itemCL);
-//                }
+                if(holder.itemCL != null) {
+                    holder.itemCL.removeView(holder.quest1);
+                    holder.itemCL.removeView(holder.quest1money);
+                    holder.itemCL.removeView(holder.quest2);
+                    holder.itemCL.removeView(holder.quest2money);
+                    ConstraintSet itemCLset = new ConstraintSet();
+                    itemCLset.clone(holder.itemCL);
+                    itemCLset.connect(holder.taskTv.getId(), ConstraintSet.BOTTOM, holder.gold.getId(), ConstraintSet.TOP);
+                    itemCLset.connect(holder.gold.getId(), ConstraintSet.TOP, holder.taskTv.getId(), ConstraintSet.BOTTOM);
+                    itemCLset.applyTo(holder.itemCL);
+                }
             }
         }catch (JSONException e){
             e.printStackTrace();
