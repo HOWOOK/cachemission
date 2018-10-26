@@ -199,7 +199,7 @@ public class Controller_2DBox extends Controller {
                                                     System.out.println("서버반응 2: " + resultTemp.get("success").toString());
 
                                                     mtaskView_PhotoView.addAnswer(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend);
-                                                    completeButton.setText("모든 부품 제출 완료 +3원");
+                                                    completeButton.setText("모든 부품 제출 완료 +5원");
 
                                                     mtaskView_PhotoView.drawAnswer(mtaskView_PhotoView.answerCoordination);
 
@@ -241,7 +241,7 @@ public class Controller_2DBox extends Controller {
         if(parentActivity.getPartNum() == 2)
             completeButton.setText("제출완료");
         else
-            completeButton.setText("찾을 부품 없음 +3원");
+            completeButton.setText("찾을 부품 없음 +5원");
 
         completeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -342,7 +342,7 @@ public class Controller_2DBox extends Controller {
                                                 constraintSet.connect(parentActivity.findViewById(R.id.textAnimation).getId(), ConstraintSet.BOTTOM, parentActivity.findViewById(R.id.btnCL).getId(), ConstraintSet.BOTTOM, (int) (43 * dpScale));
                                                 constraintSet.connect(parentActivity.findViewById(R.id.imageAnimation).getId(), ConstraintSet.BOTTOM, parentActivity.findViewById(R.id.btnCL).getId(), ConstraintSet.BOTTOM, (int) (43 * dpScale));
                                                 constraintSet.applyTo((ConstraintLayout)(parentActivity.findViewById(R.id.controllerCL)));
-                                                parentActivity.showAnimation(R.drawable.coin_animation_list,Integer.parseInt("3"));
+                                                parentActivity.showAnimation(R.drawable.coin_animation_list,Integer.parseInt("5"));
                                             }
                                         } catch (JSONException e) {
                                             e.printStackTrace();
@@ -409,7 +409,7 @@ public class Controller_2DBox extends Controller {
                                                 constraintSet.connect(parentActivity.findViewById(R.id.imageAnimation).getId(), ConstraintSet.BOTTOM, parentActivity.findViewById(R.id.btnCL).getId(), ConstraintSet.BOTTOM, (int) (43 * dpScale));
                                                 constraintSet.applyTo((ConstraintLayout)(parentActivity.findViewById(R.id.controllerCL)));
                                                 //그냥 제출과 다찾음의 금액이 달라서 일단은 하드텍스트로 박아넣음 (수정요망)
-                                                parentActivity.showAnimation(R.drawable.coin_animation_list,Integer.parseInt("3"));
+                                                parentActivity.showAnimation(R.drawable.coin_animation_list,Integer.parseInt("5"));
                                             }
                                         } catch (JSONException e) {
                                             e.printStackTrace();
