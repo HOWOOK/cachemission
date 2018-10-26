@@ -236,7 +236,7 @@ public class TaskView_PhotoView extends TaskView {
                             if(expandView != null && expandView2 != null) {
                                 expandViewParams = new ConstraintLayout.LayoutParams(width, height);
                                 expandView.setLayoutParams(expandViewParams);
-                                updateConstraintSet1(expandView, (int)leftMargin, (int) topMargin);
+                                updateConstraintSet1((View) expandView, (int)leftMargin, (int) topMargin);
 
                                 expandView2Params = new ConstraintLayout.LayoutParams(width2, height2);
                                 expandView2.setLayoutParams(expandView2Params);
@@ -268,6 +268,7 @@ public class TaskView_PhotoView extends TaskView {
         });
     }
 
+    //확대 후에도 뷰에 여백이 남는경우 남은 여백이 쌍방으로 균등하게 배분되는데, 그로인한 cropBox 제조정을 위해 이동 델타 값을 구하는 함수
     private float[] CalDeltaSettingValue(View expandView, View expandView2) {
         ConstraintLayout.LayoutParams expandViewParams = (ConstraintLayout.LayoutParams) expandView.getLayoutParams();
         ConstraintLayout.LayoutParams expandView2Params = (ConstraintLayout.LayoutParams) expandView2.getLayoutParams();
@@ -323,6 +324,7 @@ public class TaskView_PhotoView extends TaskView {
         return  returnVal;
     }
 
+    //Answer를 바탕으로 박스를 그릴 때 어디에 그릴지 셋팅해주는 함수
     private void boxSetting(View expandView, View expandView2, float[] deltaSettingValue) {
         ConstraintLayout boxCL = parentActivity.findViewById(R.id.boxCL);
         ConstraintLayout.LayoutParams expandViewParams = (ConstraintLayout.LayoutParams) expandView.getLayoutParams();
@@ -377,7 +379,7 @@ public class TaskView_PhotoView extends TaskView {
     }
 
     //photoViewCL의 ConstraintSet을 업데이트한다.
-    private void updateConstraintSet1(ImageView targetView, int leftMargin, int topMargin) {
+    private void updateConstraintSet1(View targetView, int leftMargin, int topMargin) {
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(photoViewCL);
         constraintSet.connect(targetView.getId(), ConstraintSet.START, photoViewCL.getId(), ConstraintSet.START, leftMargin);
@@ -433,16 +435,6 @@ public class TaskView_PhotoView extends TaskView {
     //좌표를 토대로 photoview에 라벨링된 데이터를 그려준다.
     public void drawAnswer(float[][] answerCoordination) {
         coordinationChange(answerCoordination);
-        System.out.println("그린다.");
-//        System.out.print("-----변환된 좌표-----");
-//        System.out.println("길이 : "+answerCoordination.length);
-//        for (int i = 0; i<answerCoordination.length; i++){
-//            System.out.println("ㅁ"+i+"+1번째ㅁ");
-//            for (int j = 0; j<answerCoordination[i].length; j++) {
-//                System.out.print(answerCoordination[i][j]+", ");
-//            }
-//            System.out.print("\n");
-//        }
 
         if(answerList == null || (answerList.length != changedCoordination.length)) {
             //일전에 그려져있던건 싹 지워야한다.
@@ -610,6 +602,7 @@ public class TaskView_PhotoView extends TaskView {
         }
     }
 
+    //서버에서 보내준 확대 좌표를 바탕으로 bitmap을 잘라준다.
     private Bitmap cropBitmap(Bitmap original, String cropCoordination) {
         System.out.println("------------");
         System.out.println(cropCoordination);
@@ -683,7 +676,7 @@ public class TaskView_PhotoView extends TaskView {
         answerList = null;
     }
 
-    //size도 함께 생각해야한다........
+    //size도 함께 생각해야한다........ 겹치는 퍼센트에 따라 P/F 하는거로 수정 요망
     public boolean similarityTest(float left, float top, float right, float bottom){
         Boolean rtnVal = true;
         float error = 0.015f;
@@ -699,23 +692,6 @@ public class TaskView_PhotoView extends TaskView {
         return  rtnVal;
     };
 
-
-//    public void answerReset(){
-//        answerCount= 0;
-//        drawAnswerCount = 0;
-//        mtaskView_PhotoView.answerType=null;
-//        mtaskView_PhotoView.answerCoordination=null;
-//        if(mtaskView_PhotoView.answerList != null) {
-//            for (int i = 0; i < mtaskView_PhotoView.answerList.length; i++) {
-//                photoViewCL.removeView(mtaskView_PhotoView.answerList[i]);
-//                photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][0]);
-//                photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][1]);
-//                photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][2]);
-//                photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][3]);
-//            }
-//        }
-//        ((TaskActivity)parentActivity).startTask();
-//    }
 
 
 }

@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.DisplayMetrics;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -92,19 +93,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
-        idText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //guideline.setGuidelinePercent(0);
-            }
-        });
-        pwText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               // guideline.setGuidelinePercent(0);
-            }
-        });
         pwText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         loginButton = findViewById(R.id.button_in);
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -123,9 +111,8 @@ public class LoginActivity extends AppCompatActivity {
                     t.send(new HitBuilders.EventBuilder().setCategory("LoginActivity").setAction("Press Button").setLabel("LoginButton Click").build());
 
                 }
-
-                String idVal = idText.getText().toString();
-                String pwVal = pwText.getText().toString();
+                String idVal = idText.getText().toString().trim();
+                String pwVal = pwText.getText().toString().trim();
                 try {
                     JSONObject param = new JSONObject();
                     param.put("id", idVal);
@@ -171,21 +158,38 @@ public class LoginActivity extends AppCompatActivity {
                 startActivityForResult(intent,1);
             }
         });
-//
-//        findid=findViewById(R.id.button_findid);
-//        findpw=findViewById(R.id.button_findpw);
-//        findid.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(getApplicationContext(),"알파테스트에서 구현되지 않은 사항입니다. 앱 추천인에게 문의하세요!",Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        findpw.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(getApplicationContext(),"알파테스트에서 구현되지 않은 사항입니다. 앱 추천인에게 문의하세요!",Toast.LENGTH_SHORT).show();
-//            }
-//        });
+
+        final InputMethodManager imm = (InputMethodManager)getSystemService(this.INPUT_METHOD_SERVICE);
+
+        //아이디 입력 후 엔터 누르면 패스워드 입력
+        idText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)){
+                    imm.hideSoftInputFromWindow(idText.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    pwText.requestFocus();
+                    imm.hideSoftInputFromWindow(pwText.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        //아이디 입력 후 엔터 누르면 로그인 버튼으로 포커스
+        pwText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)){
+                    imm.hideSoftInputFromWindow(pwText.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    loginButton.requestFocus();
+                    return true;
+                }
+                return false;
+            }
+        });
 
 
     }

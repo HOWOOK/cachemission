@@ -7,7 +7,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,6 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.selectstar.hwshin.cachemission.DataStructure.ExamView.ExamView;
 import com.selectstar.hwshin.cachemission.DataStructure.HurryHttpRequest;
-import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoView;
 import com.selectstar.hwshin.cachemission.DataStructure.UIHashMap;
 import com.selectstar.hwshin.cachemission.DataStructure.WaitHttpRequest;
@@ -43,7 +41,6 @@ public class ExamActivity extends PatherActivity {
     String examFlag="";
     ImageView backButton;
 
-
     protected void showDescription(Context context)
     {
         Intent intent_taskExplain = new Intent(context, TaskExplainActivity.class);
@@ -62,6 +59,11 @@ public class ExamActivity extends PatherActivity {
                 partNum = partType();
                 param.put("option",partNum);
             }
+            if(taskType.equals("RECORDEXAM")){//RECORDEXAM 지역을 넣어서 요청해야한다.
+                String region;
+                region = ((TextView)findViewById(R.id.optionText)).getText().toString();
+                param.put("option", region);
+            }
             new HurryHttpRequest(this) {
                 @Override
                 protected void onPostExecute(Object o) {
@@ -79,8 +81,7 @@ public class ExamActivity extends PatherActivity {
                             Date after28time = addMinutesToDate(28,new Date());
                             ((JSONObject)waitingTasks.get(0)).put("time",DateToString(after28time));
                             currentTask = waitingTasks.get(waitingTasks.size()-1);
-                            System.out.println((String)currentTask.get("content"));
-                            System.out.println("------------");
+                            System.out.println("삉"+(String)currentTask.get("content"));
                             if(taskType.equals("BOXCROPEXAM"))
                                 mTaskView.setContent(currentTask.get("content")+"*<"+currentTask.get("answer"));
                             else
@@ -149,6 +150,8 @@ public class ExamActivity extends PatherActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
         intent = getIntent();
 
+        final TextView optionText = findViewById(R.id.optionText);
+
         nowGold = findViewById(R.id.goldnow);
         pendingGold = findViewById(R.id.goldpre);
 
@@ -173,7 +176,7 @@ public class ExamActivity extends PatherActivity {
         mTaskView = uiHashMap.taskViewHashMap.get(intent.getStringExtra("taskView"));
         mTaskView.setParentActivity(this);
         mExamView = uiHashMap.examViewHashMap.get(intent.getStringExtra("examView"));
-        System.out.println("하이하이 : " +intent.getStringArrayExtra("examView"));
+        System.out.println("하이하이 : " +intent.getStringExtra("examView"));
         mExamView.setParentActivity(this);
         mParameter = uiHashMap.taskHashMap.get(intent.getStringExtra("taskType"));
         taskTitle = intent.getStringExtra("taskTitle");
@@ -213,15 +216,42 @@ public class ExamActivity extends PatherActivity {
         params2.verticalWeight = mParameter[5][0];
         parent2.setLayoutParams(params2);
 
-        if(!taskType.equals("BOXCROPEXAM")) //boxcrop이면 파트 선택되고나서 로딩해야함
+        //boxcrop이면 파트 선택되고나서 로딩해야함
+        //record면 지역 선택되고나서 로딩해야함
+        if(!(taskType.equals("BOXCROPEXAM")||taskType.equals("RECORDEXAM")))
             startTask();
 
-        //boxcrop이면 partSelectDialog를 띄워줘야한다.
-        final TextView partText = findViewById(R.id.partText);
+        //boxcropEXAM이면 partSelectDialog를 띄워줘야한다.
+        final TextView partText = findViewById(R.id.optionText);
         if((taskType.equals("BOXCROPEXAM"))){
             findViewById(R.id.option).setBackgroundColor(this.getResources().getColor(R.color.colorDark2));
             partDialogShow(partText);
         }
+
+        //RECORDEXAM regionSelectDialog를 띄워줘야한다.
+        String regionText;
+        SharedPreferences tasktoken = getSharedPreferences("taskToken", MODE_PRIVATE);
+        SharedPreferences explain = getSharedPreferences("region", MODE_PRIVATE);
+        regionText = explain.getString("region", null);
+        if(taskType.equals("RECORDEXAM")
+                && tasktoken.getInt(taskType + "taskToken", 0) == 100){
+            if(regionText != null) {
+                optionText.setText(regionText);
+                startTask();
+            }
+            else
+                regionDialogShow(optionText);
+        }
+
+        //사투리 테스크는 옵션 눌러서 변경가능함
+        optionText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(taskType.equals("RECORDEXAM"))
+                    regionDialogShow(optionText);
+            }
+        });
+
         final Button confirm=findViewById(R.id.confirmbutton);
         final Button reject=findViewById(R.id.rejectbutton);
         Button sendExam=findViewById(R.id.examsend);

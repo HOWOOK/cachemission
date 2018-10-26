@@ -73,9 +73,69 @@ public class TaskListActivity extends AppCompatActivity {
 
     public int runningHTTPRequest=0;
     NotificationCompat.Builder mBuilder;
+
     NotificationManager notifManager;
 
 
+
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // initiateListInfo();
+        Tracker t = ((GlobalApplication)getApplication()).getTracker(GlobalApplication.TrackerName.APP_TRACKER);
+        t.setScreenName("TaskListActivity");
+        t.send(new HitBuilders.AppViewBuilder().build());
+        setContentView(R.layout.activity_tasklist);
+        refreshText=findViewById(R.id.refreshText);
+        refreshButton=findViewById(R.id.refreshbutton);
+
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refreshButton.setVisibility(View.GONE);
+                refreshText.setVisibility(View.GONE);
+                SharedPreferences token = getSharedPreferences("token",MODE_PRIVATE);
+                final String loginToken = token.getString("loginToken","");
+                if(checkIfTimePassed())
+                    getTaskList(loginToken);
+                else {
+                    getPreviousList(loginToken);
+                }
+            }
+        });
+        uiHashMap = new UIHashMap();
+        subscribePush();
+        setVersion();
+        setDrawer();
+
+        myPage=findViewById(R.id.mypage);
+        myPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myPageIntent=new Intent(TaskListActivity.this,MyPageActivity.class);
+                startActivity(myPageIntent);
+            }
+        });
+    }
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        GoogleAnalytics.getInstance(this).reportActivityStart(this);
+        SharedPreferences token = getSharedPreferences("token",MODE_PRIVATE);
+        final String loginToken = token.getString("loginToken","");
+
+        //수정 요망 checkIfTimePassed 함수가 전혀 작동의미가 없음
+        if(checkIfTimePassed())
+            getTaskList(loginToken);
+        else{
+            getTaskList(loginToken);
+        }
+
+    }
+
+
+    //네트워크에 연결되어 있는지(모바일 데이터, 와이파이) 확인한다.
     public static boolean isNetworkConnected(Context context){
         ConnectivityManager manager=(ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo=manager.getActiveNetworkInfo();
@@ -97,6 +157,8 @@ public class TaskListActivity extends AppCompatActivity {
         }
 
     }
+
+    //? 언제뜨는거지 주석 요망
     public class MyBroadCastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -106,14 +168,16 @@ public class TaskListActivity extends AppCompatActivity {
             }
         }
     }
+
+    // 문제가 생겨 taskList를 불러올수 없을때, 새로고침 버튼 띄우기
     public void clearListForAccident(){
         if(runningHTTPRequest==0)
         mTaskList.clear();
         refreshButton.setVisibility(View.VISIBLE);
         refreshText.setVisibility(View.VISIBLE);
-
-
     }
+
+
     public void insertItem(JSONObject item){
 
         SharedPreferences listInfo=getSharedPreferences("listInfo",MODE_PRIVATE);
@@ -168,6 +232,7 @@ public class TaskListActivity extends AppCompatActivity {
         }
 
     }
+
     public void initiateListInfo(){
         SharedPreferences listInfo=getSharedPreferences("listInfo",MODE_PRIVATE);
         SharedPreferences.Editor editor=listInfo.edit();
@@ -201,8 +266,6 @@ public class TaskListActivity extends AppCompatActivity {
 
         editor.putString("listInfoData","[]");
         editor.apply();
-
-
     }
 
     public String updateTodayEarnedMoney(){
@@ -300,6 +363,7 @@ public class TaskListActivity extends AppCompatActivity {
             return true;
         }
     }
+
     public void insertTime(){
         SharedPreferences listInfo = getSharedPreferences("listInfo", MODE_PRIVATE);
         SharedPreferences.Editor editor = listInfo.edit();
@@ -339,6 +403,7 @@ public class TaskListActivity extends AppCompatActivity {
 
 
     }
+
     public void getPreviousList(String loginToken){
         SharedPreferences listInfo=getSharedPreferences("listInfo",MODE_PRIVATE);
         SharedPreferences.Editor editor=listInfo.edit();
@@ -382,6 +447,7 @@ public class TaskListActivity extends AppCompatActivity {
         }
 
     }
+
     private void getJustUserInfo(final String loginToken)
     {
         if(!isNetworkConnected(this)){
@@ -437,6 +503,7 @@ runningHTTPRequest++;
         //CountDownTimer adf= new AsyncTaskCancelTimerTask(asyncTask,Integer.parseInt(getString(R.string.hTTPTimeOut)),1000,true,this).start();
         asyncTask.execute(getString(R.string.mainurl) + "/testing/getTaskList", param, loginToken);
     }
+
     private void subscribePush()
     {
         final SharedPreferences push = getSharedPreferences("push", MODE_PRIVATE);
@@ -455,8 +522,9 @@ runningHTTPRequest++;
         }catch (PackageManager.NameNotFoundException e){
             e.printStackTrace();
         }
-
     }
+
+    //드로어 뷰 셋팅
     private void setDrawer()
     {
         final DrawerLayout drawer = findViewById(R.id.drawer) ;
@@ -597,6 +665,7 @@ runningHTTPRequest++;
             }
         });
     }
+
     private void getOneTask(final int i,final String loginToken,final boolean isNew)
     {
         if(!isNetworkConnected(this)){
@@ -656,6 +725,7 @@ runningHTTPRequest++;
             e.printStackTrace();
         }
     }
+
     private void getTaskList(final String loginToken)
     {
         if(!isNetworkConnected(this)){
@@ -730,7 +800,7 @@ runningHTTPRequest++;
                     for (int i = 0; i < taskList.length(); i++)
                         mTaskList.add((JSONObject) taskList.get(i));
                     RecyclerView lv_main = findViewById(R.id.taskList);
-                    adapter =new ListviewAdapter(getApplicationContext(),R.layout.task_lv,new ArrayList<JSONObject>(),TaskListActivity.this,user);
+                    adapter = new ListviewAdapter(getApplicationContext(), R.layout.task_lv, new ArrayList<JSONObject>(),TaskListActivity.this,user);
                     LinearLayoutManager layoutManager = new LinearLayoutManager(TaskListActivity.this);
                     layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                     lv_main.setLayoutManager(layoutManager);
@@ -757,7 +827,9 @@ runningHTTPRequest++;
 
 
     }
+
     public synchronized void defaultTopBarSetting(String todayMoney){
+
         Bitmap mLargeIcon= BitmapFactory.decodeResource(getResources(),R.drawable.cashmissioniconround);
         PendingIntent mPendingIntent=PendingIntent.getActivity(
                 TaskListActivity.this,
@@ -859,69 +931,10 @@ runningHTTPRequest++;
         notifManager.notify(0, mBuilder.build());
 
     }
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-       // initiateListInfo();
-
-        Tracker t = ((GlobalApplication)getApplication()).getTracker(GlobalApplication.TrackerName.APP_TRACKER);
-        t.setScreenName("TaskListActivity");
-        t.send(new HitBuilders.AppViewBuilder().build());
-        setContentView(R.layout.activity_tasklist);
-
-        nowGold=(TextView)findViewById(R.id.mygold);
-        refreshText=findViewById(R.id.refreshText);
-        refreshButton=findViewById(R.id.refreshbutton);
-
-        refreshButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                refreshButton.setVisibility(View.GONE);
-                refreshText.setVisibility(View.GONE);
-                SharedPreferences token = getSharedPreferences("token",MODE_PRIVATE);
-                final String loginToken = token.getString("loginToken","");
-                if(checkIfTimePassed())
-                    getTaskList(loginToken);
-                else {
-                    getPreviousList(loginToken);
-                }
-            }
-        });
-        uiHashMap = new UIHashMap();
-        subscribePush();
-        setVersion();
-        setDrawer();
-
-        myPage=findViewById(R.id.mypage);
-        myPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myPageIntent=new Intent(TaskListActivity.this,MyPageActivity.class);
-                startActivity(myPageIntent);
-            }
-        });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-    }
-
-    @Override
-    protected void onStart()
-    {
-        super.onStart();
-        GoogleAnalytics.getInstance(this).reportActivityStart(this);
-        SharedPreferences token = getSharedPreferences("token",MODE_PRIVATE);
-        final String loginToken = token.getString("loginToken","");
-        if(checkIfTimePassed())
-            getTaskList(loginToken);
-        else{
-            getTaskList(loginToken);
-        }
 
 
-    }
+
+
     private void setUserRankImage(ImageView userRank, TextView userLevel, int rank) {
 
         if(rank==1) {

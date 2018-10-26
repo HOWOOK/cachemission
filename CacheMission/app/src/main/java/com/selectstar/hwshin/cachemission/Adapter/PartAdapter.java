@@ -1,16 +1,9 @@
 package com.selectstar.hwshin.cachemission.Adapter;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.media.ExifInterface;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +47,7 @@ public class PartAdapter extends RecyclerView.Adapter<PartAdapter.ItemViewHolder
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TextView tv = mActivity.findViewById(R.id.partText);
+                TextView tv = mActivity.findViewById(R.id.optionText);
                 tv.setText(nameList.get(position));
                 mDialog.dismiss();
                 String taskName="a";
