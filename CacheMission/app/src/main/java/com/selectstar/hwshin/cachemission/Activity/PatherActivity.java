@@ -135,6 +135,7 @@ public abstract class PatherActivity extends AppCompatActivity {
         ImageView view = findViewById(R.id.imageAnimation);
         TextView tView = findViewById(R.id.textAnimation);
         view.bringToFront();
+        tView.bringToFront();
         ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) view.getLayoutParams();
         if(animID == R.drawable.three_coin_anim_list) {
             lp.height = 800;
@@ -148,6 +149,7 @@ public abstract class PatherActivity extends AppCompatActivity {
         }
         view.setBackgroundResource(animID);
         Animation animation = AnimationUtils.loadAnimation(this,R.anim.goldtranslate);
+        System.out.println("왜 안뜨냐 골드 : "+String.valueOf(gold));
         tView.setText("+ " + String.valueOf(gold) + " \uFFE6");
         tView.startAnimation(animation);
         AnimationDrawable spinnerAnim = (AnimationDrawable) view.getBackground();

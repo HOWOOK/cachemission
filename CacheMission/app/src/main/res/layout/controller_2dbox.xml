@@ -233,6 +233,30 @@
 
    </android.support.constraint.ConstraintLayout>
 
+    <ImageView
+        android:id="@+id/imageAnimation"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="43dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btnCL"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/textAnimation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="43dp"
+        android:textSize="25dp"
+        android:fontFamily="@font/nanumsquareb_"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="@+id/btnCL"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+
     <android.support.constraint.ConstraintLayout
         android:id="@+id/btnCL"
         android:layout_width="match_parent"

@@ -213,6 +213,12 @@ public class Controller_2DBox extends Controller {
                                                     ((TaskView_PhotoView) parentActivity.getmTaskView()).expandFlag = true;
                                                     parentActivity.setGold(String.valueOf(resultTemp.get("gold")));
                                                     parentActivity.setMaybe(String.valueOf(resultTemp.get("maybe")));
+                                                    ConstraintSet constraintSet = new ConstraintSet();
+                                                    constraintSet.clone((ConstraintLayout) (parentActivity.findViewById(R.id.controllerCL)));
+                                                    constraintSet.connect(parentActivity.findViewById(R.id.textAnimation).getId(), ConstraintSet.BOTTOM, parentActivity.findViewById(R.id.btnCL).getId(), ConstraintSet.BOTTOM, (int) (86 * dpScale));
+                                                    constraintSet.connect(parentActivity.findViewById(R.id.imageAnimation).getId(), ConstraintSet.BOTTOM, parentActivity.findViewById(R.id.btnCL).getId(), ConstraintSet.BOTTOM, (int) (86 * dpScale));
+                                                    constraintSet.applyTo((ConstraintLayout)(parentActivity.findViewById(R.id.controllerCL)));
+                                                    parentActivity.showAnimation(R.drawable.coin_animation_list,parentActivity.getUpGold());
                                                 }
                                             } catch (JSONException e) {
                                                 e.printStackTrace();
@@ -331,7 +337,12 @@ public class Controller_2DBox extends Controller {
                                                 ((TaskActivity)parentActivity).startTask();
                                                 parentActivity.setGold(String.valueOf(resultTemp.get("gold")));
                                                 parentActivity.setMaybe(String.valueOf(resultTemp.get("maybe")));
-
+                                                ConstraintSet constraintSet = new ConstraintSet();
+                                                constraintSet.clone((ConstraintLayout) (parentActivity.findViewById(R.id.controllerCL)));
+                                                constraintSet.connect(parentActivity.findViewById(R.id.textAnimation).getId(), ConstraintSet.BOTTOM, parentActivity.findViewById(R.id.btnCL).getId(), ConstraintSet.BOTTOM, (int) (43 * dpScale));
+                                                constraintSet.connect(parentActivity.findViewById(R.id.imageAnimation).getId(), ConstraintSet.BOTTOM, parentActivity.findViewById(R.id.btnCL).getId(), ConstraintSet.BOTTOM, (int) (43 * dpScale));
+                                                constraintSet.applyTo((ConstraintLayout)(parentActivity.findViewById(R.id.controllerCL)));
+                                                parentActivity.showAnimation(R.drawable.coin_animation_list,Integer.parseInt("3"));
                                             }
                                         } catch (JSONException e) {
                                             e.printStackTrace();
@@ -392,7 +403,13 @@ public class Controller_2DBox extends Controller {
                                                 ((TaskActivity) parentActivity).startTask();
                                                 parentActivity.setGold(String.valueOf(resultTemp.get("gold")));
                                                 parentActivity.setMaybe(String.valueOf(resultTemp.get("maybe")));
-
+                                                ConstraintSet constraintSet = new ConstraintSet();
+                                                constraintSet.clone((ConstraintLayout) (parentActivity.findViewById(R.id.controllerCL)));
+                                                constraintSet.connect(parentActivity.findViewById(R.id.textAnimation).getId(), ConstraintSet.BOTTOM, parentActivity.findViewById(R.id.btnCL).getId(), ConstraintSet.BOTTOM, (int) (43 * dpScale));
+                                                constraintSet.connect(parentActivity.findViewById(R.id.imageAnimation).getId(), ConstraintSet.BOTTOM, parentActivity.findViewById(R.id.btnCL).getId(), ConstraintSet.BOTTOM, (int) (43 * dpScale));
+                                                constraintSet.applyTo((ConstraintLayout)(parentActivity.findViewById(R.id.controllerCL)));
+                                                //그냥 제출과 다찾음의 금액이 달라서 일단은 하드텍스트로 박아넣음 (수정요망)
+                                                parentActivity.showAnimation(R.drawable.coin_animation_list,Integer.parseInt("3"));
                                             }
                                         } catch (JSONException e) {
                                             e.printStackTrace();

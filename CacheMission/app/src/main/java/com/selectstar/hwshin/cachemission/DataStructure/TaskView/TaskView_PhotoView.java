@@ -236,7 +236,7 @@ public class TaskView_PhotoView extends TaskView {
                             if(expandView != null && expandView2 != null) {
                                 expandViewParams = new ConstraintLayout.LayoutParams(width, height);
                                 expandView.setLayoutParams(expandViewParams);
-                                updateConstraintSet1(expandView, (int)leftMargin, (int) topMargin);
+                                updateConstraintSet1((View) expandView, (int)leftMargin, (int) topMargin);
 
                                 expandView2Params = new ConstraintLayout.LayoutParams(width2, height2);
                                 expandView2.setLayoutParams(expandView2Params);
@@ -377,7 +377,7 @@ public class TaskView_PhotoView extends TaskView {
     }
 
     //photoViewCL의 ConstraintSet을 업데이트한다.
-    private void updateConstraintSet1(ImageView targetView, int leftMargin, int topMargin) {
+    private void updateConstraintSet1(View targetView, int leftMargin, int topMargin) {
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(photoViewCL);
         constraintSet.connect(targetView.getId(), ConstraintSet.START, photoViewCL.getId(), ConstraintSet.START, leftMargin);
@@ -433,16 +433,6 @@ public class TaskView_PhotoView extends TaskView {
     //좌표를 토대로 photoview에 라벨링된 데이터를 그려준다.
     public void drawAnswer(float[][] answerCoordination) {
         coordinationChange(answerCoordination);
-        System.out.println("그린다.");
-//        System.out.print("-----변환된 좌표-----");
-//        System.out.println("길이 : "+answerCoordination.length);
-//        for (int i = 0; i<answerCoordination.length; i++){
-//            System.out.println("ㅁ"+i+"+1번째ㅁ");
-//            for (int j = 0; j<answerCoordination[i].length; j++) {
-//                System.out.print(answerCoordination[i][j]+", ");
-//            }
-//            System.out.print("\n");
-//        }
 
         if(answerList == null || (answerList.length != changedCoordination.length)) {
             //일전에 그려져있던건 싹 지워야한다.
@@ -699,23 +689,6 @@ public class TaskView_PhotoView extends TaskView {
         return  rtnVal;
     };
 
-
-//    public void answerReset(){
-//        answerCount= 0;
-//        drawAnswerCount = 0;
-//        mtaskView_PhotoView.answerType=null;
-//        mtaskView_PhotoView.answerCoordination=null;
-//        if(mtaskView_PhotoView.answerList != null) {
-//            for (int i = 0; i < mtaskView_PhotoView.answerList.length; i++) {
-//                photoViewCL.removeView(mtaskView_PhotoView.answerList[i]);
-//                photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][0]);
-//                photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][1]);
-//                photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][2]);
-//                photoViewCL.removeView(mtaskView_PhotoView.answerEdges[i][3]);
-//            }
-//        }
-//        ((TaskActivity)parentActivity).startTask();
-//    }
 
 
 }

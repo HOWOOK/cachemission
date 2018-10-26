@@ -69,7 +69,7 @@ public class TaskListActivity extends AppCompatActivity {
     private  TextView refreshText;
     public int runningHTTPRequest=0;
     NotificationCompat.Builder mBuilder;
-    NotificationManager notifManager = (NotificationManager) getSystemService  (Context.NOTIFICATION_SERVICE);
+//    NotificationManager notifManager = (NotificationManager) getSystemService  (Context.NOTIFICATION_SERVICE);
 
 
     public static boolean isNetworkConnected(Context context){
@@ -666,7 +666,7 @@ runningHTTPRequest++;
             NotificationChannel mChannel = new NotificationChannel(
                     channelId, channelName, importance);
 
-            notifManager.createNotificationChannel(mChannel);
+            //notifManager.createNotificationChannel(mChannel);
 
         }
 
@@ -701,7 +701,7 @@ runningHTTPRequest++;
                 .setAutoCancel(false)
                 .setContentIntent(pendingIntent);
 
-        notifManager.notify(0, mBuilder.build());
+        //notifManager.notify(0, mBuilder.build());
 
     }
     protected void onCreate(Bundle savedInstanceState) {

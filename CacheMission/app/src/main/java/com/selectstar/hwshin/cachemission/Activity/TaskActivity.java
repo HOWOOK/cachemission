@@ -106,7 +106,7 @@ public class TaskActivity extends PatherActivity {
          */
         explainDialog = new Dialog(this);
         intent = getIntent();
-        upGold = Integer.parseInt(intent.getStringExtra("upGold").substring(1));
+        upGold = Integer.parseInt(intent.getStringExtra("upGold").substring(1)); //string(0)은 \표시
         gold =intent.getStringExtra("goldNow");
         maybe = intent.getStringExtra("goldPre");
         nowGold.setText("현재 : \uFFE6 " + gold);
@@ -147,8 +147,8 @@ public class TaskActivity extends PatherActivity {
         constraintSet.connect(R.id.taskview, ConstraintSet.BOTTOM, mParameter[2][0], mParameter[2][1] );
         constraintSet.connect(R.id.controller, ConstraintSet.TOP, mParameter[3][0], mParameter[3][1] );
         constraintSet.connect(R.id.controller, ConstraintSet.BOTTOM, mParameter[4][0], mParameter[4][1]);
-        constraintSet.connect(R.id.textAnimation, ConstraintSet.BOTTOM, R.id.controller, ConstraintSet.BOTTOM);
-        constraintSet.connect(R.id.textAnimation, ConstraintSet.LEFT, R.id.sendbtn, ConstraintSet.RIGHT);
+//        constraintSet.connect(R.id.textAnimation, ConstraintSet.BOTTOM, R.id.controller, ConstraintSet.BOTTOM);
+//        constraintSet.connect(R.id.textAnimation, ConstraintSet.LEFT, R.id.sendbtn, ConstraintSet.RIGHT);
         constraintSet.applyTo(constraintLayout);
 
         //TaskView의 weight설정 (default == 10)
