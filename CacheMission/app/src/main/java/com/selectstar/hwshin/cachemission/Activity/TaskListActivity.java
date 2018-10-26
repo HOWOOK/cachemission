@@ -682,7 +682,7 @@ runningHTTPRequest++;
                     for (int i = 0; i < taskList.length(); i++)
                         mTaskList.add((JSONObject) taskList.get(i));
                     RecyclerView lv_main = findViewById(R.id.taskList);
-                    adapter =new ListviewAdapter(getApplicationContext(),R.layout.task_lv,new ArrayList<JSONObject>(),TaskListActivity.this,user);
+                    adapter = new ListviewAdapter(getApplicationContext(), R.layout.task_lv, new ArrayList<JSONObject>(),TaskListActivity.this,user);
                     LinearLayoutManager layoutManager = new LinearLayoutManager(TaskListActivity.this);
                     layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                     lv_main.setLayoutManager(layoutManager);

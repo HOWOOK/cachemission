@@ -2,7 +2,6 @@ package com.selectstar.hwshin.cachemission.Activity;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -25,7 +24,6 @@ import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_2D
 import com.selectstar.hwshin.cachemission.DataStructure.HurryHttpRequest;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_Photo;
-import com.selectstar.hwshin.cachemission.Dialog.PartSelectDialog;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoView;
 import com.selectstar.hwshin.cachemission.DataStructure.UIHashMap;
@@ -65,16 +63,13 @@ public class TaskActivity extends PatherActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        SharedPreferences explain = getSharedPreferences("region", Context.MODE_PRIVATE);
-        SharedPreferences tasktoken = getSharedPreferences("taskToken", MODE_PRIVATE);
-        if((taskType.equals("DIALECT") || taskType.equals("RECORD") || taskType.equals("DIRECTRECORD"))
-                && tasktoken.getInt(taskType + "taskToken", 0) == 100){
-            if(explain.getString("region","").equals("")){
-                regionDialogShow((TextView) findViewById(R.id.regionText));
-            }else{
-                ((TextView) findViewById(R.id.regionText)).setText(explain.getString("region",""));
-            }
-        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        GoogleAnalytics.getInstance(this).reportActivityStart(this);
+        setQuestList(intent.getStringExtra("questList"));
     }
 
     @Override
@@ -87,6 +82,7 @@ public class TaskActivity extends PatherActivity {
         //캡쳐방지
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
 
+        final TextView optionText = findViewById(R.id.optionText);
         nowGold = findViewById(R.id.goldnow);
         pendingGold = findViewById(R.id.goldpre);
         taskCount = findViewById(R.id.regionText);
@@ -166,14 +162,15 @@ public class TaskActivity extends PatherActivity {
         controllerView = findViewById(R.id.controller);
         mController.setParentActivity(this);
         mController.setLayout(controllerView,  taskID);
-        if(!taskType.equals("BOXCROP")) //boxcrop이면 파트 선택되고나서 로딩해야함
+        // boxcrop이면 파트 선택되고나서 로딩해야함
+        // reccord, dialect, directrecord면 지역 선택되고나서 로딩해야함, 물론 지역선택 예전에 해놨으면 바로 테스크 시작될 거임
+        if(!(taskType.equals("BOXCROP")||taskType.equals("RECORD")||taskType.equals("DIALECT")||taskType.equals("DIRECTRECORD")))
             startTask();
 
         //boxcrop이면 partSelectDialog를 띄워줘야한다.
-        final TextView partText = findViewById(R.id.partText);
         if((taskType.equals("BOXCROP"))){
             findViewById(R.id.option).setBackgroundColor(this.getResources().getColor(R.color.colorDark2));
-            partDialogShow(partText);
+            partDialogShow(optionText);
         }
 
         //DIALECT, RECOR, DIRECTRECORD이면 regionSelectDialog를 띄워줘야한다.
@@ -181,19 +178,22 @@ public class TaskActivity extends PatherActivity {
         SharedPreferences tasktoken = getSharedPreferences("taskToken", MODE_PRIVATE);
         SharedPreferences explain = getSharedPreferences("region", MODE_PRIVATE);
         regionText = explain.getString("region", null);
-        final TextView optionText = findViewById(R.id.regionText);
         if((taskType.equals("DIALECT") || taskType.equals("RECORD") || taskType.equals("DIRECTRECORD"))
                 && tasktoken.getInt(taskType + "taskToken", 0) == 100){
-            if(regionText != null)
+            if(regionText != null) {
                 optionText.setText(regionText);
+                startTask();
+            }
             else
                 regionDialogShow(optionText);
         }
 
+        //사투리 테스크는 옵션 눌러서 변경가능함
         optionText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                regionDialogShow(optionText);
+                if((taskType.equals("DIALECT") || taskType.equals("RECORD") || taskType.equals("DIRECTRECORD")))
+                    regionDialogShow(optionText);
             }
         });
 
@@ -207,8 +207,8 @@ public class TaskActivity extends PatherActivity {
                 Log.d("boxbox",taskType);
                 if(taskType.equals("BOXCROP")){
                     intent_taskExplain = new Intent(TaskActivity.this, NewExplainActivity.class);
-                    intent_taskExplain.putExtra("part", partText.getText());
-                    System.out.println("가져온 텍스트 : "+partText.getText());
+                    intent_taskExplain.putExtra("part", optionText.getText());
+                    System.out.println("가져온 텍스트 : "+optionText.getText());
                 }else{
                     intent_taskExplain = new Intent(TaskActivity.this, TaskExplainActivity.class);
                 }
@@ -232,13 +232,6 @@ public class TaskActivity extends PatherActivity {
             e.printStackTrace();
         }
         return count;
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        GoogleAnalytics.getInstance(this).reportActivityStart(this);
-        setQuestList(intent.getStringExtra("questList"));
     }
 
     @Override
@@ -269,7 +262,7 @@ public class TaskActivity extends PatherActivity {
         if(taskType.equals("BOXCROP")){
             TaskView_PhotoView taskView = (TaskView_PhotoView) mTaskView;
             Controller_2DBox controller = (Controller_2DBox) mController;
-            TextView partText = findViewById(R.id.partText);
+            TextView partText = findViewById(R.id.optionText);
             if(!taskView.expandFlag && taskView.getPhotoView()!=null){
                 taskView.expandFlag = true;
                 controller.getPinButton().setBackgroundResource(R.drawable.twodbox_icon_pin_on);
@@ -307,8 +300,7 @@ public class TaskActivity extends PatherActivity {
             }
             if(taskType.equals("RECORD")){//RECORD일때는 지역을 같이 넣어서 요청해야함
                 String region;
-                SharedPreferences explain = getSharedPreferences("region", Context.MODE_PRIVATE);
-                region = explain.getString("region",null);
+                region = ((TextView)findViewById(R.id.optionText)).getText().toString();
                 param.put("option", region);
             }
             new HurryHttpRequest(this) {
@@ -361,7 +353,7 @@ public class TaskActivity extends PatherActivity {
     public void startTask()
     {
         try {
-            waitingTasks = JSONtoArray(new JSONArray(getPreference("waitingTasks",taskType)));
+            waitingTasks = JSONtoArray(new JSONArray(getPreference("waitingTasks", taskType)));
             if(waitingTasks.size()>0) {
                 if (timeCheck(((JSONObject) waitingTasks.get(0)).get("time").toString())) {
                     if(mTaskView.isEmpty())
@@ -370,18 +362,13 @@ public class TaskActivity extends PatherActivity {
                     answerID = currentTask.get("id").toString();
                     mTaskView.setContent((String) currentTask.get("content"));
                     mController.resetContent(controllerView,taskID);
-                }
-                else
-                {
+                }else{
                     getNewTask();
                 }
-            }
-            else
-            {
+            }else{
                 getNewTask();
             }
-        }catch(JSONException e)
-        {
+        }catch(JSONException e){
             e.printStackTrace();
         }
     }
@@ -395,7 +382,7 @@ public class TaskActivity extends PatherActivity {
         if(taskToken.getInt(taskType + "taskToken",0) == 100)
             return;
         Intent intent_taskExplain;
-        TextView partText = findViewById(R.id.partText);
+        TextView partText = findViewById(R.id.optionText);
         Log.d("boxbox",taskType);
         if(taskType.equals("BOXCROP")){
             intent_taskExplain = new Intent(TaskActivity.this, NewExplainActivity.class);
@@ -407,54 +394,6 @@ public class TaskActivity extends PatherActivity {
             startActivity(intent_taskExplain);
         }
 
-    }
-
-
-    private void regionDialogShow(TextView optionText) {
-        final TextView optionTextTemp = optionText;
-        RegionSelectDialog dialog = new RegionSelectDialog(this, R.style.AppTheme_Transparent_Dialog);
-        dialog.setDialogListener(new RegionSelectDialogListener() {
-            @Override
-            public void onPartChungBukClicked() {
-                optionTextTemp.setText("충북");
-            }
-
-            @Override
-            public void onPartChungNamClicked() {
-                optionTextTemp.setText("충남");
-            }
-
-            @Override
-            public void onPartKyeongBukClicked() {
-                optionTextTemp.setText("경북");
-            }
-
-            @Override
-            public void onPartKyeongNamClicked() {
-                optionTextTemp.setText("경남");
-            }
-
-            @Override
-            public void onPartJeonBukClicked() {
-                optionTextTemp.setText("전북");
-            }
-
-            @Override
-            public void onPartJeonNamClicked() {
-                optionTextTemp.setText("전남");
-            }
-
-            @Override
-            public void onPartKangwonClicked() {
-                optionTextTemp.setText("강원");
-            }
-
-            @Override
-            public void onPartJejuClicked() {
-                optionTextTemp.setText("제주");
-            }
-        });
-        dialog.show();
     }
 
     //데일리 퀘스트 관련

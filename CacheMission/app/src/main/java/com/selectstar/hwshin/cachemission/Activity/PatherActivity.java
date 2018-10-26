@@ -11,16 +11,16 @@ import android.net.NetworkInfo;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.selectstar.hwshin.cachemission.Adapter.ListviewAdapter;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView;
 import com.selectstar.hwshin.cachemission.DataStructure.UIHashMap;
+import com.selectstar.hwshin.cachemission.Dialog.RegionSelectDialog;
+import com.selectstar.hwshin.cachemission.Dialog.RegionSelectDialogListener;
 import com.selectstar.hwshin.cachemission.R;
 
 import org.json.JSONArray;
@@ -58,12 +58,85 @@ public abstract class PatherActivity extends AppCompatActivity {
     protected int upGold;
     protected int partNum;
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences explain = getSharedPreferences("region", Context.MODE_PRIVATE);
+        SharedPreferences tasktoken = getSharedPreferences("taskToken", MODE_PRIVATE);
+        if((taskType.equals("DIALECT") || taskType.equals("RECORD") || taskType.equals("RECORDEXAM") || taskType.equals("DIRECTRECORD"))
+                && tasktoken.getInt(taskType + "taskToken", 0) == 100){
+            if(explain.getString("region","").equals("")){
+                regionDialogShow((TextView) findViewById(R.id.optionText));
+            }else{
+                ((TextView) findViewById(R.id.optionText)).setText(explain.getString("region",""));
+            }
+        }
+    }
+
+
     public int getPartNum() {
         return partNum;
     }
+
+    public void regionDialogShow(TextView optionText) {
+        final TextView optionTextTemp = optionText;
+        RegionSelectDialog dialog = new RegionSelectDialog(this, R.style.AppTheme_Transparent_Dialog);
+        dialog.setDialogListener(new RegionSelectDialogListener() {
+            @Override
+            public void onPartChungBukClicked() {
+                optionTextTemp.setText("충북");
+                startTask();
+            }
+
+            @Override
+            public void onPartChungNamClicked() {
+                optionTextTemp.setText("충남");
+                startTask();
+            }
+
+            @Override
+            public void onPartKyeongBukClicked() {
+                optionTextTemp.setText("경북");
+                startTask();
+            }
+
+            @Override
+            public void onPartKyeongNamClicked() {
+                optionTextTemp.setText("경남");
+                startTask();
+            }
+
+            @Override
+            public void onPartJeonBukClicked() {
+                optionTextTemp.setText("전북");
+                startTask();
+            }
+
+            @Override
+            public void onPartJeonNamClicked() {
+                optionTextTemp.setText("전남");
+                startTask();
+            }
+
+            @Override
+            public void onPartKangwonClicked() {
+                optionTextTemp.setText("강원");
+                startTask();
+            }
+
+            @Override
+            public void onPartJejuClicked() {
+                optionTextTemp.setText("제주");
+                startTask();
+            }
+        });
+        dialog.show();
+    }
+
     public int partType() {
         int answer = -1;
-        TextView partType = findViewById(R.id.partText);
+        TextView partType = findViewById(R.id.optionText);
         System.out.println(partType.getText().toString());
         if(partType.getText().toString().equals("전봇대 부품들"))
             answer = 2;
@@ -336,7 +409,7 @@ public abstract class PatherActivity extends AppCompatActivity {
         if(firstTimeExplain.getString(taskName,"").equals("notFirst"))
             return;
         Intent intent_taskExplain;
-        TextView partText = findViewById(R.id.partText);
+        TextView partText = findViewById(R.id.optionText);
         Log.d("boxbox",taskType);
         if(taskType.equals("BOXCROP")){
             intent_taskExplain = new Intent(PatherActivity.this, NewExplainActivity.class);

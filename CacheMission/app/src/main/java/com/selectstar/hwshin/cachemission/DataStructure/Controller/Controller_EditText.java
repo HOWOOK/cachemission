@@ -33,10 +33,23 @@ public class Controller_EditText extends Controller {
         sendb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (edit.getText().toString().length() < 3) {
                     Toast.makeText(parentActivity, "먼저 응답을 세 자 이상 기록해 주세요", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                if(edit.getText().toString().contains("(")){
+                    Toast.makeText(parentActivity, "'(',')','&' 문자를 포함하지 말아주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                };
+                if(edit.getText().toString().contains(")")){
+                    Toast.makeText(parentActivity, "'(',')','&' 문자를 포함하지 말아주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                };
+                if(edit.getText().toString().contains("&")){
+                    Toast.makeText(parentActivity, "'(',')','&' 문자를 포함하지 말아주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                };
                 JSONObject param2 = new JSONObject();
                 try {
                     param2.put("answerID", ((TaskActivity)parentActivity).getAnswerID());

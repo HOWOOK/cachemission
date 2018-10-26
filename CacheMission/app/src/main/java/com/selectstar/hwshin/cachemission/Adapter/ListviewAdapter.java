@@ -262,9 +262,6 @@ Log.d("fullupdate",questList.toString());
                 intent.putExtra("controller",taskItem.get("controller").toString());
             intent.putExtra("taskId",taskItem.get("id").toString());
 
-            System.out.println("하잇 : " + taskItem);
-
-
         } catch(JSONException e)
         {
             e.printStackTrace();
@@ -306,8 +303,7 @@ Log.d("fullupdate",questList.toString());
                     Toast.makeText(mContext,"아직 로딩 중입니다!!",Toast.LENGTH_SHORT);
             }
         });
-        //TextView dailyMission=convertView.findViewById(R.id.dailyMission);
-        //dailyMission.setText(taskItem.getDailyMission());
+
     }
     public void questReset(ListviewAdapter.ItemViewHolder holder){
         holder.quest1money.setText("");

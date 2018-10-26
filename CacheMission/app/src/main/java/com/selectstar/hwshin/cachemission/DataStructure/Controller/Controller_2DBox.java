@@ -1348,7 +1348,7 @@ public class Controller_2DBox extends Controller {
                 return true;
             }
         });
-        
+
         //boxcrop controller가 활성화된 이후에는 포토뷰가 더이상 수정될 수 없어야 합니다.
         youCantTouchAnymore.setOnTouchListener(new View.OnTouchListener() {
             @Override
