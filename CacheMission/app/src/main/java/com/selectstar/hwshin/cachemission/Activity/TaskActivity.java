@@ -389,7 +389,6 @@ public class TaskActivity extends PatherActivity {
 
 
     //해당 task가 처음이라면 설명서 띄워주는 것
-
     public void showDescription()
     {
         SharedPreferences taskToken = getSharedPreferences("taskToken", MODE_PRIVATE);

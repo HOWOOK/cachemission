@@ -268,6 +268,7 @@ public class TaskView_PhotoView extends TaskView {
         });
     }
 
+    //확대 후에도 뷰에 여백이 남는경우 남은 여백이 쌍방으로 균등하게 배분되는데, 그로인한 cropBox 제조정을 위해 이동 델타 값을 구하는 함수
     private float[] CalDeltaSettingValue(View expandView, View expandView2) {
         ConstraintLayout.LayoutParams expandViewParams = (ConstraintLayout.LayoutParams) expandView.getLayoutParams();
         ConstraintLayout.LayoutParams expandView2Params = (ConstraintLayout.LayoutParams) expandView2.getLayoutParams();
@@ -323,6 +324,7 @@ public class TaskView_PhotoView extends TaskView {
         return  returnVal;
     }
 
+    //Answer를 바탕으로 박스를 그릴 때 어디에 그릴지 셋팅해주는 함수
     private void boxSetting(View expandView, View expandView2, float[] deltaSettingValue) {
         ConstraintLayout boxCL = parentActivity.findViewById(R.id.boxCL);
         ConstraintLayout.LayoutParams expandViewParams = (ConstraintLayout.LayoutParams) expandView.getLayoutParams();
@@ -600,6 +602,7 @@ public class TaskView_PhotoView extends TaskView {
         }
     }
 
+    //서버에서 보내준 확대 좌표를 바탕으로 bitmap을 잘라준다.
     private Bitmap cropBitmap(Bitmap original, String cropCoordination) {
         System.out.println("------------");
         System.out.println(cropCoordination);
@@ -673,7 +676,7 @@ public class TaskView_PhotoView extends TaskView {
         answerList = null;
     }
 
-    //size도 함께 생각해야한다........
+    //size도 함께 생각해야한다........ 겹치는 퍼센트에 따라 P/F 하는거로 수정 요망
     public boolean similarityTest(float left, float top, float right, float bottom){
         Boolean rtnVal = true;
         float error = 0.015f;

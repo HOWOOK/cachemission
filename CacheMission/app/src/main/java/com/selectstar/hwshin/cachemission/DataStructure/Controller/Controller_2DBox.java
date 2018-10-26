@@ -454,6 +454,8 @@ public class Controller_2DBox extends Controller {
         final View bottomFade = view.findViewById(R.id.bottomFade);
         final View bottomRightFade = view.findViewById(R.id.bottomRightFade);
 
+        //top_line, bottom_line, left_line, right_line, topLeft_corner, topRight_corner, bottomLeft_corner, bottomRight_corner 리스너 사실 상 없애도 됨.
+
         top_line.setOnTouchListener(new View.OnTouchListener() {
             float lastX;
             float lastY;
@@ -1346,7 +1348,8 @@ public class Controller_2DBox extends Controller {
                 return true;
             }
         });
-
+        
+        //boxcrop controller가 활성화된 이후에는 포토뷰가 더이상 수정될 수 없어야 합니다.
         youCantTouchAnymore.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -1357,8 +1360,6 @@ public class Controller_2DBox extends Controller {
         });
 
     }
-
-    //어떤 파트를 찾았는지 알아내서 서버로 보내줘야합니다.
 
     @Override
     public void setLayout(View view, String taskID) {
