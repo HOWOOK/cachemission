@@ -49,7 +49,6 @@ public class TaskActivity extends PatherActivity {
     Uri photoUri;
     Dialog explainDialog;
     ImageView backButton;
-    public TextView taskCount;
     ArrayList<String> pic=new ArrayList<>();
     //사투리특별전용옵션
     static String region_dialect;
@@ -58,11 +57,6 @@ public class TaskActivity extends PatherActivity {
 
     public TaskView getmTaskView() {
         return this.mTaskView;
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
     @Override
@@ -85,7 +79,6 @@ public class TaskActivity extends PatherActivity {
         final TextView optionText = findViewById(R.id.optionText);
         nowGold = findViewById(R.id.goldnow);
         pendingGold = findViewById(R.id.goldpre);
-        taskCount = findViewById(R.id.regionText);
         backButton = findViewById(R.id.back);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,8 +100,6 @@ public class TaskActivity extends PatherActivity {
         maybe = intent.getStringExtra("goldPre");
         nowGold.setText("현재 : \uFFE6 " + gold);
         pendingGold.setText("예정 : \uFFE6 " + maybe);
-        if(intent.hasExtra("daily"))
-            taskCount.setText(parseDailyQuest(intent.getStringExtra("daily")));
         uiHashMap = new UIHashMap();
         taskID = (String)intent.getStringExtra("taskId");
         mTaskView =  uiHashMap.taskViewHashMap.get(intent.getStringExtra("taskView"));
@@ -373,8 +364,6 @@ public class TaskActivity extends PatherActivity {
         }
     }
 
-
-
     //해당 task가 처음이라면 설명서 띄워주는 것
     public void showDescription()
     {
@@ -394,67 +383,6 @@ public class TaskActivity extends PatherActivity {
             startActivity(intent_taskExplain);
         }
 
-    }
-
-    //데일리 퀘스트 관련
-    public int getTaskCount()
-    {
-        String string = taskCount.getText().toString();
-        int startPoint=-1;
-        int midPoint=-1;
-        int endPoint=-1;
-        for(int i=0;i<string.length();i++)
-        {
-            if(string.charAt(i)=='[')
-                startPoint=i;
-            if(string.charAt(i)=='/')
-                midPoint=i;
-            if(string.charAt(i)==']')
-                endPoint=i;
-        }
-        int a = Integer.parseInt(string.substring(startPoint+1,midPoint));
-        int b = Integer.parseInt(string.substring(midPoint+1,endPoint));
-        return b-a;
-    }
-
-    public int setDailyQuest(String rawText)
-    {
-        if(rawText.equals("-1")) {
-            int startPoint = -1, endPoint = -1, midPoint = -1,bonusPoint = -1;
-            String a = taskCount.getText().toString();
-            rawText = a;
-            for (int i = 0; i < rawText.length(); i++) {
-                if (rawText.charAt(i) == '[')
-                    startPoint = i;
-                if (rawText.charAt(i) == ']')
-                    endPoint = i;
-                if (rawText.charAt(i) == '/')
-                    midPoint = i;
-                if (rawText.charAt(i) == '(')
-                    bonusPoint = i;
-            }
-            System.out.println("~!~!!~!");
-            System.out.println(startPoint);
-            System.out.println(endPoint);
-            System.out.println(midPoint);
-            System.out.println(bonusPoint);
-
-            if (startPoint == -1 || endPoint == -1 || midPoint == -1 || bonusPoint == -1)
-                return 0;
-
-            if (startPoint >= endPoint)
-                return 0;
-            int bonusGold = Integer.parseInt(getNumberInString(rawText.substring(bonusPoint+1)));
-            int count = Integer.parseInt(rawText.substring(startPoint+1,midPoint));
-            int allCount = Integer.parseInt(rawText.substring(midPoint+1,endPoint));
-            if(count + 1 == allCount)
-                return bonusGold+getUpGold();
-            else
-                rawText.replace(String.valueOf(count),String.valueOf(count+1));
-
-        }
-        taskCount.setText(parseDailyQuest(rawText));
-        return 0;
     }
 
     public void setQuestList(String questString)

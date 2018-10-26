@@ -51,11 +51,7 @@ public class Controller_Numbers extends Controller {
                     System.out.println(taskID);
                     System.out.println(Integer.parseInt(result));
                     parentActivity.setGold("-1");
-                    int nowUpGold = parentActivity.setDailyQuest("-1");
-                    if(nowUpGold>0)
-                        parentActivity.showAnimation(R.drawable.three_coin_anim_list,nowUpGold);
-                    else
-                        parentActivity.showAnimation(R.drawable.coin_animation_list,parentActivity.getUpGold());
+
                     param.put("answerID", parentActivity.getAnswerID());
                     param.put("taskID", taskID);
                     param.put("submit", Integer.parseInt(result));
@@ -118,7 +114,7 @@ public class Controller_Numbers extends Controller {
         gv = ((ConstraintLayout)view).findViewById(R.id.gridViewff);
         gv.setNumColumns(10);
         ArrayList<ImageView> as = new ArrayList<>();
-        for(int i=0;i<10;i++) {
+        for(int i = 0; i < 10; i++) {
             ImageView iv = new ImageView(parentActivity);
             as.add(iv);
         }

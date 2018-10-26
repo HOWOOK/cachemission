@@ -41,11 +41,6 @@ public class ExamActivity extends PatherActivity {
     String examFlag="";
     ImageView backButton;
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
     protected void showDescription(Context context)
     {
         Intent intent_taskExplain = new Intent(context, TaskExplainActivity.class);
