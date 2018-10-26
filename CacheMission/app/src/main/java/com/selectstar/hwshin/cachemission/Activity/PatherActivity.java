@@ -339,6 +339,10 @@ public abstract class PatherActivity extends AppCompatActivity {
         if(taskType.equals("BOXCROP")){
             intent_taskExplain = new Intent(PatherActivity.this, NewExplainActivity.class);
             intent_taskExplain.putExtra("part", partText.getText());
+            intent_taskExplain.putExtra("partNum", partType());
+            intent_taskExplain.putExtra("taskID", taskID);
+            System.out.println("shibal"+taskID);
+            intent_taskExplain.putExtra("loginToken", getLoginToken());
             System.out.println("가져온 텍스트 : "+partText.getText());
         }else{
             intent_taskExplain = new Intent(PatherActivity.this, TaskExplainActivity.class);

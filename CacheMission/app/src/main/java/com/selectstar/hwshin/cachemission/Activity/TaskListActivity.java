@@ -1,11 +1,13 @@
 package com.selectstar.hwshin.cachemission.Activity;
 
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
@@ -67,9 +69,11 @@ public class TaskListActivity extends AppCompatActivity {
     private TextView myPage;
     private Button refreshButton;
     private  TextView refreshText;
+    private TextView nowGold;
+
     public int runningHTTPRequest=0;
     NotificationCompat.Builder mBuilder;
-    NotificationManager notifManager = (NotificationManager) getSystemService  (Context.NOTIFICATION_SERVICE);
+    NotificationManager notifManager;
 
 
     public static boolean isNetworkConnected(Context context){
@@ -201,6 +205,48 @@ public class TaskListActivity extends AppCompatActivity {
 
     }
 
+    public String updateTodayEarnedMoney(){
+
+        int moneyDifference=0;
+
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        SimpleDateFormat hourFormat = new SimpleDateFormat("HH");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        String currentDate = dateFormat.format(date);
+        String currentHour = hourFormat.format(date);
+
+        SharedPreferences currentGold=getSharedPreferences("currentGold",MODE_PRIVATE);
+
+        String nowGoldString=currentGold.getString("currentGold","0");
+
+
+        SharedPreferences todayMoney=getSharedPreferences("todayMoney",MODE_PRIVATE);
+        String todayDate=todayMoney.getString("todayDate","");
+        String todayStartMoney=todayMoney.getString("todayStartMoney","");
+        SharedPreferences.Editor editor=todayMoney.edit();
+
+        if(todayDate.equals("")){
+            editor.putString("todayDate",currentDate);
+            editor.putString("todayStartMoney",nowGoldString);
+            editor.commit();
+            return "0";
+        }
+        else if(!todayDate.equals(currentDate)){
+            editor.putString("todayDate",currentDate);
+            editor.putString("todayStartMoney",nowGoldString);
+            editor.commit();
+            return "0";
+        }
+        Log.d("todayStart",todayStartMoney);
+
+        Log.d("nowgold",nowGoldString);
+        moneyDifference=Integer.parseInt(nowGoldString)-Integer.parseInt(todayStartMoney);
+        return String.valueOf(moneyDifference);
+
+
+    }
     public boolean checkIfTimePassed() {
 
         SharedPreferences listInfo = getSharedPreferences("listInfo", MODE_PRIVATE);
@@ -239,7 +285,7 @@ public class TaskListActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-Log.d("timeee",String.valueOf(nowTime));
+        Log.d("timeee",String.valueOf(nowTime));
         Log.d("pretimeee",String.valueOf(preTime));
 
         if (nowDate.equals(preDate)) {
@@ -361,6 +407,19 @@ runningHTTPRequest++;
                     TextView userGold = findViewById(R.id.mygold);
                     int allGold = (int) user.get("gold") + (int) user.get("maybe");
                     userGold.setText(String.valueOf(allGold));
+
+                    SharedPreferences currentGold=getSharedPreferences("currentGold",MODE_PRIVATE);
+                    SharedPreferences.Editor editor=currentGold.edit();
+                    editor.putString("currentGold",String.valueOf(allGold));
+                    editor.commit();
+                    updateTodayEarnedMoney();
+
+
+                    notifManager = (NotificationManager) getSystemService  (Context.NOTIFICATION_SERVICE);
+                    notifManager.cancelAll();
+                    SharedPreferences notificationOnOffBoolean=getSharedPreferences("notificationOnOffBoolean",MODE_PRIVATE);
+                    topBarSetting(notificationOnOffBoolean.getBoolean("OnOff",true));
+
                     TextView userNameDrawer = findViewById(R.id.usernamedrawer);
                     userNameDrawer.setText(String.valueOf(user.get("name")));
                     setUserRankImage(userRank, userLevel, (int)user.get("rank"));
@@ -496,6 +555,47 @@ runningHTTPRequest++;
                 startActivity(intent_suggestion);
             }
         });
+        TextView notificationOnOffBtn=findViewById(R.id.notificationOnOff);
+        notificationOnOffBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder oDialog = new AlertDialog.Builder(mContext,
+                        android.R.style.Theme_DeviceDefault_Light_Dialog);
+
+                oDialog.setMessage("상단 바 알림을 사용하시겠습니까?")
+                        .setTitle("알림 사용 선택")
+                        .setPositiveButton("알림 해제", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                SharedPreferences notificationOnOffBoolean=getSharedPreferences("notificationOnOffBoolean",MODE_PRIVATE);
+                                SharedPreferences.Editor editor=notificationOnOffBoolean.edit();
+                                editor.putBoolean("OnOff",false);
+                                editor.commit();
+                                notifManager.cancelAll();
+                                Toast.makeText(getApplicationContext(), "알림이 해제되었습니다.", Toast.LENGTH_LONG).show();
+                            }
+                        })
+                        .setNeutralButton("알림 적용", new DialogInterface.OnClickListener()
+                        {
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                SharedPreferences notificationOnOffBoolean=getSharedPreferences("notificationOnOffBoolean",MODE_PRIVATE);
+                                SharedPreferences.Editor editor=notificationOnOffBoolean.edit();
+                                editor.putBoolean("OnOff",true);
+                                editor.commit();
+                                //topBarSetting(true);
+                                Toast.makeText(getApplicationContext(), "알림이 적용되었습니다.", Toast.LENGTH_LONG).show();
+                            }
+                        })
+                        .setCancelable(false) // 백버튼으로 팝업창이 닫히지 않도록 한다.
+
+
+                        .show();
+
+            }
+        });
     }
     private void getOneTask(final int i,final String loginToken,final boolean isNew)
     {
@@ -597,6 +697,22 @@ runningHTTPRequest++;
                     TextView userGold = findViewById(R.id.mygold);
                     int allGold = (int) user.get("gold") + (int) user.get("maybe");
                     userGold.setText(String.valueOf(allGold));
+
+                    SharedPreferences currentGold=getSharedPreferences("currentGold",MODE_PRIVATE);
+                    SharedPreferences.Editor currentGoldEditor=currentGold.edit();
+                    currentGoldEditor.putString("currentGold",String.valueOf(allGold));
+
+                    Log.d("todayStartfirst",String.valueOf(allGold));
+                    currentGoldEditor.commit();
+                    updateTodayEarnedMoney();
+                    notifManager = (NotificationManager) getSystemService  (Context.NOTIFICATION_SERVICE);
+
+                    notifManager.cancelAll();
+                    SharedPreferences notificationOnOffBoolean=getSharedPreferences("notificationOnOffBoolean",MODE_PRIVATE);
+
+
+                    topBarSetting(notificationOnOffBoolean.getBoolean("OnOff",true));
+
                     TextView userNameDrawer = findViewById(R.id.usernamedrawer);
                     mTaskList.clear();
                     clearItem();
@@ -641,8 +757,7 @@ runningHTTPRequest++;
 
 
     }
-    public synchronized void topBarSetting(String todayMoney,boolean notificationFlag){
-
+    public synchronized void defaultTopBarSetting(String todayMoney){
         Bitmap mLargeIcon= BitmapFactory.decodeResource(getResources(),R.drawable.cashmissioniconround);
         PendingIntent mPendingIntent=PendingIntent.getActivity(
                 TaskListActivity.this,
@@ -650,7 +765,7 @@ runningHTTPRequest++;
                 new Intent(getApplicationContext(),TaskListActivity.class),
                 PendingIntent.FLAG_UPDATE_CURRENT
 
-                );
+        );
 
 
         String channelId = "channel";
@@ -694,12 +809,52 @@ runningHTTPRequest++;
         mBuilder
                 .setSmallIcon(R.drawable.cashmissioniconround)
                 .setContentTitle("캐시미션")
-                .setContentText("오늘번돈 : "+R.string.wonunicode+todayMoney)
+                .setContentText("오늘번돈 : "+"\uFFE6"+todayMoney)
                 .setDefaults(Notification.DEFAULT_SOUND)
                 .setLargeIcon(mLargeIcon)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(false)
+                .setOngoing(true)
                 .setContentIntent(pendingIntent);
+
+    }
+    public synchronized void topBarSetting( boolean notificationFlag){
+        if(!notificationFlag)
+            return;
+
+        defaultTopBarSetting(updateTodayEarnedMoney());
+//        SharedPreferences token = getSharedPreferences("token",MODE_PRIVATE);
+//        final String loginToken = token.getString("loginToken","");
+//        JSONObject param = new JSONObject();
+//
+//        WaitHttpRequest asyncTask=new WaitHttpRequest(mContext) {
+//            @Override
+//            protected void onPostExecute(Object o) {
+//                super.onPostExecute(o);
+//
+//                try {
+//                    if (result == "")
+//                        return;
+//                    JSONObject resultTemp = new JSONObject(result);
+//                    String todayMoney=resultTemp.get("todayMoney").toString();
+//                    defaultTopBarSetting(todayMoney);
+//
+//
+//
+//
+//
+//                }
+//                catch(JSONException e)
+//                {
+//                    e.printStackTrace();
+//                }
+//                runningHTTPRequest--;
+//
+//            }
+//        };
+//        //CountDownTimer adf= new AsyncTaskCancelTimerTask(asyncTask,Integer.parseInt(getString(R.string.hTTPTimeOut)),1000,true,this).start();
+//        asyncTask.execute(getString(R.string.mainurl) + "/testing/todayMoney", param, loginToken);
+
 
         notifManager.notify(0, mBuilder.build());
 
@@ -707,10 +862,13 @@ runningHTTPRequest++;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
        // initiateListInfo();
+
         Tracker t = ((GlobalApplication)getApplication()).getTracker(GlobalApplication.TrackerName.APP_TRACKER);
         t.setScreenName("TaskListActivity");
         t.send(new HitBuilders.AppViewBuilder().build());
         setContentView(R.layout.activity_tasklist);
+
+        nowGold=(TextView)findViewById(R.id.mygold);
         refreshText=findViewById(R.id.refreshText);
         refreshButton=findViewById(R.id.refreshbutton);
 
@@ -742,6 +900,13 @@ runningHTTPRequest++;
             }
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
     @Override
     protected void onStart()
     {
@@ -754,6 +919,7 @@ runningHTTPRequest++;
         else{
             getTaskList(loginToken);
         }
+
 
     }
     private void setUserRankImage(ImageView userRank, TextView userLevel, int rank) {

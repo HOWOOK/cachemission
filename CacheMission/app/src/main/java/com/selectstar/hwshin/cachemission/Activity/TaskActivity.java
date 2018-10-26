@@ -161,7 +161,7 @@ public class TaskActivity extends PatherActivity {
 
 
         //해당 task가 처음이라면 설명서 띄워주는 것
-        showDescription();
+        //showDescription();
 
         controllerView = findViewById(R.id.controller);
         mController.setParentActivity(this);
@@ -205,9 +205,17 @@ public class TaskActivity extends PatherActivity {
             public void onClick(View v) {
                 Intent intent_taskExplain;
                 Log.d("boxbox",taskType);
-                if(taskType.equals("BOXCROP")){
+
+
+
+                if(taskType.equals("BOXCROP")||taskType.equals("PHOTO")){
                     intent_taskExplain = new Intent(TaskActivity.this, NewExplainActivity.class);
                     intent_taskExplain.putExtra("part", partText.getText());
+                    intent_taskExplain.putExtra("partNum", partType());
+                    intent_taskExplain.putExtra("taskID", taskID);
+                    System.out.println("shibal"+taskID);
+                    intent_taskExplain.putExtra("loginToken", getLoginToken());
+
                     System.out.println("가져온 텍스트 : "+partText.getText());
                 }else{
                     intent_taskExplain = new Intent(TaskActivity.this, TaskExplainActivity.class);
@@ -401,6 +409,11 @@ public class TaskActivity extends PatherActivity {
         if(taskType.equals("BOXCROP")){
             intent_taskExplain = new Intent(TaskActivity.this, NewExplainActivity.class);
             intent_taskExplain.putExtra("part", partText.getText());
+            intent_taskExplain.putExtra("partNum", partType());
+            intent_taskExplain.putExtra("taskID", taskID);
+
+            System.out.println("shibal"+taskID);
+            intent_taskExplain.putExtra("loginToken", getLoginToken());
             System.out.println("가져온 텍스트 : "+partText.getText());
         }else{
             intent_taskExplain = new Intent(TaskActivity.this, TaskExplainActivity.class);

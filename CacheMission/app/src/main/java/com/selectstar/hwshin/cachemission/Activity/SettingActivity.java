@@ -60,6 +60,8 @@ Context mContext=this;
                         SharedPreferences.Editor editor = test.edit();
                         editor.remove("loginToken");
                         editor.commit();
+
+
                         finish();
                     }
                 });

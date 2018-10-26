@@ -201,6 +201,7 @@ Log.d("fullupdate",questList.toString());
 
                 }
             }else{
+
 //                Log.d("how?","??");
 //                if(holder.itemCL != null) {
 //                    holder.itemCL.removeView(holder.quest1);
@@ -213,6 +214,7 @@ Log.d("fullupdate",questList.toString());
 //                    itemCLset.connect(holder.gold.getId(), ConstraintSet.TOP, holder.taskTv.getId(), ConstraintSet.BOTTOM);
 //                    itemCLset.applyTo(holder.itemCL);
 //                }
+
             }
         }catch (JSONException e){
             e.printStackTrace();

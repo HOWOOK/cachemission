@@ -302,6 +302,15 @@
             app:layout_constraintTop_toBottomOf="@+id/noticeb"/>
 
 
+        <TextView
+            android:id="@+id/notificationOnOff"
+            style="@style/normalTextList"
+
+            android:text="알람 켜기/끄기"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/suggestion" />
+
         <android.support.constraint.ConstraintLayout
             android:id="@+id/drawer_bottom"
             android:layout_width="match_parent"
