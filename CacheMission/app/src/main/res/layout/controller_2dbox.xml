@@ -272,7 +272,7 @@
             android:layout_width="match_parent"
             android:layout_height="43dp"
             android:background="@color/colorDark1"
-            android:text="제출하기"
+            android:text="제출하기 +25원"
             android:textSize="15dp"
             android:textColor="#FFFFFF"
             android:fontFamily="@font/bmjua_"
