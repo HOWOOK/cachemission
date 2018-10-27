@@ -77,7 +77,6 @@ public class TaskListActivity extends AppCompatActivity {
     NotificationManager notifManager;
 
 
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // initiateListInfo();
@@ -85,9 +84,17 @@ public class TaskListActivity extends AppCompatActivity {
         t.setScreenName("TaskListActivity");
         t.send(new HitBuilders.AppViewBuilder().build());
         setContentView(R.layout.activity_tasklist);
+
+        ConstraintLayout drawerCL = findViewById(R.id.drawerCL);
+        drawerCL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                return;
+            }
+        });
+
         refreshText=findViewById(R.id.refreshText);
         refreshButton=findViewById(R.id.refreshbutton);
-
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
