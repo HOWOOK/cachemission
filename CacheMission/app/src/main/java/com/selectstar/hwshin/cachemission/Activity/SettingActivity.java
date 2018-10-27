@@ -62,6 +62,11 @@ Context mContext=this;
                         editor.commit();
 
 
+                        SharedPreferences todayMoney=getSharedPreferences("todayMoney",MODE_PRIVATE);
+                        SharedPreferences.Editor moneyEditor=todayMoney.edit();
+                        moneyEditor.remove("todayDate");
+                        moneyEditor.remove("todayStartMoney");
+                        moneyEditor.commit();
                         finish();
                     }
                 });

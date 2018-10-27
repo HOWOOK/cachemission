@@ -630,9 +630,9 @@ runningHTTPRequest++;
                 AlertDialog.Builder oDialog = new AlertDialog.Builder(mContext,
                         android.R.style.Theme_DeviceDefault_Light_Dialog);
 
-                oDialog.setMessage("상단 바 알림을 사용하시겠습니까?")
-                        .setTitle("알림 사용 선택")
-                        .setPositiveButton("알림 해제", new DialogInterface.OnClickListener()
+                oDialog.setMessage("상태바 알림을 사용하시겠습니까?")
+                        .setTitle("상태바 알림 사용 선택")
+                        .setPositiveButton("상태바 알림 해제", new DialogInterface.OnClickListener()
                         {
                             @Override
                             public void onClick(DialogInterface dialog, int which)
@@ -642,10 +642,10 @@ runningHTTPRequest++;
                                 editor.putBoolean("OnOff",false);
                                 editor.commit();
                                 notifManager.cancelAll();
-                                Toast.makeText(getApplicationContext(), "알림이 해제되었습니다.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "상태바 알림이 해제되었습니다.", Toast.LENGTH_LONG).show();
                             }
                         })
-                        .setNeutralButton("알림 적용", new DialogInterface.OnClickListener()
+                        .setNeutralButton("상태바 알림 적용", new DialogInterface.OnClickListener()
                         {
                             public void onClick(DialogInterface dialog, int which)
                             {
@@ -654,7 +654,7 @@ runningHTTPRequest++;
                                 editor.putBoolean("OnOff",true);
                                 editor.commit();
                                 //topBarSetting(true);
-                                Toast.makeText(getApplicationContext(), "알림이 적용되었습니다.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "상태바 알림이 적용되었습니다.", Toast.LENGTH_LONG).show();
                             }
                         })
                         .setCancelable(false) // 백버튼으로 팝업창이 닫히지 않도록 한다.
@@ -848,7 +848,7 @@ runningHTTPRequest++;
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
 
-            int importance = NotificationManager.IMPORTANCE_HIGH;
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
 
             NotificationChannel mChannel = new NotificationChannel(
                     channelId, channelName, importance);
