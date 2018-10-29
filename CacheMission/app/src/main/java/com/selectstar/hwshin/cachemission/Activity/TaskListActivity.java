@@ -887,8 +887,8 @@ runningHTTPRequest++;
 
         mBuilder
                 .setSmallIcon(R.drawable.cashmissioniconround)
-                .setContentTitle("캐시미션")
-                .setContentText("오늘번돈 : "+"\uFFE6"+todayMoney)
+                .setContentTitle("오늘 번 돈")
+                .setContentText("\uFFE6"+todayMoney)
                 .setDefaults(Notification.DEFAULT_SOUND)
                 .setLargeIcon(mLargeIcon)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)

@@ -174,21 +174,38 @@ public class GalleryImageAdapter extends RecyclerView.Adapter<GalleryImageAdapte
                 ExifInterface exif=null;
                 try{exif=new ExifInterface(basePath + File.separator + mImgs[position]);}
                 catch(IOException e){e.printStackTrace();}
-                int orientation=exif.getAttributeInt(ExifInterface.TAG_ORIENTATION,ExifInterface.ORIENTATION_UNDEFINED);
-                final Bitmap bm = BitmapFactory.decodeFile(basePath + File.separator + mImgs[position], options);
-                final Bitmap bmRotated = rotateBitmap(bm,orientation);
+                if(exif!=null) {
+                    int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+                    final Bitmap bm = BitmapFactory.decodeFile(basePath + File.separator + mImgs[position], options);
+                    final Bitmap bmRotated = rotateBitmap(bm, orientation);
 
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mActivity.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                holder.image.setImageBitmap(bmRotated);
-                            }
-                        });
-                    }
-                }).start();
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mActivity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    holder.image.setImageBitmap(bmRotated);
+                                }
+                            });
+                        }
+                    }).start();
+                }else{
+                    final Bitmap bm = BitmapFactory.decodeFile(basePath + File.separator + mImgs[position], options);
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mActivity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    holder.image.setImageBitmap(bm);
+                                }
+                            });
+                        }
+                    }).start();
+
+                }
+
             }
         }.start();
 
