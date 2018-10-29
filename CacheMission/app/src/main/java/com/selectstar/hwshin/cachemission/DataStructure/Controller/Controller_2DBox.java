@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -1359,6 +1360,35 @@ public class Controller_2DBox extends Controller {
             }
         });
 
+
+        settingThumbnailIV();
+    }
+
+    private void settingThumbnailIV() {
+        ImageView thumbNailIV = parentActivity.findViewById(R.id.thumbnailImage);
+        int partNum = parentActivity.getPartNum();
+        Log.d("파트 번호", ((Integer)partNum).toString());
+        if(partNum == 1)
+            thumbNailIV.setImageDrawable(parentActivity.getDrawable(R.drawable.part_g));
+        if(partNum == 2)
+            thumbNailIV.setImageDrawable(parentActivity.getDrawable(android.R.color.transparent));
+        if(partNum == 3)
+            thumbNailIV.setImageDrawable(parentActivity.getDrawable(R.drawable.part_pole));
+        if(partNum == 4)
+            thumbNailIV.setImageDrawable(parentActivity.getDrawable(R.drawable.part_tree));
+        if(partNum == 5)
+            thumbNailIV.setImageDrawable(parentActivity.getDrawable(R.drawable.part_transformer));
+        if(partNum == 6)
+            thumbNailIV.setImageDrawable(parentActivity.getDrawable(R.drawable.part_a));
+        if(partNum == 7)
+            thumbNailIV.setImageDrawable(parentActivity.getDrawable(R.drawable.part_b));
+        if(partNum == 8)
+            thumbNailIV.setImageDrawable(parentActivity.getDrawable(R.drawable.part_c));
+        if(partNum == 9)
+            thumbNailIV.setImageDrawable(parentActivity.getDrawable(R.drawable.part_d));
+        if(partNum == 10)
+            thumbNailIV.setImageDrawable(parentActivity.getDrawable(R.drawable.part_e));
+        thumbNailIV.bringToFront();
     }
 
     @Override
