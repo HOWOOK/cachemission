@@ -51,6 +51,10 @@ public class TaskView_Text extends TaskView {
                 textView2.setTextColor(ContextCompat.getColor(parentActivity, R.color.fontColorActive));
                 textView2.setTextSize(18);
             }
+            else if(taskType.equals("SUGGEST") || taskType.equals("SUGGESTEXAM")){
+                textView1.setText(content);
+                
+            }
            else{
             array = content.split("/");
             array2 = array[1].split("\\(");

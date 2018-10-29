@@ -40,6 +40,8 @@ public class UIHashMap {
     int[][] parameters_DIALECT = new int[6][2];
     int[][] parameters_PHOTO = new int[6][2];
     int[][] parameters_BOXCROP = new int[6][2];
+    int[][] parameters_SUGGEST = new int[6][2];
+
 
     int[][] parameters_OCREXAM = new int[6][2];
     int[][] parameters_VIDEOEXAM = new int[6][2];
@@ -49,6 +51,8 @@ public class UIHashMap {
     int[][] parameters_DIALECTEXAM = new int[6][2];
     int[][] parameters_PHOTOEXAM = new int[6][2];
     int[][] parameters_BOXCROPEXAM = new int[6][2];
+    int[][] parameters_SUGGESTEXAM = new int[6][2];
+
 
     public HashMap<String, TaskView> taskViewHashMap = new HashMap();
     public HashMap<String, Controller> controllerHashMap = new HashMap();
@@ -222,6 +226,22 @@ public class UIHashMap {
         parameters_BOXCROPEXAM[4][0] = R.id.taskConstLayoutexam; parameters_BOXCROPEXAM[4][1] = 4;
         parameters_BOXCROPEXAM[5][0] = 10;
         taskHashMap.put("BOXCROPEXAM", parameters_BOXCROPEXAM);
+
+        parameters_SUGGEST[0][0] = 10;
+        parameters_SUGGEST[1][0] = R.id.title; parameters_SUGGEST[1][1] = 4;
+        parameters_SUGGEST[2][0] = R.id.taskConstLayout; parameters_SUGGEST[2][1] = 4;
+        parameters_SUGGEST[3][0] = R.id.taskConstLayout; parameters_SUGGEST[3][1] = 3;
+        parameters_SUGGEST[4][0] = R.id.taskConstLayout; parameters_SUGGEST[4][1] = 4;
+        parameters_SUGGEST[5][0] = 0;
+        taskHashMap.put("SUGGEST", parameters_SUGGEST);
+
+        parameters_SUGGESTEXAM[0][0] = 5;
+        parameters_SUGGESTEXAM[1][0] = R.id.title; parameters_SUGGESTEXAM[1][1] = 4;
+        parameters_SUGGESTEXAM[2][0] = R.id.examview; parameters_SUGGESTEXAM[2][1] = 3;
+        parameters_SUGGESTEXAM[3][0] = R.id.taskviewexam; parameters_SUGGESTEXAM[3][1] = 4;
+        parameters_SUGGESTEXAM[4][0] = R.id.taskConstLayoutexam; parameters_SUGGESTEXAM[4][1] = 4;
+        parameters_SUGGESTEXAM[5][0] = 10;
+        taskHashMap.put("SUGGESTEXAM", parameters_SUGGESTEXAM);
 
     }
 
