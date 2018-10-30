@@ -148,11 +148,14 @@ public class TaskActivity extends PatherActivity {
 
 
         //해당 task가 처음이라면 설명서 띄워주는 것
+        //지금은 임시방편으로 new description activity인 것들은///이거 안하게함 모르겠다
+        //if(!(taskType.equals("BOXCROP")||taskType.equals("PHOTO")))
         //showDescription();
 
         controllerView = findViewById(R.id.controller);
         mController.setParentActivity(this);
         mController.setLayout(controllerView,  taskID);
+
         // boxcrop이면 파트 선택되고나서 로딩해야함
         // reccord, dialect, directrecord면 지역 선택되고나서 로딩해야함, 물론 지역선택 예전에 해놨으면 바로 테스크 시작될 거임
         if(!(taskType.equals("BOXCROP")||taskType.equals("RECORD")||taskType.equals("DIALECT")||taskType.equals("DIRECTRECORD")))
@@ -161,6 +164,7 @@ public class TaskActivity extends PatherActivity {
         //boxcrop이면 partSelectDialog를 띄워줘야한다.
         if((taskType.equals("BOXCROP"))){
             findViewById(R.id.option).setBackgroundColor(this.getResources().getColor(R.color.colorDark2));
+            ((TextView) findViewById(R.id.optionText)).setTextColor(this.getResources().getColor(R.color.colorPrimary));
             partDialogShow(optionText);
         }
 
@@ -169,13 +173,11 @@ public class TaskActivity extends PatherActivity {
         SharedPreferences tasktoken = getSharedPreferences("taskToken", MODE_PRIVATE);
         SharedPreferences explain = getSharedPreferences("region", MODE_PRIVATE);
         regionText = explain.getString("region", null);
-        if((taskType.equals("DIALECT") || taskType.equals("RECORD") || taskType.equals("DIRECTRECORD"))
-                && tasktoken.getInt(taskType + "taskToken", 0) == 100){
+        if((taskType.equals("DIALECT") || taskType.equals("RECORD") || taskType.equals("DIRECTRECORD"))){
             if(regionText != null) {
                 optionText.setText(regionText);
                 startTask();
-            }
-            else
+            }else
                 regionDialogShow(optionText);
         }
 

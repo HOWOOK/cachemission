@@ -256,6 +256,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         />
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/thumbnailImage"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintTop_toTopOf="@+id/btnCL"
+        app:layout_constraintBottom_toBottomOf="@+id/btnCL"
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/btnCL"
@@ -266,6 +275,8 @@
         app:layout_constraintTop_toBottomOf="@+id/boxCL"
         app:layout_constraintBottom_toBottomOf="parent"
         >
+
+
 
         <Button
             android:id="@+id/sendbtn"
@@ -296,6 +307,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             />
+
 
     </android.support.constraint.ConstraintLayout>
 
