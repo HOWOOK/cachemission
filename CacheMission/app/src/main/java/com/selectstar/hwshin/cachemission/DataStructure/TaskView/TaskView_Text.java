@@ -53,7 +53,7 @@ public class TaskView_Text extends TaskView {
             }
             else if(taskType.equals("SUGGEST") || taskType.equals("SUGGESTEXAM")){
                 textView1.setText(content);
-                
+
             }
            else{
             array = content.split("/");
