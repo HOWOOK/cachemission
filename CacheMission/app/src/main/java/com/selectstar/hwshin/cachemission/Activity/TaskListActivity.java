@@ -165,7 +165,7 @@ public class TaskListActivity extends AppCompatActivity {
 
     }
 
-    //? 언제뜨는거지 주석 요망
+    //4G에서 와이파이로 넘어갈 때 토스트
     public class MyBroadCastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -184,7 +184,7 @@ public class TaskListActivity extends AppCompatActivity {
         refreshText.setVisibility(View.VISIBLE);
     }
 
-
+// 쉐프퍼에 불러온 테스크리스트 아이템 한개 저장
     public void insertItem(JSONObject item){
 
         SharedPreferences listInfo=getSharedPreferences("listInfo",MODE_PRIVATE);
@@ -210,7 +210,7 @@ public class TaskListActivity extends AppCompatActivity {
         }
 
     }
-
+//쉐프퍼에 불러온 유저정보 저장
     public void insertUserInfo(JSONObject userInfo){
         SharedPreferences listInfo=getSharedPreferences("listInfo",MODE_PRIVATE);
         SharedPreferences.Editor editor=listInfo.edit();
@@ -239,7 +239,7 @@ public class TaskListActivity extends AppCompatActivity {
         }
 
     }
-
+//리스트인포 쉐프퍼를 초기화
     public void initiateListInfo(){
         SharedPreferences listInfo=getSharedPreferences("listInfo",MODE_PRIVATE);
         SharedPreferences.Editor editor=listInfo.edit();
@@ -266,7 +266,7 @@ public class TaskListActivity extends AppCompatActivity {
 
 
     }
-
+//리스트인포 쉐프퍼 내용 전부 비우기
     public void clearItem(){
         SharedPreferences listInfo=getSharedPreferences("listInfo",MODE_PRIVATE);
         SharedPreferences.Editor editor=listInfo.edit();
@@ -274,7 +274,7 @@ public class TaskListActivity extends AppCompatActivity {
         editor.putString("listInfoData","[]");
         editor.apply();
     }
-
+// 현재날짜와 저장된 날짜를 비교하여 날짜가 변했다면 오늘 번 돈 0으로 초기화. 저장된 날짜와 현재날짜가 같다면 오늘 번 돈 계산하여 리턴
     public String updateTodayEarnedMoney(){
 
         int moneyDifference=0;
@@ -317,6 +317,7 @@ public class TaskListActivity extends AppCompatActivity {
 
 
     }
+    //현재시간이 저장된 시간으로부터 10분 이상이 지났는지 계산하여 불린값 리턴
     public boolean checkIfTimePassed() {
 
         SharedPreferences listInfo = getSharedPreferences("listInfo", MODE_PRIVATE);
@@ -370,7 +371,7 @@ public class TaskListActivity extends AppCompatActivity {
             return true;
         }
     }
-
+//현재시간정보 리스트인포 쉐프퍼에 저장
     public void insertTime(){
         SharedPreferences listInfo = getSharedPreferences("listInfo", MODE_PRIVATE);
         SharedPreferences.Editor editor = listInfo.edit();
@@ -410,7 +411,7 @@ public class TaskListActivity extends AppCompatActivity {
 
 
     }
-
+//이전에 저장해놓은 리스트인포 정보로 테스크리스트 인플레이트
     public void getPreviousList(String loginToken){
         SharedPreferences listInfo=getSharedPreferences("listInfo",MODE_PRIVATE);
         SharedPreferences.Editor editor=listInfo.edit();
@@ -454,7 +455,7 @@ public class TaskListActivity extends AppCompatActivity {
         }
 
     }
-
+//유저정보만 서버에게 요청하기
     private void getJustUserInfo(final String loginToken)
     {
         if(!isNetworkConnected(this)){
