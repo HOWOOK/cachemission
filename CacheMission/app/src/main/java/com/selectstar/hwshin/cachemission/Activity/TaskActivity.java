@@ -149,8 +149,11 @@ public class TaskActivity extends PatherActivity {
 
         //해당 task가 처음이라면 설명서 띄워주는 것
         //지금은 임시방편으로 new description activity인 것들은///이거 안하게함 모르겠다
+
+
+        // 현재는 showDescription 에서 기존의 설명서를 쓰는 테스크들의 경우만 띄워주고 새로 바뀐 형태의 설명서를 사용하는 테스크들의 경우 아무것도 하지 않게 조정함
         //if(!(taskType.equals("BOXCROP")||taskType.equals("PHOTO")))
-        //showDescription();
+        showDescription();
 
         controllerView = findViewById(R.id.controller);
         mController.setParentActivity(this);
@@ -385,15 +388,15 @@ public class TaskActivity extends PatherActivity {
         Intent intent_taskExplain;
         TextView partText = findViewById(R.id.optionText);
         Log.d("boxbox",taskType);
-        if(taskType.equals("BOXCROP")){
-            intent_taskExplain = new Intent(TaskActivity.this, NewExplainActivity.class);
-            intent_taskExplain.putExtra("part", partText.getText());
-            intent_taskExplain.putExtra("partNum", partType());
-            intent_taskExplain.putExtra("taskID", taskID);
-
-            System.out.println("shibal"+taskID);
-            intent_taskExplain.putExtra("loginToken", getLoginToken());
-            System.out.println("가져온 텍스트 : "+partText.getText());
+        if(taskType.equals("BOXCROP")||taskType.equals("PHOTO")){
+//            intent_taskExplain = new Intent(TaskActivity.this, NewExplainActivity.class);
+//            intent_taskExplain.putExtra("part", partText.getText());
+//            intent_taskExplain.putExtra("partNum", partType());
+//            intent_taskExplain.putExtra("taskID", taskID);
+//
+//            System.out.println("shibal"+taskID);
+//            intent_taskExplain.putExtra("loginToken", getLoginToken());
+//            System.out.println("가져온 텍스트 : "+partText.getText());
         }else{
             intent_taskExplain = new Intent(TaskActivity.this, TaskExplainActivity.class);
             intent_taskExplain.putExtra("taskType", taskType);
