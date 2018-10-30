@@ -295,8 +295,7 @@ public class TaskActivity extends PatherActivity {
         GoogleAnalytics.getInstance(this).reportActivityStop(this);
     }
 
-    public void getNewTask()
-    {
+    public void getNewTask(){
         JSONObject param = new JSONObject();
         try {
             param.put("taskID", taskID);
@@ -356,8 +355,7 @@ public class TaskActivity extends PatherActivity {
     }
 
     @Override
-    public void startTask()
-    {
+    public void startTask(){
         try {
             waitingTasks = JSONtoArray(new JSONArray(getPreference("waitingTasks", taskType)));
             if(waitingTasks.size()>0) {
@@ -380,8 +378,7 @@ public class TaskActivity extends PatherActivity {
     }
 
     //해당 task가 처음이라면 설명서 띄워주는 것
-    public void showDescription()
-    {
+    public void showDescription(){
         SharedPreferences taskToken = getSharedPreferences("taskToken", MODE_PRIVATE);
         if(taskToken.getInt(taskType + "taskToken",0) == 100)
             return;

@@ -4,19 +4,15 @@ import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.support.constraint.ConstraintLayout;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.selectstar.hwshin.cachemission.Activity.LoginActivity;
 import com.selectstar.hwshin.cachemission.Adapter.numbergridadapter;
 import com.selectstar.hwshin.cachemission.DataStructure.HurryHttpRequest;
-import com.selectstar.hwshin.cachemission.DataStructure.WaitHttpRequest;
 import com.selectstar.hwshin.cachemission.R;
 
 import org.json.JSONException;
@@ -50,7 +46,7 @@ public class Controller_Numbers extends Controller {
                     System.out.println(parentActivity.getAnswerID());
                     System.out.println(taskID);
                     System.out.println(Integer.parseInt(result));
-                    parentActivity.setGold("-1");
+                    parentActivity.goldSetting("-1");
                     param.put("answerID", parentActivity.getAnswerID());
                     param.put("taskID", taskID);
                     param.put("submit", Integer.parseInt(result));
@@ -80,8 +76,8 @@ public class Controller_Numbers extends Controller {
                                     return;
 
                                 } else {
-                                    parentActivity.setGold(String.valueOf(resultTemp.get("gold")));
-                                    parentActivity.setMaybe(String.valueOf(resultTemp.get("maybe")));
+                                    parentActivity.goldSetting(String.valueOf(resultTemp.get("gold")));
+                                    parentActivity.maybeSetting(String.valueOf(resultTemp.get("maybe")));
                                     parentActivity.setQuestList(String.valueOf(resultTemp.get("questList")));
                                     int bonus = Integer.parseInt(String.valueOf(resultTemp.get("bonus_up")));
                                     System.out.println(bonus);

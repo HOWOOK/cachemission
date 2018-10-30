@@ -87,8 +87,8 @@ public class Controller_EditText extends Controller {
 
                                 } else {
                                     ((TaskActivity)parentActivity).startTask();
-                                    parentActivity.setGold(String.valueOf(resulttemp.get("gold")));
-                                    parentActivity.setMaybe(String.valueOf(resulttemp.get("maybe")));
+                                    parentActivity.goldSetting(String.valueOf(resulttemp.get("gold")));
+                                    parentActivity.maybeSetting(String.valueOf(resulttemp.get("maybe")));
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();

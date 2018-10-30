@@ -58,6 +58,31 @@ public abstract class PatherActivity extends AppCompatActivity {
     protected int upGold;
     protected int partNum;
 
+    public int getPartNum() {
+        return partNum;
+    }
+
+    public void setPartNum(int partNum) {
+        this.partNum = partNum;
+    }
+
+    public int getUpGold()
+    {
+        return upGold;
+    }
+
+    public String getLoginToken() {
+        return loginToken;
+    }
+
+    public void setLoginToken(String loginToken) {
+        if(loginToken == null)
+            loginToken = "";
+        this.loginToken = loginToken;
+    }
+
+    public abstract void startTask();
+    public abstract void getNewTask();
 
     @Override
     protected void onResume() {
@@ -65,18 +90,13 @@ public abstract class PatherActivity extends AppCompatActivity {
         SharedPreferences explain = getSharedPreferences("region", Context.MODE_PRIVATE);
         SharedPreferences tasktoken = getSharedPreferences("taskToken", MODE_PRIVATE);
         if((taskType.equals("DIALECT") || taskType.equals("RECORD") || taskType.equals("RECORDEXAM") || taskType.equals("DIRECTRECORD"))
-                && tasktoken.getInt(taskType + "taskToken", 0) == 100){
+                && tasktoken.getInt(taskType + "taskToken", 0) == 100){// <- 내가 이 조건은 왜 넣은걸까?
             if(explain.getString("region","").equals("")){
                 regionDialogShow((TextView) findViewById(R.id.optionText));
             }else{
                 ((TextView) findViewById(R.id.optionText)).setText(explain.getString("region",""));
             }
         }
-    }
-
-
-    public int getPartNum() {
-        return partNum;
     }
 
     public void regionDialogShow(TextView optionText) {
@@ -161,11 +181,9 @@ public abstract class PatherActivity extends AppCompatActivity {
         System.out.println(answer);
         return answer;
     }
-    public void setPartNum(int partNum) {
-        this.partNum = partNum;
-    }
-    protected void partDialogShow(TextView partText) {
-        final TextView partTextTemp = partText;
+
+    protected void partDialogShow(TextView optionText) {
+        final TextView partTextTemp = optionText;
         com.selectstar.hwshin.cachemission.Dialog.PartSelectDialog dialog = new com.selectstar.hwshin.cachemission.Dialog.PartSelectDialog(this, R.style.AppTheme_Transparent_Dialog);
         dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
@@ -188,23 +206,27 @@ public abstract class PatherActivity extends AppCompatActivity {
     public String getNumberInString(String rawText)
     {
         return rawText.replaceAll("\\D+","");
+    }
 
-    }
-    public int getUpGold()
-    {
-        return upGold;
-    }
-    public void setGold(String value)
-    {
-        if(value=="-1")
-        {
+    //현재 돈이 즉각적으로 올라가는 UI구현을 위해서 서버와 통신하지 않고 클라이언트 단에서 돈을 올려준다.
+    //Controller 2dbox, EditText, Numbers, Photo, Voice 이랑 ExamActivity 에서 사용중
+    public void goldSetting(String value){
+        if(value == "-1"){
             value = String.valueOf(Integer.parseInt(gold) + upGold);
         }
         gold = value;
         nowGold.setText("현재 : \uFFE6 " + gold);
     }
-    public void showAnimation(int animID, int gold)
-    {
+
+    //현재 돈이 즉각적으로 올라가는 UI구현을 위해서 서버와 통신하지 않고 클라이언트 단에서 돈을 올려준다.
+    //Controller 2dbox, EditText, Numbers, Photo, Voice 이랑 ExamActivity 에서 사용중
+    public void maybeSetting(String value){
+        maybe = value;
+        pendingGold.setText("예정 : \uFFE6 " + maybe);
+    }
+
+    //Task를 제출하면 동전 애니메이션과 돈 애니메이션
+    public void showAnimation(int animID, int gold){
         ImageView view = findViewById(R.id.imageAnimation);
         TextView tView = findViewById(R.id.textAnimation);
         view.bringToFront();
@@ -229,30 +251,19 @@ public abstract class PatherActivity extends AppCompatActivity {
         spinnerAnim.stop();
         spinnerAnim.start();
     }
-    public void setMaybe(String value)
-    {
-        maybe = value;
-        pendingGold.setText("예정 : \uFFE6 " + maybe);
+
+    public void deleteWaitingTasks(){
+        savePreference("waitingTasks", taskType, new JSONArray().toString());
     }
-    public void deleteWaitingTasks()
-    {
-        savePreference("waitingTasks",taskType,new JSONArray().toString());
-    }
-    public void updateWaitingTasks()
-    {
-        waitingTasks.remove(waitingTasks.size()-1);
+
+    public void updateWaitingTasks(){
+        waitingTasks.remove(waitingTasks.size() - 1);
         savePreference("waitingTasks",taskType,ARRAYtoJSON(waitingTasks).toString());
     }
-    public abstract void startTask();
-    public abstract void getNewTask();
-    public void setLoginToken(String loginToken) {if(loginToken==null)loginToken="";this.loginToken = loginToken;}
-    public String getLoginToken() {
-        return loginToken;
-    }
-    protected JSONArray ARRAYtoJSON(ArrayList<JSONObject> list)
-    {
+
+    protected JSONArray ARRAYtoJSON(ArrayList<JSONObject> list){
         JSONArray jsonArray = new JSONArray();
-        for(int i=0;i<list.size();i++)
+        for(int i = 0; i < list.size(); i++)
             jsonArray.put(list.get(i));
         return jsonArray;
     }
@@ -279,8 +290,8 @@ public abstract class PatherActivity extends AppCompatActivity {
             return "-1";
         }
     }
-    protected ArrayList<JSONObject> JSONtoArray(JSONArray jsonArray)
-    {
+
+    protected ArrayList<JSONObject> JSONtoArray(JSONArray jsonArray){
         ArrayList<JSONObject> list = new ArrayList<>();
         try {
             for (int i = 0; i < jsonArray.length(); i++)
@@ -292,14 +303,12 @@ public abstract class PatherActivity extends AppCompatActivity {
         return list;
     }
 
-    public String getPreference(String title,String key)
-    {
+    public String getPreference(String title,String key){
         SharedPreferences SPF = getSharedPreferences(title, MODE_PRIVATE);
         return SPF.getString(key, (new ArrayList<JSONObject>()).toString());
     }
 
-    public void savePreference(String title, String key, String value)
-    {
+    public void savePreference(String title, String key, String value){
 
         SharedPreferences SPF = getSharedPreferences(title, MODE_PRIVATE);
         SharedPreferences.Editor editor = SPF.edit();
@@ -308,8 +317,7 @@ public abstract class PatherActivity extends AppCompatActivity {
 
     }
 
-    protected boolean timeCheck(String x)
-    {
+    protected boolean timeCheck(String x){
         System.out.println(StringToDate(x));
         System.out.println(new Date());
         if(StringToDate(x).after(new Date()))
@@ -323,8 +331,8 @@ public abstract class PatherActivity extends AppCompatActivity {
         String to = transFormat.format(from);
         return to;
     }
-    protected Date StringToDate(String from)
-    {
+
+    protected Date StringToDate(String from){
         try {
             SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date to = transFormat.parse(from);
@@ -336,8 +344,7 @@ public abstract class PatherActivity extends AppCompatActivity {
         return null;
     }
 
-    public JSONArray parseQuestList( JSONArray questList)
-    {
+    public JSONArray parseQuestList( JSONArray questList){
         JSONArray result=new JSONArray();
         JSONObject resultNameElem=new JSONObject();
         JSONObject resultRewardElem=new JSONObject();
@@ -371,6 +378,7 @@ public abstract class PatherActivity extends AppCompatActivity {
         result.put(resultRewardElem);
         return result;
     }
+
     public static boolean isNetworkConnected(Context context){
         ConnectivityManager manager=(ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo=manager.getActiveNetworkInfo();
@@ -392,6 +400,7 @@ public abstract class PatherActivity extends AppCompatActivity {
         }
 
     }
+
     public class MyBroadCastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -402,8 +411,7 @@ public abstract class PatherActivity extends AppCompatActivity {
         }
     }
 
-    public void forcedShowDescription(String taskName)
-    {
+    public void forcedShowDescription(String taskName){
 
         SharedPreferences firstTimeExplain = getSharedPreferences("firstTimeExplain", MODE_PRIVATE);
         if(firstTimeExplain.getString(taskName,"").equals("notFirst"))
@@ -425,4 +433,5 @@ public abstract class PatherActivity extends AppCompatActivity {
         intent_taskExplain.putExtra("taskType", taskType);
         startActivity(intent_taskExplain);
     }
+
 }

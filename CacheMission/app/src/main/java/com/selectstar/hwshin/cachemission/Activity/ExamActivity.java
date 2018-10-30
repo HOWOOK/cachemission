@@ -139,6 +139,7 @@ public class ExamActivity extends PatherActivity {
             e.printStackTrace();
         }
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -218,7 +219,7 @@ public class ExamActivity extends PatherActivity {
 
         //boxcrop이면 파트 선택되고나서 로딩해야함
         //record면 지역 선택되고나서 로딩해야함
-        if(!(taskType.equals("BOXCROPEXAM")||taskType.equals("RECORDEXAM")))
+        if(!(taskType.equals("BOXCROPEXAM")||(taskType.equals("RECORDEXAM") && examType == 2)||taskType.equals("DIRECTRECORDEXAM")))
             startTask();
 
         //boxcropEXAM이면 partSelectDialog를 띄워줘야한다.
@@ -233,7 +234,7 @@ public class ExamActivity extends PatherActivity {
         SharedPreferences tasktoken = getSharedPreferences("taskToken", MODE_PRIVATE);
         SharedPreferences explain = getSharedPreferences("region", MODE_PRIVATE);
         regionText = explain.getString("region", null);
-        if(taskType.equals("RECORDEXAM")
+        if(((taskType.equals("RECORDEXAM") && examType == 2)||taskType.equals("DIRECTRECORDEXAM"))
                 && tasktoken.getInt(taskType + "taskToken", 0) == 100){
             if(regionText != null) {
                 optionText.setText(regionText);
@@ -247,7 +248,7 @@ public class ExamActivity extends PatherActivity {
         optionText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(taskType.equals("RECORDEXAM"))
+                if((taskType.equals("RECORDEXAM") && examType == 2)||taskType.equals("DIRECTRECORDEXAM"))
                     regionDialogShow(optionText);
             }
         });
@@ -324,8 +325,8 @@ public class ExamActivity extends PatherActivity {
                                         ((TaskView_PhotoView)mTaskView).removeAnswer();
                                     }
                                     startTask();
-                                    setGold(String.valueOf(resultTemp.get("gold")));
-                                    setMaybe(String.valueOf(resultTemp.get("maybe")));
+                                    goldSetting(String.valueOf(resultTemp.get("gold")));
+                                    maybeSetting(String.valueOf(resultTemp.get("maybe")));
 
                                 } else {
                                     Toast.makeText(getApplicationContext(),"남은 검수작업이 없습니다. 테스크리스트로 돌아갑니다.",Toast.LENGTH_SHORT).show();
@@ -366,6 +367,7 @@ public class ExamActivity extends PatherActivity {
 
 
     }
+
     @Override
     protected void onStart(){
         super.onStart();
@@ -373,6 +375,7 @@ public class ExamActivity extends PatherActivity {
 
 
     }
+
     @Override
     protected void onStop(){
         super.onStop();

@@ -212,8 +212,8 @@ public class Controller_2DBox extends Controller {
                                                     pinFlag = true;
                                                     photoView.setScale(1);
                                                     ((TaskView_PhotoView) parentActivity.getmTaskView()).expandFlag = true;
-                                                    parentActivity.setGold(String.valueOf(resultTemp.get("gold")));
-                                                    parentActivity.setMaybe(String.valueOf(resultTemp.get("maybe")));
+                                                    parentActivity.goldSetting(String.valueOf(resultTemp.get("gold")));
+                                                    parentActivity.maybeSetting(String.valueOf(resultTemp.get("maybe")));
                                                     ConstraintSet constraintSet = new ConstraintSet();
                                                     constraintSet.clone((ConstraintLayout) (parentActivity.findViewById(R.id.controllerCL)));
                                                     constraintSet.connect(parentActivity.findViewById(R.id.textAnimation).getId(), ConstraintSet.BOTTOM, parentActivity.findViewById(R.id.btnCL).getId(), ConstraintSet.BOTTOM, (int) (86 * dpScale));
@@ -336,8 +336,8 @@ public class Controller_2DBox extends Controller {
                                             } else {
                                                 mtaskView_PhotoView.removeAnswer();
                                                 ((TaskActivity)parentActivity).startTask();
-                                                parentActivity.setGold(String.valueOf(resultTemp.get("gold")));
-                                                parentActivity.setMaybe(String.valueOf(resultTemp.get("maybe")));
+                                                parentActivity.goldSetting(String.valueOf(resultTemp.get("gold")));
+                                                parentActivity.maybeSetting(String.valueOf(resultTemp.get("maybe")));
                                                 ConstraintSet constraintSet = new ConstraintSet();
                                                 constraintSet.clone((ConstraintLayout) (parentActivity.findViewById(R.id.controllerCL)));
                                                 constraintSet.connect(parentActivity.findViewById(R.id.textAnimation).getId(), ConstraintSet.BOTTOM, parentActivity.findViewById(R.id.btnCL).getId(), ConstraintSet.BOTTOM, (int) (43 * dpScale));
@@ -402,8 +402,8 @@ public class Controller_2DBox extends Controller {
                                             } else {
                                                 mtaskView_PhotoView.removeAnswer();
                                                 ((TaskActivity) parentActivity).startTask();
-                                                parentActivity.setGold(String.valueOf(resultTemp.get("gold")));
-                                                parentActivity.setMaybe(String.valueOf(resultTemp.get("maybe")));
+                                                parentActivity.goldSetting(String.valueOf(resultTemp.get("gold")));
+                                                parentActivity.maybeSetting(String.valueOf(resultTemp.get("maybe")));
                                                 ConstraintSet constraintSet = new ConstraintSet();
                                                 constraintSet.clone((ConstraintLayout) (parentActivity.findViewById(R.id.controllerCL)));
                                                 constraintSet.connect(parentActivity.findViewById(R.id.textAnimation).getId(), ConstraintSet.BOTTOM, parentActivity.findViewById(R.id.btnCL).getId(), ConstraintSet.BOTTOM, (int) (43 * dpScale));

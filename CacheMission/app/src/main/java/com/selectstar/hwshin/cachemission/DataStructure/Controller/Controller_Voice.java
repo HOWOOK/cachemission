@@ -210,8 +210,8 @@ public class Controller_Voice extends Controller {
                         Toast.makeText(parentActivity,"성공적으로 제출되었습니다.",Toast.LENGTH_SHORT).show();
                         parentActivity.showAnimation(R.drawable.coin_animation_list,parentActivity.getUpGold());
                         parentActivity.startTask();
-                        parentActivity.setGold(String.valueOf(resultTemp.get("gold")));
-                        parentActivity.setMaybe(String.valueOf(resultTemp.get("maybe")));
+                        parentActivity.goldSetting(String.valueOf(resultTemp.get("gold")));
+                        parentActivity.maybeSetting(String.valueOf(resultTemp.get("maybe")));
 
 
                     }else

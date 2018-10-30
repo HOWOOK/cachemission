@@ -133,8 +133,8 @@ public class Controller_Photo extends Controller {
                                         parentActivity.startTask();
                                         parentActivity.setQuestList(String.valueOf(resultTemp.get("questList")));
                                     }
-                                    parentActivity.setGold(String.valueOf(resultTemp.get("gold")));
-                                    parentActivity.setMaybe(String.valueOf(resultTemp.get("maybe")));
+                                    parentActivity.goldSetting(String.valueOf(resultTemp.get("gold")));
+                                    parentActivity.maybeSetting(String.valueOf(resultTemp.get("maybe")));
 
 
                                 }else
