@@ -18,6 +18,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.selectstar.hwshin.cachemission.Activity.LoginActivity;
@@ -69,13 +70,31 @@ public class Controller_Voice extends Controller {
     private boolean mIsPlaying=false;
     private boolean mIsRecording = false;           // 녹음 중인지에 대한 상태값
     private String mPath = "";                      // 녹음한 파일을 저장할 경로
+    SeekBar sb;
+    int pos=-1;
+    private Button bStart;
+    private Button bPause;
+    private Button bRestart;
+    private Button bStop;
 
-    private boolean isPlaying = false;
+
+   // private boolean isPlaying = false;
     MediaPlayer mPlayer = new MediaPlayer();
     private String oldpath="init";
     int serverResponseCode = 0;
     MediaPlayer mp=new MediaPlayer();
     private boolean isrecordstarted=false;
+
+
+    class MyThread extends Thread {
+        @Override
+        public void run() { // 쓰레드가 시작되면 콜백되는 메서드
+            // 씨크바 막대기 조금씩 움직이기 (노래 끝날 때까지 반복)
+            while(mIsPlaying) {
+                sb.setProgress(mp.getCurrentPosition());
+            }
+        }
+    }
 
     @Override
     public void resetContent(final View view, final String taskID) {
@@ -85,6 +104,12 @@ public class Controller_Voice extends Controller {
         mRecordBtn.setOnClickListener(btnClick);
         mPlayBtn.setOnClickListener(btnClick);
         Button post=temp.findViewById(R.id.post);
+//        bStart = (Button)temp.findViewById(R.id.buttonStart);
+//        bPause = (Button)temp.findViewById(R.id.buttonPause);
+//        bRestart=(Button)temp.findViewById(R.id.buttonRestart);
+//        bStop  = (Button)temp.findViewById(R.id.buttonStop);
+
+
 
         isrecordstarted=false;
         mIsPlaying=false;
@@ -94,6 +119,133 @@ public class Controller_Voice extends Controller {
         serverResponseCode = 0;
         mRecorder = null;
         mRecordingThread = null;
+//        sb = (SeekBar)temp.findViewById(R.id.voiceRecordSeekBar);
+//        sb.setVisibility(View.GONE);
+//        sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+//
+//            public void onStopTrackingTouch(SeekBar seekBar) {
+//                if (isrecordstarted==false) {
+//
+//                    sb.setProgress(0);
+//
+//                }else {
+//                    mIsPlaying = true;
+//                    int ttt = seekBar.getProgress(); // 사용자가 움직여놓은 위치
+//                    bStart.setVisibility(View.INVISIBLE);
+//                    bStop.setVisibility(View.VISIBLE);
+//                    bPause.setVisibility(View.VISIBLE);
+//                    bRestart.setVisibility(View.INVISIBLE);
+//
+//                    mp.seekTo(ttt);
+//                    mp.start();
+//                    new MyThread().start();
+//                }
+//            }
+//            public void onStartTrackingTouch(SeekBar seekBar) {
+//                if (isrecordstarted==false) {
+//                    Toast.makeText(parentActivity, "Please record, first.", Toast.LENGTH_SHORT).show();
+//
+//                }else {
+//                    mIsPlaying = false;
+//
+//                    mp.pause();
+//                }
+//            }
+//            public void onProgressChanged(SeekBar seekBar,int progress,boolean fromUser) {
+//                if (seekBar.getMax()==progress) {
+//                    bStart.setVisibility(View.VISIBLE);
+//                    bStop.setVisibility(View.VISIBLE);
+//                    bPause.setVisibility(View.INVISIBLE);
+//                    bRestart.setVisibility(View.INVISIBLE);
+//
+//
+//                    mIsPlaying = false;
+//                   mp.reset();
+//
+//                    sb.setProgress(0);
+//                }
+//            }
+//        });
+//        bStart.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // MediaPlayer 객체 초기화 , 재생
+//                if (isrecordstarted==false) {
+//                    Toast.makeText(parentActivity, "Please record, first.", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }else {
+//                    sb.setVisibility(View.VISIBLE);
+//mp=new MediaPlayer();
+//                    Uri myUri = Uri.parse(mPath + ".wav");
+//                    try {
+//                        mp.setDataSource(mPath + ".wav");
+//                        mp.prepare();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                    mp.setLooping(false); // true:무한반복
+//                    mp.start(); // 노래 재생 시작
+//
+//                    int a = mp.getDuration(); // 노래의 재생시간(miliSecond)
+//                    sb.setMax(a);// 씨크바의 최대 범위를 노래의 재생시간으로 설정
+//                    new MyThread().start(); // 씨크바 그려줄 쓰레드 시작
+//                    mIsPlaying = true; // 씨크바 쓰레드 반복 하도록
+//
+//                    bStart.setVisibility(View.INVISIBLE);
+//                    bStop.setVisibility(View.VISIBLE);
+//                    bPause.setVisibility(View.VISIBLE);
+//                    bRestart.setVisibility(View.INVISIBLE);
+//                }
+//            }
+//        });
+//
+//        bStop.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // 음악 종료
+//                mIsPlaying = false; // 쓰레드 종료
+//
+//                mp.reset();
+//                bStart.setVisibility(View.VISIBLE);
+//                bStop.setVisibility(View.VISIBLE);
+//                bPause.setVisibility(View.INVISIBLE);
+//                bRestart.setVisibility(View.INVISIBLE);
+//
+//
+//                sb.setProgress(0); // 씨크바 초기화
+//            }
+//        });
+//
+//        bPause.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // 일시중지
+//                pos = mp.getCurrentPosition();
+//                mp.pause(); // 일시중지
+//                bStart.setVisibility(View.INVISIBLE);
+//                bStop.setVisibility(View.VISIBLE);
+//                bPause.setVisibility(View.INVISIBLE);
+//                bRestart.setVisibility(View.VISIBLE);
+//                mIsPlaying = false; // 쓰레드 정지
+//            }
+//        });
+//        bRestart.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // 멈춘 지점부터 재시작
+//                mp.seekTo(pos); // 일시정지 시점으로 이동
+//                mp.start(); // 시작
+//                bStart.setVisibility(View.INVISIBLE);
+//                bStop.setVisibility(View.VISIBLE);
+//                bPause.setVisibility(View.VISIBLE);
+//                bRestart.setVisibility(View.INVISIBLE);
+//                mIsPlaying = true; // 재생하도록 flag 변경
+//                new MyThread().start(); // 쓰레드 시작
+//            }
+//        });
+
+
+
 
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 
@@ -102,7 +254,6 @@ public class Controller_Voice extends Controller {
                 mp.reset();
                 mIsPlaying = false;
                 mPlayBtn.setBackground(ContextCompat.getDrawable(parentActivity, R.drawable.voiceplaybtn));
-                //mBtPlay.setText("들어보기");
             }
         });
 
@@ -136,7 +287,15 @@ public class Controller_Voice extends Controller {
 
     // 녹음을 수행할 Thread를 생성하여 녹음을 수행하는 함수
     private void startRecording() {
-
+//        bStart.setVisibility(View.VISIBLE);
+//        bStop.setVisibility(View.VISIBLE);
+//        bPause.setVisibility(View.INVISIBLE);
+//        bRestart.setVisibility(View.INVISIBLE);
+//        if(mp!=null) {
+//            mp.stop();
+//            mp.release();
+//        }
+//        sb.setVisibility(View.GONE);
         mRecorder = findAudioRecord();
         mRecorder.startRecording();
         mIsRecording = true;
@@ -436,6 +595,7 @@ public class Controller_Voice extends Controller {
                             mIsPlaying = false;
                             mPlayBtn.setBackground(ContextCompat.getDrawable(parentActivity, R.drawable.voiceplaybtn));
 
+
                             mp.reset();
 
 
@@ -444,13 +604,18 @@ public class Controller_Voice extends Controller {
                             mIsPlaying = true;
                             //mPlayBtn.setBackground(ContextCompat.getDrawable(parentActivity, R.drawable.voiceplaybtn));
                             mPlayBtn.setBackground(ContextCompat.getDrawable(parentActivity, R.drawable.voicestopbtn));
-                            try {
-                                mp.setDataSource(mPath + ".wav");
-                                mp.prepare();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                            mp.start();
+
+
+                                try {
+                                    mp.setDataSource(mPath + ".wav");
+                                    mp.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                mp.start();
+
+
+
 
                             //playWaveFile();
                         }
