@@ -856,10 +856,11 @@ runningHTTPRequest++;
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
 
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            int importance = NotificationManager.IMPORTANCE_LOW;
 
             NotificationChannel mChannel = new NotificationChannel(
                     channelId, channelName, importance);
+            mChannel.enableVibration(false);
 
             notifManager.createNotificationChannel(mChannel);
 
@@ -890,11 +891,11 @@ runningHTTPRequest++;
                 .setSmallIcon(R.drawable.cashmissioniconround)
                 .setContentTitle("오늘 번 돈")
                 .setContentText("\uFFE6"+todayMoney)
-                .setDefaults(Notification.DEFAULT_SOUND)
                 .setLargeIcon(mLargeIcon)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setAutoCancel(false)
                 .setOngoing(true)
+                .setAutoCancel(false)
+                .setDefaults(NotificationCompat.DEFAULT_SOUND)
+                .setNumber(0)
                 .setContentIntent(pendingIntent);
 
     }
@@ -935,7 +936,7 @@ runningHTTPRequest++;
 //        //CountDownTimer adf= new AsyncTaskCancelTimerTask(asyncTask,Integer.parseInt(getString(R.string.hTTPTimeOut)),1000,true,this).start();
 //        asyncTask.execute(getString(R.string.mainurl) + "/testing/todayMoney", param, loginToken);
 
-
+mBuilder.setNumber(0);
         notifManager.notify(0, mBuilder.build());
 
     }

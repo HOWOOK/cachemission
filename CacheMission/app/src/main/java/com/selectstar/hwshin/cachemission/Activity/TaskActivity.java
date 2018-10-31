@@ -385,16 +385,21 @@ public class TaskActivity extends PatherActivity {
         Intent intent_taskExplain;
         TextView partText = findViewById(R.id.optionText);
         Log.d("boxbox",taskType);
-        if(taskType.equals("BOXCROP")||taskType.equals("PHOTO")){
-//            intent_taskExplain = new Intent(TaskActivity.this, NewExplainActivity.class);
-//            intent_taskExplain.putExtra("part", partText.getText());
-//            intent_taskExplain.putExtra("partNum", partType());
-//            intent_taskExplain.putExtra("taskID", taskID);
-//
-//            System.out.println("shibal"+taskID);
-//            intent_taskExplain.putExtra("loginToken", getLoginToken());
-//            System.out.println("가져온 텍스트 : "+partText.getText());
-        }else{
+        if(taskType.equals("PHOTO")){
+            intent_taskExplain = new Intent(TaskActivity.this, NewExplainActivity.class);
+            intent_taskExplain.putExtra("part", partText.getText());
+            intent_taskExplain.putExtra("partNum", partType());
+            intent_taskExplain.putExtra("taskID", taskID);
+            intent_taskExplain.putExtra("taskType", taskType);
+
+            System.out.println("shibal"+taskID);
+            intent_taskExplain.putExtra("loginToken", getLoginToken());
+            System.out.println("가져온 텍스트 : "+partText.getText());
+            startActivity(intent_taskExplain);
+        }else if(taskType.equals("BOXCROP")){
+
+        }
+        else{
             intent_taskExplain = new Intent(TaskActivity.this, TaskExplainActivity.class);
             intent_taskExplain.putExtra("taskType", taskType);
             startActivity(intent_taskExplain);
