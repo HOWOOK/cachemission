@@ -71,7 +71,7 @@ public class TaskListActivity extends AppCompatActivity {
     private  TextView refreshText;
     private TextView nowGold;
 
-    public int runningHTTPRequest=0;
+    public int runningHTTPRequest = 0;
     NotificationCompat.Builder mBuilder;
 
     NotificationManager notifManager;

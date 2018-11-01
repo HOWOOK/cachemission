@@ -14,6 +14,7 @@ import android.support.constraint.ConstraintSet;
 
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import android.view.View;
@@ -89,14 +90,13 @@ public class TaskView_PhotoView extends TaskView {
         dpScale = (float) getDeviceDpi / 160f;
 
         photoViewCL = parentActivity.findViewById(R.id.photoViewCL);
-        if(parentActivity.getPartNum() == 2){ // 프리프로세싱은 레이아웃이 좀 달라야함
-            ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(
-                            ConstraintLayout.LayoutParams.MATCH_PARENT,
-                            ConstraintLayout.LayoutParams.MATCH_PARENT);
-            params.bottomMargin= (int) (43 * dpScale);
-            photoViewCL.setLayoutParams(params);
-        }
-
+//        if(parentActivity.getPartNum() == 2){ // 프리프로세싱은 레이아웃이 좀 달라야함
+//            ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(
+//                            ConstraintLayout.LayoutParams.MATCH_PARENT,
+//                            ConstraintLayout.LayoutParams.MATCH_PARENT);
+//            params.bottomMargin= (int) (43 * dpScale);
+//            photoViewCL.setLayoutParams(params);
+//        }
 
         if(isExamFlag)
             parentActivity.findViewById(R.id.textDragCL).setVisibility(View.INVISIBLE);
@@ -144,6 +144,8 @@ public class TaskView_PhotoView extends TaskView {
                             drawAnswer(answerCoordination);
                             parentActivity.findViewById(R.id.textDragCL).bringToFront();
                         }
+
+                        scaleUpForExam();
                     }
                 });
 
@@ -156,6 +158,7 @@ public class TaskView_PhotoView extends TaskView {
                 }
             }
         });
+
         photoView.setOnTouchListener(new View.OnTouchListener() {
             ImageView expandView = parentActivity.findViewById(R.id.expandView);
             ConstraintLayout.LayoutParams expandViewParams;
@@ -243,9 +246,10 @@ public class TaskView_PhotoView extends TaskView {
                                 updateConstraintSet2(expandView2, expandView);
                             }
                             break;
+
                         case MotionEvent.ACTION_UP:
                             Matrix newSuppMatrix = new Matrix();
-                            float[] deltaSettingValue = new float[4];
+                            float[] deltaSettingValue;
                             deltaSettingValue = CalDeltaSettingValue(expandView, expandView2);
                             updateSuppMatrix(newSuppMatrix, saveWidth, saveHeight, saveX, saveY);
                             boxSetting(expandView, expandView2, deltaSettingValue);
@@ -266,6 +270,65 @@ public class TaskView_PhotoView extends TaskView {
 
             }
         });
+
+
+    }
+
+    //정답이 하나 그려진 검수에서는 해당 그려진 정답에 가깝게 확대되어서 나타나야 한다.
+    private void scaleUpForExam(){
+        if(isExamFlag && parentActivity.getExamType() == 1 && answerCoordination.length == 1) {
+            float width = answerCoordination[0][2] - answerCoordination[0][0];
+            float height = answerCoordination[0][3] - answerCoordination[0][1];
+            float X = answerCoordination[0][0] * (photoView.getDisplayRect().right - photoView.getDisplayRect().left);
+            float Y = answerCoordination[0][1]  * (photoView.getDisplayRect().bottom - photoView.getDisplayRect().top);
+            float size;
+            float pvRatio = 0;
+            pvRatio = (float) photoViewCL.getWidth() / (float) photoViewCL.getHeight();
+            Log.d("포토뷰 비율",((Float)pvRatio).toString());
+            Log.d("계산 전 너비",((Float)width).toString());
+            Log.d("계산 전 높이",((Float)height).toString());
+            Log.d("계산 전 X",((Float)X).toString());
+            Log.d("계산 전 Y",((Float)Y).toString());
+
+            if(height * pvRatio > width){// 높이 기준으로 확대해야하는 경우
+                size = height * 2f;
+                if(size > 1f)
+                    size = 1f;
+                height = size * (photoView.getDisplayRect().bottom - photoView.getDisplayRect().top);
+                width = height * pvRatio;
+//                X = X - height / 4f;
+//                Y = Y - width / 4f;
+                if(X < 0f)
+                    X = 0f;
+                if(Y < 0f)
+                    Y = 0f;
+                Log.d("어디를 계산했는가?", "높이 기준으로");
+            }else{// 너비 기준으로 확대해야하는 경우
+                size = width * 2f;
+                if(size > 1f)
+                    size = 1f;
+                width = size * (photoView.getDisplayRect().right - photoView.getDisplayRect().left);
+                height = width / pvRatio;
+//                X = X - height / 4f;
+//                Y = Y - width / 4f;
+                if(X < 0f)
+                    X = 0f;
+                if(Y < 0f)
+                    Y = 0f;
+                Log.d("어디를 계산했는가?", "너비 기준으로");
+            }
+
+            Log.d("렉 탑",((Float)photoView.getDisplayRect().top).toString());
+            Log.d("렉 바텀",((Float)photoView.getDisplayRect().bottom).toString());
+            Log.d("렉 왼",((Float)photoView.getDisplayRect().left).toString());
+            Log.d("렉 오",((Float)photoView.getDisplayRect().right).toString());
+            Log.d("계산 너비",((Float)width).toString());
+            Log.d("계산 높이",((Float)height).toString());
+            Log.d("계산 X",((Float)X).toString());
+            Log.d("계산 Y",((Float)Y).toString());
+
+            updateSuppMatrix(new Matrix(), width, height, X, Y);
+        }
     }
 
     //확대 후에도 뷰에 여백이 남는경우 남은 여백이 쌍방으로 균등하게 배분되는데, 그로인한 cropBox 제조정을 위해 이동 델타 값을 구하는 함수
@@ -400,7 +463,7 @@ public class TaskView_PhotoView extends TaskView {
 
     //확대영역을 결정하기 위해 mSuppMatrix를 업데이트 해준다.
     private void updateSuppMatrix(Matrix newSuppMatrix, float saveWidth, float saveHeight, float saveX, float saveY) {
-        Matrix hackMatrix1 = new Matrix();  //mBaseMatrix
+        Matrix hackMatrix1;  //mBaseMatrix
         float[] var = new float[9];
         float[] hackVar1 = new float[9];
         float scale = 1;
@@ -674,6 +737,7 @@ public class TaskView_PhotoView extends TaskView {
             }
         }
         answerList = null;
+        answerEdges = null;
     }
 
     //size도 함께 생각해야한다........ 겹치는 퍼센트에 따라 P/F 하는거로 수정 요망
