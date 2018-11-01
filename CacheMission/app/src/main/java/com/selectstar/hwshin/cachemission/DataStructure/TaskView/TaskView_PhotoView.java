@@ -296,8 +296,8 @@ public class TaskView_PhotoView extends TaskView {
                     size = 1f;
                 height = size * (photoView.getDisplayRect().bottom - photoView.getDisplayRect().top);
                 width = height * pvRatio;
-//                X = X - height / 4f;
-//                Y = Y - width / 4f;
+                X = X - height / 4f + photoView.getDisplayRect().left;
+                Y = Y - width / 4f + photoView.getDisplayRect().top;
                 if(X < 0f)
                     X = 0f;
                 if(Y < 0f)
@@ -309,8 +309,8 @@ public class TaskView_PhotoView extends TaskView {
                     size = 1f;
                 width = size * (photoView.getDisplayRect().right - photoView.getDisplayRect().left);
                 height = width / pvRatio;
-//                X = X - height / 4f;
-//                Y = Y - width / 4f;
+                X = X - height / 4f + photoView.getDisplayRect().left;
+                Y = Y - width / 4f + photoView.getDisplayRect().top;
                 if(X < 0f)
                     X = 0f;
                 if(Y < 0f)
@@ -470,6 +470,7 @@ public class TaskView_PhotoView extends TaskView {
         float left, top;
 
         scale = (float) photoViewCL.getWidth() / saveWidth;
+        Log.d("스케일",((Float)scale).toString());
         left = (photoView.getDisplayRect().left - saveX) * scale;
         top = (photoView.getDisplayRect().top - saveY) * scale;
         hackMatrix1 = photoView.getAttacher().mBaseMatrix;
