@@ -118,7 +118,7 @@ public class TaskView_PhotoView extends TaskView {
         }
 
         photoView = parentActivity.findViewById(R.id.srcview);
-        photoView.setMaximumScale(10);
+        photoView.setMaximumScale(15);
         photoView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         System.out.println("뭐누아ㅣㅁ너ㅜ이ㅏ"+parentActivity.getString(R.string.mainurl)+"/media/"+array1[0]);
         Glide.with(parentActivity)
@@ -284,11 +284,6 @@ public class TaskView_PhotoView extends TaskView {
             float size;
             float pvRatio = 0;
             pvRatio = (float) photoViewCL.getWidth() / (float) photoViewCL.getHeight();
-            Log.d("포토뷰 비율",((Float)pvRatio).toString());
-            Log.d("계산 전 너비",((Float)width).toString());
-            Log.d("계산 전 높이",((Float)height).toString());
-            Log.d("계산 전 X",((Float)X).toString());
-            Log.d("계산 전 Y",((Float)Y).toString());
 
             if(height * pvRatio > width){// 높이 기준으로 확대해야하는 경우
                 size = height * 2f;
@@ -302,30 +297,20 @@ public class TaskView_PhotoView extends TaskView {
                     X = 0f;
                 if(Y < 0f)
                     Y = 0f;
-                Log.d("어디를 계산했는가?", "높이 기준으로");
-            }else{// 너비 기준으로 확대해야하는 경우
+            }else {// 너비 기준으로 확대해야하는 경우
                 size = width * 2f;
-                if(size > 1f)
+                if (size > 1f)
                     size = 1f;
                 width = size * (photoView.getDisplayRect().right - photoView.getDisplayRect().left);
                 height = width / pvRatio;
                 X = X - height / 4f + photoView.getDisplayRect().left;
                 Y = Y - width / 4f + photoView.getDisplayRect().top;
-                if(X < 0f)
+                if (X < 0f)
                     X = 0f;
-                if(Y < 0f)
+                if (Y < 0f)
                     Y = 0f;
-                Log.d("어디를 계산했는가?", "너비 기준으로");
             }
 
-            Log.d("렉 탑",((Float)photoView.getDisplayRect().top).toString());
-            Log.d("렉 바텀",((Float)photoView.getDisplayRect().bottom).toString());
-            Log.d("렉 왼",((Float)photoView.getDisplayRect().left).toString());
-            Log.d("렉 오",((Float)photoView.getDisplayRect().right).toString());
-            Log.d("계산 너비",((Float)width).toString());
-            Log.d("계산 높이",((Float)height).toString());
-            Log.d("계산 X",((Float)X).toString());
-            Log.d("계산 Y",((Float)Y).toString());
 
             updateSuppMatrix(new Matrix(), width, height, X, Y);
         }
@@ -470,7 +455,6 @@ public class TaskView_PhotoView extends TaskView {
         float left, top;
 
         scale = (float) photoViewCL.getWidth() / saveWidth;
-        Log.d("스케일",((Float)scale).toString());
         left = (photoView.getDisplayRect().left - saveX) * scale;
         top = (photoView.getDisplayRect().top - saveY) * scale;
         hackMatrix1 = photoView.getAttacher().mBaseMatrix;
@@ -502,7 +486,6 @@ public class TaskView_PhotoView extends TaskView {
 
         if(answerList == null || (answerList.length != changedCoordination.length)) {
             //일전에 그려져있던건 싹 지워야한다.
-            System.out.println("지운다.");
             if(answerList != null){
                 for (int i = 0; i < answerList.length; i++){
                     photoViewCL.removeView(answerList[i]);
@@ -745,12 +728,12 @@ public class TaskView_PhotoView extends TaskView {
     public boolean similarityTest(float left, float top, float right, float bottom){
         Boolean rtnVal = true;
         float error = 0.015f;
-        if(answerCoordination!=null) {
+        if(answerCoordination != null) {
             for (int i = 0; i < answerCoordination.length; i++) {
-                if (Math.abs(answerCoordination[i][0] - left) < error &&
-                        Math.abs(answerCoordination[i][1] - top) < error &&
-                        Math.abs(answerCoordination[i][2] - right) < error &&
-                        Math.abs(answerCoordination[i][3] - bottom) < error)
+                if ((answerCoordination[i][0] - left < error)
+                        &&(answerCoordination[i][1] - top < error)
+                        &&(answerCoordination[i][2] - right < error)
+                        &&(answerCoordination[i][3] - bottom < error))
                     rtnVal = false;
             }
         }

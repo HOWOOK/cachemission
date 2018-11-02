@@ -58,7 +58,7 @@ public class ExamActivity extends PatherActivity {
                 partNum = partType();
                 param.put("option",partNum);
             }
-            if(taskType.equals("RECORDEXAM")){//RECORDEXAM 지역을 넣어서 요청해야한다.
+            if((taskType.equals("RECORDEXAM") && examType == 2)||taskType.equals("DIRECTRECORDEXAM")){//RECORDEXAM 지역을 넣어서 요청해야한다.
                 String region;
                 region = ((TextView)findViewById(R.id.optionText)).getText().toString();
                 param.put("option", region);
@@ -70,7 +70,7 @@ public class ExamActivity extends PatherActivity {
                     JSONObject resultTemp;
                     try {
                         resultTemp = new JSONObject(result);
-                        System.out.println("오오오 : "+ resultTemp);
+
                         if ((boolean) resultTemp.get("success")) {
                             waitingTasks = new ArrayList<>();
                             JSONArray tempTasks = (JSONArray)resultTemp.get("answers");
@@ -80,7 +80,6 @@ public class ExamActivity extends PatherActivity {
                             Date after28time = addMinutesToDate(28,new Date());
                             ((JSONObject)waitingTasks.get(0)).put("time",DateToString(after28time));
                             currentTask = waitingTasks.get(waitingTasks.size()-1);
-                            System.out.println("삉"+(String)currentTask.get("content"));
                             if(taskType.equals("BOXCROPEXAM"))
                                 mTaskView.setContent(currentTask.get("content")+"*<"+currentTask.get("answer"));
                             else
@@ -170,13 +169,11 @@ public class ExamActivity extends PatherActivity {
         SharedPreferences token = getSharedPreferences("token",MODE_PRIVATE);
         setLoginToken(token.getString("loginToken",null));
 
-
         uiHashMap = new UIHashMap();
         taskID=intent.getStringExtra("taskId");
         mTaskView = uiHashMap.taskViewHashMap.get(intent.getStringExtra("taskView"));
         mTaskView.setParentActivity(this);
         mExamView = uiHashMap.examViewHashMap.get(intent.getStringExtra("examView"));
-        System.out.println("하이하이 : " +intent.getStringExtra("examView"));
         mExamView.setParentActivity(this);
         mParameter = uiHashMap.taskHashMap.get(intent.getStringExtra("taskType"));
         taskTitle = intent.getStringExtra("taskTitle");
