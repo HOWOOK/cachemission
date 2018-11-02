@@ -681,10 +681,19 @@ runningHTTPRequest++;
             clearListForAccident();
             return;
         }
+        String version = null;
+        try {
+            PackageInfo in = this.getPackageManager().getPackageInfo(this.getPackageName(), 0);
+            version = in.versionName;
+        } catch(PackageManager.NameNotFoundException e) {
+
+        }
         runningHTTPRequest++;
         try {
             JSONObject param = new JSONObject();
             param.put("taskID", mTaskList.get(i).get("id"));
+            param.put("version",version);
+            Log.d("버전",version);
             String taskType = mTaskList.get(i).get("taskType").toString();
             int examType = (int) mTaskList.get(i).get("examType");
             if(taskType.contains("EXAM")){
