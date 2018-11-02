@@ -93,9 +93,9 @@ public class UIHashMap {
 
         parameters_OCREXAM[0][0] = 5;
         parameters_OCREXAM[1][0] = R.id.title; parameters_OCREXAM[1][1] = 4;
-        parameters_OCREXAM[2][0] = R.id.examview; parameters_OCREXAM[2][1] = 3;
-        parameters_OCREXAM[3][0] = R.id.taskviewexam; parameters_OCREXAM[3][1] = 4;
-        parameters_OCREXAM[4][0] = R.id.taskConstLayoutexam; parameters_OCREXAM[4][1] = 4;
+        parameters_OCREXAM[2][0] = R.id.controllerExam; parameters_OCREXAM[2][1] = 3;
+        parameters_OCREXAM[3][0] = R.id.taskViewExam; parameters_OCREXAM[3][1] = 4;
+        parameters_OCREXAM[4][0] = R.id.taskConstLayoutExam; parameters_OCREXAM[4][1] = 4;
         parameters_OCREXAM[5][0] = 10;
         taskHashMap.put("OCREXAM", parameters_OCREXAM);
 
@@ -109,9 +109,9 @@ public class UIHashMap {
 
         parameters_VIDEOEXAM[0][0] = 5;
         parameters_VIDEOEXAM[1][0] = R.id.title; parameters_VIDEOEXAM[1][1] = 4;
-        parameters_VIDEOEXAM[2][0] = R.id.examview; parameters_VIDEOEXAM[2][1] = 3;
-        parameters_VIDEOEXAM[3][0] = R.id.taskviewexam; parameters_VIDEOEXAM[3][1] = 4;
-        parameters_VIDEOEXAM[4][0] = R.id.taskConstLayoutexam; parameters_VIDEOEXAM[4][1] = 4;
+        parameters_VIDEOEXAM[2][0] = R.id.controllerExam; parameters_VIDEOEXAM[2][1] = 3;
+        parameters_VIDEOEXAM[3][0] = R.id.taskViewExam; parameters_VIDEOEXAM[3][1] = 4;
+        parameters_VIDEOEXAM[4][0] = R.id.taskConstLayoutExam; parameters_VIDEOEXAM[4][1] = 4;
         parameters_VIDEOEXAM[5][0] = 10;
         taskHashMap.put("VIDEOEXAM", parameters_VIDEOEXAM);
 
@@ -133,17 +133,17 @@ public class UIHashMap {
 
         parameters_VOICEEXAM[0][0] = 25;
         parameters_VOICEEXAM[1][0] = R.id.title; parameters_VOICEEXAM[1][1] = 4;
-        parameters_VOICEEXAM[2][0] = R.id.examview; parameters_VOICEEXAM[2][1] = 3;
-        parameters_VOICEEXAM[3][0] = R.id.taskviewexam; parameters_VOICEEXAM[3][1] = 4;
-        parameters_VOICEEXAM[4][0] = R.id.taskConstLayoutexam; parameters_VOICEEXAM[4][1] = 4;
+        parameters_VOICEEXAM[2][0] = R.id.controllerExam; parameters_VOICEEXAM[2][1] = 3;
+        parameters_VOICEEXAM[3][0] = R.id.taskViewExam; parameters_VOICEEXAM[3][1] = 4;
+        parameters_VOICEEXAM[4][0] = R.id.taskConstLayoutExam; parameters_VOICEEXAM[4][1] = 4;
         parameters_VOICEEXAM[5][0] = 10;
         taskHashMap.put("RECORDEXAM", parameters_VOICEEXAM);
 
         parameters_VOICEEXAM[0][0] = 25;
         parameters_VOICEEXAM[1][0] = R.id.title; parameters_VOICEEXAM[1][1] = 4;
-        parameters_VOICEEXAM[2][0] = R.id.examview; parameters_VOICEEXAM[2][1] = 3;
-        parameters_VOICEEXAM[3][0] = R.id.taskviewexam; parameters_VOICEEXAM[3][1] = 4;
-        parameters_VOICEEXAM[4][0] = R.id.taskConstLayoutexam; parameters_VOICEEXAM[4][1] = 4;
+        parameters_VOICEEXAM[2][0] = R.id.controllerExam; parameters_VOICEEXAM[2][1] = 3;
+        parameters_VOICEEXAM[3][0] = R.id.taskViewExam; parameters_VOICEEXAM[3][1] = 4;
+        parameters_VOICEEXAM[4][0] = R.id.taskConstLayoutExam; parameters_VOICEEXAM[4][1] = 4;
         parameters_VOICEEXAM[5][0] = 10;
         taskHashMap.put("DIRECTRECORDEXAM", parameters_VOICEEXAM);
 
@@ -157,9 +157,9 @@ public class UIHashMap {
 
         parameters_DICTATIONEXAM[0][0] = 5;
         parameters_DICTATIONEXAM[1][0] = R.id.title; parameters_DICTATIONEXAM[1][1] = 4;
-        parameters_DICTATIONEXAM[2][0] = R.id.examview; parameters_DICTATIONEXAM[2][1] = 3;
-        parameters_DICTATIONEXAM[3][0] = R.id.taskviewexam; parameters_DICTATIONEXAM[3][1] = 4;
-        parameters_DICTATIONEXAM[4][0] = R.id.taskConstLayoutexam; parameters_DICTATIONEXAM[4][1] = 4;
+        parameters_DICTATIONEXAM[2][0] = R.id.controllerExam; parameters_DICTATIONEXAM[2][1] = 3;
+        parameters_DICTATIONEXAM[3][0] = R.id.taskViewExam; parameters_DICTATIONEXAM[3][1] = 4;
+        parameters_DICTATIONEXAM[4][0] = R.id.taskConstLayoutExam; parameters_DICTATIONEXAM[4][1] = 4;
         parameters_DICTATIONEXAM[5][0] = 10;
         taskHashMap.put("DICTATIONEXAM", parameters_DICTATIONEXAM);
 
@@ -173,9 +173,9 @@ public class UIHashMap {
 
         parameters_NUMBERINGEXAM[0][0] = 5;
         parameters_NUMBERINGEXAM[1][0] = R.id.title; parameters_NUMBERINGEXAM[1][1] = 4;
-        parameters_NUMBERINGEXAM[2][0] = R.id.examview; parameters_NUMBERINGEXAM[2][1] = 3;
-        parameters_NUMBERINGEXAM[3][0] = R.id.taskviewexam; parameters_NUMBERINGEXAM[3][1] = 4;
-        parameters_NUMBERINGEXAM[4][0] = R.id.taskConstLayoutexam; parameters_NUMBERINGEXAM[4][1] = 4;
+        parameters_NUMBERINGEXAM[2][0] = R.id.controllerExam; parameters_NUMBERINGEXAM[2][1] = 3;
+        parameters_NUMBERINGEXAM[3][0] = R.id.taskViewExam; parameters_NUMBERINGEXAM[3][1] = 4;
+        parameters_NUMBERINGEXAM[4][0] = R.id.taskConstLayoutExam; parameters_NUMBERINGEXAM[4][1] = 4;
         parameters_NUMBERINGEXAM[5][0] = 10;
         taskHashMap.put("NUMBERINGEXAM", parameters_NUMBERINGEXAM);
 
@@ -189,9 +189,9 @@ public class UIHashMap {
 
         parameters_DIALECTEXAM[0][0] = 5;
         parameters_DIALECTEXAM[1][0] = R.id.title; parameters_DIALECTEXAM[1][1] = 4;
-        parameters_DIALECTEXAM[2][0] = R.id.examview; parameters_DIALECTEXAM[2][1] = 3;
-        parameters_DIALECTEXAM[3][0] = R.id.taskviewexam; parameters_DIALECTEXAM[3][1] = 4;
-        parameters_DIALECTEXAM[4][0] = R.id.taskConstLayoutexam; parameters_DIALECTEXAM[4][1] = 4;
+        parameters_DIALECTEXAM[2][0] = R.id.controllerExam; parameters_DIALECTEXAM[2][1] = 3;
+        parameters_DIALECTEXAM[3][0] = R.id.taskViewExam; parameters_DIALECTEXAM[3][1] = 4;
+        parameters_DIALECTEXAM[4][0] = R.id.taskConstLayoutExam; parameters_DIALECTEXAM[4][1] = 4;
         parameters_DIALECTEXAM[5][0] = 10;
         taskHashMap.put("DIALECTEXAM", parameters_DIALECTEXAM);
 
@@ -205,9 +205,9 @@ public class UIHashMap {
 
         parameters_PHOTOEXAM[0][0] = 1;
         parameters_PHOTOEXAM[1][0] = R.id.title; parameters_PHOTOEXAM[1][1] = 4;
-        parameters_PHOTOEXAM[2][0] = R.id.examview; parameters_PHOTOEXAM[2][1] = 3;
-        parameters_PHOTOEXAM[3][0] = R.id.taskviewexam; parameters_PHOTOEXAM[3][1] = 4;
-        parameters_PHOTOEXAM[4][0] = R.id.taskConstLayoutexam; parameters_PHOTOEXAM[4][1] = 4;
+        parameters_PHOTOEXAM[2][0] = R.id.controllerExam; parameters_PHOTOEXAM[2][1] = 3;
+        parameters_PHOTOEXAM[3][0] = R.id.taskViewExam; parameters_PHOTOEXAM[3][1] = 4;
+        parameters_PHOTOEXAM[4][0] = R.id.taskConstLayoutExam; parameters_PHOTOEXAM[4][1] = 4;
         parameters_PHOTOEXAM[5][0] = 50;
         taskHashMap.put("PHOTOEXAM",parameters_PHOTOEXAM);
 
@@ -221,9 +221,9 @@ public class UIHashMap {
 
         parameters_BOXCROPEXAM[0][0] = 10;
         parameters_BOXCROPEXAM[1][0] = R.id.option; parameters_BOXCROPEXAM[1][1] = 4;
-        parameters_BOXCROPEXAM[2][0] = R.id.taskConstLayoutexam; parameters_BOXCROPEXAM[2][1] = 4;
+        parameters_BOXCROPEXAM[2][0] = R.id.taskConstLayoutExam; parameters_BOXCROPEXAM[2][1] = 4;
         parameters_BOXCROPEXAM[3][0] = R.id.option; parameters_BOXCROPEXAM[3][1] = 4;
-        parameters_BOXCROPEXAM[4][0] = R.id.taskConstLayoutexam; parameters_BOXCROPEXAM[4][1] = 4;
+        parameters_BOXCROPEXAM[4][0] = R.id.taskConstLayoutExam; parameters_BOXCROPEXAM[4][1] = 4;
         parameters_BOXCROPEXAM[5][0] = 10;
         taskHashMap.put("BOXCROPEXAM", parameters_BOXCROPEXAM);
 
@@ -237,9 +237,9 @@ public class UIHashMap {
 
         parameters_SUGGESTEXAM[0][0] = 5;
         parameters_SUGGESTEXAM[1][0] = R.id.title; parameters_SUGGESTEXAM[1][1] = 4;
-        parameters_SUGGESTEXAM[2][0] = R.id.examview; parameters_SUGGESTEXAM[2][1] = 3;
-        parameters_SUGGESTEXAM[3][0] = R.id.taskviewexam; parameters_SUGGESTEXAM[3][1] = 4;
-        parameters_SUGGESTEXAM[4][0] = R.id.taskConstLayoutexam; parameters_SUGGESTEXAM[4][1] = 4;
+        parameters_SUGGESTEXAM[2][0] = R.id.controllerExam; parameters_SUGGESTEXAM[2][1] = 3;
+        parameters_SUGGESTEXAM[3][0] = R.id.taskViewExam; parameters_SUGGESTEXAM[3][1] = 4;
+        parameters_SUGGESTEXAM[4][0] = R.id.taskConstLayoutExam; parameters_SUGGESTEXAM[4][1] = 4;
         parameters_SUGGESTEXAM[5][0] = 10;
         taskHashMap.put("SUGGESTEXAM", parameters_SUGGESTEXAM);
 

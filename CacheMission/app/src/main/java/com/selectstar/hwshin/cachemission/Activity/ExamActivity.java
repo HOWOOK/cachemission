@@ -37,7 +37,6 @@ public class ExamActivity extends PatherActivity {
 
     ExamView mExamView;
     String buttons;
-    int examType;
     String examFlag="";
     ImageView backButton;
     Context mContext=this;
@@ -208,20 +207,20 @@ public class ExamActivity extends PatherActivity {
 
         // TaskView Inflating
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        ViewGroup parent1 = (ViewGroup) findViewById(R.id.taskviewexam);
+        ViewGroup parent1 = (ViewGroup) findViewById(R.id.taskViewExam);
         inflater.inflate(taskViewID, parent1);
-        ViewGroup parent2 = (ViewGroup) findViewById(R.id.examview);
+        ViewGroup parent2 = (ViewGroup) findViewById(R.id.controllerExam);
         inflater.inflate(controllerID, parent2);
 
         //TaskView와 Controller의 constraint 설정
         //ConstraintSet.TOP -> 3 // ConstraintSet.BOTTOM -> 4
         ConstraintSet constraintSet = new ConstraintSet();
-        ConstraintLayout constraintLayout =  (ConstraintLayout) findViewById(R.id.taskConstLayoutexam);
+        ConstraintLayout constraintLayout =  (ConstraintLayout) findViewById(R.id.taskConstLayoutExam);
         constraintSet.clone(constraintLayout);
-        constraintSet.connect(R.id.taskviewexam, ConstraintSet.TOP, mParameter[1][0], mParameter[1][1]);
-        constraintSet.connect(R.id.taskviewexam, ConstraintSet.BOTTOM, mParameter[2][0], mParameter[2][1] );
-        constraintSet.connect(R.id.examview, ConstraintSet.TOP, mParameter[3][0], mParameter[3][1] );
-        constraintSet.connect(R.id.examview, ConstraintSet.BOTTOM, mParameter[4][0], mParameter[4][1]);
+        constraintSet.connect(R.id.taskViewExam, ConstraintSet.TOP, mParameter[1][0], mParameter[1][1]);
+        constraintSet.connect(R.id.taskViewExam, ConstraintSet.BOTTOM, mParameter[2][0], mParameter[2][1] );
+        constraintSet.connect(R.id.controllerExam, ConstraintSet.TOP, mParameter[3][0], mParameter[3][1] );
+        constraintSet.connect(R.id.controllerExam, ConstraintSet.BOTTOM, mParameter[4][0], mParameter[4][1]);
         constraintSet.applyTo(constraintLayout);
 
         //TaskView의 weight설정 (default == 10)

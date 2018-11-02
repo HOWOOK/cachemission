@@ -46,6 +46,8 @@ public abstract class PatherActivity extends AppCompatActivity {
     public String getTaskType() {
         return taskType;
     }
+    protected int examType;
+    public int getExamType() { return  examType; }
     protected TaskView mTaskView;
     protected UIHashMap uiHashMap;
     private String loginToken;
@@ -89,7 +91,7 @@ public abstract class PatherActivity extends AppCompatActivity {
         super.onResume();
         SharedPreferences explain = getSharedPreferences("region", Context.MODE_PRIVATE);
         SharedPreferences tasktoken = getSharedPreferences("taskToken", MODE_PRIVATE);
-        if((taskType.equals("DIALECT") || taskType.equals("RECORD") || taskType.equals("RECORDEXAM") || taskType.equals("DIRECTRECORD"))
+        if((taskType.equals("DIALECT") || taskType.equals("RECORD") || (taskType.equals("RECORDEXAM") && examType == 2) || taskType.equals("DIRECTRECORD"))
                 && tasktoken.getInt(taskType + "taskToken", 0) == 100){// <- 내가 이 조건은 왜 넣은걸까?
             if(explain.getString("region","").equals("")){
                 regionDialogShow((TextView) findViewById(R.id.optionText));
