@@ -253,12 +253,12 @@ public abstract class PatherActivity extends AppCompatActivity {
     }
 
     public void deleteWaitingTasks(){
-        savePreference("waitingTasks", taskType, new JSONArray().toString());
+        savePreference("waitingTasks", taskID, new JSONArray().toString());
     }
 
     public void updateWaitingTasks(){
         waitingTasks.remove(waitingTasks.size() - 1);
-        savePreference("waitingTasks",taskType,ARRAYtoJSON(waitingTasks).toString());
+        savePreference("waitingTasks",taskID,ARRAYtoJSON(waitingTasks).toString());
     }
 
     protected JSONArray ARRAYtoJSON(ArrayList<JSONObject> list){

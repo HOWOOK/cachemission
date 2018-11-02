@@ -328,6 +328,7 @@ public class Controller_2DBox extends Controller {
                                                     parentActivity.finish();
                                                 } else if (resultTemp.get("message").toString().equals("task")) {
                                                     Toast.makeText(parentActivity, "테스크가 만료되었습니다. 다른 테스크를 선택해주세요", Toast.LENGTH_SHORT).show();
+                                                    parentActivity.deleteWaitingTasks();
                                                     parentActivity.finish();
                                                 } else {
                                                     Toast.makeText(parentActivity, "남은 테스크가 없습니다.", Toast.LENGTH_SHORT).show();
@@ -335,6 +336,7 @@ public class Controller_2DBox extends Controller {
                                                 }
                                             } else {
                                                 mtaskView_PhotoView.removeAnswer();
+                                                parentActivity.updateWaitingTasks();
                                                 ((TaskActivity)parentActivity).startTask();
                                                 parentActivity.goldSetting(String.valueOf(resultTemp.get("gold")));
                                                 parentActivity.maybeSetting(String.valueOf(resultTemp.get("maybe")));
@@ -394,6 +396,7 @@ public class Controller_2DBox extends Controller {
                                                     parentActivity.finish();
                                                 } else if (resultTemp.get("message").toString().equals("task")) {
                                                     Toast.makeText(parentActivity, "테스크가 만료되었습니다. 다른 테스크를 선택해주세요", Toast.LENGTH_SHORT).show();
+                                                    parentActivity.deleteWaitingTasks();
                                                     parentActivity.finish();
                                                 } else {
                                                     Toast.makeText(parentActivity, "남은 테스크가 없습니다.", Toast.LENGTH_SHORT).show();
@@ -401,6 +404,7 @@ public class Controller_2DBox extends Controller {
                                                 }
                                             } else {
                                                 mtaskView_PhotoView.removeAnswer();
+                                                parentActivity.updateWaitingTasks();
                                                 ((TaskActivity) parentActivity).startTask();
                                                 parentActivity.goldSetting(String.valueOf(resultTemp.get("gold")));
                                                 parentActivity.maybeSetting(String.valueOf(resultTemp.get("maybe")));

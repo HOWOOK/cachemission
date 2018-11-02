@@ -357,7 +357,7 @@ public class TaskActivity extends PatherActivity {
     @Override
     public void startTask(){
         try {
-            waitingTasks = JSONtoArray(new JSONArray(getPreference("waitingTasks", taskType)));
+            waitingTasks = JSONtoArray(new JSONArray(getPreference("waitingTasks", taskID)));
             if(waitingTasks.size()>0) {
                 if (timeCheck(((JSONObject) waitingTasks.get(0)).get("time").toString())) {
                     if(mTaskView.isEmpty())

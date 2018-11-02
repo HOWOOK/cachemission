@@ -1,6 +1,7 @@
 package com.selectstar.hwshin.cachemission.DataStructure.TaskView;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
@@ -14,6 +15,7 @@ import android.support.constraint.ConstraintSet;
 
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import android.view.View;
@@ -28,10 +30,15 @@ import com.selectstar.hwshin.cachemission.Photoview.OnMatrixChangedListener;
 import com.selectstar.hwshin.cachemission.R;
 import com.selectstar.hwshin.cachemission.Photoview.PhotoView;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -52,20 +59,75 @@ public class TaskView_PhotoView extends TaskView {
     private float dpScale;
     private int answerCount = 0;
     private int drawAnswerCount = 0;
+    private HashMap<String,Bitmap> bitmaps;
 
     public TaskView_PhotoView()
     {
         taskViewID = R.layout.taskview_photoview;
+        bitmaps = new HashMap<>();
     }
 
     public PhotoView getPhotoView() {
         return this.photoView;
     }
 
-    @Override
-    public void setPreviewContents(ArrayList<JSONObject> list) {
+    //사진 url을 서버에서 받아와서 미리 로딩해놓는 함수이다.
+    private Bitmap getBitmap(String url) {
+        URL imgUrl = null;
+        HttpURLConnection connection = null;
+        InputStream is = null;
 
+        Bitmap retBitmap = null;
+
+
+        try{
+            imgUrl = new URL(url);
+            connection = (HttpURLConnection) imgUrl.openConnection();
+            connection.setDoInput(true); //url로 input받는 flag 허용
+            connection.connect(); //연결
+            is = connection.getInputStream(); // get inputstream
+            retBitmap = BitmapFactory.decodeStream(is);
+        }catch(Exception e) {
+            e.printStackTrace();
+            return null;
+        }finally {
+            if(connection!=null) {
+                connection.disconnect();
+            }
+            return retBitmap;
+        }
     }
+
+    @Override
+    public void setPreviewContents(ArrayList<JSONObject> list)
+    {
+        try {
+            for (int i = 0; i < list.size(); i++) {
+                JSONObject jsonObject = list.get(i);
+                final String content = jsonObject.get("content").toString();
+                String[] preArray0 = content.split(">");
+                final String[] preArray1 = preArray0[1].split("\\*");
+                Log.d("arrayset",preArray0[1]);
+                new Thread() {
+                    public void run() {
+
+                        Bitmap bitmap = getBitmap(parentActivity.getString(R.string.mainurl) + "/media/" + preArray1[0]);
+                        bitmaps.put(preArray1[0], bitmap);
+
+
+                    }
+                }.start();
+
+
+
+            }
+        }
+        catch(JSONException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public boolean isEmpty() {
@@ -74,6 +136,7 @@ public class TaskView_PhotoView extends TaskView {
 
     public void setContent(String content)
     {
+        Log.d("contenttttt",content);
         //플래그 처리
         ImageReady = false;
         isExamFlag = false;
@@ -121,18 +184,21 @@ public class TaskView_PhotoView extends TaskView {
         photoView.setMaximumScale(10);
         photoView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         System.out.println("뭐누아ㅣㅁ너ㅜ이ㅏ"+parentActivity.getString(R.string.mainurl)+"/media/"+array1[0]);
-        Glide.with(parentActivity)
-                .asBitmap()
-                .load(Uri.parse(parentActivity.getString(R.string.mainurl)+"/media/"+ array1[0]))
-                .into(new SimpleTarget<Bitmap>(){
-                    @Override
-                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                        resource = cropBitmap(resource, array0[0]);
-                        photoView.setImageBitmap(resource);
-                        ImageReady = true;
 
-                        if(answerCoordination != null) {
-                            System.out.println("그릴때");
+        if(bitmaps.containsKey(array1[0])) {
+            Log.d("imin",array1[0]);
+            Glide.with(parentActivity)
+                    .asBitmap()
+                    .load(bitmaps.get(array1[0]))
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                            resource = cropBitmap(resource, array0[0]);
+                            photoView.setImageBitmap(resource);
+                            ImageReady = true;
+
+                            if (answerCoordination != null) {
+                                System.out.println("그릴때");
                                 for (int i = 0; i < answerCoordination.length; i++) {
                                     System.out.print("(");
                                     for (int j = 0; j < 4; j++) {
@@ -141,11 +207,46 @@ public class TaskView_PhotoView extends TaskView {
                                     System.out.print(" 타입 : " + answerType[i]);
                                     System.out.println(")");
                                 }
-                            drawAnswer(answerCoordination);
-                            parentActivity.findViewById(R.id.textDragCL).bringToFront();
+                                drawAnswer(answerCoordination);
+                                parentActivity.findViewById(R.id.textDragCL).bringToFront();
+                            }
+                            else{
+                                Log.d("aswr:null","shit");
+                            }
                         }
-                    }
-                });
+                    });
+        }
+        else {
+
+            Glide.with(parentActivity)
+                    .asBitmap()
+                    .load(Uri.parse(parentActivity.getString(R.string.mainurl) + "/media/" + array1[0]))
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                            resource = cropBitmap(resource, array0[0]);
+                            photoView.setImageBitmap(resource);
+                            ImageReady = true;
+
+                            if (answerCoordination != null) {
+                                System.out.println("그릴때");
+                                for (int i = 0; i < answerCoordination.length; i++) {
+                                    System.out.print("(");
+                                    for (int j = 0; j < 4; j++) {
+                                        System.out.print(answerCoordination[i][j] + ",");
+                                    }
+                                    System.out.print(" 타입 : " + answerType[i]);
+                                    System.out.println(")");
+                                }
+                                drawAnswer(answerCoordination);
+                                parentActivity.findViewById(R.id.textDragCL).bringToFront();
+                            }
+                            else{
+                                Log.d("aswr:null","shit");
+                            }
+                        }
+                    });
+        }
 
         photoView.setOnMatrixChangeListener(new OnMatrixChangedListener() {
             @Override
@@ -592,7 +693,9 @@ public class TaskView_PhotoView extends TaskView {
 
     //String 형태로 서버에서 넘어온 좌표를 float[][] 형식으로 바꾸어 answerCoordination에 넣어줌
     private void coordinationParsing(String[] array) {
+
         for(int i =1; i < array.length; i++){
+            Log.d("answercoordinationhere",array[i]);
             array3 = array[i].split(",");
             answerCoordination[i-1][0] = (float) Float.parseFloat(array3[0]);
             answerCoordination[i-1][1] = (float) Float.parseFloat(array3[1]);
@@ -691,6 +794,8 @@ public class TaskView_PhotoView extends TaskView {
         }
         return  rtnVal;
     };
+
+
 
 
 

@@ -40,6 +40,7 @@ public class ExamActivity extends PatherActivity {
     int examType;
     String examFlag="";
     ImageView backButton;
+    Context mContext=this;
 
     protected void showDescription(Context context)
     {
@@ -89,15 +90,25 @@ public class ExamActivity extends PatherActivity {
                             answerID = ((Integer)currentTask.get("id")).toString();
                             mExamView.setContent((String) currentTask.get("answer"),taskID);
 
-                        } else {
-                            if (getIntent().getIntExtra("from", 0) == 0) {
-                                Toast.makeText(ExamActivity.this, "회원님이 선택하신 지역에 해당하는 과제가 더이상 없습니다. 테스크 리스트로 돌아갑니다.", Toast.LENGTH_SHORT).show();
+                        } else if (resultTemp.get("success").toString().equals("false")) {
+                                if (resultTemp.get("message").toString().equals("login")) {
+                                    Intent in = new Intent(mContext, LoginActivity.class);
+                                    startActivity(in);
+                                    Toast.makeText(mContext, "로그인이 만료되었습니다. 다시 로그인해주세요", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                } else if (resultTemp.get("message").toString().equals("task")) {
+                                    Toast.makeText(mContext, "테스크가 만료되었습니다. 다른 테스크를 선택해주세요", Toast.LENGTH_SHORT).show();
+                                    deleteWaitingTasks();
+                                    finish();
+                                } else {
+                                    Toast.makeText(mContext, "남은 테스크가 없습니다.", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+                                return;
 
-                            } else {
-                                Toast.makeText(ExamActivity.this, "테스크를 모두 완료했습니다. 테스크 리스트로 돌아갑니다.", Toast.LENGTH_SHORT).show();
                             }
-                            finish();
-                        }
+
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -115,14 +126,18 @@ public class ExamActivity extends PatherActivity {
     public void startTask()
     {
         try {
-            waitingTasks = JSONtoArray(new JSONArray(getPreference("waitingTasks",taskType)));
+            waitingTasks = JSONtoArray(new JSONArray(getPreference("waitingTasks",taskID)));
             if(waitingTasks.size()>0) {
                 if (timeCheck(((JSONObject) waitingTasks.get(0)).get("time").toString())) {
                     if(mTaskView.isEmpty())
                         mTaskView.setPreviewContents(waitingTasks);
                     currentTask = (JSONObject)waitingTasks.get(waitingTasks.size()-1);
                     answerID = currentTask.get("id").toString();
-                    mTaskView.setContent((String) currentTask.get("content"));
+                    if(taskType.equals("BOXCROPEXAM"))
+                        mTaskView.setContent(currentTask.get("content")+"*<"+currentTask.get("answer"));
+                    else
+                        mTaskView.setContent((String) currentTask.get("content"));
+
                     mExamView.setContent((String) currentTask.get("answer"),taskID);
                 }
                 else
@@ -219,9 +234,10 @@ public class ExamActivity extends PatherActivity {
 
         //boxcrop이면 파트 선택되고나서 로딩해야함
         //record면 지역 선택되고나서 로딩해야함
-        if(!(taskType.equals("BOXCROPEXAM")||(taskType.equals("RECORDEXAM") && examType == 2)||taskType.equals("DIRECTRECORDEXAM")))
-            startTask();
+        if(!(taskType.equals("BOXCROPEXAM")||(taskType.equals("RECORDEXAM") && examType == 2)||taskType.equals("DIRECTRECORDEXAM"))) {
 
+            startTask();
+        }
         //boxcropEXAM이면 partSelectDialog를 띄워줘야한다.
         final TextView partText = findViewById(R.id.optionText);
         if((taskType.equals("BOXCROPEXAM"))){
@@ -238,6 +254,7 @@ public class ExamActivity extends PatherActivity {
                 && tasktoken.getInt(taskType + "taskToken", 0) == 100){
             if(regionText != null) {
                 optionText.setText(regionText);
+
                 startTask();
             }
             else
@@ -324,12 +341,14 @@ public class ExamActivity extends PatherActivity {
                                     if(taskType.equals("BOXCROPEXAM")){
                                         ((TaskView_PhotoView)mTaskView).removeAnswer();
                                     }
+                                    updateWaitingTasks();
                                     startTask();
                                     goldSetting(String.valueOf(resultTemp.get("gold")));
                                     maybeSetting(String.valueOf(resultTemp.get("maybe")));
 
                                 } else {
                                     Toast.makeText(getApplicationContext(),"남은 검수작업이 없습니다. 테스크리스트로 돌아갑니다.",Toast.LENGTH_SHORT).show();
+                                    deleteWaitingTasks();
                                     finish();
                                 }
                             } catch (JSONException e) {
