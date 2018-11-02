@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_2DBox;
 import com.selectstar.hwshin.cachemission.DataStructure.ExamView.ExamView;
 import com.selectstar.hwshin.cachemission.DataStructure.HurryHttpRequest;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoView;
@@ -238,6 +239,7 @@ public class ExamActivity extends PatherActivity {
         final TextView partText = findViewById(R.id.optionText);
         if((taskType.equals("BOXCROPEXAM"))){
             findViewById(R.id.option).setBackgroundColor(this.getResources().getColor(R.color.colorDark2));
+            ((TextView) findViewById(R.id.optionText)).setTextColor(this.getResources().getColor(R.color.colorPrimary));
             partDialogShow(partText);
         }
 
@@ -395,6 +397,24 @@ public class ExamActivity extends PatherActivity {
     protected void onStop(){
         super.onStop();
         GoogleAnalytics.getInstance(this).reportActivityStop(this);
+    }
+
+    @Override
+    public void onBackPressed() {
+        //박스 테스크의 경우 확대 잘못하면 취소 눌렀을 때 다시 확대 할수있도록 해야함
+        if(taskType.equals("BOXCROPEXAM")){
+            TaskView_PhotoView taskView = (TaskView_PhotoView) mTaskView;
+            TextView partText = findViewById(R.id.optionText);
+            if(taskView.isExamFlag) {
+                partText.setText("");
+                partDialogShow(partText);
+                taskView.removeAnswer();
+            }else{
+                super.onBackPressed();
+            }
+        }else{
+            super.onBackPressed();
+        }
     }
 
 }
