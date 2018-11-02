@@ -229,8 +229,8 @@ public class UIHashMap {
 
         parameters_SUGGEST[0][0] = 10;
         parameters_SUGGEST[1][0] = R.id.title; parameters_SUGGEST[1][1] = 4;
-        parameters_SUGGEST[2][0] = R.id.taskConstLayout; parameters_SUGGEST[2][1] = 4;
-        parameters_SUGGEST[3][0] = R.id.taskConstLayout; parameters_SUGGEST[3][1] = 3;
+        parameters_SUGGEST[2][0] = R.id.controller; parameters_SUGGEST[2][1] = 4;
+        parameters_SUGGEST[3][0] = R.id.taskview; parameters_SUGGEST[3][1] = 3;
         parameters_SUGGEST[4][0] = R.id.taskConstLayout; parameters_SUGGEST[4][1] = 4;
         parameters_SUGGEST[5][0] = 0;
         taskHashMap.put("SUGGEST", parameters_SUGGEST);

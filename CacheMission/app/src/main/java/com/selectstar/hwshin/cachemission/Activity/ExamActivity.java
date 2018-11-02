@@ -84,6 +84,8 @@ public class ExamActivity extends PatherActivity {
                             currentTask = waitingTasks.get(waitingTasks.size()-1);
                             if(taskType.equals("BOXCROPEXAM"))
                                 mTaskView.setContent(currentTask.get("content")+"*<"+currentTask.get("answer"));
+                            else if (taskType.equals("SUGGESTEXAM"))
+                                mTaskView.setContent(currentTask.get("content")+"("+currentTask.get("answer"));
                             else
                                 mTaskView.setContent((String) currentTask.get("content"));
                             answerID = ((Integer)currentTask.get("id")).toString();
