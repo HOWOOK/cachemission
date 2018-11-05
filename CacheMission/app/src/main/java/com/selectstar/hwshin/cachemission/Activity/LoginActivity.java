@@ -20,6 +20,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -41,9 +42,9 @@ public class LoginActivity extends AppCompatActivity {
     Guideline viewGuideline;
     EditText idText;
     EditText pwText;
-    Button loginButton;
-    Button upButton;
-    Button findid,findpw;
+    TextView loginButton;
+    TextView upButton;
+    TextView findid,findpw;
     Guideline guideline;
     ImageView backbutton;
     final int P_RECORD_AUDIO=77;
@@ -58,15 +59,17 @@ public class LoginActivity extends AppCompatActivity {
 
         }
         setContentView(R.layout.activity_login);
+
         Tracker t = ((GlobalApplication)getApplication()).getTracker(GlobalApplication.TrackerName.APP_TRACKER);
         t.setScreenName("LoginActivity");
         t.send(new HitBuilders.AppViewBuilder().build());
+
 
         viewGuideline = this.findViewById(R.id.guideline);
         DisplayMetrics displayMetrics = new DisplayMetrics();
         this.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int getDeviceHeight_Pixel = displayMetrics.heightPixels;
-        viewGuideline.setGuidelineBegin(getDeviceHeight_Pixel / 2);
+       // viewGuideline.setGuidelineBegin(getDeviceHeight_Pixel / 2);
 
         //앱을 처음깔았다면 앱 설명띄워주는 것
         SharedPreferences explain = getSharedPreferences("explain", MODE_PRIVATE);

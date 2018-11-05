@@ -5,20 +5,17 @@
         <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-            android:background="@color/colorPrimary"
+    android:id="@+id/CC1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
 
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
         >
 
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/CC1"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@+id/guideline"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+
 
                 <ImageView
                     android:id="@+id/loginBackButton"
@@ -44,25 +41,123 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/logo"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_marginBottom="43dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/login_flag"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
 
-            </android.support.constraint.ConstraintLayout>
+                <android.support.constraint.Guideline
+                    android:id="@+id/guideline4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="42dp" />
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/guideline3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="42dp" />
+
+
+
+                    <TextView
+                        android:id="@+id/IDTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="82dp"
+                        android:fontFamily="@font/nanumsquareb_"
+                        android:text="ID (Email)"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="13dp"
+                        app:layout_constraintBottom_toTopOf="@+id/edit_id"
+                        app:layout_constraintStart_toStartOf="@id/guideline3"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/edit_id"
+                        style="@style/normalEditText"
+                        android:layout_width="0dp"
+                        android:layout_height="43dp"
+                        android:layout_marginTop="4dp"
+                        android:paddingLeft="3dp"
+                        android:background="@drawable/rounded_edittext"
+                        android:ems="10"
+                        android:fontFamily="@font/nanumsquareb_"
+                        android:inputType="textPersonName"
+                        app:layout_constraintEnd_toEndOf="@id/guideline4"
+                        app:layout_constraintStart_toStartOf="@id/guideline3"
+                        app:layout_constraintTop_toBottomOf="@+id/IDTextView" />
+
+                    <TextView
+                        android:id="@+id/passWordTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:fontFamily="@font/nanumsquareb_"
+                        android:textSize="13dp"
+                        android:textColor="@color/colorWhite"
+                        android:text="PASSWORD"
+                        app:layout_constraintBottom_toTopOf="@+id/edit_pw"
+                        app:layout_constraintStart_toStartOf="@id/guideline3" />
+
+                    <EditText
+                        android:id="@+id/edit_pw"
+                        style="@style/normalEditText"
+                        android:layout_width="0dp"
+                        android:layout_height="43dp"
+                        android:layout_marginTop="43dp"
+                        android:paddingLeft="3dp"
+                        android:background="@drawable/rounded_edittext"
+                        android:ems="10"
+
+
+                        android:inputType="textPassword"
+                        app:layout_constraintEnd_toEndOf="@id/guideline4"
+                        app:layout_constraintStart_toStartOf="@id/guideline3"
+                        app:layout_constraintTop_toBottomOf="@+id/edit_id" />
+
+                <TextView
+                    android:id="@+id/button_in"
+                    style="@style/normalbtn1"
+
+                    android:layout_width="205dp"
+                    android:layout_height="46dp"
+
+                    android:layout_marginTop="65dp"
+                    android:height="46dp"
+                    android:background="@drawable/rounded_loginbutton"
+                    android:elevation="10dp"
+                    android:fontFamily="@font/nanumsquareb_"
+                    android:text="로그인"
+
+                    android:textColor="@color/colorPrimary"
+                    app:layout_constraintEnd_toEndOf="@id/guideline4"
+                    app:layout_constraintStart_toStartOf="@id/guideline3"
+                    app:layout_constraintTop_toBottomOf="@+id/edit_pw" />
+
+                <TextView
+                    android:id="@+id/button_up"
+                    style="@style/normalbtn1"
+                    android:layout_width="205dp"
+                    android:layout_height="46dp"
+                    android:layout_marginTop="23dp"
+                    android:height="46dp"
+                    android:background="@drawable/rounded_loginbutton"
+                    android:elevation="10dp"
+                    android:fontFamily="@font/nanumsquareb_"
+                    android:text="+회원가입"
+                    android:textColor="@color/colorPrimary"
+                    app:layout_constraintEnd_toEndOf="@id/guideline4"
+                    app:layout_constraintStart_toStartOf="@id/guideline3"
+                    app:layout_constraintTop_toBottomOf="@+id/button_in" />
+
+
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.42" />
+        app:layout_constraintGuide_begin="421dp" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/CC2"
@@ -75,125 +170,15 @@
         app:layout_constraintTop_toBottomOf="@+id/guideline"
         >
 
-        <android.support.constraint.Guideline
-            android:id="@+id/guideline4"
+        <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_end="42dp" />
-
-        <android.support.constraint.Guideline
-            android:id="@+id/guideline3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="42dp" />
-
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@color/colorPrimary"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/guideline4"
-            app:layout_constraintStart_toStartOf="@id/guideline3"
-            app:layout_constraintTop_toTopOf="parent"
-           >
-
-            <TextView
-                android:id="@+id/IDTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:fontFamily="@font/nanumsquareb_"
-                android:text="ID (Email)"
-                android:textSize="13dp"
-                android:textColor="@color/colorWhite"
-                app:layout_constraintBottom_toTopOf="@+id/edit_id"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <EditText
-                android:id="@+id/edit_id"
-                style="@style/normalEditText"
-                android:layout_width="0dp"
-                android:layout_height="43dp"
-                android:layout_marginTop="4dp"
-                android:paddingLeft="3dp"
-                android:background="@drawable/rounded_edittext"
-                android:ems="10"
-                android:fontFamily="@font/nanumsquareb_"
-                android:inputType="textPersonName"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/IDTextView" />
-
-            <TextView
-                android:id="@+id/passWordTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:fontFamily="@font/nanumsquareb_"
-                android:textSize="13dp"
-                android:textColor="@color/colorWhite"
-                android:text="PASSWORD"
-                app:layout_constraintBottom_toTopOf="@+id/edit_pw"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <EditText
-                android:id="@+id/edit_pw"
-                style="@style/normalEditText"
-                android:layout_width="0dp"
-                android:layout_height="43dp"
-                android:layout_marginTop="43dp"
-                android:paddingLeft="3dp"
-                android:background="@drawable/rounded_edittext"
-                android:ems="10"
+            android:layout_height="match_parent"
+android:id="@+id/fufu"
+            android:scaleType="fitCenter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
 
-                android:inputType="textPassword"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_id" />
-
-            <Button
-                android:id="@+id/button_in"
-                style="@style/normalbtn1"
-
-                android:layout_width="0dp"
-                android:layout_height="46dp"
-                android:layout_marginEnd="60dp"
-                android:layout_marginStart="60dp"
-
-                android:layout_marginTop="65dp"
-                android:height="46dp"
-                android:background="@drawable/rounded_loginbutton"
-                android:elevation="30dp"
-                android:fontFamily="@font/nanumsquareb_"
-                android:text="로그인"
-
-                android:textColor="@color/colorPrimary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_pw" />
-
-            <Button
-                android:id="@+id/button_up"
-                style="@style/normalbtn1"
-                android:layout_width="0dp"
-                android:layout_height="46dp"
-                android:layout_marginEnd="3dp"
-                android:layout_marginStart="60dp"
-                android:layout_marginTop="23dp"
-                android:height="46dp"
-                android:background="@drawable/rounded_loginbutton"
-                android:elevation="30dp"
-                android:fontFamily="@font/nanumsquareb_"
-                android:text="+회원가입"
-                android:textColor="@color/colorPrimary"
-                app:layout_constraintEnd_toEndOf="@+id/button_in"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button_in" />
-        </android.support.constraint.ConstraintLayout>
 
 
     </android.support.constraint.ConstraintLayout>
