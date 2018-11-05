@@ -95,7 +95,7 @@ public class Controller_EditText extends Controller {
                             }
 
                         }
-                    }.execute(parentActivity.getString(R.string.mainurl)+"/taskSubmit", param2,((TaskActivity)parentActivity).getLoginToken());
+                    }.execute(parentActivity.getString(R.string.mainurl)+"/testing/taskSubmit", param2,((TaskActivity)parentActivity).getLoginToken());
                 }catch (JSONException e){
                     e.printStackTrace();
 

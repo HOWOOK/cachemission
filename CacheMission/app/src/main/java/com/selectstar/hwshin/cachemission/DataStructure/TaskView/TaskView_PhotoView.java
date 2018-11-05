@@ -60,6 +60,7 @@ public class TaskView_PhotoView extends TaskView {
     private int answerCount = 0;
     private int drawAnswerCount = 0;
     private HashMap<String,Bitmap> bitmaps;
+    private float iouValue;
 
     public TaskView_PhotoView()
     {
@@ -145,6 +146,12 @@ public class TaskView_PhotoView extends TaskView {
             isExamFlag = true;
         if(isExamFlag == true)
             expandFlag = false;
+
+        //박스 친곳에 또 치려고하면 막아야한다. 프리프로세싱은 조금더 엄격하다.
+        if(parentActivity.getPartNum() == 2)
+            iouValue = 0.3f;
+        else
+            iouValue = 0.5f;
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         parentActivity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -820,13 +827,25 @@ public class TaskView_PhotoView extends TaskView {
     //size도 함께 생각해야한다........ 겹치는 퍼센트에 따라 P/F 하는거로 수정 요망
     public boolean similarityTest(float left, float top, float right, float bottom){
         Boolean rtnVal = true;
-        float error = 0.015f;
+        float leftIntersect, topIntersect, rightIntersect, bottomIntersect;
+        float answerArea, drawArea;
+        float interArea, unionArea;
+        float iou; //intersection over union
+        drawArea = (right - left) * ( bottom - top );
         if(answerCoordination != null) {
             for (int i = 0; i < answerCoordination.length; i++) {
-                if ((answerCoordination[i][0] - left < error)
-                        &&(answerCoordination[i][1] - top < error)
-                        &&(answerCoordination[i][2] - right < error)
-                        &&(answerCoordination[i][3] - bottom < error))
+                leftIntersect = Math.max(answerCoordination[i][0], left);
+                topIntersect = Math.max(answerCoordination[i][1], top);
+                rightIntersect = Math.min(answerCoordination[i][2], right);
+                bottomIntersect = Math.min(answerCoordination[i][3], bottom);
+
+                interArea = Math.max((rightIntersect - leftIntersect), 0) * Math.max((bottomIntersect - topIntersect), 0);
+                answerArea = (answerCoordination[i][2] - answerCoordination[i][0]) * (answerCoordination[i][3] - answerCoordination[i][1]);
+                unionArea = answerArea + drawArea - interArea;
+                iou = interArea / unionArea;
+
+                Log.d("겹치는 비율", ((Float)iou).toString());
+                if (iou > iouValue)
                     rtnVal = false;
             }
         }

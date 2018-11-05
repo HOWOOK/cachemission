@@ -81,9 +81,9 @@ public class SignUpActivity extends AppCompatActivity {
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String idVal = idText.getText().toString();
-                String pwVal = pwText.getText().toString();
-                String pw2Val = pw2Text.getText().toString();
+                String idVal = idText.getText().toString().trim();
+                String pwVal = pwText.getText().toString().trim();
+                String pw2Val = pw2Text.getText().toString().trim();
                 String genderVal ="[ 선택 ]";
                  if (genderSpinner.getSelectedItem().toString().equals("남자"))
                      genderVal = "MALE";
