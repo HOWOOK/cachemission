@@ -132,13 +132,19 @@ public class TaskListActivity extends AppCompatActivity {
         SharedPreferences token = getSharedPreferences("token",MODE_PRIVATE);
         final String loginToken = token.getString("loginToken","");
 
-        //수정 요망 checkIfTimePassed 함수가 전혀 작동의미가 없음
+        //수정 요망 checkIfTimePassed 함수가 전혀 작동의미가 없음->현재는 10분이 지나지 않을 경우 재로딩을 하지 않는 메커니즘을 사용하지 않기 때문임. 나중에 getPreviousList를 받아오게 바뀌면 자연스럽게 해결될것임
         if(checkIfTimePassed())
             getTaskList(loginToken);
         else{
             getTaskList(loginToken);
         }
 
+    }
+    public void forcedUpdate(){
+
+        Uri uri = Uri.parse("market://details?id="+this.getPackageName());
+        Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+        startActivity(intent);
     }
 
 
@@ -772,6 +778,16 @@ runningHTTPRequest++;
                     if (result == "")
                         return;
                     JSONObject resultTemp = new JSONObject(result);
+
+                    try {
+                        if ((resultTemp.getString("forced")).equals("True")) {
+                            forcedUpdate();
+
+                        }
+
+                    }catch (JSONException e){
+                        e.printStackTrace();
+                    }
                     JSONObject user = (JSONObject)resultTemp.get("user");
 
                     SharedPreferences userInfo=getSharedPreferences("userInfo",MODE_PRIVATE);

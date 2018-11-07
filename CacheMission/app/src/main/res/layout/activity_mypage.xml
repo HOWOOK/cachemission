@@ -128,18 +128,19 @@
             android:background="@drawable/mypage_won"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/myPageUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="11dp"
-            android:text="'전문휘'님의 통장"
-            android:fontFamily="@font/nanumsquareeb_"
-            android:textColor="@color/colorDark1"
             android:layout_marginEnd="40dp"
-            android:layout_marginTop="51dp"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/nanumsquareeb_"
+            android:text="'전문휘'님의 통장"
+            android:textColor="@color/colorDark1"
+            android:textSize="11dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
         <TextView
             android:id="@+id/nowMoney"
             android:layout_width="wrap_content"
@@ -231,16 +232,15 @@
         <TextView
             android:id="@+id/withdrawButton"
             android:layout_width="match_parent"
-            android:layout_height="22dp"
-            android:text="환전신청"
-            android:textSize="11dp"
-            android:textColor="@color/colorWhite"
-            android:gravity="center"
+            android:layout_height="32dp"
             android:background="@drawable/mypage_withdraw_button"
+            android:gravity="center"
+            android:text="▼ 환전신청"
+            android:textColor="@color/colorWhite"
+            android:textSize="11dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-             />
+            app:layout_constraintStart_toStartOf="parent" />
     </android.support.constraint.ConstraintLayout>
 
 

@@ -183,5 +183,37 @@ android:id="@+id/fufu"
 
     </android.support.constraint.ConstraintLayout>
 
-    </android.support.constraint.ConstraintLayout>
+    <CheckBox
+        android:id="@+id/IDRemember"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="32dp"
+        android:buttonTint="@color/colorWhite"
+        android:text="아이디 기억하기"
+        android:textColor="@color/colorWhite"
+        android:textSize="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_in"
+        app:layout_constraintStart_toEndOf="@+id/guideline3"
+        app:layout_constraintEnd_toStartOf="@+id/PWRemember"
+        app:layout_constraintTop_toBottomOf="@+id/edit_pw" />
+
+    <CheckBox
+        android:id="@+id/PWRemember"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="32dp"
+        android:buttonTint="@color/colorWhite"
+        android:text="비밀번호 기억하기"
+        android:textColor="@color/colorWhite"
+        android:textSize="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_in"
+        app:layout_constraintEnd_toStartOf="@+id/guideline4"
+        app:layout_constraintStart_toEndOf="@+id/IDRemember"
+        app:layout_constraintTop_toBottomOf="@+id/edit_pw" />
+
+</android.support.constraint.ConstraintLayout>
 
