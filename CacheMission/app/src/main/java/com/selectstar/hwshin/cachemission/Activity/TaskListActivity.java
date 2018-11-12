@@ -780,14 +780,17 @@ runningHTTPRequest++;
                     JSONObject resultTemp = new JSONObject(result);
 
                     try {
+
                         if ((resultTemp.getString("forced")).equals("True")) {
-                            forcedUpdate();
+                            getForcedUpdateDialog("필수적인 업데이트사항이 있습니다.","먼저 버전 업데이트를 진행해 주세요.");
+                            //forcedUpdate();
 
                         }
 
                     }catch (JSONException e){
                         e.printStackTrace();
                     }
+                    //getForcedUpdateDialog("필수적인 업데이트사항이 있습니다.","먼저 버전 업데이트를 진행해 주세요.");
                     JSONObject user = (JSONObject)resultTemp.get("user");
 
                     SharedPreferences userInfo=getSharedPreferences("userInfo",MODE_PRIVATE);
@@ -1020,5 +1023,25 @@ mBuilder.setNumber(0);
     protected void onStop(){
         super.onStop();
         GoogleAnalytics.getInstance(this).reportActivityStop(this);
+    }
+    private void getForcedUpdateDialog(String title, String value)
+    {
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(TaskListActivity.this);
+        alertDialogBuilder.setTitle(title);
+        alertDialogBuilder.setMessage(value);
+        alertDialogBuilder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                forcedUpdate();
+            }
+        });
+        alertDialogBuilder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        alertDialogBuilder.show();
     }
 }
