@@ -1,13 +1,18 @@
 package com.selectstar.hwshin.cachemission.DataStructure.Controller;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,6 +29,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -114,6 +120,7 @@ public class Controller_Photo extends Controller {
                 for(int i=0;i<allCount;i++)
                 {
                     Uri uri = adapter.getUri(i);
+                   // Log.d("lflflflflf",String.valueOf(getBitmapWidth(uri)));
                     System.out.println(uri.toString());
                     new FileHttpRequest(parentActivity) {
 
@@ -186,6 +193,70 @@ public class Controller_Photo extends Controller {
         );
         //imageFilePath = image.getAbsolutePath();
         return image;
+    }
+//    private String getRealPathFromURI(Context context, Uri contentUri) {
+//        Cursor cursor = null;
+//        try {
+//            String[] proj = { MediaStore.Images.Media.DATA };
+//            cursor = context.getContentResolver().query(contentUri,  proj, null, null, null);
+//            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+//            cursor.moveToFirst();
+//            return cursor.getString(column_index);
+//        } catch (Exception e) {
+//
+//            return "";
+//        } finally {
+//            if (cursor != null) {
+//                cursor.close();
+//            }
+//        }
+//    }
+
+    public String getPathFromUri(Uri uri){
+
+        Cursor cursor = parentActivity.getContentResolver().query(uri, null, null, null, null );
+
+        cursor.moveToNext();
+
+        String path = cursor.getString( cursor.getColumnIndex( "_data" ) );
+
+        cursor.close();
+
+
+
+        return path;
+
+    }
+
+
+
+    private int getBitmapWidth(Uri uri){
+        try {
+            BitmapFactory.Options options=new BitmapFactory.Options();
+            options.inJustDecodeBounds =true;
+            options.inPreferredConfig = Bitmap.Config.RGB_565;
+
+
+//            String path = getRealPathFromURI(parentActivity,uri);
+//            String filename = path.substring(path.lastIndexOf("/")+1);
+//            String fileWOExtension;
+//            if (filename.indexOf(".") > 0) {
+//                fileWOExtension = filename.substring(0, filename.lastIndexOf("."));
+//            } else {
+//                fileWOExtension =  filename;
+//            }
+            String path =getPathFromUri(uri); // "/mnt/sdcard/FileName.mp3"
+
+            BitmapFactory.decodeFile(path,options);
+            Log.d("jdjdjdjdjdj",path);
+
+            return options.outWidth;
+
+        }catch (Exception e){
+            return 0;
+
+        }
+
     }
 
 }

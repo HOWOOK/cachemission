@@ -30,6 +30,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.util.ArrayList;
 
 import static android.support.constraint.Constraints.TAG;
@@ -37,9 +38,11 @@ import static android.support.constraint.Constraints.TAG;
 public class PhotoPagerAdapter extends RecyclerView.Adapter<PhotoPagerAdapter.ItemViewHolder> {
     ArrayList<Uri> photoList;
     AppCompatActivity parentActivity;
+    ArrayList<Boolean> resolution;
     public void addPhoto(Uri photoUri)
     {
         photoList.add(photoUri);
+        resolution.add(true);
         notifyItemInserted(photoList.size()-1);
         notifyDataSetChanged();
         ((ImageView)parentActivity.findViewById(R.id.emptyview)).setVisibility(View.INVISIBLE);
@@ -48,9 +51,12 @@ public class PhotoPagerAdapter extends RecyclerView.Adapter<PhotoPagerAdapter.It
     {
         return photoList.get(index);
     }
+    public Boolean getResolutionAcceptance(int index){return  resolution.get(index);}
     public PhotoPagerAdapter(AppCompatActivity parentActivity) {
         photoList = new ArrayList<>();
+        resolution = new ArrayList<>();
         this.parentActivity = parentActivity;
+
     }
     public boolean isEmpty()
     {
@@ -59,6 +65,7 @@ public class PhotoPagerAdapter extends RecyclerView.Adapter<PhotoPagerAdapter.It
     public void clearItem()
     {
         photoList = new ArrayList<>();
+        resolution = new ArrayList<>();
         notifyDataSetChanged();
         ((ImageView)parentActivity.findViewById(R.id.emptyview)).setVisibility(View.VISIBLE);
     }
@@ -161,6 +168,8 @@ public class PhotoPagerAdapter extends RecyclerView.Adapter<PhotoPagerAdapter.It
 
                                 if(photoList.get(position).toString().substring(0,7).equals("content")){
                                     holder.image.setImageURI(photoList.get(position));
+
+
                                 }else {
                                     final Bitmap bm = BitmapFactory.decodeFile(photoList.get(position).toString(), options);
                                     final Bitmap bmRotated = rotateBitmap(bm, orientation);
@@ -212,5 +221,31 @@ public class PhotoPagerAdapter extends RecyclerView.Adapter<PhotoPagerAdapter.It
             delete = itemView.findViewById(R.id.itemdelete);
             image = itemView.findViewById(R.id.imageitem);
         }
+    }
+    private int getBitmapWidth(Uri uri){
+        try {
+            BitmapFactory.Options options=new BitmapFactory.Options();
+            options.inJustDecodeBounds =true;
+
+
+//            String path = getRealPathFromURI(parentActivity,uri);
+//            String filename = path.substring(path.lastIndexOf("/")+1);
+//            String fileWOExtension;
+//            if (filename.indexOf(".") > 0) {
+//                fileWOExtension = filename.substring(0, filename.lastIndexOf("."));
+//            } else {
+//                fileWOExtension =  filename;
+//            }
+            String path =uri.getPath(); // "/mnt/sdcard/FileName.mp3"
+            File file = new File(new URI(path));
+            BitmapFactory.decodeFile(uri.toString(),options);
+            Log.d("jdjdjdjdjdj",uri.toString());
+            return options.outWidth;
+
+        }catch (Exception e){
+            return 0;
+
+        }
+
     }
 }
