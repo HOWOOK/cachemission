@@ -126,8 +126,19 @@ public class ExamActivity extends PatherActivity {
     @Override
     public void startTask()
     {
-        try {
-            waitingTasks = JSONtoArray(new JSONArray(getPreference("waitingTasks",taskID)));
+        try{
+            String key = taskID;
+            if(taskType.contains("BOXCROP"))
+                key = key +"/"+ String.valueOf(partType());
+            else
+                key = key + "/-1";
+            if(taskType.contains("EXAM"))
+                key = key + "/" + String.valueOf(examType);
+            else
+                key = key + "/-1";
+            waitingTasks = JSONtoArray(new JSONArray(getPreference("waitingTasks",key)));
+            System.out.println("flag1");
+            System.out.println(waitingTasks);
             if(waitingTasks.size()>0) {
                 if (timeCheck(((JSONObject) waitingTasks.get(0)).get("time").toString())) {
                     if(mTaskView.isEmpty())
