@@ -270,8 +270,8 @@ public class MyPageActivity extends AppCompatActivity {
                     getDialog("금액 길이제한","30자 이내로 입력해 주세요.");
                     return;
                 }
-                if(Integer.parseInt(currentGold)<3000){
-                    getDialog("금액 액수제한","3000원 이상의 금액부터 환전할 수 있습니다.");
+                if(Integer.parseInt(currentGold)<2000){
+                    getDialog("금액 액수제한","2000원 이상의 금액부터 환전할 수 있습니다.");
                     return;
                 }
 //                String curMoneyArray[]=certainMoney.getText().toString().split("\uFFE6");
