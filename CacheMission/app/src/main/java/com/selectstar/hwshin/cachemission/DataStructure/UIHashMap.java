@@ -2,6 +2,7 @@ package com.selectstar.hwshin.cachemission.DataStructure;
 
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_2DBox;
+import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_Classification;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_EditText;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_Numbers;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_TwoPoint;
@@ -16,6 +17,7 @@ import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_Vo
 import com.selectstar.hwshin.cachemission.DataStructure.ExamView.ExamView_ZoomImage;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_Image;
+import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoView;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoWithBox;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoWithLine;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_SwipeImage;
@@ -46,6 +48,7 @@ public class UIHashMap {
     int[][] parameters_BOXCROP = new int[6][2];
     int[][] parameters_TWOPOINT = new int[6][2];
     int[][] parameters_SUGGEST = new int[6][2];
+    int[][] parameters_CLASSIFICATION = new int[6][2];
 
     int[][] parameters_OCREXAM = new int[6][2];
     int[][] parameters_VIDEOEXAM = new int[6][2];
@@ -58,6 +61,7 @@ public class UIHashMap {
     int[][] parameters_BOXCROPEXAM = new int[6][2];
     int[][] parameters_TWOPOINTEXAM = new int[6][2];
     int[][] parameters_SUGGESTEXAM = new int[6][2];
+    int[][] parameters_CLASSIFICATIONEXAM = new int[6][2];
 
     public HashMap<String, TaskView> taskViewHashMap = new HashMap();
     public HashMap<String, Controller> controllerHashMap = new HashMap();
@@ -73,6 +77,7 @@ public class UIHashMap {
         taskViewHashMap.put("swipeimage", new TaskView_SwipeImage());
         taskViewHashMap.put("photoview", new TaskView_PhotoWithBox());
         taskViewHashMap.put("photowithline", new TaskView_PhotoWithLine());
+        taskViewHashMap.put("photoview2", new TaskView_PhotoView());
 
         //Controller hashmap 종류들
         controllerHashMap.put("edittext", new Controller_EditText());
@@ -82,6 +87,7 @@ public class UIHashMap {
         controllerHashMap.put("numbers", new Controller_Numbers());
         controllerHashMap.put("photo", new Controller_Photo());
         controllerHashMap.put("twopoint", new Controller_TwoPoint());
+        controllerHashMap.put("classification", new Controller_Classification());
 
         examViewHashMap.put("edittext", new ExamView_EditText());
         examViewHashMap.put("buttons", new ExamView_Buttons());
@@ -253,10 +259,10 @@ public class UIHashMap {
 
         parameters_SUGGEST[0][0] = 10;
         parameters_SUGGEST[1][0] = R.id.title; parameters_SUGGEST[1][1] = 4;
-        parameters_SUGGEST[2][0] = R.id.controller; parameters_SUGGEST[2][1] = 4;
-        parameters_SUGGEST[3][0] = R.id.taskview; parameters_SUGGEST[3][1] = 3;
+        parameters_SUGGEST[2][0] = R.id.controller; parameters_SUGGEST[2][1] = 3;
+        parameters_SUGGEST[3][0] = R.id.taskview; parameters_SUGGEST[3][1] = 4;
         parameters_SUGGEST[4][0] = R.id.taskConstLayout; parameters_SUGGEST[4][1] = 4;
-        parameters_SUGGEST[5][0] = 0;
+        parameters_SUGGEST[5][0] = 10;
         taskHashMap.put("SUGGEST", parameters_SUGGEST);
 
         parameters_SUGGESTEXAM[0][0] = 5;
@@ -266,6 +272,22 @@ public class UIHashMap {
         parameters_SUGGESTEXAM[4][0] = R.id.taskConstLayoutExam; parameters_SUGGESTEXAM[4][1] = 4;
         parameters_SUGGESTEXAM[5][0] = 10;
         taskHashMap.put("SUGGESTEXAM", parameters_SUGGESTEXAM);
+
+        parameters_CLASSIFICATION[0][0] = 10;
+        parameters_CLASSIFICATION[1][0] = R.id.option; parameters_CLASSIFICATION[1][1] = 4;
+        parameters_CLASSIFICATION[2][0] = R.id.controller; parameters_CLASSIFICATION[2][1] = 3;
+        parameters_CLASSIFICATION[3][0] = R.id.taskview; parameters_CLASSIFICATION[3][1] = 4;
+        parameters_CLASSIFICATION[4][0] = R.id.taskConstLayout; parameters_CLASSIFICATION[4][1] = 4;
+        parameters_CLASSIFICATION[5][0] = 5;
+        taskHashMap.put("CLASSIFICATION", parameters_CLASSIFICATION);
+
+        parameters_CLASSIFICATIONEXAM[0][0] = 10;
+        parameters_CLASSIFICATIONEXAM[1][0] = R.id.option; parameters_CLASSIFICATIONEXAM[1][1] = 4;
+        parameters_CLASSIFICATIONEXAM[2][0] = R.id.controllerExam; parameters_CLASSIFICATIONEXAM[2][1] = 3;
+        parameters_CLASSIFICATIONEXAM[3][0] = R.id.taskViewExam; parameters_CLASSIFICATIONEXAM[3][1] = 4;
+        parameters_CLASSIFICATIONEXAM[4][0] = R.id.taskConstLayoutExam; parameters_CLASSIFICATIONEXAM[4][1] = 4;
+        parameters_CLASSIFICATIONEXAM[5][0] = 5;
+        taskHashMap.put("CLASSIFICATIONEXAM", parameters_CLASSIFICATIONEXAM);
 
     }
 
