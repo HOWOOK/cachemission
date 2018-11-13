@@ -3,6 +3,7 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorTransparentWhite">#b4ffffff</color>
     <color name="colorTransparentMoreWhite">#64ffffff</color>
+    <color name="colorTransparentAbsolute">#00ffffff</color>
     <color name="colorBlack">#000000</color>
 
     <color name="colorPrimary">#fab902</color>
@@ -10,6 +11,9 @@
     <color name="colorDark1">#03284b</color>
     <color name="colorDark2">#1C2629</color>
     <color name="colorDark3">#4C6A71</color>
+    <color name="colorDarkWhite">#8093a6</color>
+    <color name="colorDarkWhiteText">#c0c9d3</color>
+
     <color name="colorAccent">#00ADA9</color>
     <color name="colorPoint1">#0978aa</color>
     <color name="colorPoint2">#fa484e</color>

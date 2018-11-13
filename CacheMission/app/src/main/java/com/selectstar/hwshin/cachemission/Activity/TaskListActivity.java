@@ -132,13 +132,19 @@ public class TaskListActivity extends AppCompatActivity {
         SharedPreferences token = getSharedPreferences("token",MODE_PRIVATE);
         final String loginToken = token.getString("loginToken","");
 
-        //수정 요망 checkIfTimePassed 함수가 전혀 작동의미가 없음
+        //수정 요망 checkIfTimePassed 함수가 전혀 작동의미가 없음->현재는 10분이 지나지 않을 경우 재로딩을 하지 않는 메커니즘을 사용하지 않기 때문임. 나중에 getPreviousList를 받아오게 바뀌면 자연스럽게 해결될것임
         if(checkIfTimePassed())
             getTaskList(loginToken);
         else{
             getTaskList(loginToken);
         }
 
+    }
+    public void forcedUpdate(){
+
+        Uri uri = Uri.parse("market://details?id="+this.getPackageName());
+        Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+        startActivity(intent);
     }
 
 
@@ -772,6 +778,19 @@ runningHTTPRequest++;
                     if (result == "")
                         return;
                     JSONObject resultTemp = new JSONObject(result);
+
+                    try {
+
+                        if ((resultTemp.getString("forced")).equals("True")) {
+                            getForcedUpdateDialog("필수적인 업데이트사항이 있습니다.","먼저 버전 업데이트를 진행해 주세요.");
+                            //forcedUpdate();
+
+                        }
+
+                    }catch (JSONException e){
+                        e.printStackTrace();
+                    }
+                    //getForcedUpdateDialog("필수적인 업데이트사항이 있습니다.","먼저 버전 업데이트를 진행해 주세요.");
                     JSONObject user = (JSONObject)resultTemp.get("user");
 
                     SharedPreferences userInfo=getSharedPreferences("userInfo",MODE_PRIVATE);
@@ -1004,5 +1023,25 @@ mBuilder.setNumber(0);
     protected void onStop(){
         super.onStop();
         GoogleAnalytics.getInstance(this).reportActivityStop(this);
+    }
+    private void getForcedUpdateDialog(String title, String value)
+    {
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(TaskListActivity.this);
+        alertDialogBuilder.setTitle(title);
+        alertDialogBuilder.setMessage(value);
+        alertDialogBuilder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                forcedUpdate();
+            }
+        });
+        alertDialogBuilder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        alertDialogBuilder.show();
     }
 }

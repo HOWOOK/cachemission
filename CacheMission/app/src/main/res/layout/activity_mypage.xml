@@ -32,13 +32,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.83"
         app:srcCompat="@drawable/backcom2" />
+
     <android.support.constraint.Guideline
         android:id="@+id/guideLineMyPageHo1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_begin="242dp"
+        app:layout_constraintGuide_begin="55dp"
         app:layout_constraintStart_toStartOf="parent" />
 
     <android.support.constraint.Guideline
@@ -47,7 +48,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_begin="476dp"
+        app:layout_constraintGuide_begin="289dp"
         app:layout_constraintStart_toStartOf="parent" />
 
     <android.support.constraint.Guideline
@@ -73,6 +74,7 @@
         android:layout_width="118dp"
         android:layout_height="118dp"
         android:background="@drawable/mypage_circle"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/guideLineMyPageHo1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -85,6 +87,7 @@
         android:text="Lv.03"
         android:textColor="@color/colorWhite"
         android:textSize="20dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/guideLineMyPageHo1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -123,47 +126,50 @@
         <ImageView
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:layout_marginStart="40dp"
+            android:layout_marginStart="37dp"
             android:layout_marginTop="33dp"
             android:background="@drawable/mypage_won"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/myPageUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="11dp"
-            android:text="'전문휘'님의 통장"
-            android:fontFamily="@font/nanumsquareeb_"
-            android:textColor="@color/colorDark1"
             android:layout_marginEnd="40dp"
-            android:layout_marginTop="51dp"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/nanumsquareeb_"
+            android:text="'전문휘'님의 통장"
+            android:textColor="@color/colorDark1"
+            android:textSize="11dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/nowMoney"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="33dp"
-            android:text="3500"
-            android:fontFamily="@font/nanumsquareeb_"
-            android:textColor="@color/colorDark1"
-            android:layout_marginStart="40dp"
+            android:layout_marginStart="37dp"
             android:layout_marginTop="51dp"
+            android:fontFamily="@font/nanumsquareeb_"
+            android:text="3500"
+            android:textColor="@color/colorDark1"
+            android:textSize="33dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/certainMoney"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:text="3500"
-            android:fontFamily="@font/nanumsquareeb_"
-            android:textColor="@color/colorDark1"
-            android:layout_marginStart="40dp"
+            android:layout_marginStart="37dp"
             android:layout_marginTop="117dp"
+            android:fontFamily="@font/nanumsquareeb_"
+            android:text="3500"
+            android:textColor="@color/colorDark1"
+            android:textSize="20dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/delayedMoney"
@@ -189,18 +195,19 @@
             android:layout_marginTop="117dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
+
         <TextView
             android:id="@+id/certainMoneyText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="8dp"
-            android:text="현재 적립 금액"
-            android:fontFamily="@font/nanumsquareeb_"
-            android:textColor="@color/colorDark1"
-            android:layout_marginStart="40dp"
+            android:layout_marginStart="37dp"
             android:layout_marginTop="143dp"
+            android:fontFamily="@font/nanumsquareeb_"
+            android:text="현재 적립 금액"
+            android:textColor="@color/colorDark1"
+            android:textSize="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/delayedMoneyText"
@@ -219,28 +226,173 @@
             android:id="@+id/totalMoneyText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="8dp"
-            android:text="누적 적립 금액"
-            android:fontFamily="@font/nanumsquareeb_"
-            android:textColor="@color/colorDark1"
             android:layout_marginEnd="40dp"
             android:layout_marginTop="143dp"
+            android:fontFamily="@font/nanumsquareeb_"
+            android:text="환전 예정 금액"
+            android:textColor="@color/colorDark1"
+            android:textSize="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/withdrawButton"
             android:layout_width="match_parent"
-            android:layout_height="22dp"
-            android:text="환전신청"
-            android:textSize="11dp"
-            android:textColor="@color/colorWhite"
-            android:gravity="center"
+            android:layout_height="32dp"
             android:background="@drawable/mypage_withdraw_button"
+            android:fontFamily="@font/nanumsquareeb_"
+            android:gravity="center"
+            android:text="▼ 환전신청"
+            android:textColor="@color/colorWhite"
+            android:textSize="11dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-             />
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/withdrawText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="22dp"
+            android:layout_marginStart="37dp"
+            android:fontFamily="@font/nanumsquareeb_"
+            android:text="환전신청"
+            android:textColor="@color/colorDark1"
+            android:textSize="12dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/imoticon"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/imoticon"
+            android:layout_width="63dp"
+            android:layout_height="20dp"
+            android:layout_marginBottom="21dp"
+            android:layout_marginStart="37dp"
+            android:background="@drawable/selected_rounded_withdrawbutton"
+            android:fontFamily="@font/nanumsquareeb_"
+            android:gravity="center"
+            android:text="이모티콘"
+            android:textColor="@color/colorWhite"
+            android:textSize="11dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/personalInfo1"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/gifticon"
+            android:layout_width="63dp"
+            android:layout_height="20dp"
+            android:layout_marginBottom="21dp"
+            android:layout_marginStart="23dp"
+            android:background="@drawable/rounded_withdrawbutton"
+            android:fontFamily="@font/nanumsquareeb_"
+            android:gravity="center"
+            android:text="기프티콘"
+            android:textColor="@color/colorDarkWhiteText"
+            android:textSize="11dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/personalInfo1"
+            app:layout_constraintStart_toEndOf="@+id/imoticon" />
+
+        <TextView
+            android:id="@+id/cash"
+            android:layout_width="63dp"
+            android:layout_height="20dp"
+            android:layout_marginBottom="21dp"
+            android:layout_marginStart="23dp"
+            android:background="@drawable/rounded_withdrawbutton"
+            android:fontFamily="@font/nanumsquareeb_"
+            android:gravity="center"
+            android:text="현금"
+            android:textColor="@color/colorDarkWhiteText"
+            android:textSize="11dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/personalInfo1"
+            app:layout_constraintStart_toEndOf="@+id/gifticon" />
+
+        <EditText
+            android:id="@+id/personalInfo2"
+
+            android:layout_width="300dp"
+            android:layout_height="20dp"
+            android:layout_marginBottom="21dp"
+            android:layout_marginStart="37dp"
+            android:gravity="center_vertical"
+            android:background="@null"
+            android:fontFamily="@font/nanumsquareeb_"
+            android:hint="카카오톡 아이디"
+            android:textColor="@color/colorDark1"
+            android:textSize="10dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/warningMessage"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/personalInfo1"
+
+            android:layout_width="300dp"
+            android:layout_height="20dp"
+            android:layout_marginBottom="14dp"
+            android:layout_marginStart="37dp"
+            android:gravity="center_vertical"
+            android:background="@null"
+            android:fontFamily="@font/nanumsquareeb_"
+            android:hint="이모티콘명"
+            android:textColor="@color/colorDark1"
+            android:textSize="10dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/personalInfoGold"
+            app:layout_constraintStart_toStartOf="parent" />
+        <EditText
+            android:id="@+id/personalInfoGold"
+            android:inputType="number"
+            android:layout_width="300dp"
+            android:layout_height="20dp"
+            android:layout_marginBottom="14dp"
+            android:layout_marginStart="37dp"
+            android:gravity="center_vertical"
+            android:background="@null"
+            android:fontFamily="@font/nanumsquareeb_"
+            android:hint="이모티콘금액"
+            android:textColor="@color/colorDark1"
+            android:textSize="10dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/personalInfo2"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/warningMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="18dp"
+            android:layout_marginStart="37dp"
+            android:fontFamily="@font/nanumsquareeb_"
+            android:text="환전 신청은 현재적립금액 한도에서만 가능합니다."
+            android:textColor="@color/colorDark1"
+            android:textSize="10dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/withdrawButton"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/withdrawSend"
+            android:layout_width="120dp"
+            android:layout_height="24dp"
+            android:layout_marginBottom="208dp"
+            android:layout_marginStart="37dp"
+            android:background="@drawable/selected_rounded_withdrawbutton"
+            android:gravity="center"
+            android:fontFamily="@font/nanumsquareeb_"
+            android:text="환전신청 보내기"
+            android:textColor="@color/colorWhite"
+
+            android:textSize="12dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/withdrawButton"
+            app:layout_constraintStart_toEndOf="@id/withdrawText" />
+
+
     </android.support.constraint.ConstraintLayout>
 
 

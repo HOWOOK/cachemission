@@ -18,8 +18,10 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -41,11 +43,12 @@ public class LoginActivity extends AppCompatActivity {
     Guideline viewGuideline;
     EditText idText;
     EditText pwText;
-    Button loginButton;
-    Button upButton;
-    Button findid,findpw;
+    TextView loginButton;
+    TextView upButton;
+    TextView findid,findpw;
     Guideline guideline;
     ImageView backbutton;
+    CheckBox IDRemember,PWRemember;
     final int P_RECORD_AUDIO=77;
 
     @Override
@@ -58,15 +61,19 @@ public class LoginActivity extends AppCompatActivity {
 
         }
         setContentView(R.layout.activity_login);
+
         Tracker t = ((GlobalApplication)getApplication()).getTracker(GlobalApplication.TrackerName.APP_TRACKER);
         t.setScreenName("LoginActivity");
         t.send(new HitBuilders.AppViewBuilder().build());
+
+        IDRemember=findViewById(R.id.IDRemember);
+        PWRemember=findViewById(R.id.PWRemember);
 
         viewGuideline = this.findViewById(R.id.guideline);
         DisplayMetrics displayMetrics = new DisplayMetrics();
         this.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int getDeviceHeight_Pixel = displayMetrics.heightPixels;
-        viewGuideline.setGuidelineBegin(getDeviceHeight_Pixel / 2);
+       // viewGuideline.setGuidelineBegin(getDeviceHeight_Pixel / 2);
 
         //앱을 처음깔았다면 앱 설명띄워주는 것
         SharedPreferences explain = getSharedPreferences("explain", MODE_PRIVATE);
@@ -82,6 +89,20 @@ public class LoginActivity extends AppCompatActivity {
 
         idText = findViewById(R.id.edit_id);
         pwText = findViewById(R.id.edit_pw);
+        SharedPreferences IDPWRemember = getSharedPreferences("IDPWRemember", MODE_PRIVATE);
+        String rememberedID="";
+        String rememberedPW="";
+        rememberedID=IDPWRemember.getString("loginID","");
+        rememberedPW=IDPWRemember.getString("loginPW","");
+        if(!rememberedID.equals(""))
+            idText.setText(rememberedID);
+        if(!rememberedPW.equals(""))
+            pwText.setText(rememberedPW);
+
+        if(IDPWRemember.getString("loginIDRemember","").equals("true"))
+            IDRemember.setChecked(true);
+        if(IDPWRemember.getString("loginPWRemember","").equals("true"))
+            PWRemember.setChecked(true);
         guideline=findViewById(R.id.guideline);
        // InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
@@ -103,7 +124,30 @@ public class LoginActivity extends AppCompatActivity {
                 //logintoken이라는 key값으로 token을 저장한다.
                 editor.putString("loginID", idText.getText().toString());
                 editor.apply();
+                SharedPreferences IDPWRemember = getSharedPreferences("IDPWRemember", MODE_PRIVATE);
+                SharedPreferences.Editor IDPWeditor = IDPWRemember.edit();
+                if(IDRemember.isChecked()){
+                IDPWeditor.putString("loginID", idText.getText().toString());
+                IDPWeditor.putString("loginIDRemember", "true");
+                IDPWeditor.putString("loginPWRemember", "");
 
+                }
+                else {
+                    IDPWeditor.putString("loginID", "");
+                    IDPWeditor.putString("loginIDRemember", "");
+                    IDPWeditor.putString("loginPWRemember", "");
+                }
+                if(PWRemember.isChecked()) {
+                    IDPWeditor.putString("loginID", idText.getText().toString());
+                    IDPWeditor.putString("loginPW", pwText.getText().toString());
+                    IDPWeditor.putString("loginIDRemember", "true");
+                    IDPWeditor.putString("loginPWRemember", "true");
+
+                }
+                else {
+                    IDPWeditor.putString("loginPW", "");
+                }
+                IDPWeditor.apply();
                 int id = view.getId();
                 Tracker t = ((GlobalApplication)getApplication()).getTracker(GlobalApplication.TrackerName.APP_TRACKER);
 
