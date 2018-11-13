@@ -92,7 +92,6 @@
             android:gravity="center_vertical"
             android:layout_marginEnd="5dp"
             android:fontFamily="@font/nanumsquareb_"
-            android:text=""
             android:textColor="@color/colorDark1"
             android:textSize="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -106,10 +105,23 @@
             android:gravity="center_vertical"
             android:layout_marginStart="5dp"
             android:fontFamily="@font/nanumsquareb_"
-            android:text=""
             android:textSize="18dp"
             android:textColor="@color/colorDark2"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/answerID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:fontFamily="@font/nanumsquareb_"
+            android:textColor="@color/colorPrimary"
+            android:textSize="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             />

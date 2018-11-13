@@ -55,6 +55,7 @@ public class TaskActivity extends PatherActivity {
     static String region_dialect;
     String questString="";
     int currentIndex=0;
+    private TextView answerIDtv;
 
     public TaskView getmTaskView() {
         return this.mTaskView;
@@ -75,9 +76,10 @@ public class TaskActivity extends PatherActivity {
         t.send(new HitBuilders.AppViewBuilder().build());
         setContentView(R.layout.activity_task);
         //캡쳐방지
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
+//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
 
         final TextView optionText = findViewById(R.id.optionText);
+        answerIDtv = findViewById(R.id.answerID);
         nowGold = findViewById(R.id.goldnow);
         pendingGold = findViewById(R.id.goldpre);
         backButton = findViewById(R.id.back);
@@ -357,6 +359,9 @@ public class TaskActivity extends PatherActivity {
                             Date after28time = addMinutesToDate(28,new Date());
                             ((JSONObject)waitingTasks.get(0)).put("time",DateToString(after28time));
                             currentTask = waitingTasks.get(waitingTasks.size()-1);
+                            String answerID = currentTask.getString("id");
+                            if(answerID != null)
+                                answerIDtv.setText("Answer ID : " + answerID);
                             System.out.println("컨텐츠 : "+ currentTask.get("content"));
                             System.out.println("------------");
                             mTaskView.setContent((String) currentTask.get("content"));
@@ -403,6 +408,9 @@ public class TaskActivity extends PatherActivity {
                     if(mTaskView.isEmpty())
                         mTaskView.setPreviewContents(waitingTasks);
                     currentTask = (JSONObject)waitingTasks.get(waitingTasks.size()-1);
+                    String answerID = currentTask.getString("id");
+                    if(answerID != null)
+                        answerIDtv.setText("Answer ID : " + answerID);
                     answerID = currentTask.get("id").toString();
                     mTaskView.setContent((String) currentTask.get("content"));
                     mController.resetContent(controllerView,taskID);

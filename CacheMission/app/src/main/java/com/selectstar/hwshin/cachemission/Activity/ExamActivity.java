@@ -41,6 +41,7 @@ public class ExamActivity extends PatherActivity {
     String buttons;
     String examFlag="";
     ImageView backButton;
+    TextView answerIDtv, taskUserIDtv;
     Context mContext=this;
 
     protected void showDescription(Context context)
@@ -83,6 +84,15 @@ public class ExamActivity extends PatherActivity {
                             Date after28time = addMinutesToDate(28,new Date());
                             ((JSONObject)waitingTasks.get(0)).put("time",DateToString(after28time));
                             currentTask = waitingTasks.get(waitingTasks.size()-1);
+                            System.out.println("뭔지 어디한번 뱉어바ㅘ라 " + currentTask);
+
+                            String taskUserID = currentTask.getString("user");
+                            String answerID = currentTask.getString("id");
+                            if(taskUserID != null)
+                                taskUserIDtv.setText("작업자 ID : " + taskUserID);
+                            if(answerID != null)
+                                answerIDtv.setText("Answer ID : " + answerID);
+
                             if(taskType.equals("BOXCROPEXAM") || taskType.equals("TWOPOINTEXAM"))
                                 mTaskView.setContent(currentTask.get("content")+"*<"+currentTask.get("answer"));
                             else if (taskType.equals("SUGGESTEXAM"))
@@ -115,7 +125,6 @@ public class ExamActivity extends PatherActivity {
                         e.printStackTrace();
                     }
 
-
                 }
             }.execute(getString(R.string.mainurl) + "/testing/examGet", param, getLoginToken());
         } catch(JSONException e)
@@ -145,6 +154,14 @@ public class ExamActivity extends PatherActivity {
                     if(mTaskView.isEmpty())
                         mTaskView.setPreviewContents(waitingTasks);
                     currentTask = (JSONObject)waitingTasks.get(waitingTasks.size()-1);
+
+                    String taskUserID = currentTask.getString("user");
+                    String answerID = currentTask.getString("id");
+                    if(taskUserID != null)
+                        taskUserIDtv.setText("작업자 ID : " + taskUserID);
+                    if(answerID != null)
+                        answerIDtv.setText("Answer ID : " + answerID);
+
                     answerID = currentTask.get("id").toString();
                     if(taskType.equals("BOXCROPEXAM")||taskType.equals("TWOPOINTEXAM"))
                         mTaskView.setContent(currentTask.get("content")+"*<"+currentTask.get("answer"));
@@ -176,10 +193,12 @@ public class ExamActivity extends PatherActivity {
         t.send(new HitBuilders.AppViewBuilder().build());
         setContentView(R.layout.activity_exam);
         //캡쳐방지
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
+//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
         intent = getIntent();
 
         final TextView optionText = findViewById(R.id.optionText);
+        answerIDtv = findViewById(R.id.answerID);
+        taskUserIDtv = findViewById(R.id.taskUserID);
 
         nowGold = findViewById(R.id.goldnow);
         pendingGold = findViewById(R.id.goldpre);
