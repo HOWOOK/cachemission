@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +20,10 @@ import android.widget.Toast;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
-import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_2DBox;
 import com.selectstar.hwshin.cachemission.DataStructure.ExamView.ExamView;
 import com.selectstar.hwshin.cachemission.DataStructure.HurryHttpRequest;
-import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoView;
+import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoWithBox;
+import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoWithLine;
 import com.selectstar.hwshin.cachemission.DataStructure.UIHashMap;
 import com.selectstar.hwshin.cachemission.DataStructure.WaitHttpRequest;
 import com.selectstar.hwshin.cachemission.R;
@@ -56,7 +57,7 @@ public class ExamActivity extends PatherActivity {
         try {
             param.put("taskID", taskID);
             param.put("examType",examType);
-            if(taskType.equals("BOXCROPEXAM")){//BOXCROP에서는 파트를 넣어서 요청해야함
+            if(taskType.equals("BOXCROPEXAM") || taskType.equals("TWOPOINTEXAM")){//BOXCROP에서는 파트를 넣어서 요청해야함
                 partNum = partType();
                 param.put("option",partNum);
             }
@@ -82,7 +83,7 @@ public class ExamActivity extends PatherActivity {
                             Date after28time = addMinutesToDate(28,new Date());
                             ((JSONObject)waitingTasks.get(0)).put("time",DateToString(after28time));
                             currentTask = waitingTasks.get(waitingTasks.size()-1);
-                            if(taskType.equals("BOXCROPEXAM"))
+                            if(taskType.equals("BOXCROPEXAM") || taskType.equals("TWOPOINTEXAM"))
                                 mTaskView.setContent(currentTask.get("content")+"*<"+currentTask.get("answer"));
                             else if (taskType.equals("SUGGESTEXAM"))
                                 mTaskView.setContent(currentTask.get("content")+"("+currentTask.get("answer"));
@@ -134,7 +135,7 @@ public class ExamActivity extends PatherActivity {
                         mTaskView.setPreviewContents(waitingTasks);
                     currentTask = (JSONObject)waitingTasks.get(waitingTasks.size()-1);
                     answerID = currentTask.get("id").toString();
-                    if(taskType.equals("BOXCROPEXAM"))
+                    if(taskType.equals("BOXCROPEXAM")||taskType.equals("TWOPOINTEXAM"))
                         mTaskView.setContent(currentTask.get("content")+"*<"+currentTask.get("answer"));
                     else
                         mTaskView.setContent((String) currentTask.get("content"));
@@ -329,6 +330,7 @@ public class ExamActivity extends PatherActivity {
                     param.put("examType", intent.getIntExtra("examType",0));
                     param.put("submit", answer);
                     param.put("option",partType());
+                    Log.d("옵션", ((Integer)partType()).toString());
                     new WaitHttpRequest(ExamActivity.this) {
                         @Override
                         protected void onPostExecute(Object o) {
@@ -339,7 +341,11 @@ public class ExamActivity extends PatherActivity {
 
                                 if ((boolean) resultTemp.get("success")) {
                                     if(taskType.equals("BOXCROPEXAM")){
-                                        ((TaskView_PhotoView)mTaskView).removeAnswer();
+                                        ((TaskView_PhotoWithBox)mTaskView).removeAnswer();
+                                    }
+                                    if(taskType.equals("TWOPOINTEXAM")){
+                                        ((TaskView_PhotoWithLine)mTaskView).removeAnswer();
+                                        Log.d("examActivity리무브", "불림");
                                     }
                                     updateWaitingTasks();
                                     startTask();
@@ -358,8 +364,6 @@ public class ExamActivity extends PatherActivity {
 
                         }
                     }.execute(getString(R.string.mainurl)+"/testing/examSubmit", param, getLoginToken());
-
-
 
                 }
                 catch (JSONException e) {
@@ -403,9 +407,9 @@ public class ExamActivity extends PatherActivity {
 
     @Override
     public void onBackPressed() {
-        //박스 테스크의 경우 확대 잘못하면 취소 눌렀을 때 다시 확대 할수있도록 해야함
+        //박스 검수 테스크는 뒤로가기 누르면 파트 선택가능해야함
         if(taskType.equals("BOXCROPEXAM")){
-            TaskView_PhotoView taskView = (TaskView_PhotoView) mTaskView;
+            TaskView_PhotoWithBox taskView = (TaskView_PhotoWithBox) mTaskView;
             TextView partText = findViewById(R.id.optionText);
             if(taskView.isExamFlag) {
                 partText.setText("");

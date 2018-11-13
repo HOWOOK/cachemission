@@ -11,12 +11,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.selectstar.hwshin.cachemission.Activity.LoginActivity;
 import com.selectstar.hwshin.cachemission.Activity.TaskActivity;
-import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoView;
+import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoWithBox;
 import com.selectstar.hwshin.cachemission.DataStructure.WaitHttpRequest;
 import com.selectstar.hwshin.cachemission.Photoview.PhotoView;
 import com.selectstar.hwshin.cachemission.R;
@@ -28,19 +27,13 @@ public class Controller_2DBox extends Controller {
 
     private Button sendButton, completeButton;
     private ImageView pinButton;
-    private TextView testingText1, testingText2, testingText3;
     private View centerImage;
     private PhotoView photoView;
     private float originWidth, originHeight, originLeftMargin, originTopMargin;
-    private TaskView_PhotoView mtaskView_PhotoView;
-    private float[][] answerCoordinationTemp;
-    private int[] answerTypeTemp;
-    private int answerCount = 0;
-    private int drawAnswerCount = 0;
+    private TaskView_PhotoWithBox mTaskViewPhotoWithBox;
     public boolean pinFlag;
     private int getDeviceDpi;
     private float dpScale;
-    private ConstraintLayout photoViewCL;
 
     public Controller_2DBox() {
         controllerID = R.layout.controller_2dbox;
@@ -53,13 +46,13 @@ public class Controller_2DBox extends Controller {
     @Override
     public void resetContent(final View view, final String taskID) {
         centerImage = view.findViewById(R.id.centerimage);
-        mtaskView_PhotoView = (TaskView_PhotoView) parentActivity.getmTaskView();
+        mTaskViewPhotoWithBox = (TaskView_PhotoWithBox) parentActivity.getmTaskView();
         pinFlag = true;
+
         DisplayMetrics displayMetrics = new DisplayMetrics();
         parentActivity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         getDeviceDpi = displayMetrics.densityDpi;
         dpScale = (float) getDeviceDpi / 160f;
-        photoViewCL = parentActivity.findViewById(R.id.photoViewCL);
 
         //처음에는 box가 없어야 합니다.
         final ConstraintLayout boxCL = view.findViewById(R.id.boxCL);
@@ -88,7 +81,7 @@ public class Controller_2DBox extends Controller {
                 sendButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (((TaskView_PhotoView) parentActivity.getmTaskView()).expandFlag) {
+                        if (((TaskView_PhotoWithBox) parentActivity.getmTaskView()).expandFlag) {
                             Toast.makeText(parentActivity, "먼저 물체를 찾아주세요", Toast.LENGTH_SHORT).show();
                         } else {
                             JSONObject param = new JSONObject();
@@ -96,16 +89,13 @@ public class Controller_2DBox extends Controller {
                                 param.put("answerID", ((TaskActivity) parentActivity).getAnswerID());
                                 param.put("taskID", taskID);
 
-                                TaskView_PhotoView temp = (TaskView_PhotoView) parentActivity.getmTaskView();
+                                TaskView_PhotoWithBox temp = (TaskView_PhotoWithBox) parentActivity.getmTaskView();
                                 photoView = temp.getPhotoView();
 
                                 System.out.println("디스플레이 네모 : " + photoView.getDisplayRect());
                                 System.out.println("배율 : " + photoView.getScale());
                                 float widthCL = boxCL.getWidth();
                                 float heightCL = boxCL.getHeight();
-                                testingText1 = view.findViewById(R.id.testingtext1);
-                                testingText2 = view.findViewById(R.id.testingtext2);
-                                testingText3 = view.findViewById(R.id.testingtext3);
                                 /********************************
                                  * (x1, y1) = crop box의 현재 좌상단 좌표
                                  * (x2, y2) = crop box의 현재 우하단 좌표
@@ -139,11 +129,11 @@ public class Controller_2DBox extends Controller {
                                 bottomPercent = (y5 - originTopMargin) / originHeight;
                                 if (leftPercent < 0f)
                                     leftPercent = 0f;
-                                if (rightPercent > 1f)
+                                if (rightPercent > 0.97f) //박스가 끝에 있을경우 1로 생각하도록
                                     rightPercent = 1f;
                                 if (topPercent < 0f)
                                     topPercent = 0f;
-                                if (bottomPercent > 1f)
+                                if (bottomPercent > 0.97f) //박스가 끝에 있을경우 1로 생각하도록
                                     bottomPercent = 1f;
                                 leftPercentSend = leftPercent;
                                 topPercentSend = topPercent;
@@ -153,7 +143,7 @@ public class Controller_2DBox extends Controller {
                                 submit = "<" + ans + ">" + leftPercent + "," + topPercent + "," + rightPercent + "," + bottomPercent;
                                 param.put("submit", submit);
 
-                                if(mtaskView_PhotoView.similarityTest(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend)) {
+                                if(mTaskViewPhotoWithBox.similarityTest(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend)) {
                                     new WaitHttpRequest(parentActivity) {
                                         @Override
                                         protected void onPostExecute(Object o) {
@@ -180,10 +170,10 @@ public class Controller_2DBox extends Controller {
                                                 } else {
                                                     System.out.println("서버반응 2: " + resultTemp.get("success").toString());
 
-                                                    mtaskView_PhotoView.addAnswer(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend);
+                                                    mTaskViewPhotoWithBox.addAnswer(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend);
                                                     completeButton.setText("모든 부품 제출 완료 +5원");
 
-                                                    mtaskView_PhotoView.drawAnswer(mtaskView_PhotoView.answerCoordination);
+                                                    mTaskViewPhotoWithBox.drawAnswer(mTaskViewPhotoWithBox.answerCoordination);
 
                                                     ConstraintLayout textDragCL = parentActivity.findViewById(R.id.textDragCL);
                                                     Toast.makeText(parentActivity, "제출 완료! 계속 찾아주세요.", Toast.LENGTH_SHORT).show();
@@ -192,7 +182,7 @@ public class Controller_2DBox extends Controller {
                                                     textDragCL.bringToFront();
                                                     pinFlag = true;
                                                     photoView.setScale(1);
-                                                    ((TaskView_PhotoView) parentActivity.getmTaskView()).expandFlag = true;
+                                                    ((TaskView_PhotoWithBox) parentActivity.getmTaskView()).expandFlag = true;
                                                     parentActivity.goldSetting(String.valueOf(resultTemp.get("gold")));
                                                     parentActivity.maybeSetting(String.valueOf(resultTemp.get("maybe")));
                                                     ConstraintSet constraintSet = new ConstraintSet();
@@ -260,7 +250,7 @@ public class Controller_2DBox extends Controller {
                                                     parentActivity.finish();
                                                 }
                                             } else {
-                                                mtaskView_PhotoView.removeAnswer();
+                                                mTaskViewPhotoWithBox.removeAnswer();
                                                 parentActivity.updateWaitingTasks();
                                                 ((TaskActivity) parentActivity).startTask();
                                                 parentActivity.goldSetting(String.valueOf(resultTemp.get("gold")));

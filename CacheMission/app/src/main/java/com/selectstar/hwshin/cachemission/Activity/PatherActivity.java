@@ -181,12 +181,14 @@ public abstract class PatherActivity extends AppCompatActivity {
         if(partType.getText().toString().equals("부품 G"))
             answer = 1;
         System.out.println(answer);
+        if(taskType.equals("TWOPOINTEXAM"))
+            answer = 11;
         return answer;
     }
 
     protected void partDialogShow(TextView optionText) {
         final TextView partTextTemp = optionText;
-        com.selectstar.hwshin.cachemission.Dialog.PartSelectDialog dialog = new com.selectstar.hwshin.cachemission.Dialog.PartSelectDialog(this, R.style.AppTheme_Transparent_Dialog);
+        com.selectstar.hwshin.cachemission.Dialog.PartSelectDialog dialog = new com.selectstar.hwshin.cachemission.Dialog.PartSelectDialog(this, R.style.AppTheme_Transparent_Dialog, taskID);
         dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {

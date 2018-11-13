@@ -69,6 +69,8 @@ public class ListviewAdapter extends RecyclerView.Adapter<ListviewAdapter.ItemVi
         this.iconIDMap.put("DIALECTEXAM",R.drawable.tasktype_dialect); //main_icon_ve이 아직 없음
         this.iconIDMap.put("BOXCROP",R.drawable.main_icon_il);
         this.iconIDMap.put("BOXCROPEXAM",R.drawable.main_icon_ie);
+        this.iconIDMap.put("TWOPOINT",R.drawable.main_icon_il);
+        this.iconIDMap.put("TWOPOINTEXAM",R.drawable.main_icon_ie);
         this.mContext = mContext;
     }
     public ListviewAdapter(Context context, int layout, ArrayList<JSONObject> taskList,Context mContext,JSONObject user){
@@ -100,6 +102,8 @@ public class ListviewAdapter extends RecyclerView.Adapter<ListviewAdapter.ItemVi
         this.iconIDMap.put("DIALECTEXAM",R.drawable.tasktype_dialect); //main_icon_ve이 아직 없음
         this.iconIDMap.put("BOXCROP",R.drawable.main_icon_il);
         this.iconIDMap.put("BOXCROPEXAM",R.drawable.main_icon_ie);
+        this.iconIDMap.put("TWOPOINT",R.drawable.main_icon_il);
+        this.iconIDMap.put("TWOPOINTEXAM",R.drawable.main_icon_ie);
         this.mContext = mContext;
     }
 

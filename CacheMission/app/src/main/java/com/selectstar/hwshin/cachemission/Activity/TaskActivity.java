@@ -21,14 +21,14 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_2DBox;
+import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_TwoPoint;
 import com.selectstar.hwshin.cachemission.DataStructure.HurryHttpRequest;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_Photo;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView;
-import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoView;
+import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoWithBox;
+import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoWithLine;
 import com.selectstar.hwshin.cachemission.DataStructure.UIHashMap;
-import com.selectstar.hwshin.cachemission.Dialog.RegionSelectDialog;
-import com.selectstar.hwshin.cachemission.Dialog.RegionSelectDialogListener;
 import com.selectstar.hwshin.cachemission.R;
 
 import org.json.JSONArray;
@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import static java.lang.Integer.parseInt;
+import static java.lang.Integer.sum;
 
 
 public class TaskActivity extends PatherActivity {
@@ -202,11 +203,8 @@ public class TaskActivity extends PatherActivity {
                 Intent intent_taskExplain;
                 Log.d("boxbox",taskType);
 
-
-
                 if(taskType.equals("BOXCROP")||taskType.equals("PHOTO")){
                     intent_taskExplain = new Intent(TaskActivity.this, NewExplainActivity.class);
-
                     intent_taskExplain.putExtra("part", optionText.getText());
                     intent_taskExplain.putExtra("partNum", partType());
                     intent_taskExplain.putExtra("taskID", taskID);
@@ -266,7 +264,7 @@ public class TaskActivity extends PatherActivity {
     public void onBackPressed() {
         //박스 테스크의 경우 확대 잘못하면 취소 눌렀을 때 다시 확대 할수있도록 해야함
         if(taskType.equals("BOXCROP")){
-            TaskView_PhotoView taskView = (TaskView_PhotoView) mTaskView;
+            TaskView_PhotoWithBox taskView = (TaskView_PhotoWithBox) mTaskView;
             Controller_2DBox controller = (Controller_2DBox) mController;
             TextView partText = findViewById(R.id.optionText);
             if(!taskView.expandFlag && taskView.getPhotoView()!=null){
@@ -281,6 +279,36 @@ public class TaskActivity extends PatherActivity {
                 partText.setText("");
                 partDialogShow(partText);
                 taskView.removeAnswer();
+            }else{
+                super.onBackPressed();
+            }
+        }else if(taskType.equals("TWOPOINT")){
+            TaskView_PhotoWithLine taskView = (TaskView_PhotoWithLine) mTaskView;
+            Controller_TwoPoint controller = (Controller_TwoPoint) mController;
+            if(!controller.firstPointFlag && controller.secondPointFlag){//한점만 쳐진경우
+                controller.firstPointFlag = true;
+                controller.secondPointFlag = false;
+                ((TextView) findViewById(R.id.textDrag)).setText("라인의 시작점을 지정해 주세요.");
+                if(controller.firstPoint.getVisibility() == View.VISIBLE)
+                    controller.firstPoint.setVisibility(View.INVISIBLE);
+                if(controller.firstPointTouch.getVisibility() == View.VISIBLE)
+                    controller.firstPointTouch.setVisibility(View.INVISIBLE);
+                ((Controller_TwoPoint.LineView) controller.pointLine).pointReset();
+
+            }else if(!controller.firstPointFlag && !controller.secondPointFlag){//두점이 다 쳐진경우
+                controller.firstPointFlag = false;
+                controller.secondPointFlag = true;
+                if(controller.secondPoint.getVisibility() == View.VISIBLE)
+                    controller.secondPoint.setVisibility(View.INVISIBLE);
+                if(controller.secondPointTouch.getVisibility() == View.VISIBLE)
+                    controller.secondPointTouch.setVisibility(View.INVISIBLE);
+                if(((ConstraintLayout) findViewById(R.id.textDragCL)).getVisibility() == View.INVISIBLE)
+                    ((ConstraintLayout) findViewById(R.id.textDragCL)).setVisibility(View.VISIBLE);
+                ((TextView) findViewById(R.id.textDrag)).setText("라인의 끝점을 지정해 주세요.");
+                ((Controller_TwoPoint.LineView) controller.pointLine).samePointSetting(
+                        ((Controller_TwoPoint.LineView) controller.pointLine).getLines()[0],
+                        ((Controller_TwoPoint.LineView) controller.pointLine).getLines()[1]);
+
             }else{
                 super.onBackPressed();
             }
@@ -302,6 +330,9 @@ public class TaskActivity extends PatherActivity {
             if(taskType.equals("BOXCROP")){//BOXCROP에서는 파트를 넣어서 요청해야함
                 partNum = partType();
                 param.put("option",partNum);
+            }
+            if(taskType.equals("TWOPOINT")){//TWOPOINT에서는 파트(11=전선)를 넣어서 요청해야함
+                param.put("option",11);
             }
             if(taskType.equals("RECORD")){//RECORD일때는 지역을 같이 넣어서 요청해야함
                 String region;
@@ -334,7 +365,7 @@ public class TaskActivity extends PatherActivity {
 
                         } else {
                             if (getIntent().getIntExtra("from", 0) == 0) {
-                                Toast.makeText(TaskActivity.this, "회원님이 선택하신 지역에 해당하는 과제가 더이상 없습니다. 테스크 리스트로 돌아갑니다.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(TaskActivity.this, "회원님이 선택하신 옵션에 해당하는 과제가 더이상 없습니다. 테스크 리스트로 돌아갑니다.", Toast.LENGTH_SHORT).show();
 
                             } else {
                                 Toast.makeText(TaskActivity.this, "테스크를 모두 완료했습니다. 테스크 리스트로 돌아갑니다.", Toast.LENGTH_SHORT).show();

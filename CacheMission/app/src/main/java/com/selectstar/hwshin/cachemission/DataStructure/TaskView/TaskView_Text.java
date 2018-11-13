@@ -77,7 +77,7 @@ public class TaskView_Text extends TaskView {
                 textView1.setTextColor(ContextCompat.getColor(parentActivity, R.color.colorDark3));
                 textView2.setText(array[1]);
                 textView2.setTextSize(15);
-                textView2.setTextColor(ContextCompat.getColor(parentActivity, R.color.colorDark1));
+                textView2.setTextColor(ContextCompat.getColor(parentActivity, R.color.colorDark2));
 
 
             }
