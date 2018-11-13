@@ -402,11 +402,11 @@ public class Controller_TwoPoint extends Controller {
                         bottomPercent = (y5 - originTopMargin) / originHeight;
                         if (leftPercent < 0f)
                             leftPercent = 0f;
-                        if (rightPercent > 0.97f)
+                        if (rightPercent > 1f)
                             rightPercent = 1f;
                         if (topPercent < 0f)
                             topPercent = 0f;
-                        if (bottomPercent > 0.97f)
+                        if (bottomPercent > 1f)
                             bottomPercent = 1f;
                         leftPercentSend = leftPercent;
                         topPercentSend = topPercent;

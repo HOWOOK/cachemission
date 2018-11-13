@@ -129,11 +129,11 @@ public class Controller_2DBox extends Controller {
                                 bottomPercent = (y5 - originTopMargin) / originHeight;
                                 if (leftPercent < 0f)
                                     leftPercent = 0f;
-                                if (rightPercent > 0.97f) //박스가 끝에 있을경우 1로 생각하도록
+                                if (rightPercent > 0.99f) //박스가 끝에 있을경우 1로 생각하도록
                                     rightPercent = 1f;
                                 if (topPercent < 0f)
                                     topPercent = 0f;
-                                if (bottomPercent > 0.97f) //박스가 끝에 있을경우 1로 생각하도록
+                                if (bottomPercent > 0.99f) //박스가 끝에 있을경우 1로 생각하도록
                                     bottomPercent = 1f;
                                 leftPercentSend = leftPercent;
                                 topPercentSend = topPercent;
