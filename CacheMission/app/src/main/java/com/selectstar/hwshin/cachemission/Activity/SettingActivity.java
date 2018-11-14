@@ -150,12 +150,12 @@ Context mContext=this;
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    FirebaseMessaging.getInstance().subscribeToTopic("TestPush");
+                    FirebaseMessaging.getInstance().subscribeToTopic("RetentionPush");
                     editor.putString("push","true");
                     editor.commit();
                     Toast.makeText(SettingActivity.this, "푸시알람을 허용합니다.", Toast.LENGTH_SHORT).show();
                 }else {
-                    FirebaseMessaging.getInstance().unsubscribeFromTopic("TestPush");
+                    FirebaseMessaging.getInstance().unsubscribeFromTopic("RetentionPush");
                     editor.putString("push","false");
                     editor.commit();
                     Toast.makeText(SettingActivity.this, "푸시알람을 허용을 해제합니다.", Toast.LENGTH_SHORT).show();

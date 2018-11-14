@@ -366,7 +366,7 @@ public class TaskActivity extends PatherActivity {
                             System.out.println("------------");
                             mTaskView.setContent((String) currentTask.get("content"));
                             answerID = ((Integer)currentTask.get("id")).toString();
-                            mController.resetContent(controllerView,taskID);
+                            mController.resetContent(controllerView, taskID);
 
                         } else {
                             if (getIntent().getIntExtra("from", 0) == 0) {

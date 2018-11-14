@@ -521,11 +521,17 @@ runningHTTPRequest++;
     private void subscribePush()
     {
         final SharedPreferences push = getSharedPreferences("push", MODE_PRIVATE);
-        String OnOff = push.getString("push", "true");
+        String OnOff = push.getString("push", "true"); //default가 true라서 앱처음켰을때는 자동 true;
         if(OnOff.equals("true"))
             FirebaseMessaging.getInstance().subscribeToTopic("RetentionPush");
-        FirebaseMessaging.getInstance().subscribeToTopic("testPush");
+
+
+
+        // 테스트할때만 쓰이는 Topic임으로 unsubscribe가 default
+        //FirebaseMessaging.getInstance().subscribeToTopic("testPush");
+        FirebaseMessaging.getInstance().unsubscribeFromTopic("testPush");
     }
+
     private void setVersion()
     {
         try{
@@ -733,6 +739,7 @@ runningHTTPRequest++;
                     if (result == "")
                         return;
                     JSONObject resultTemp = new JSONObject(result);
+                    Log.d("getTaskList",resultTemp.toString());
 
                     try {
 
@@ -746,7 +753,20 @@ runningHTTPRequest++;
                         e.printStackTrace();
                     }
                     //getForcedUpdateDialog("필수적인 업데이트사항이 있습니다.","먼저 버전 업데이트를 진행해 주세요.");
+
+                    //특정개인에게 푸시알람보내기
                     JSONObject user = (JSONObject)resultTemp.get("user");
+                    String userID = user.get("id").toString();
+                    SharedPreferences userPush = getSharedPreferences("userPush",MODE_PRIVATE);
+                    String saveUserID = userPush.getString("userID", null);
+                    //기존에 저장되어있던 아이디가 있다면 해당 아이디 구독 취소 (로그아웃시 발생가능한 문제)
+                    if(saveUserID != null)
+                        FirebaseMessaging.getInstance().unsubscribeFromTopic(saveUserID + "userPush");
+                    //새로운 아이디로 구독 및 쉐프퍼에 저장
+                    SharedPreferences.Editor editor2=userPush.edit();
+                    editor2.putString("userID", userID);
+                    editor2.apply();
+                    FirebaseMessaging.getInstance().subscribeToTopic(userID + "userPush");
 
                     SharedPreferences userInfo=getSharedPreferences("userInfo",MODE_PRIVATE);
                     SharedPreferences.Editor editor=userInfo.edit();
