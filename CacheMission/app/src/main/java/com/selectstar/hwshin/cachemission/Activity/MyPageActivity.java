@@ -187,6 +187,8 @@ public class MyPageActivity extends AppCompatActivity {
 
                 info2.setText("");
                 info2.setHint("계좌번호");
+                info1.setText("");
+                info1.setHint("현금");
                 info1.setVisibility(View.INVISIBLE);
             }
         });
@@ -246,7 +248,7 @@ public class MyPageActivity extends AppCompatActivity {
                 currentInfo1=info1.getText().toString();
                 currentInfo2=info2.getText().toString();
                 currentGold=gold.getText().toString();
-                if(currentInfo1.equals("")){
+                if(currentInfo1.equals("")&&!(requestType.equals("cash"))){
                     getDialog("상품정보 없음","먼저 상품정보를 입력해 주세요.");
                     return;
                 }
