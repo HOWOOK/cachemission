@@ -66,6 +66,7 @@ public class PartSelectDialog extends Dialog{
             }
         });
         RecyclerView partRecycler = findViewById(R.id.partRecycler);
+
         ArrayList<Integer> idList = new ArrayList<>();
         ArrayList<String> nameList = new ArrayList<>();
         mAdapter = new PartAdapter((PatherActivity)context, idList, nameList,this);
