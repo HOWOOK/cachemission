@@ -58,7 +58,7 @@ public abstract class PatherActivity extends AppCompatActivity {
     protected TextView nowGold;
     protected TextView pendingGold;
     protected int upGold;
-    protected int partNum;
+    protected int partNum=-1;
 
     public int getPartNum() {
         return partNum;
@@ -181,12 +181,14 @@ public abstract class PatherActivity extends AppCompatActivity {
         if(partType.getText().toString().equals("부품 G"))
             answer = 1;
         System.out.println(answer);
+        if(taskType.equals("TWOPOINTEXAM"))
+            answer = 11;
         return answer;
     }
 
     protected void partDialogShow(TextView optionText) {
         final TextView partTextTemp = optionText;
-        com.selectstar.hwshin.cachemission.Dialog.PartSelectDialog dialog = new com.selectstar.hwshin.cachemission.Dialog.PartSelectDialog(this, R.style.AppTheme_Transparent_Dialog);
+        com.selectstar.hwshin.cachemission.Dialog.PartSelectDialog dialog = new com.selectstar.hwshin.cachemission.Dialog.PartSelectDialog(this, R.style.AppTheme_Transparent_Dialog, taskID);
         dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
@@ -255,12 +257,31 @@ public abstract class PatherActivity extends AppCompatActivity {
     }
 
     public void deleteWaitingTasks(){
-        savePreference("waitingTasks", taskID, new JSONArray().toString());
+        System.out.println("FHFH"+partType());
+        String key = taskID;
+        if(taskType.contains("BOXCROP"))
+            key = key +"/"+ String.valueOf(partType());
+        else
+            key = key + "/-1";
+        if(taskType.contains("EXAM"))
+            key = key + "/" + String.valueOf(examType);
+        else
+            key = key + "/-1";
+        savePreference("waitingTasks", key, new JSONArray().toString());
     }
 
     public void updateWaitingTasks(){
         waitingTasks.remove(waitingTasks.size() - 1);
-        savePreference("waitingTasks",taskID,ARRAYtoJSON(waitingTasks).toString());
+        String key = taskID;
+        if(taskType.contains("BOXCROP"))
+            key = key +"/"+ String.valueOf(partType());
+        else
+            key = key + "/-1";
+        if(taskType.contains("EXAM"))
+            key = key + "/" + String.valueOf(examType);
+        else
+            key = key + "/-1";
+        savePreference("waitingTasks",key,ARRAYtoJSON(waitingTasks).toString());
     }
 
     protected JSONArray ARRAYtoJSON(ArrayList<JSONObject> list){

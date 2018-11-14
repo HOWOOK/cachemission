@@ -156,6 +156,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guideline_examining">
 
+        <TextView
+            android:id="@+id/taskUserID"
+            android:layout_width="150dp"
+            android:layout_height="20dp"
+            android:textColor="@color/colorDark2"
+            android:fontFamily="@font/nanumsquareb_"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/answerID"
+            />
+
+        <TextView
+            android:id="@+id/answerID"
+            android:layout_width="150dp"
+            android:layout_height="20dp"
+            android:textColor="@color/colorDark2"
+            android:fontFamily="@font/nanumsquareb_"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/taskUserID"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
         <Button
             android:id="@+id/rejectbutton"
             android:layout_width="70dp"
@@ -164,7 +188,7 @@
             android:background="@drawable/examining_false"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/confirmbutton"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/taskUserID"
             app:layout_constraintBottom_toBottomOf="parent"
             />
 
@@ -177,7 +201,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/rejectbutton"
             app:layout_constraintEnd_toStartOf="@+id/examsend"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/taskUserID"
             />
 
         <Button
@@ -186,7 +210,7 @@
             android:text="제출하기"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/confirmbutton"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/taskUserID"
             app:layout_constraintBottom_toBottomOf="parent"
             />
 

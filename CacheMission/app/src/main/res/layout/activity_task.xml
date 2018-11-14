@@ -92,7 +92,6 @@
             android:gravity="center_vertical"
             android:layout_marginEnd="5dp"
             android:fontFamily="@font/nanumsquareb_"
-            android:text=""
             android:textColor="@color/colorDark1"
             android:textSize="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -106,10 +105,23 @@
             android:gravity="center_vertical"
             android:layout_marginStart="5dp"
             android:fontFamily="@font/nanumsquareb_"
-            android:text=""
             android:textSize="18dp"
             android:textColor="@color/colorDark2"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/answerID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:fontFamily="@font/nanumsquareb_"
+            android:textColor="@color/colorPrimary"
+            android:textSize="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             />
@@ -138,29 +150,5 @@
 
 
     </android.support.constraint.ConstraintLayout>
-
-    <!--<ImageView-->
-        <!--android:id="@+id/imageAnimation"-->
-        <!--android:layout_width="320dp"-->
-        <!--android:layout_height="180dp"-->
-        <!--android:layout_centerInParent="true"-->
-        <!--android:layout_marginBottom="44dp"-->
-        <!--android:adjustViewBounds="true"-->
-        <!--android:elevation="10000dp"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintStart_toStartOf="parent" />-->
-
-    <!--<TextView-->
-        <!--android:id="@+id/textAnimation"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginBottom="40dp"-->
-        <!--android:layout_marginEnd="90dp"-->
-        <!--android:textSize="25dp"-->
-        <!--android:fontFamily="@font/nanumsquareb_"-->
-        <!--android:textColor="@color/colorAccent"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--app:layout_constraintEnd_toEndOf="parent" />-->
 
 </android.support.constraint.ConstraintLayout>

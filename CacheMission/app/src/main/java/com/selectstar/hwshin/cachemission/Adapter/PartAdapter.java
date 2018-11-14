@@ -24,6 +24,7 @@ public class PartAdapter extends RecyclerView.Adapter<PartAdapter.ItemViewHolder
     ArrayList<String> nameList;
     PartSelectDialog mDialog;
     PatherActivity mActivity;
+
     public PartAdapter(PatherActivity mActivity, ArrayList<Integer> idList, ArrayList<String> nameList, PartSelectDialog mDialog) {
         this.context = context;
         this.idList = idList;
@@ -35,7 +36,6 @@ public class PartAdapter extends RecyclerView.Adapter<PartAdapter.ItemViewHolder
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.dialog_item, parent, false);
-
         return new ItemViewHolder(view);
     }
 
@@ -50,6 +50,8 @@ public class PartAdapter extends RecyclerView.Adapter<PartAdapter.ItemViewHolder
                 TextView tv = mActivity.findViewById(R.id.optionText);
                 tv.setText(nameList.get(position));
                 mDialog.dismiss();
+
+                //이하, 설명서 보여주기 위한 코드
                 String taskName="a";
                 if(nameList.get(position).equals("변압기"))
                     taskName="transformer";

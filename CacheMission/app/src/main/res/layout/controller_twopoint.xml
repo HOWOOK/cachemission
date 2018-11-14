@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/controllerCL"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+   <android.support.constraint.ConstraintLayout
+        android:id="@+id/boxCL"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnCL"
+        >
+
+       <View
+           android:id="@+id/touchView"
+           android:layout_width="0dp"
+           android:layout_height="0dp"
+           android:background="#00000000"
+           app:layout_constraintBottom_toBottomOf="parent"
+           app:layout_constraintTop_toTopOf="parent"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toStartOf="parent"/>
+
+       <View
+           android:id="@+id/firstPoint"
+           android:layout_width="3dp"
+           android:layout_height="3dp"
+           android:layout_marginTop="70dp"
+           android:layout_marginStart="20dp"
+           android:background="@color/colorDark2"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toTopOf="parent"
+           />
+
+       <View
+           android:id="@+id/firstPointTouch"
+           android:layout_width="30dp"
+           android:layout_height="30dp"
+           android:background="@drawable/photowithline_firstpoint"
+           app:layout_constraintStart_toStartOf="@+id/firstPoint"
+           app:layout_constraintEnd_toEndOf="@+id/firstPoint"
+           app:layout_constraintTop_toTopOf="@+id/firstPoint"
+           app:layout_constraintBottom_toBottomOf="@+id/firstPoint"
+           />
+
+       <View
+           android:id="@+id/secondPoint"
+           android:layout_width="3dp"
+           android:layout_height="3dp"
+           android:layout_marginStart="70dp"
+           android:layout_marginTop="30dp"
+           android:background="@color/colorDark2"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toTopOf="parent"
+           />
+
+       <View
+           android:id="@+id/secondPointTouch"
+           android:layout_width="30dp"
+           android:layout_height="30dp"
+           android:background="@drawable/photowithline_secondpoint"
+           app:layout_constraintStart_toStartOf="@+id/secondPoint"
+           app:layout_constraintEnd_toEndOf="@+id/secondPoint"
+           app:layout_constraintTop_toTopOf="@+id/secondPoint"
+           app:layout_constraintBottom_toBottomOf="@+id/secondPoint"
+           />
+
+       <android.support.constraint.ConstraintLayout
+           android:id="@+id/textDragCL"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:background="#40000000"
+           android:layout_marginBottom="10dp"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintBottom_toBottomOf="parent"
+           >
+
+           <TextView
+               android:id="@+id/textDrag"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:padding="3dp"
+               android:textSize="15dp"
+               android:text="라인의 시작점을 지정해 주세요."
+               android:textColor="#E0FFFFFF"
+               android:fontFamily="@font/bmjua_"
+               app:layout_constraintTop_toTopOf="@+id/textDragCL"
+               app:layout_constraintBottom_toBottomOf="@+id/textDragCL"
+               app:layout_constraintStart_toStartOf="@+id/textDragCL"
+               app:layout_constraintEnd_toEndOf="@+id/textDragCL"
+               />
+
+       </android.support.constraint.ConstraintLayout>
+
+   </android.support.constraint.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/imageAnimation"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="43dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btnCL"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/textAnimation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="43dp"
+        android:textSize="25dp"
+        android:fontFamily="@font/nanumsquareb_"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="@+id/btnCL"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/thumbnailImage"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintTop_toTopOf="@+id/btnCL"
+        app:layout_constraintBottom_toBottomOf="@+id/btnCL"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/btnCL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/boxCL"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+
+        <Button
+            android:id="@+id/sendbtn"
+            android:layout_width="match_parent"
+            android:layout_height="43dp"
+            android:background="@color/colorDark1"
+            android:text="제출하기 +25원"
+            android:textSize="15dp"
+            android:textColor="#FFFFFF"
+            android:fontFamily="@font/bmjua_"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/completebtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <Button
+            android:id="@+id/completebtn"
+            android:layout_width="match_parent"
+            android:layout_height="43dp"
+            android:background="@color/colorPrimary"
+            android:text="모든 물체 제출 완료"
+            android:textSize="15dp"
+            android:textColor="#FFFFFF"
+            android:fontFamily="@font/bmjua_"
+            app:layout_constraintTop_toBottomOf="@+id/sendbtn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>

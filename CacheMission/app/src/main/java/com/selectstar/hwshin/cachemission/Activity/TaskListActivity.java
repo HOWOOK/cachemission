@@ -580,51 +580,6 @@ runningHTTPRequest++;
 
             }
         });
-        TextView exchangeBtn = findViewById(R.id.exchange);
-        exchangeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                runningHTTPRequest++;
-                SharedPreferences token = getSharedPreferences("token",MODE_PRIVATE);
-                final String loginToken = token.getString("loginToken","");
-                JSONObject param = new JSONObject();
-                WaitHttpRequest asyncTask=new WaitHttpRequest(mContext) {
-                    @Override
-                    protected void onPostExecute(Object o) {
-                        super.onPostExecute(o);
-
-                        try {
-                            if (result == "")
-                                return;
-                            JSONObject resultTemp = new JSONObject(result);
-                            String url=resultTemp.get("url").toString();
-                            Intent intent = new Intent(Intent.ACTION_VIEW);
-                            intent.setData(Uri.parse(url));
-                            startActivity(intent);
-
-
-
-                        }
-                        catch(JSONException e)
-                        {
-                            e.printStackTrace();
-                        }
-                        runningHTTPRequest--;
-
-                    }
-                };
-                //CountDownTimer adf= new AsyncTaskCancelTimerTask(asyncTask,Integer.parseInt(getString(R.string.hTTPTimeOut)),1000,true,this).start();
-                asyncTask.execute(getString(R.string.mainurl) + "/testing/exchange", param, loginToken);
-
-
-
-                Intent intent_exchange= new Intent(TaskListActivity.this, ExchangeActivity.class);
-                if (drawer.isDrawerOpen(Gravity.LEFT)) {
-                    drawer.closeDrawer(Gravity.LEFT) ;
-                }
-               // startActivity(intent_exchange);
-            }
-        });
 
         TextView suggestionBtn = findViewById(R.id.suggestion);
         suggestionBtn.setOnClickListener(new View.OnClickListener() {
