@@ -81,47 +81,6 @@ Context mContext=this;
             }
         });
 
-        TextView exchange = findViewById(R.id.exchangebtn);
-        exchange.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences token = getSharedPreferences("token",MODE_PRIVATE);
-                final String loginToken = token.getString("loginToken","");
-                JSONObject param = new JSONObject();
-                WaitHttpRequest asyncTask=new WaitHttpRequest(mContext) {
-                    @Override
-                    protected void onPostExecute(Object o) {
-                        super.onPostExecute(o);
-
-                        try {
-                            if (result == "")
-                                return;
-                            JSONObject resultTemp = new JSONObject(result);
-                            String url=resultTemp.get("url").toString();
-                            Intent intent = new Intent(Intent.ACTION_VIEW);
-                            intent.setData(Uri.parse(url));
-                            startActivity(intent);
-
-
-
-                        }
-                        catch(JSONException e)
-                        {
-                            e.printStackTrace();
-                        }
-
-
-                    }
-                };
-                //CountDownTimer adf= new AsyncTaskCancelTimerTask(asyncTask,Integer.parseInt(getString(R.string.hTTPTimeOut)),1000,true,this).start();
-                asyncTask.execute(getString(R.string.mainurl) + "/testing/exchange", param, loginToken);
-                //Toast.makeText(getApplicationContext(),"알파테스트에서 구현되지 않은 사항입니다! 챔피언의 충실한 보조 조하영 화이팅!",Toast.LENGTH_SHORT).show();
-
-//                Intent intent_exchange = new Intent(SettingActivity.this, ExchangeActivity.class);
-//                startActivity(intent_exchange);
-            }
-        });
-
         TextView suggestion = findViewById(R.id.suggestionbtn);
         suggestion.setOnClickListener(new View.OnClickListener() {
             @Override

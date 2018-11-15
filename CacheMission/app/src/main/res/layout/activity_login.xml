@@ -108,8 +108,6 @@
                         android:paddingLeft="3dp"
                         android:background="@drawable/rounded_edittext"
                         android:ems="10"
-
-
                         android:inputType="textPassword"
                         app:layout_constraintEnd_toEndOf="@id/guideline4"
                         app:layout_constraintStart_toStartOf="@id/guideline3"
@@ -117,18 +115,15 @@
 
                 <TextView
                     android:id="@+id/button_in"
-                    style="@style/normalbtn1"
-
                     android:layout_width="205dp"
                     android:layout_height="46dp"
-
                     android:layout_marginTop="65dp"
-                    android:height="46dp"
+                    android:gravity="center"
                     android:background="@drawable/rounded_loginbutton"
-                    android:elevation="10dp"
-                    android:fontFamily="@font/nanumsquareb_"
+                    android:elevation="4dp"
+                    android:fontFamily="@font/nanumsquareeb_"
                     android:text="로그인"
-
+                    android:textSize="15dp"
                     android:textColor="@color/colorPrimary"
                     app:layout_constraintEnd_toEndOf="@id/guideline4"
                     app:layout_constraintStart_toStartOf="@id/guideline3"
@@ -136,16 +131,16 @@
 
                 <TextView
                     android:id="@+id/button_up"
-                    style="@style/normalbtn1"
                     android:layout_width="205dp"
                     android:layout_height="46dp"
                     android:layout_marginTop="23dp"
-                    android:height="46dp"
-                    android:background="@drawable/rounded_loginbutton"
-                    android:elevation="10dp"
-                    android:fontFamily="@font/nanumsquareb_"
+                    android:gravity="center"
+                    android:background="@drawable/rounded_signupbutton"
+                    android:elevation="4dp"
+                    android:fontFamily="@font/nanumsquareeb_"
                     android:text="+회원가입"
-                    android:textColor="@color/colorPrimary"
+                    android:textSize="15dp"
+                    android:textColor="@color/colorWhite"
                     app:layout_constraintEnd_toEndOf="@id/guideline4"
                     app:layout_constraintStart_toStartOf="@id/guideline3"
                     app:layout_constraintTop_toBottomOf="@+id/button_in" />
