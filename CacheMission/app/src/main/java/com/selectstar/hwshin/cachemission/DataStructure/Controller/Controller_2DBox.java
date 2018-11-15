@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.selectstar.hwshin.cachemission.Activity.LoginActivity;
 import com.selectstar.hwshin.cachemission.Activity.TaskActivity;
+import com.selectstar.hwshin.cachemission.DataStructure.ServerMessageParser;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoWithBox;
 import com.selectstar.hwshin.cachemission.DataStructure.WaitHttpRequest;
 import com.selectstar.hwshin.cachemission.Photoview.PhotoView;
@@ -155,18 +156,8 @@ public class Controller_2DBox extends Controller {
                                                 System.out.println("resultTemp : " + resultTemp);
                                                 System.out.println("서버반응 : " + resultTemp.get("success").toString());
                                                 if (resultTemp.get("success").toString().equals("false")) {
-                                                    if (resultTemp.get("message").toString().equals("login")) {
-                                                        Intent in = new Intent(parentActivity, LoginActivity.class);
-                                                        parentActivity.startActivity(in);
-                                                        Toast.makeText(parentActivity, "로그인이 만료되었습니다. 다시 로그인해주세요", Toast.LENGTH_SHORT).show();
-                                                        parentActivity.finish();
-                                                    } else if (resultTemp.get("message").toString().equals("task")) {
-                                                        Toast.makeText(parentActivity, "테스크가 만료되었습니다. 다른 테스크를 선택해주세요", Toast.LENGTH_SHORT).show();
-                                                        parentActivity.finish();
-                                                    } else {
-                                                        Toast.makeText(parentActivity, "남은 테스크가 없습니다.", Toast.LENGTH_SHORT).show();
-                                                        parentActivity.finish();
-                                                    }
+                                                    new ServerMessageParser().taskGetFailParse(parentActivity,resultTemp);
+                                                    parentActivity.finish();
                                                 } else {
                                                     System.out.println("서버반응 2: " + resultTemp.get("success").toString());
 

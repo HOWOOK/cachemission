@@ -115,10 +115,6 @@
             android:name=".Activity.TaskExplainActivity"
             android:theme="@style/AppTheme.Transparent.NoActionBar" />
         <activity
-            android:name=".Activity.ExchangeActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".Activity.ExplainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />

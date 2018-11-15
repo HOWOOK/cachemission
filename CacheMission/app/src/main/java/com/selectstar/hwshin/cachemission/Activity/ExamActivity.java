@@ -22,6 +22,7 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.selectstar.hwshin.cachemission.DataStructure.ExamView.ExamView;
 import com.selectstar.hwshin.cachemission.DataStructure.HurryHttpRequest;
+import com.selectstar.hwshin.cachemission.DataStructure.ServerMessageParser;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoWithBox;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoWithLine;
 import com.selectstar.hwshin.cachemission.DataStructure.UIHashMap;
@@ -84,10 +85,9 @@ public class ExamActivity extends PatherActivity {
                             Date after28time = addMinutesToDate(28,new Date());
                             ((JSONObject)waitingTasks.get(0)).put("time",DateToString(after28time));
                             currentTask = waitingTasks.get(waitingTasks.size()-1);
-                            System.out.println("뭔지 어디한번 뱉어바ㅘ라 " + currentTask);
 
                             String taskUserID = currentTask.getString("user");
-                            String answerID = currentTask.getString("id");
+                            answerID = ((Integer)currentTask.get("id")).toString();
                             if(taskUserID != null)
                                 taskUserIDtv.setText("작업자 ID : " + taskUserID);
                             if(answerID != null)
@@ -99,28 +99,13 @@ public class ExamActivity extends PatherActivity {
                                 mTaskView.setContent(currentTask.get("content")+"("+currentTask.get("answer"));
                             else
                                 mTaskView.setContent((String) currentTask.get("content"));
-                            answerID = ((Integer)currentTask.get("id")).toString();
+
                             mExamView.setContent((String) currentTask.get("answer"),taskID);
 
                         } else if (resultTemp.get("success").toString().equals("false")) {
-                                if (resultTemp.get("message").toString().equals("login")) {
-                                    Intent in = new Intent(mContext, LoginActivity.class);
-                                    startActivity(in);
-                                    Toast.makeText(mContext, "로그인이 만료되었습니다. 다시 로그인해주세요", Toast.LENGTH_SHORT).show();
-                                    finish();
-                                } else if (resultTemp.get("message").toString().equals("task")) {
-                                    Toast.makeText(mContext, "테스크가 만료되었습니다. 다른 테스크를 선택해주세요", Toast.LENGTH_SHORT).show();
-                                    deleteWaitingTasks();
-                                    finish();
-                                } else {
-                                    Toast.makeText(mContext, "남은 테스크가 없습니다.", Toast.LENGTH_SHORT).show();
-                                    finish();
-                                }
-                                return;
-
+                                new ServerMessageParser().examGetFailParse(mContext, resultTemp);
+                                finish();
                             }
-
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -360,7 +345,7 @@ public class ExamActivity extends PatherActivity {
                     param.put("examType", intent.getIntExtra("examType",0));
                     param.put("submit", answer);
                     param.put("option",partType());
-                    Log.d("옵션", ((Integer)partType()).toString());
+                    Log.d("보내는파라미터", param.toString());
                     new WaitHttpRequest(ExamActivity.this) {
                         @Override
                         protected void onPostExecute(Object o) {
@@ -375,7 +360,6 @@ public class ExamActivity extends PatherActivity {
                                     }
                                     if(taskType.equals("TWOPOINTEXAM")){
                                         ((TaskView_PhotoWithLine)mTaskView).removeAnswer();
-                                        Log.d("examActivity리무브", "불림");
                                     }
                                     updateWaitingTasks();
                                     startTask();

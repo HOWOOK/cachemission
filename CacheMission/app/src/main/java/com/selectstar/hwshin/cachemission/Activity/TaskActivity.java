@@ -25,6 +25,7 @@ import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_Tw
 import com.selectstar.hwshin.cachemission.DataStructure.HurryHttpRequest;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_Photo;
+import com.selectstar.hwshin.cachemission.DataStructure.ServerMessageParser;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoWithBox;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoWithLine;
@@ -369,12 +370,7 @@ public class TaskActivity extends PatherActivity {
                             mController.resetContent(controllerView, taskID);
 
                         } else {
-                            if (getIntent().getIntExtra("from", 0) == 0) {
-                                Toast.makeText(TaskActivity.this, "회원님이 선택하신 옵션에 해당하는 과제가 더이상 없습니다. 테스크 리스트로 돌아갑니다.", Toast.LENGTH_SHORT).show();
-
-                            } else {
-                                Toast.makeText(TaskActivity.this, "테스크를 모두 완료했습니다. 테스크 리스트로 돌아갑니다.", Toast.LENGTH_SHORT).show();
-                            }
+                            new ServerMessageParser().taskGetFailParse(TaskActivity.this, resultTemp);
                             finish();
                         }
                     } catch (JSONException e) {
@@ -383,7 +379,7 @@ public class TaskActivity extends PatherActivity {
 
 
                 }
-            }.execute(getString(R.string.mainurl) + "/testing/taskGet", param, getLoginToken());
+            }.execute(getString(R.string.mainurl) + "/taskGet", param, getLoginToken());
         } catch(JSONException e)
         {
             e.printStackTrace();
