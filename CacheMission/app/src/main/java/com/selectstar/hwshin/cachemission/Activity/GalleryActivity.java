@@ -1,8 +1,10 @@
 package com.selectstar.hwshin.cachemission.Activity;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,6 +24,11 @@ import java.io.File;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+import static android.Manifest.permission.RECORD_AUDIO;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+
 public class GalleryActivity extends AppCompatActivity {
 
     public String basePath = null;
@@ -31,12 +38,14 @@ public class GalleryActivity extends AppCompatActivity {
     public GalleryImageAdapter mAdapter;
     public ChoiceImageAdapter mChoiceAdapter;
     public int availNumber;
+    final int P_RECORD_AUDIO=77;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Tracker t = ((GlobalApplication)getApplication()).getTracker(GlobalApplication.TrackerName.APP_TRACKER);
         t.setScreenName("GalleryActivity");
         t.send(new HitBuilders.AppViewBuilder().build());
+
         Intent intent = getIntent();
         availNumber = intent.getIntExtra("avail",0);
         setContentView(R.layout.activity_gallery);
