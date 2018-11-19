@@ -1,14 +1,20 @@
 package com.selectstar.hwshin.cachemission.DataStructure.Controller;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +26,7 @@ import android.widget.Toast;
 
 import com.selectstar.hwshin.cachemission.Activity.GalleryActivity;
 import com.selectstar.hwshin.cachemission.Activity.LoginActivity;
+import com.selectstar.hwshin.cachemission.Activity.TaskActivity;
 import com.selectstar.hwshin.cachemission.Adapter.PhotoPagerAdapter;
 import com.selectstar.hwshin.cachemission.DataStructure.FileHttpRequest;
 import com.selectstar.hwshin.cachemission.DataStructure.ServerMessageParser;
@@ -29,10 +36,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+import static android.Manifest.permission.RECORD_AUDIO;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class Controller_Photo extends Controller {
     PhotoPagerAdapter adapter;
@@ -41,6 +55,7 @@ public class Controller_Photo extends Controller {
     int successCount = 0;
     int allCount = 0;
     RecyclerView recyclerView;
+    final int P_RECORD_AUDIO=77;
     public Controller_Photo(){
         controllerID= R.layout.controller_photo;
     }
@@ -89,16 +104,23 @@ public class Controller_Photo extends Controller {
         galleryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if ((ActivityCompat.checkSelfPermission(parentActivity, RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) || (ActivityCompat.checkSelfPermission(parentActivity, WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) || (ActivityCompat.checkSelfPermission(parentActivity, ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) || (ActivityCompat.checkSelfPermission(parentActivity, ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
 
-                if(parentActivity.getAvailableCount() <= adapter.getItemCount())
-                {
-                    Toast.makeText(parentActivity,"더 이상 사진을 추가할 수 없습니다!",Toast.LENGTH_SHORT).show();
-                    return;
+
+                    ActivityCompat.requestPermissions(parentActivity, new String[]{RECORD_AUDIO, WRITE_EXTERNAL_STORAGE, ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION},
+                            P_RECORD_AUDIO);
+
+                } else {
+
+                    if (parentActivity.getAvailableCount() <= adapter.getItemCount()) {
+                        Toast.makeText(parentActivity, "더 이상 사진을 추가할 수 없습니다!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    Intent in = new Intent(parentActivity, GalleryActivity.class);
+
+                    in.putExtra("avail", parentActivity.getAvailableCount() - adapter.getItemCount());
+                    parentActivity.startActivityForResult(in, 999);
                 }
-                Intent in=new Intent(parentActivity, GalleryActivity.class);
-
-                in.putExtra("avail",parentActivity.getAvailableCount()-adapter.getItemCount());
-                parentActivity.startActivityForResult(in,999);
             }
         });
         Button submitButton = parentActivity.findViewById(R.id.submit);
@@ -121,7 +143,15 @@ public class Controller_Photo extends Controller {
                 for(int i=0;i<allCount;i++)
                 {
                     Uri uri = adapter.getUri(i);
-                   // Log.d("lflflflflf",String.valueOf(getBitmapWidth(uri)));
+                    Log.d("lflflflflf",String.valueOf(getEXIFWidth(uri)));
+                    Log.d("lflflflflffff",String.valueOf(getEXIFLength(uri)));
+                    Log.d("asdadsas",String.valueOf(getBitmapWidth(uri)));
+                    if(getEXIFWidth(uri)<1920||getEXIFLength(uri)<1080){
+                        getDialog("사진 해상도 낮음",String.valueOf(i+1)+"번째 사진의 해상도가 1920*1080 미만입니다. 해상도가 1920*1080 이상인 사진만 업로드할 수 있습니다.");
+                        adapter.dropPhoto(i+1);
+                        break;
+                    }
+
                     System.out.println(uri.toString());
                     new FileHttpRequest(parentActivity) {
 
@@ -166,7 +196,19 @@ public class Controller_Photo extends Controller {
             }
         });
     }
-
+    private void getDialog(String title, String value)
+    {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(parentActivity);
+        alertDialogBuilder.setTitle(title);
+        alertDialogBuilder.setMessage(value);
+        alertDialogBuilder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alertDialogBuilder.show();
+    }
     private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "TEST_" + timeStamp + "_";
@@ -179,23 +221,23 @@ public class Controller_Photo extends Controller {
         //imageFilePath = image.getAbsolutePath();
         return image;
     }
-//    private String getRealPathFromURI(Context context, Uri contentUri) {
-//        Cursor cursor = null;
-//        try {
-//            String[] proj = { MediaStore.Images.Media.DATA };
-//            cursor = context.getContentResolver().query(contentUri,  proj, null, null, null);
-//            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-//            cursor.moveToFirst();
-//            return cursor.getString(column_index);
-//        } catch (Exception e) {
-//
-//            return "";
-//        } finally {
-//            if (cursor != null) {
-//                cursor.close();
-//            }
-//        }
-//    }
+    private String getRealPathFromURI(Context context, Uri contentUri) {
+        Cursor cursor = null;
+        try {
+            String[] proj = { MediaStore.Images.Media.DATA };
+            cursor = context.getContentResolver().query(contentUri,  proj, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } catch (Exception e) {
+
+            return "";
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+    }
 
     public String getPathFromUri(Uri uri){
 
@@ -214,7 +256,69 @@ public class Controller_Photo extends Controller {
     }
 
 
+    private int getEXIFWidth(Uri uri){
+            int result=0;
+        String path =getRealPathFromURI(parentActivity,uri);
+        InputStream inputStream=null;
+        ExifInterface exif = null;
+        int orientation=0;
+        try {
 
+            if(uri.toString().substring(0,7).equals("content"))
+            {
+                inputStream = parentActivity.getContentResolver().openInputStream(uri);
+            }
+            else
+            {
+                inputStream =  new FileInputStream(uri.toString());
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                exif = new ExifInterface(inputStream);
+                result=Integer.parseInt(exif.getAttribute(ExifInterface.TAG_IMAGE_WIDTH));
+            }
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return result;
+
+
+
+    }
+    private int getEXIFLength(Uri uri){
+        int result=0;
+        String path =getRealPathFromURI(parentActivity,uri);
+        InputStream inputStream=null;
+        ExifInterface exif = null;
+        int orientation=0;
+        try {
+
+            if(uri.toString().substring(0,7).equals("content"))
+            {
+                inputStream = parentActivity.getContentResolver().openInputStream(uri);
+            }
+            else
+            {
+                inputStream =  new FileInputStream(uri.toString());
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                exif = new ExifInterface(inputStream);
+                result=Integer.parseInt(exif.getAttribute(ExifInterface.TAG_IMAGE_LENGTH));
+
+            }
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return result;
+
+
+
+    }
     private int getBitmapWidth(Uri uri){
         try {
             BitmapFactory.Options options=new BitmapFactory.Options();
@@ -232,10 +336,10 @@ public class Controller_Photo extends Controller {
 //            }
             String path =getPathFromUri(uri); // "/mnt/sdcard/FileName.mp3"
 
-            BitmapFactory.decodeFile(path,options);
+            Bitmap b = BitmapFactory.decodeFile(path,options);
             Log.d("jdjdjdjdjdj",path);
-
-            return options.outWidth;
+            Bitmap bm = MediaStore.Images.Media.getBitmap(parentActivity.getContentResolver(), uri);
+            return bm.getHeight();
 
         }catch (Exception e){
             return 0;

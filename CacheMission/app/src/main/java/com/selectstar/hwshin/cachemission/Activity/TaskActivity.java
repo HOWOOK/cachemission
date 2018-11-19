@@ -4,10 +4,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +41,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+import static android.Manifest.permission.RECORD_AUDIO;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static java.lang.Integer.parseInt;
 import static java.lang.Integer.sum;
 
@@ -58,6 +64,7 @@ public class TaskActivity extends PatherActivity {
     int currentIndex=0;
     private TextView answerIDtv;
 
+
     public TaskView getmTaskView() {
         return this.mTaskView;
     }
@@ -73,9 +80,10 @@ public class TaskActivity extends PatherActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Tracker t = ((GlobalApplication)getApplication()).getTracker(GlobalApplication.TrackerName.APP_TRACKER);
-        t.setScreenName("TaskActivity");
+        t.setScreenName(taskType+"TaskActivity");
         t.send(new HitBuilders.AppViewBuilder().build());
         setContentView(R.layout.activity_task);
+
         //캡쳐방지
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
 

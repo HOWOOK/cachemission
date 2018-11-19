@@ -1,11 +1,13 @@
 package com.selectstar.hwshin.cachemission.Adapter;
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -46,6 +48,13 @@ public class PhotoPagerAdapter extends RecyclerView.Adapter<PhotoPagerAdapter.It
         notifyItemInserted(photoList.size()-1);
         notifyDataSetChanged();
         ((ImageView)parentActivity.findViewById(R.id.emptyview)).setVisibility(View.INVISIBLE);
+    }
+    public void dropPhoto(int i){
+        for(int j=0;j<i;j++) {
+            photoList.remove(0);
+            notifyItemRemoved(0);
+            notifyDataSetChanged();
+        }
     }
     public Uri getUri(int index)
     {
@@ -167,13 +176,39 @@ public class PhotoPagerAdapter extends RecyclerView.Adapter<PhotoPagerAdapter.It
                                 }
 
                                 if(photoList.get(position).toString().substring(0,7).equals("content")){
+
                                     holder.image.setImageURI(photoList.get(position));
+//                                    String[] projection = { MediaStore.Images.Media.DATA };
+//                                    Cursor imageCursor = parentActivity.getContentResolver().query(
+//                                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, // 이미지 컨텐트 테이블
+//                                            projection, // DATA를 출력
+//                                            null,       // 모든 개체 출력
+//                                            null,
+//                                            null);
+//                                    int dataColumnIndex = imageCursor.getColumnIndex(projection[0]);
+//
+//                                    if (imageCursor == null) {
+//                                        // Error 발생
+//                                        // 적절하게 handling 해주세요
+//                                    } else if (imageCursor.moveToLast()) {
+//                                        do {
+//                                            String filePath = imageCursor.getString(dataColumnIndex);
+//                                            Log.d("djdjdjdjd",filePath);
+//                                            Uri imageUri = Uri.parse(filePath);
+//                                            holder.image.setImageURI(imageUri);
+//                                        } while(false);
+//                                    } else {
+//                                        // imageCursor가 비었습니다.
+//                                    }
+//                                    imageCursor.close();
 
 
                                 }else {
                                     final Bitmap bm = BitmapFactory.decodeFile(photoList.get(position).toString(), options);
                                     final Bitmap bmRotated = rotateBitmap(bm, orientation);
+
                                     holder.image.setImageBitmap(bmRotated);
+                                    Log.d("???????",String.valueOf(bm.getHeight()*options.inSampleSize));
                                 }
 
                             }
@@ -222,30 +257,5 @@ public class PhotoPagerAdapter extends RecyclerView.Adapter<PhotoPagerAdapter.It
             image = itemView.findViewById(R.id.imageitem);
         }
     }
-    private int getBitmapWidth(Uri uri){
-        try {
-            BitmapFactory.Options options=new BitmapFactory.Options();
-            options.inJustDecodeBounds =true;
 
-
-//            String path = getRealPathFromURI(parentActivity,uri);
-//            String filename = path.substring(path.lastIndexOf("/")+1);
-//            String fileWOExtension;
-//            if (filename.indexOf(".") > 0) {
-//                fileWOExtension = filename.substring(0, filename.lastIndexOf("."));
-//            } else {
-//                fileWOExtension =  filename;
-//            }
-            String path =uri.getPath(); // "/mnt/sdcard/FileName.mp3"
-            File file = new File(new URI(path));
-            BitmapFactory.decodeFile(uri.toString(),options);
-            Log.d("jdjdjdjdjdj",uri.toString());
-            return options.outWidth;
-
-        }catch (Exception e){
-            return 0;
-
-        }
-
-    }
 }
