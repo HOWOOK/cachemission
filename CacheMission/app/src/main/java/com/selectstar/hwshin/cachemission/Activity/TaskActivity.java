@@ -27,6 +27,7 @@ import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_Tw
 import com.selectstar.hwshin.cachemission.DataStructure.HurryHttpRequest;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_Photo;
+import com.selectstar.hwshin.cachemission.DataStructure.ServerMessageParser;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoWithBox;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoWithLine;
@@ -367,22 +368,17 @@ public class TaskActivity extends PatherActivity {
                             Date after28time = addMinutesToDate(28,new Date());
                             ((JSONObject)waitingTasks.get(0)).put("time",DateToString(after28time));
                             currentTask = waitingTasks.get(waitingTasks.size()-1);
-                            String answerID = currentTask.getString("id");
+                            answerID = currentTask.getString("id");
                             if(answerID != null)
                                 answerIDtv.setText("Answer ID : " + answerID);
                             System.out.println("컨텐츠 : "+ currentTask.get("content"));
                             System.out.println("------------");
                             mTaskView.setContent((String) currentTask.get("content"));
                             answerID = ((Integer)currentTask.get("id")).toString();
-                            mController.resetContent(controllerView,taskID);
+                            mController.resetContent(controllerView, taskID);
 
                         } else {
-                            if (getIntent().getIntExtra("from", 0) == 0) {
-                                Toast.makeText(TaskActivity.this, "회원님이 선택하신 옵션에 해당하는 과제가 더이상 없습니다. 테스크 리스트로 돌아갑니다.", Toast.LENGTH_SHORT).show();
-
-                            } else {
-                                Toast.makeText(TaskActivity.this, "테스크를 모두 완료했습니다. 테스크 리스트로 돌아갑니다.", Toast.LENGTH_SHORT).show();
-                            }
+                            new ServerMessageParser().taskGetFailParse(TaskActivity.this, resultTemp);
                             finish();
                         }
                     } catch (JSONException e) {
@@ -391,7 +387,7 @@ public class TaskActivity extends PatherActivity {
 
 
                 }
-            }.execute(getString(R.string.mainurl) + "/testing/taskGet", param, getLoginToken());
+            }.execute(getString(R.string.mainurl) + "/taskGet", param, getLoginToken());
         } catch(JSONException e)
         {
             e.printStackTrace();

@@ -35,7 +35,7 @@ public class PartAdapter extends RecyclerView.Adapter<PartAdapter.ItemViewHolder
 
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.dialog_item, parent, false);
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.dialog_partitem, parent, false);
         return new ItemViewHolder(view);
     }
 

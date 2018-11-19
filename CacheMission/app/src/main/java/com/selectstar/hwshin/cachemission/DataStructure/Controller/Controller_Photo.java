@@ -29,6 +29,7 @@ import com.selectstar.hwshin.cachemission.Activity.LoginActivity;
 import com.selectstar.hwshin.cachemission.Activity.TaskActivity;
 import com.selectstar.hwshin.cachemission.Adapter.PhotoPagerAdapter;
 import com.selectstar.hwshin.cachemission.DataStructure.FileHttpRequest;
+import com.selectstar.hwshin.cachemission.DataStructure.ServerMessageParser;
 import com.selectstar.hwshin.cachemission.R;
 
 import org.json.JSONException;
@@ -173,25 +174,9 @@ public class Controller_Photo extends Controller {
                                     parentActivity.goldSetting(String.valueOf(resultTemp.get("gold")));
                                     parentActivity.maybeSetting(String.valueOf(resultTemp.get("maybe")));
 
-
-                                }else
-                                {
-                                    System.out.println(myResult);
-                                    if (resultTemp.get("message").toString().equals("login")) {
-                                        Intent in = new Intent(parentActivity, LoginActivity.class);
-                                        parentActivity.startActivity(in);
-                                        Toast.makeText(parentActivity, "로그인이 만료되었습니다. 다시 로그인해주세요", Toast.LENGTH_SHORT).show();
-                                        parentActivity.finish();
-                                    } else if (resultTemp.get("message").toString().equals("task")) {
-
-                                        Toast.makeText(parentActivity, "테스크가 만료되었습니다. 다시 시도해주세요", Toast.LENGTH_SHORT).show();
-                                        parentActivity.finish();
-                                    }
-                                    else{
-                                        Toast.makeText(parentActivity,"남은 테스크가 없습니다.",Toast.LENGTH_SHORT).show();
-                                        parentActivity.finish();
-                                    }
-
+                                }else{
+                                    new ServerMessageParser().taskGetFailParse(parentActivity,resultTemp);
+                                    parentActivity.finish();
                                 }
 
                             }

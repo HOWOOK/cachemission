@@ -55,8 +55,7 @@ public class NoticeActivity extends AppCompatActivity {
                 super.onPostExecute(o);
                 try {
                     JSONObject res = new JSONObject(result);
-                    if(res.get("success").toString().equals(("true")))
-                    {
+                    if(res.get("success").toString().equals(("true"))){
                         JSONArray noticeList = (JSONArray)res.get("notices");
                         for (int i = 0; i < noticeList.length(); i++) {
 
@@ -66,13 +65,9 @@ public class NoticeActivity extends AppCompatActivity {
                         adapter = new NoticeviewAdapter(getApplicationContext(), R.layout.notice_lv, NoticeActivity.mNoticeList);
                         listView.setAdapter(adapter);
 
-                    }
-                    else
-                    {
+                    }else{
                         getDialog("통신 에러","확인");
                     }
-
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -80,8 +75,7 @@ public class NoticeActivity extends AppCompatActivity {
         }.execute(getString(R.string.mainurl)+"/notice",param, "");
     }
 
-    private void getDialog(String title, String value)
-    {
+    private void getDialog(String title, String value){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(NoticeActivity.this);
         alertDialogBuilder.setTitle(title);
         alertDialogBuilder.setMessage(value);
@@ -93,13 +87,13 @@ public class NoticeActivity extends AppCompatActivity {
         });
         alertDialogBuilder.show();
     }
+
     @Override
     protected void onStart(){
         super.onStart();
         GoogleAnalytics.getInstance(this).reportActivityStart(this);
-
-
     }
+
     @Override
     protected void onStop(){
         super.onStop();

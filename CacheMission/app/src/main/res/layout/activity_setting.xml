@@ -51,20 +51,12 @@
         </android.support.constraint.ConstraintLayout>
 
         <TextView
-            android:id="@+id/exchangebtn"
-            style="@style/normalTextList"
-            android:text="환전신청 하기"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/settingtitle" />
-
-        <TextView
             android:id="@+id/suggestionbtn"
             style="@style/normalTextList"
             android:text="건의사항 보내기"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/exchangebtn" />
+            app:layout_constraintTop_toBottomOf="@+id/settingtitle" />
 
         <TextView
             android:id="@+id/pushonoff"

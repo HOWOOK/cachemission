@@ -17,7 +17,7 @@ import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_Vo
 import com.selectstar.hwshin.cachemission.DataStructure.ExamView.ExamView_ZoomImage;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_Image;
-import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoView;
+import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_Classification;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoWithBox;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoWithLine;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_SwipeImage;
@@ -77,7 +77,7 @@ public class UIHashMap {
         taskViewHashMap.put("swipeimage", new TaskView_SwipeImage());
         taskViewHashMap.put("photoview", new TaskView_PhotoWithBox());
         taskViewHashMap.put("photowithline", new TaskView_PhotoWithLine());
-        taskViewHashMap.put("photoview2", new TaskView_PhotoView());
+        taskViewHashMap.put("classification", new TaskView_Classification());
 
         //Controller hashmap 종류들
         controllerHashMap.put("edittext", new Controller_EditText());
@@ -275,16 +275,16 @@ public class UIHashMap {
 
         parameters_CLASSIFICATION[0][0] = 10;
         parameters_CLASSIFICATION[1][0] = R.id.option; parameters_CLASSIFICATION[1][1] = 4;
-        parameters_CLASSIFICATION[2][0] = R.id.controller; parameters_CLASSIFICATION[2][1] = 3;
-        parameters_CLASSIFICATION[3][0] = R.id.taskview; parameters_CLASSIFICATION[3][1] = 4;
+        parameters_CLASSIFICATION[2][0] = R.id.taskConstLayout; parameters_CLASSIFICATION[2][1] = 4;
+        parameters_CLASSIFICATION[3][0] = R.id.option; parameters_CLASSIFICATION[3][1] = 4;
         parameters_CLASSIFICATION[4][0] = R.id.taskConstLayout; parameters_CLASSIFICATION[4][1] = 4;
         parameters_CLASSIFICATION[5][0] = 5;
         taskHashMap.put("CLASSIFICATION", parameters_CLASSIFICATION);
 
         parameters_CLASSIFICATIONEXAM[0][0] = 10;
         parameters_CLASSIFICATIONEXAM[1][0] = R.id.option; parameters_CLASSIFICATIONEXAM[1][1] = 4;
-        parameters_CLASSIFICATIONEXAM[2][0] = R.id.controllerExam; parameters_CLASSIFICATIONEXAM[2][1] = 3;
-        parameters_CLASSIFICATIONEXAM[3][0] = R.id.taskViewExam; parameters_CLASSIFICATIONEXAM[3][1] = 4;
+        parameters_CLASSIFICATIONEXAM[2][0] = R.id.taskConstLayoutExam; parameters_CLASSIFICATIONEXAM[2][1] = 4;
+        parameters_CLASSIFICATIONEXAM[3][0] = R.id.option; parameters_CLASSIFICATIONEXAM[3][1] = 4;
         parameters_CLASSIFICATIONEXAM[4][0] = R.id.taskConstLayoutExam; parameters_CLASSIFICATIONEXAM[4][1] = 4;
         parameters_CLASSIFICATIONEXAM[5][0] = 5;
         taskHashMap.put("CLASSIFICATIONEXAM", parameters_CLASSIFICATIONEXAM);

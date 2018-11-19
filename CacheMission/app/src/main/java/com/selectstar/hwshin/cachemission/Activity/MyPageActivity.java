@@ -329,7 +329,7 @@ public class MyPageActivity extends AppCompatActivity {
                     }
                 };
                 //CountDownTimer adf= new AsyncTaskCancelTimerTask(asyncTask,Integer.parseInt(getString(R.string.hTTPTimeOut)),1000,true,this).start();
-                asyncTask.execute(getString(R.string.mainurl) + "/testing/newExchange", param, loginToken);
+                asyncTask.execute(getString(R.string.mainurl) + "/newExchange", param, loginToken);
                 //Toast.makeText(getApplicationContext(),"알파테스트에서 구현되지 않은 사항입니다! 챔피언의 충실한 보조 조하영 화이팅!",Toast.LENGTH_SHORT).show();
             }
         });

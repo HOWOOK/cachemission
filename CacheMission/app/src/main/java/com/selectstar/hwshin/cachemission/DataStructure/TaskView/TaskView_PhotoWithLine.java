@@ -109,8 +109,8 @@ public class TaskView_PhotoWithLine extends TaskView {
         constraintSet.clear(parentActivity.findViewById(R.id.expandViewCL).getId(), ConstraintSet.BOTTOM);
         constraintSet.clear(parentActivity.findViewById(R.id.expandViewCL).getId(), ConstraintSet.LEFT);
         constraintSet.clear(parentActivity.findViewById(R.id.expandViewCL).getId(), ConstraintSet.RIGHT);
-        constraintSet.connect(parentActivity.findViewById(R.id.expandViewCL).getId(), ConstraintSet.TOP, parentActivity.findViewById(R.id.photoWithLineCL).getId(), ConstraintSet.TOP, (int)(10 * dpScale));
-        constraintSet.connect(parentActivity.findViewById(R.id.expandViewCL).getId(), ConstraintSet.LEFT, parentActivity.findViewById(R.id.photoWithLineCL).getId(), ConstraintSet.LEFT, (int)(10 * dpScale));
+        constraintSet.connect(parentActivity.findViewById(R.id.expandViewCL).getId(), ConstraintSet.TOP, parentActivity.findViewById(R.id.photoWithLineCL).getId(), ConstraintSet.TOP, (int)(44 * dpScale));
+        constraintSet.connect(parentActivity.findViewById(R.id.expandViewCL).getId(), ConstraintSet.LEFT, parentActivity.findViewById(R.id.photoWithLineCL).getId(), ConstraintSet.LEFT, (int)(26 * dpScale));
         constraintSet.applyTo((ConstraintLayout) parentActivity.findViewById(R.id.photoWithLineCL));
 
         //플래그 처리
@@ -193,7 +193,7 @@ public class TaskView_PhotoWithLine extends TaskView {
 
     private Bitmap bitmapExpand(float X, float Y, float expandSize) {
         Bitmap returnBitmap;
-        int padding_val = 50; //50? : expand view의 크기가 100이다. (expand View size / 2)
+        int padding_val = 85; //85? : expand view의 크기가 170이다. (expand View size / 2)
         X = X - photoView.getDisplayRect().left;
         Y = Y - photoView.getDisplayRect().top;
 

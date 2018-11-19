@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.selectstar.hwshin.cachemission.Activity.LoginActivity;
 import com.selectstar.hwshin.cachemission.Activity.TaskActivity;
+import com.selectstar.hwshin.cachemission.DataStructure.ServerMessageParser;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoWithLine;
 import com.selectstar.hwshin.cachemission.DataStructure.WaitHttpRequest;
 import com.selectstar.hwshin.cachemission.Photoview.PhotoView;
@@ -523,19 +524,8 @@ public class Controller_TwoPoint extends Controller {
                                 try {
                                     JSONObject resultTemp = new JSONObject(result);
                                     if (resultTemp.get("success").toString().equals("false")) {
-                                        if (resultTemp.get("message").toString().equals("login")) {
-                                            Intent in = new Intent(parentActivity, LoginActivity.class);
-                                            parentActivity.startActivity(in);
-                                            Toast.makeText(parentActivity, "로그인이 만료되었습니다. 다시 로그인해주세요", Toast.LENGTH_SHORT).show();
-                                            parentActivity.finish();
-                                        } else if (resultTemp.get("message").toString().equals("task")) {
-                                            Toast.makeText(parentActivity, "테스크가 만료되었습니다. 다른 테스크를 선택해주세요", Toast.LENGTH_SHORT).show();
-                                            parentActivity.deleteWaitingTasks();
-                                            parentActivity.finish();
-                                        } else {
-                                            Toast.makeText(parentActivity, "남은 테스크가 없습니다.", Toast.LENGTH_SHORT).show();
-                                            parentActivity.finish();
-                                        }
+                                        new ServerMessageParser().taskGetFailParse(parentActivity,resultTemp);
+                                        parentActivity.finish();
                                     } else {
                                         mTaskViewPhotoWithLine.removeAnswer();
                                         parentActivity.updateWaitingTasks();
@@ -574,6 +564,8 @@ public class Controller_TwoPoint extends Controller {
     }
 
     private void setExpandViewPos(float curX, float curY) {
+        float topBottomMargin = 44 * dpScale;
+        float leftRightMargin = 26 * dpScale;
         ConstraintLayout photoWithLineCL = parentActivity.findViewById(R.id.photoWithLineCL);
         ConstraintLayout expandViewCL = parentActivity.findViewById(R.id.expandViewCL);
         float CLWidth = photoWithLineCL.getWidth();
@@ -581,22 +573,22 @@ public class Controller_TwoPoint extends Controller {
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(photoWithLineCL);
 
-        if(curX <= expandViewCL.getWidth() + 2 * 10 * dpScale && curY <= expandViewCL.getHeight() + 2 * 10 * dpScale) { //현재좌표가 좌상단, 포토뷰는 우하단으로
+        if(curX <= expandViewCL.getWidth() + leftRightMargin && curY <= expandViewCL.getHeight() + topBottomMargin) { //현재좌표가 좌상단, 포토뷰는 우하단으로
             Log.d("어디들어갔게", "좌상단" );
             constraintSetClear(expandViewCL, constraintSet);
             constraintSet.connect(expandViewCL.getId(), ConstraintSet.BOTTOM, photoWithLineCL.getId(), ConstraintSet.BOTTOM, (int) (10 * dpScale));
             constraintSet.connect(expandViewCL.getId(), ConstraintSet.RIGHT, photoWithLineCL.getId(), ConstraintSet.RIGHT, (int) (10 * dpScale));
-        }else if(curX > CLWidth - (expandViewCL.getWidth() + 2 * 10 * dpScale) && curY <= expandViewCL.getHeight() + 2 * 10 * dpScale) { //현재좌표가 우상단, 포토뷰는 좌하단으로
+        }else if(curX > CLWidth - (expandViewCL.getWidth() + leftRightMargin) && curY <= expandViewCL.getHeight() + topBottomMargin) { //현재좌표가 우상단, 포토뷰는 좌하단으로
             Log.d("어디들어갔게", "우상단" );
             constraintSetClear(expandViewCL, constraintSet);
             constraintSet.connect(expandViewCL.getId(), ConstraintSet.BOTTOM, photoWithLineCL.getId(), ConstraintSet.BOTTOM, (int) (10 * dpScale));
             constraintSet.connect(expandViewCL.getId(), ConstraintSet.LEFT, photoWithLineCL.getId(), ConstraintSet.LEFT, (int) (10 * dpScale));
-        }else if(curX <= expandViewCL.getWidth() + 2 * 10 * dpScale && curY > CLHeight - (expandViewCL.getHeight() + 2 * 10 * dpScale)) { //현재좌표가 좌하단, 포토뷰는 우상단으로
+        }else if(curX <= expandViewCL.getWidth() + leftRightMargin && curY > CLHeight - (expandViewCL.getHeight() + topBottomMargin)) { //현재좌표가 좌하단, 포토뷰는 우상단으로
             Log.d("어디들어갔게", "좌하단" );
             constraintSetClear(expandViewCL, constraintSet);
             constraintSet.connect(expandViewCL.getId(), ConstraintSet.TOP, photoWithLineCL.getId(), ConstraintSet.TOP, (int) (10 * dpScale));
             constraintSet.connect(expandViewCL.getId(), ConstraintSet.RIGHT, photoWithLineCL.getId(), ConstraintSet.RIGHT, (int) (10 * dpScale));
-        }else if(curX > CLWidth - (expandViewCL.getWidth() + 2 * 10 * dpScale) && curY > CLHeight - (expandViewCL.getHeight() + 2 * 10 * dpScale)) { //현재좌표가 우하단, 포토뷰는 좌상단으로
+        }else if(curX > CLWidth - (expandViewCL.getWidth() + leftRightMargin) && curY > CLHeight - (expandViewCL.getHeight() + topBottomMargin)) { //현재좌표가 우하단, 포토뷰는 좌상단으로
             Log.d("어디들어갔게", "우하단" );
             constraintSetClear(expandViewCL, constraintSet);
             constraintSet.connect(expandViewCL.getId(), ConstraintSet.TOP, photoWithLineCL.getId(), ConstraintSet.TOP, (int) (10 * dpScale));

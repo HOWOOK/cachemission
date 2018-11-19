@@ -1,6 +1,5 @@
 package com.selectstar.hwshin.cachemission.DataStructure.Controller;
 
-import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.support.constraint.ConstraintLayout;
 import android.view.View;
@@ -10,9 +9,9 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.selectstar.hwshin.cachemission.Activity.LoginActivity;
 import com.selectstar.hwshin.cachemission.Adapter.numbergridadapter;
 import com.selectstar.hwshin.cachemission.DataStructure.HurryHttpRequest;
+import com.selectstar.hwshin.cachemission.DataStructure.ServerMessageParser;
 import com.selectstar.hwshin.cachemission.R;
 
 import org.json.JSONException;
@@ -60,21 +59,8 @@ public class Controller_Numbers extends Controller {
                                 JSONObject resultTemp = new JSONObject(result);
                                 System.out.println("resultTemp : "+resultTemp);
                                 if (resultTemp.get("success").toString().equals("false")) {
-                                    if (resultTemp.get("message").toString().equals("login")) {
-                                        Intent in = new Intent(parentActivity, LoginActivity.class);
-                                        parentActivity.startActivity(in);
-                                        Toast.makeText(parentActivity, "로그인이 만료되었습니다. 다시 로그인해주세요", Toast.LENGTH_SHORT).show();
-                                        parentActivity.finish();
-                                    } else if (resultTemp.get("message").toString().equals("task")) {
-                                        Toast.makeText(parentActivity, "테스크가 만료되었습니다. 다른 테스크를 선택해주세요", Toast.LENGTH_SHORT).show();
-                                        parentActivity.deleteWaitingTasks();
-                                        parentActivity.finish();
-                                    } else {
-                                        Toast.makeText(parentActivity, "남은 테스크가 없습니다.", Toast.LENGTH_SHORT).show();
-                                        parentActivity.finish();
-                                    }
-                                    return;
-
+                                    new ServerMessageParser().taskGetFailParse(parentActivity,resultTemp);
+                                    parentActivity.finish();
                                 } else {
                                     parentActivity.goldSetting(String.valueOf(resultTemp.get("gold")));
                                     parentActivity.maybeSetting(String.valueOf(resultTemp.get("maybe")));

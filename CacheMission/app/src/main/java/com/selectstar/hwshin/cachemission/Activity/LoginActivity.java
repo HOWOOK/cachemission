@@ -167,7 +167,6 @@ public class LoginActivity extends AppCompatActivity {
                             super.onPostExecute(o);
                             try {
                                 JSONObject res = new JSONObject(result);
-                                System.out.println("로그인 리스폰스 : "+res);
                                 Intent in=new Intent(LoginActivity.this, TaskListActivity.class);
                                 if (res.get("success").toString() == "true"){
                                     SharedPreferences token = getSharedPreferences("token", MODE_PRIVATE);
@@ -178,15 +177,14 @@ public class LoginActivity extends AppCompatActivity {
                                     onUserSignIn();
                                     startActivity(in);
                                     finish();
-                                }
-                                else
+                                }else
                                     getDialog("로그인에 실패하였습니다.","아이디와 비밀번호를 확인해주세요.");
                             }catch(JSONException e)
                             {
                                 e.printStackTrace();
                             }
                         }
-                    }.execute(getString(R.string.mainurl)+"/testing/signin",param);
+                    }.execute(getString(R.string.mainurl)+"/signin",param);
                 }catch(JSONException e)
                 {
                     e.printStackTrace();

@@ -115,15 +115,12 @@ public class SignUpActivity extends AppCompatActivity {
                                     Intent returnIntent = new Intent();
                                     setResult(Activity.RESULT_OK, returnIntent);
                                     finish();
-                                }
-                                else
+                                }else
                                     getDialog("회원가입 실패",res.get("message").toString());
-                            }catch(JSONException e)
-                            {
+                            }catch(JSONException e){
                                 e.printStackTrace();
                             }
                         }
-
                     }.execute(getString(R.string.mainurl)+"/signup",param);
                 }catch(JSONException e)
                 {
