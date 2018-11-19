@@ -18,14 +18,14 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/expandViewCL"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
         >
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/expandView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -33,10 +33,10 @@
             />
 
         <View
-            android:id="@+id/expandViewCenter"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:background="@drawable/explain_exit"
+            android:id="@+id/expandViewDrawable"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:background="@drawable/line_big"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
