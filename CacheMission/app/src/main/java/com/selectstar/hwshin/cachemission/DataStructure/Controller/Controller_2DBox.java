@@ -36,6 +36,7 @@ public class Controller_2DBox extends Controller {
     private int getDeviceDpi;
     private float dpScale;
 
+
     public Controller_2DBox() {
         controllerID = R.layout.controller_2dbox;
     }

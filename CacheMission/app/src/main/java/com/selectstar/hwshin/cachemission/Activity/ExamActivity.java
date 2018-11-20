@@ -141,13 +141,11 @@ public class ExamActivity extends PatherActivity {
                     currentTask = (JSONObject)waitingTasks.get(waitingTasks.size()-1);
 
                     String taskUserID = currentTask.getString("user");
-                    String answerID = currentTask.getString("id");
+                    answerID = currentTask.get("id").toString();
                     if(taskUserID != null)
                         taskUserIDtv.setText("작업자 ID : " + taskUserID);
                     if(answerID != null)
                         answerIDtv.setText("Answer ID : " + answerID);
-
-                    answerID = currentTask.get("id").toString();
                     if(taskType.equals("BOXCROPEXAM")||taskType.equals("TWOPOINTEXAM"))
                         mTaskView.setContent(currentTask.get("content")+"*<"+currentTask.get("answer"));
                     else

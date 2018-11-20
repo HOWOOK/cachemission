@@ -4,33 +4,24 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
-import android.support.v4.app.ActivityCompat;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
-import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_2DBox;
-import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_TwoPoint;
-import com.selectstar.hwshin.cachemission.DataStructure.HurryHttpRequest;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller;
-import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_Photo;
+import com.selectstar.hwshin.cachemission.DataStructure.HurryHttpRequest;
 import com.selectstar.hwshin.cachemission.DataStructure.ServerMessageParser;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView;
-import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoWithBox;
-import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoWithLine;
 import com.selectstar.hwshin.cachemission.DataStructure.UIHashMap;
 import com.selectstar.hwshin.cachemission.R;
 
@@ -41,16 +32,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
-import static android.Manifest.permission.ACCESS_FINE_LOCATION;
-import static android.Manifest.permission.RECORD_AUDIO;
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
-import static java.lang.Integer.parseInt;
-import static java.lang.Integer.sum;
-
-
-public class TaskActivity extends PatherActivity {
-
+public class Quiz2DBoxActivity extends PatherActivity {
     View controllerView;
     Controller mController;
     String buttons;
@@ -60,30 +42,21 @@ public class TaskActivity extends PatherActivity {
     ArrayList<String> pic=new ArrayList<>();
     //사투리특별전용옵션
     static String region_dialect;
-//    String questString="";
-//    int currentIndex=0;
+    String questString="";
+    int currentIndex=0;
     private TextView answerIDtv;
 
-
-//    public TaskView getmTaskView() {
-//        return this.mTaskView;
-//    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        GoogleAnalytics.getInstance(this).reportActivityStart(this);
-        setQuestList(intent.getStringExtra("questList"));
+    public TaskView getmTaskView() {
+        return this.mTaskView;
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         Tracker t = ((GlobalApplication)getApplication()).getTracker(GlobalApplication.TrackerName.APP_TRACKER);
-        t.setScreenName(taskType+"TaskActivity");
+        t.setScreenName("Quiz2DBoxActivity");
         t.send(new HitBuilders.AppViewBuilder().build());
-        setContentView(R.layout.activity_task);
-
+        setContentView(R.layout.activity_quiz_2dbox);
         //캡쳐방지
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
 
@@ -159,7 +132,7 @@ public class TaskActivity extends PatherActivity {
         parent2.setLayoutParams(params2);
 
 
-        //해당 task가 처음이라면 설명서 띄워주는 것ㄴ
+        //해당 task가 처음이라면 설명서 띄워주는 것
         //지금은 임시방편으로 new description activity인 것들은///이거 안하게함 모르겠다
 
 
@@ -168,7 +141,7 @@ public class TaskActivity extends PatherActivity {
         showDescription();
 
         controllerView = findViewById(R.id.controller);
-        mController.setParentActivity(this);
+        mController.setParentActivity( this);
         mController.setLayout(controllerView,  taskID);
 
         // boxcrop이면 파트 선택되고나서 로딩해야함
@@ -215,7 +188,7 @@ public class TaskActivity extends PatherActivity {
                 Log.d("boxbox",taskType);
 
                 if(taskType.equals("BOXCROP")||taskType.equals("PHOTO")){
-                    intent_taskExplain = new Intent(TaskActivity.this, NewExplainActivity.class);
+                    intent_taskExplain = new Intent(Quiz2DBoxActivity.this, NewExplainActivity.class);
                     intent_taskExplain.putExtra("part", optionText.getText());
                     intent_taskExplain.putExtra("partNum", partType());
                     intent_taskExplain.putExtra("taskID", taskID);
@@ -225,7 +198,7 @@ public class TaskActivity extends PatherActivity {
                     System.out.println("가져온 텍스트 : "+optionText.getText());
 
                 }else{
-                    intent_taskExplain = new Intent(TaskActivity.this, TaskExplainActivity.class);
+                    intent_taskExplain = new Intent(Quiz2DBoxActivity.this, TaskExplainActivity.class);
                 }
 
                 intent_taskExplain.putExtra("taskType", taskType);
@@ -233,99 +206,6 @@ public class TaskActivity extends PatherActivity {
 
             }
         });
-    }
-
-//    public int getAvailableCount(){
-//        JSONArray questList= null;
-//        int count=0;
-//        try {
-//            questList = new JSONArray(questString);
-//            JSONObject quest=(JSONObject) questList.get(0);
-//            count=(int)quest.get("questTotal")-(int)quest.get("questDone");
-//
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        return count;
-//    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 1 && resultCode == RESULT_OK) {
-            //        Bundle extras = data.getExtras();
-//            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            photoUri = mController.getPhotoUri();
-            ((Controller_Photo) mController).addPhoto(photoUri);
-        }
-        if(requestCode==999&& resultCode == RESULT_OK){
-            pic= data.getStringArrayListExtra("result");
-            for(int i=0;i<pic.size();i++){
-                Uri uri=Uri.parse(pic.get(i));
-                ((Controller_Photo)mController).addPhoto(uri);
-            }
-
-        }
-
-
-    }
-
-    @Override
-    public void onBackPressed() {
-        //박스 테스크의 경우 확대 잘못하면 취소 눌렀을 때 다시 확대 할수있도록 해야함
-        if(taskType.equals("BOXCROP")){
-            TaskView_PhotoWithBox taskView = (TaskView_PhotoWithBox) mTaskView;
-            Controller_2DBox controller = (Controller_2DBox) mController;
-            TextView partText = findViewById(R.id.optionText);
-            if(!taskView.expandFlag && taskView.getPhotoView()!=null){
-                taskView.expandFlag = true;
-                controller.getPinButton().setBackgroundResource(R.drawable.twodbox_icon_pin_on);
-                controller.pinFlag = true;
-                taskView.getPhotoView().setScale(1);
-                findViewById(R.id.boxCL).setVisibility(View.INVISIBLE);
-                findViewById(R.id.textDragCL).setVisibility(View.VISIBLE);
-                findViewById(R.id.textDragCL).bringToFront();
-            } else if(taskView.expandFlag){
-                partText.setText("");
-                partDialogShow(partText);
-                taskView.removeAnswer();
-            }else{
-                super.onBackPressed();
-            }
-        }else if(taskType.equals("TWOPOINT")){
-            TaskView_PhotoWithLine taskView = (TaskView_PhotoWithLine) mTaskView;
-            Controller_TwoPoint controller = (Controller_TwoPoint) mController;
-            if(!controller.firstPointFlag && controller.secondPointFlag){//한점만 쳐진경우
-                controller.firstPointFlag = true;
-                controller.secondPointFlag = false;
-                ((TextView) findViewById(R.id.textDrag)).setText("라인의 시작점을 지정해 주세요.");
-                if(controller.firstPoint.getVisibility() == View.VISIBLE)
-                    controller.firstPoint.setVisibility(View.INVISIBLE);
-                if(controller.firstPointTouch.getVisibility() == View.VISIBLE)
-                    controller.firstPointTouch.setVisibility(View.INVISIBLE);
-                ((Controller_TwoPoint.LineView) controller.pointLine).pointReset();
-
-            }else if(!controller.firstPointFlag && !controller.secondPointFlag){//두점이 다 쳐진경우
-                controller.firstPointFlag = false;
-                controller.secondPointFlag = true;
-                if(controller.secondPoint.getVisibility() == View.VISIBLE)
-                    controller.secondPoint.setVisibility(View.INVISIBLE);
-                if(controller.secondPointTouch.getVisibility() == View.VISIBLE)
-                    controller.secondPointTouch.setVisibility(View.INVISIBLE);
-                if(((ConstraintLayout) findViewById(R.id.textDragCL)).getVisibility() == View.INVISIBLE)
-                    ((ConstraintLayout) findViewById(R.id.textDragCL)).setVisibility(View.VISIBLE);
-                ((TextView) findViewById(R.id.textDrag)).setText("라인의 끝점을 지정해 주세요.");
-                ((Controller_TwoPoint.LineView) controller.pointLine).samePointSetting(
-                        ((Controller_TwoPoint.LineView) controller.pointLine).getLines()[0],
-                        ((Controller_TwoPoint.LineView) controller.pointLine).getLines()[1]);
-
-            }else{
-                super.onBackPressed();
-            }
-        }else{
-            super.onBackPressed();
-        }
     }
 
     @Override
@@ -350,6 +230,7 @@ public class TaskActivity extends PatherActivity {
                 region = ((TextView)findViewById(R.id.optionText)).getText().toString();
                 param.put("option", region);
             }
+            param.put("num",3);
             new HurryHttpRequest(this) {
                 @Override
                 protected void onPostExecute(Object o) {
@@ -377,7 +258,7 @@ public class TaskActivity extends PatherActivity {
                             mController.resetContent(controllerView, taskID);
 
                         } else {
-                            new ServerMessageParser().taskGetFailParse(TaskActivity.this, resultTemp);
+                            new ServerMessageParser().taskGetFailParse(Quiz2DBoxActivity.this, resultTemp);
                             finish();
                         }
                     } catch (JSONException e) {
@@ -427,87 +308,4 @@ public class TaskActivity extends PatherActivity {
             e.printStackTrace();
         }
     }
-
-    //해당 task가 처음이라면 설명서 띄워주는 것
-//    public void showDescription(){
-//        SharedPreferences taskToken = getSharedPreferences("taskToken", MODE_PRIVATE);
-//        if(taskToken.getInt(taskType + "taskToken",0) == 100)
-//            return;
-//        Intent intent_taskExplain;
-//        TextView partText = findViewById(R.id.optionText);
-//        Log.d("boxbox",taskType);
-//        if(taskType.equals("PHOTO")){
-//            intent_taskExplain = new Intent(TaskActivity.this, NewExplainActivity.class);
-//            intent_taskExplain.putExtra("part", partText.getText());
-//            intent_taskExplain.putExtra("partNum", partType());
-//            intent_taskExplain.putExtra("taskID", taskID);
-//            intent_taskExplain.putExtra("taskType", taskType);
-//
-//            System.out.println("shibal"+taskID);
-//            intent_taskExplain.putExtra("loginToken", getLoginToken());
-//            System.out.println("가져온 텍스트 : "+partText.getText());
-//            startActivity(intent_taskExplain);
-//        }else if(taskType.equals("BOXCROP")){
-//
-//        }
-//        else{
-//            intent_taskExplain = new Intent(TaskActivity.this, TaskExplainActivity.class);
-//            intent_taskExplain.putExtra("taskType", taskType);
-//            startActivity(intent_taskExplain);
-//        }
-//
-//    }
-
-//    public void setQuestList(String questString)
-//    {
-//
-//        try {
-//            final TextView questText=findViewById(R.id.questText);
-//            JSONArray questList=new JSONArray(questString);
-//            JSONArray parsedQuestList=parseQuestList(questList);
-//            final JSONObject questName=(JSONObject) parsedQuestList.get(0);
-//            final JSONObject questReward=(JSONObject) parsedQuestList.get(1);
-//            if(questName.length()>0) {
-//
-//                if((int)questReward.get(String.valueOf(currentIndex))!=0) {
-//                    questText.setText(questName.get(String.valueOf(currentIndex)).toString() + "+\uFFE6" + String.valueOf(questReward.get(String.valueOf(currentIndex))));
-//                }else{
-//                    questText.setText(questName.get(String.valueOf(currentIndex)).toString() );
-//                }
-//
-//                questText.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        if (currentIndex+1 < questName.length()) {
-//                            currentIndex++;
-//                        } else {
-//                            currentIndex = 0;
-//                        }
-//                        try {
-//                            if((int)questReward.get(String.valueOf(currentIndex))!=0) {
-//                                questText.setText(questName.get(String.valueOf(currentIndex)).toString() + "+\uFFE6" + String.valueOf(questReward.get(String.valueOf(currentIndex))));
-//                            }else{
-//                                questText.setText(questName.get(String.valueOf(currentIndex)).toString() );
-//                            }
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                });
-//            }
-//
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    private String parseDailyQuest(String rawText) {
-//        if(rawText.contains("\n"))
-//        {
-//            rawText = rawText.replace("\n"," (");
-//            rawText = rawText + ")";
-//        }
-//        return rawText;
-//    }
-
 }

@@ -186,7 +186,7 @@ public class MyPageActivity extends AppCompatActivity {
                 gold.setHint("금액");
 
                 info2.setText("");
-                info2.setHint("계좌번호");
+                info2.setHint("계좌번호,은행,예금주");
                 info1.setText("");
                 info1.setHint("현금");
                 info1.setVisibility(View.INVISIBLE);

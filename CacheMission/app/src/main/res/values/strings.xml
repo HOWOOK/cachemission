@@ -10,7 +10,7 @@
     <string name="signuptitle">캐시미션 회원가입</string>
     <string name="regiontext">구사 가능한 사투리를 선택해주세요!\n서울지역이신 분들은 다른 테스크를 진행해 주세요.</string>
 
-    <string name="mainurl">https://www.selectstar.co.kr</string>
+    <string name="mainurl">http://18.188.94.71</string>
 
     <string name="default_notification_channel_id">none</string>
     <string name="facebook_app_id">916035911927110</string>
