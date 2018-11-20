@@ -25,7 +25,7 @@ public class ServerMessageParser {
         } else if (result.get("message").toString().equals("invalid")) {
             Toast.makeText(context, "현재 서버에 문제가 있습니다.", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(context, "false", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "false : " + result.get("message").toString(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -42,7 +42,7 @@ public class ServerMessageParser {
         } else if (result.get("message").toString().equals("invalid")) {
             Toast.makeText(context, "현재 서버에 문제가 있습니다.", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(context, "false", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "false : " + result.get("message").toString(), Toast.LENGTH_SHORT).show();
         }
     }
 }

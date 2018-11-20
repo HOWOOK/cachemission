@@ -114,6 +114,7 @@ public class TaskActivity extends PatherActivity {
         pendingGold.setText("예정 : \uFFE6 " + maybe);
         uiHashMap = new UIHashMap();
         taskID = (String)intent.getStringExtra("taskId");
+        taskDifficulty = (String)intent.getStringExtra("taskDifficulty");
         mTaskView =  uiHashMap.taskViewHashMap.get(intent.getStringExtra("taskView"));
         mTaskView.setParentActivity(this);
         mController =  uiHashMap.controllerHashMap.get(intent.getStringExtra("controller"));
@@ -221,7 +222,6 @@ public class TaskActivity extends PatherActivity {
                     intent_taskExplain.putExtra("taskID", taskID);
                     System.out.println("shibal"+taskID);
                     intent_taskExplain.putExtra("loginToken", getLoginToken());
-
                     System.out.println("가져온 텍스트 : "+optionText.getText());
 
                 }else{
@@ -338,12 +338,12 @@ public class TaskActivity extends PatherActivity {
         JSONObject param = new JSONObject();
         try {
             param.put("taskID", taskID);
-            if(taskType.equals("BOXCROP")){//BOXCROP에서는 파트를 넣어서 요청해야함
+            if(taskType.equals("BOXCROP") || taskType.equals("CLASSIFICATION")){//BOXCROP, CLASSIFICATION 에서는 파트를 넣어서 요청해야함
                 partNum = partType();
                 param.put("option",partNum);
             }
-            if(taskType.equals("TWOPOINT")){//TWOPOINT에서는 파트(11=전선)를 넣어서 요청해야함
-                param.put("option",11);
+            if(taskType.equals("TWOPOINT")){// TWOPOINT(전선)은 옵션에 111을 넣어서주어야한다.
+                param.put("option",111);
             }
             if(taskType.equals("RECORD")){//RECORD일때는 지역을 같이 넣어서 요청해야함
                 String region;
@@ -358,7 +358,7 @@ public class TaskActivity extends PatherActivity {
                     JSONObject resultTemp = null;
                     try {
                         resultTemp = new JSONObject(result);
-                        System.out.println(result);
+                        System.out.println("테스크겟 결과 : "+result);
                         if ((boolean) resultTemp.get("success")) {
                             waitingTasks = new ArrayList<>();
                             JSONArray tempTasks = (JSONArray)resultTemp.get("answers");
@@ -411,7 +411,9 @@ public class TaskActivity extends PatherActivity {
                     if(mTaskView.isEmpty())
                         mTaskView.setPreviewContents(waitingTasks);
                     currentTask = (JSONObject)waitingTasks.get(waitingTasks.size()-1);
+
                     answerID = currentTask.get("id").toString();
+
                     if(answerID != null)
                         answerIDtv.setText("Answer ID : " + answerID);
 

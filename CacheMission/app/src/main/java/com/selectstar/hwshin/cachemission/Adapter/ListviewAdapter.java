@@ -227,27 +227,25 @@ public class ListviewAdapter extends RecyclerView.Adapter<ListviewAdapter.ItemVi
         JSONArray questList=new JSONArray();
         JSONObject taskItem = mTaskList.get(pos);
         questReset(holder);
+
         try {
             taskType = taskItem.get("taskType").toString();
             taskName = taskItem.get("taskName").toString();
             taskGold = taskItem.get("gold").toString();
             Log.d("taskItem",taskItem.toString());
-
-           questList=(JSONArray) taskItem.get("questList");
-
-
+            questList=(JSONArray) taskItem.get("questList");
             updateItem(holder,questList);
-
-        }
-        catch(JSONException e)
-        {
+        }catch(JSONException e){
             e.printStackTrace();
         }
         Intent intent;
+
+        //EXAM이면 ExamActivity로 TASK면 TaskActivity로
         if(taskType.contains("EXAM"))
             intent = new Intent(mContext, ExamActivity.class);
         else
             intent = new Intent(mContext, TaskActivity.class);
+
         intent.putExtra("taskType",taskType);
         intent.putExtra("taskTitle",taskName);
         intent.putExtra("upGold","\uFFE6"+taskGold);
@@ -262,17 +260,16 @@ public class ListviewAdapter extends RecyclerView.Adapter<ListviewAdapter.ItemVi
             else
                 intent.putExtra("controller",taskItem.get("controller").toString());
             intent.putExtra("taskId",taskItem.get("id").toString());
+            intent.putExtra("taskDifficulty", taskItem.get("difficulty").toString());
 
-        } catch(JSONException e)
-        {
+        } catch(JSONException e){
             e.printStackTrace();
         }
         System.out.println("--");
         System.out.println(taskType);
         try {
             System.out.println(taskItem.get("id"));
-        }catch(JSONException e)
-        {
+        }catch(JSONException e){
             e.printStackTrace();
         }
         System.out.println("--");

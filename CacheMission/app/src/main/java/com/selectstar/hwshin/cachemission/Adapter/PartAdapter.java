@@ -22,13 +22,17 @@ public class PartAdapter extends RecyclerView.Adapter<PartAdapter.ItemViewHolder
     Context context;
     ArrayList<Integer> idList;
     ArrayList<String> nameList;
+    ArrayList<Integer> levelCountList; //유저가 해당 Rank에서 현재 진행한 테스크의 개수
+    ArrayList<Integer> levelMaxList;  //해당 TaskRank에서 최대로 할수 있는 테스크의 개수
     PartSelectDialog mDialog;
     PatherActivity mActivity;
 
-    public PartAdapter(PatherActivity mActivity, ArrayList<Integer> idList, ArrayList<String> nameList, PartSelectDialog mDialog) {
+    public PartAdapter(PatherActivity mActivity, ArrayList<Integer> idList, ArrayList<String> nameList, ArrayList<Integer> levelCountList, ArrayList<Integer> levelMaxList, PartSelectDialog mDialog) {
         this.context = context;
         this.idList = idList;
         this.nameList = nameList;
+        this.levelCountList = levelCountList;
+        this.levelMaxList = levelMaxList;
         this.mDialog = mDialog;
         this.mActivity = mActivity;
     }
@@ -44,6 +48,7 @@ public class PartAdapter extends RecyclerView.Adapter<PartAdapter.ItemViewHolder
         final int position = pos;
         holder.image.setImageDrawable(ContextCompat.getDrawable(mActivity,idList.get(pos)));
         holder.name.setText(nameList.get(pos));
+        holder.countText.setText("["+ levelCountList.get(pos)+"/"+ levelMaxList.get(pos)+"]");
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,9 +62,9 @@ public class PartAdapter extends RecyclerView.Adapter<PartAdapter.ItemViewHolder
                     taskName="transformer";
                 if(nameList.get(position).equals("나무"))
                     taskName="tree";
-                if(nameList.get(position).equals("전신주"))
+                if(nameList.get(position).equals("전봇대"))
                     taskName="pole";
-                if(nameList.get(position).equals("프리프로세스"))
+                if(nameList.get(position).equals("전봇대 부품들"))
                     taskName="preProcess";
                 if(nameList.get(position).equals("부품 A"))
                     taskName="partA";
@@ -92,10 +97,13 @@ public class PartAdapter extends RecyclerView.Adapter<PartAdapter.ItemViewHolder
     class ItemViewHolder extends RecyclerView.ViewHolder {
         private ImageView image;
         private TextView name;
+        private TextView countText;
+
         public ItemViewHolder(View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.part_thumb);
             name = itemView.findViewById(R.id.part_text);
+            countText = itemView.findViewById(R.id.part_countText);
         }
     }
 }
