@@ -338,20 +338,17 @@ public class TaskActivity extends PatherActivity {
         JSONObject param = new JSONObject();
         try {
             param.put("taskID", taskID);
-            if(taskType.equals("BOXCROP")){//BOXCROP에서는 파트를 넣어서 요청해야함
+            if(taskType.equals("BOXCROP") || taskType.equals("CLASSIFICATION")){//BOXCROP, CLASSIFICATION 에서는 파트를 넣어서 요청해야함
                 partNum = partType();
                 param.put("option",partNum);
             }
-            if(taskType.equals("TWOPOINT")){//TWOPOINT에서는 파트(11=전선)를 넣어서 요청해야함
-                param.put("option",11);
+            if(taskType.equals("TWOPOINT")){// TWOPOINT(전선)은 옵션에 111을 넣어서주어야한다.
+                param.put("option",111);
             }
             if(taskType.equals("RECORD")){//RECORD일때는 지역을 같이 넣어서 요청해야함
                 String region;
                 region = ((TextView)findViewById(R.id.optionText)).getText().toString();
                 param.put("option", region);
-            }
-            if(taskType.equals("CLASSIFICATION")){
-                param.put("option", 999);
             }
             new HurryHttpRequest(this) {
                 @Override

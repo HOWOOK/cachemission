@@ -62,9 +62,9 @@ public class PartAdapter extends RecyclerView.Adapter<PartAdapter.ItemViewHolder
                     taskName="transformer";
                 if(nameList.get(position).equals("나무"))
                     taskName="tree";
-                if(nameList.get(position).equals("전신주"))
+                if(nameList.get(position).equals("전봇대"))
                     taskName="pole";
-                if(nameList.get(position).equals("프리프로세스"))
+                if(nameList.get(position).equals("전봇대 부품들"))
                     taskName="preProcess";
                 if(nameList.get(position).equals("부품 A"))
                     taskName="partA";
@@ -98,6 +98,7 @@ public class PartAdapter extends RecyclerView.Adapter<PartAdapter.ItemViewHolder
         private ImageView image;
         private TextView name;
         private TextView countText;
+
         public ItemViewHolder(View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.part_thumb);

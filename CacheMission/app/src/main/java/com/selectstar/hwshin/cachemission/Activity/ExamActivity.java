@@ -59,9 +59,12 @@ public class ExamActivity extends PatherActivity {
         try {
             param.put("taskID", taskID);
             param.put("examType",examType);
-            if(taskType.equals("BOXCROPEXAM") || taskType.equals("TWOPOINTEXAM")){//BOXCROP에서는 파트를 넣어서 요청해야함
+            if(taskType.equals("BOXCROPEXAM")){//BOXCROP에서는 파트를 넣어서 요청해야함
                 partNum = partType();
                 param.put("option",partNum);
+            }
+            if(taskType.equals("TWOPOINTEXAM")){// TWOPOINT(전선)은 옵션에 111을 넣어서주어야한다.
+                param.put("option",111);
             }
             if((taskType.equals("RECORDEXAM") && examType == 2)||taskType.equals("DIRECTRECORDEXAM")){//RECORDEXAM 지역을 넣어서 요청해야한다.
                 String region;

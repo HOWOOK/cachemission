@@ -159,31 +159,43 @@ public abstract class PatherActivity extends AppCompatActivity {
 
     public int partType() {
         int answer = -1;
+        if((taskType.equals("BOXCROP") || taskType.equals("BOXCROPEXAM")) && taskDifficulty.equals("EASY"))
+            answer = 100;
+        if((taskType.equals("BOXCROP") || taskType.equals("BOXCROPEXAM")) && taskDifficulty.equals("NORMAL"))
+            answer = 200;
+        if(taskType.equals("CLASSIFICATION") && taskDifficulty.equals("1"))
+            answer = 1001;
+        if(taskType.equals("CLASSIFICATION") && taskDifficulty.equals("2"))
+            answer = 1002;
+        if(taskType.equals("CLASSIFICATION") && taskDifficulty.equals("3"))
+            answer = 1003;
+
         TextView partType = findViewById(R.id.optionText);
         System.out.println(partType.getText().toString());
+
         if(partType.getText().toString().equals("전봇대 부품들"))
-            answer = 2;
-        if(partType.getText().toString().equals("전봇대"))
-            answer = 3;
-        if(partType.getText().toString().equals("나무"))
-            answer = 4;
-        if(partType.getText().toString().equals("변압기"))
-            answer = 5;
-        if(partType.getText().toString().equals("부품 A"))
-            answer = 6;
-        if(partType.getText().toString().equals("부품 B"))
-            answer = 7;
-        if(partType.getText().toString().equals("부품 C"))
-            answer = 8;
-        if(partType.getText().toString().equals("부품 D"))
-            answer = 9;
-        if(partType.getText().toString().equals("부품 E"))
-            answer = 10;
-        if(partType.getText().toString().equals("부품 G"))
-            answer = 1;
-        System.out.println(answer);
-        if(taskType.equals("TWOPOINTEXAM"))
-            answer = 11;
+            answer += 2;
+        else if(partType.getText().toString().equals("전봇대"))
+            answer += 3;
+        else if(partType.getText().toString().equals("나무"))
+            answer += 4;
+        else if(partType.getText().toString().equals("변압기"))
+            answer += 5;
+        else if(partType.getText().toString().equals("부품 A"))
+            answer += 6;
+        else if(partType.getText().toString().equals("부품 B"))
+            answer += 7;
+        else if(partType.getText().toString().equals("부품 C"))
+            answer += 8;
+        else if(partType.getText().toString().equals("부품 D"))
+            answer += 9;
+        else if(partType.getText().toString().equals("부품 E"))
+            answer += 10;
+        else if(partType.getText().toString().equals("부품 G"))
+            answer += 1;
+        else
+            answer = -1;
+
         return answer;
     }
 
