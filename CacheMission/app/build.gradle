@@ -31,8 +31,8 @@ android {
 
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 33
-        versionName "1.2.19"
+        versionCode 34
+        versionName "1.2.20"
         testInstrumentationRunner "android.support.test.runner.AndroidJ" +
                 "UnitRunner"
     }

@@ -205,6 +205,7 @@ public class ExamActivity extends PatherActivity {
 
         uiHashMap = new UIHashMap();
         taskID=intent.getStringExtra("taskId");
+        taskDifficulty = (String)intent.getStringExtra("taskDifficulty");
         mTaskView = uiHashMap.taskViewHashMap.get(intent.getStringExtra("taskView"));
         mTaskView.setParentActivity(this);
         mExamView = uiHashMap.examViewHashMap.get(intent.getStringExtra("examView"));

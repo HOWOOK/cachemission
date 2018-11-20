@@ -43,6 +43,7 @@ public abstract class PatherActivity extends AppCompatActivity {
     }
     protected String taskTitle;
     protected String taskType;
+    protected String taskDifficulty;
     public String getTaskType() {
         return taskType;
     }
@@ -188,7 +189,7 @@ public abstract class PatherActivity extends AppCompatActivity {
 
     protected void partDialogShow(TextView optionText) {
         final TextView partTextTemp = optionText;
-        com.selectstar.hwshin.cachemission.Dialog.PartSelectDialog dialog = new com.selectstar.hwshin.cachemission.Dialog.PartSelectDialog(this, R.style.AppTheme_Transparent_Dialog, taskID);
+        com.selectstar.hwshin.cachemission.Dialog.PartSelectDialog dialog = new com.selectstar.hwshin.cachemission.Dialog.PartSelectDialog(this, R.style.AppTheme_Transparent_Dialog, taskID, taskType, taskDifficulty);
         dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {

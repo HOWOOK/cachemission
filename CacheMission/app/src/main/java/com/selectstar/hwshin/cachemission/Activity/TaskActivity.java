@@ -114,6 +114,7 @@ public class TaskActivity extends PatherActivity {
         pendingGold.setText("예정 : \uFFE6 " + maybe);
         uiHashMap = new UIHashMap();
         taskID = (String)intent.getStringExtra("taskId");
+        taskDifficulty = (String)intent.getStringExtra("taskDifficulty");
         mTaskView =  uiHashMap.taskViewHashMap.get(intent.getStringExtra("taskView"));
         mTaskView.setParentActivity(this);
         mController =  uiHashMap.controllerHashMap.get(intent.getStringExtra("controller"));
@@ -221,7 +222,6 @@ public class TaskActivity extends PatherActivity {
                     intent_taskExplain.putExtra("taskID", taskID);
                     System.out.println("shibal"+taskID);
                     intent_taskExplain.putExtra("loginToken", getLoginToken());
-
                     System.out.println("가져온 텍스트 : "+optionText.getText());
 
                 }else{
@@ -350,6 +350,9 @@ public class TaskActivity extends PatherActivity {
                 region = ((TextView)findViewById(R.id.optionText)).getText().toString();
                 param.put("option", region);
             }
+            if(taskType.equals("CLASSIFICATION")){
+                param.put("option", 999);
+            }
             new HurryHttpRequest(this) {
                 @Override
                 protected void onPostExecute(Object o) {
@@ -358,7 +361,7 @@ public class TaskActivity extends PatherActivity {
                     JSONObject resultTemp = null;
                     try {
                         resultTemp = new JSONObject(result);
-                        System.out.println(result);
+                        System.out.println("테스크겟 결과 : "+result);
                         if ((boolean) resultTemp.get("success")) {
                             waitingTasks = new ArrayList<>();
                             JSONArray tempTasks = (JSONArray)resultTemp.get("answers");
@@ -412,7 +415,6 @@ public class TaskActivity extends PatherActivity {
                     if(mTaskView.isEmpty())
                         mTaskView.setPreviewContents(waitingTasks);
                     currentTask = (JSONObject)waitingTasks.get(waitingTasks.size()-1);
-                    String answerID = currentTask.getString("id");
                     if(answerID != null)
                         answerIDtv.setText("Answer ID : " + answerID);
                     answerID = currentTask.get("id").toString();

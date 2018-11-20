@@ -576,23 +576,23 @@ public class Controller_TwoPoint extends Controller {
         if(curX <= expandViewCL.getWidth() + leftRightMargin && curY <= expandViewCL.getHeight() + topBottomMargin) { //현재좌표가 좌상단, 포토뷰는 우하단으로
             Log.d("어디들어갔게", "좌상단" );
             constraintSetClear(expandViewCL, constraintSet);
-            constraintSet.connect(expandViewCL.getId(), ConstraintSet.BOTTOM, photoWithLineCL.getId(), ConstraintSet.BOTTOM, (int) (10 * dpScale));
-            constraintSet.connect(expandViewCL.getId(), ConstraintSet.RIGHT, photoWithLineCL.getId(), ConstraintSet.RIGHT, (int) (10 * dpScale));
+            constraintSet.connect(expandViewCL.getId(), ConstraintSet.BOTTOM, photoWithLineCL.getId(), ConstraintSet.BOTTOM, (int) topBottomMargin);
+            constraintSet.connect(expandViewCL.getId(), ConstraintSet.RIGHT, photoWithLineCL.getId(), ConstraintSet.RIGHT, (int) leftRightMargin);
         }else if(curX > CLWidth - (expandViewCL.getWidth() + leftRightMargin) && curY <= expandViewCL.getHeight() + topBottomMargin) { //현재좌표가 우상단, 포토뷰는 좌하단으로
             Log.d("어디들어갔게", "우상단" );
             constraintSetClear(expandViewCL, constraintSet);
-            constraintSet.connect(expandViewCL.getId(), ConstraintSet.BOTTOM, photoWithLineCL.getId(), ConstraintSet.BOTTOM, (int) (10 * dpScale));
-            constraintSet.connect(expandViewCL.getId(), ConstraintSet.LEFT, photoWithLineCL.getId(), ConstraintSet.LEFT, (int) (10 * dpScale));
+            constraintSet.connect(expandViewCL.getId(), ConstraintSet.BOTTOM, photoWithLineCL.getId(), ConstraintSet.BOTTOM, (int) topBottomMargin);
+            constraintSet.connect(expandViewCL.getId(), ConstraintSet.LEFT, photoWithLineCL.getId(), ConstraintSet.LEFT, (int) leftRightMargin);
         }else if(curX <= expandViewCL.getWidth() + leftRightMargin && curY > CLHeight - (expandViewCL.getHeight() + topBottomMargin)) { //현재좌표가 좌하단, 포토뷰는 우상단으로
             Log.d("어디들어갔게", "좌하단" );
             constraintSetClear(expandViewCL, constraintSet);
-            constraintSet.connect(expandViewCL.getId(), ConstraintSet.TOP, photoWithLineCL.getId(), ConstraintSet.TOP, (int) (10 * dpScale));
-            constraintSet.connect(expandViewCL.getId(), ConstraintSet.RIGHT, photoWithLineCL.getId(), ConstraintSet.RIGHT, (int) (10 * dpScale));
+            constraintSet.connect(expandViewCL.getId(), ConstraintSet.TOP, photoWithLineCL.getId(), ConstraintSet.TOP, (int) topBottomMargin);
+            constraintSet.connect(expandViewCL.getId(), ConstraintSet.RIGHT, photoWithLineCL.getId(), ConstraintSet.RIGHT, (int) leftRightMargin);
         }else if(curX > CLWidth - (expandViewCL.getWidth() + leftRightMargin) && curY > CLHeight - (expandViewCL.getHeight() + topBottomMargin)) { //현재좌표가 우하단, 포토뷰는 좌상단으로
             Log.d("어디들어갔게", "우하단" );
             constraintSetClear(expandViewCL, constraintSet);
-            constraintSet.connect(expandViewCL.getId(), ConstraintSet.TOP, photoWithLineCL.getId(), ConstraintSet.TOP, (int) (10 * dpScale));
-            constraintSet.connect(expandViewCL.getId(), ConstraintSet.LEFT, photoWithLineCL.getId(), ConstraintSet.LEFT, (int) (10 * dpScale));
+            constraintSet.connect(expandViewCL.getId(), ConstraintSet.TOP, photoWithLineCL.getId(), ConstraintSet.TOP, (int) topBottomMargin);
+            constraintSet.connect(expandViewCL.getId(), ConstraintSet.LEFT, photoWithLineCL.getId(), ConstraintSet.LEFT, (int) leftRightMargin);
         }
         constraintSet.applyTo(photoWithLineCL);
     }
