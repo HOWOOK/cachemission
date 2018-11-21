@@ -169,7 +169,7 @@
         </provider>
 
         <activity android:name=".Activity.ExamResultActivity" />
-        <activity android:name=".Activity.Quize2DBoxActivity"></activity>
+        <activity android:name=".Activity.Quiz2DBoxActivity"></activity>
     </application>
 
 </manifest>

@@ -161,6 +161,7 @@ public class NewExplainActivity extends AppCompatActivity {
                     JSONObject resultTemp = null;
                     try {
                         resultTemp = new JSONObject(result);
+                        System.out.println("리절리절"+result);
                         JSONArray imageList = (JSONArray) resultTemp.get("imageList");
                         if(imageList.length()!=0){
                             urlList=imageList.toString();

@@ -37,6 +37,7 @@ public class PartSelectDialog extends Dialog{
     private ImageView cancelbtn;
     private ConstraintLayout dialogCL;
 
+
     public PartSelectDialog(@NonNull Context context) {
         super(context);
         this.context = context;
@@ -54,6 +55,7 @@ public class PartSelectDialog extends Dialog{
         this.taskType = taskType;
         this.examType = examType;
         this.taskDifficulty = taskDifficulty;
+
     }
 
 
@@ -76,7 +78,8 @@ public class PartSelectDialog extends Dialog{
         ArrayList<String> nameList = new ArrayList<>();
         ArrayList<Integer> levelCountList = new ArrayList<>();
         ArrayList<Integer> levelMaxList = new ArrayList<>();
-        mAdapter = new PartAdapter((PatherActivity)context, idList, nameList, levelCountList, levelMaxList, this);
+        ArrayList<Boolean> testingList = new ArrayList<>();
+        mAdapter = new PartAdapter((PatherActivity)context, idList, nameList, levelCountList, levelMaxList, this,testingList);
         partRecycler.setLayoutManager(new GridLayoutManager(context,2));
         partRecycler.setAdapter(mAdapter);
 
@@ -85,28 +88,28 @@ public class PartSelectDialog extends Dialog{
 
         if((taskType.equals("BOXCROP") || taskType.equals("BOXCROPEXAM")) && taskDifficulty.equals("EASY")) {
             partNumber = 100;
-            checkPossible(partNumber + 1, idList, R.drawable.part_g, nameList,"부품 G", levelCountList, levelMaxList);
-            checkPossible(partNumber + 2, idList, R.drawable.part_pre, nameList,"전봇대 부품들", levelCountList, levelMaxList);
-            checkPossible(partNumber + 3, idList, R.drawable.part_pole, nameList,"전봇대", levelCountList, levelMaxList);
-            checkPossible(partNumber + 4, idList, R.drawable.part_tree, nameList,"나무", levelCountList, levelMaxList);
-            checkPossible(partNumber + 5, idList, R.drawable.part_transformer, nameList,"변압기", levelCountList, levelMaxList);
-            checkPossible(partNumber + 6, idList, R.drawable.part_a, nameList,"부품 A", levelCountList, levelMaxList);
-            checkPossible(partNumber + 7, idList, R.drawable.part_b, nameList,"부품 B", levelCountList, levelMaxList);
-            checkPossible(partNumber + 8, idList, R.drawable.part_c, nameList,"부품 C", levelCountList, levelMaxList);
-            checkPossible(partNumber + 9, idList, R.drawable.part_d, nameList,"부품 D", levelCountList, levelMaxList);
-            checkPossible(partNumber + 10, idList, R.drawable.part_e, nameList,"부품 E", levelCountList, levelMaxList);
+            checkPossible(partNumber + 1, idList, R.drawable.part_g, nameList,"부품 G", levelCountList, levelMaxList,testingList);
+            checkPossible(partNumber + 2, idList, R.drawable.part_pre, nameList,"전봇대 부품들", levelCountList, levelMaxList,testingList);
+            checkPossible(partNumber + 3, idList, R.drawable.part_pole, nameList,"전봇대", levelCountList, levelMaxList,testingList);
+            checkPossible(partNumber + 4, idList, R.drawable.part_tree, nameList,"나무", levelCountList, levelMaxList,testingList);
+            checkPossible(partNumber + 5, idList, R.drawable.part_transformer, nameList,"변압기", levelCountList, levelMaxList,testingList);
+            checkPossible(partNumber + 6, idList, R.drawable.part_a, nameList,"부품 A", levelCountList, levelMaxList,testingList);
+            checkPossible(partNumber + 7, idList, R.drawable.part_b, nameList,"부품 B", levelCountList, levelMaxList,testingList);
+            checkPossible(partNumber + 8, idList, R.drawable.part_c, nameList,"부품 C", levelCountList, levelMaxList,testingList);
+            checkPossible(partNumber + 9, idList, R.drawable.part_d, nameList,"부품 D", levelCountList, levelMaxList,testingList);
+            checkPossible(partNumber + 10, idList, R.drawable.part_e, nameList,"부품 E", levelCountList, levelMaxList,testingList);
         }
         if((taskType.equals("BOXCROP") || taskType.equals("BOXCROPEXAM")) && taskDifficulty.equals("NORMAL")) {
             partNumber = 200;
-            checkPossible(partNumber + 6, idList, R.drawable.part_a, nameList,"부품 A", levelCountList, levelMaxList);
-            checkPossible(partNumber + 7, idList, R.drawable.part_b, nameList,"부품 B", levelCountList, levelMaxList);
-            checkPossible(partNumber + 8, idList, R.drawable.part_c, nameList,"부품 C", levelCountList, levelMaxList);
-            checkPossible(partNumber + 9, idList, R.drawable.part_d, nameList,"부품 D", levelCountList, levelMaxList);
-            checkPossible(partNumber + 10, idList, R.drawable.part_e, nameList,"부품 E", levelCountList, levelMaxList);
+            checkPossible(partNumber + 6, idList, R.drawable.part_a, nameList,"부품 A", levelCountList, levelMaxList,testingList);
+            checkPossible(partNumber + 7, idList, R.drawable.part_b, nameList,"부품 B", levelCountList, levelMaxList,testingList);
+            checkPossible(partNumber + 8, idList, R.drawable.part_c, nameList,"부품 C", levelCountList, levelMaxList,testingList);
+            checkPossible(partNumber + 9, idList, R.drawable.part_d, nameList,"부품 D", levelCountList, levelMaxList,testingList);
+            checkPossible(partNumber + 10, idList, R.drawable.part_e, nameList,"부품 E", levelCountList, levelMaxList,testingList);
         }
     }
 
-    private void checkPossible(int partNum, final ArrayList<Integer> idList, final Integer idListItem, final ArrayList<String> nameList, final String nameListItem, final ArrayList<Integer> levelCountList, final ArrayList<Integer> levelMaxList) {
+    private void checkPossible(int partNum, final ArrayList<Integer> idList, final Integer idListItem, final ArrayList<String> nameList, final String nameListItem, final ArrayList<Integer> levelCountList, final ArrayList<Integer> levelMaxList,final ArrayList<Boolean> testingList) {
         JSONObject param = new JSONObject();
         try {
             param.put("taskID", taskID);
@@ -139,6 +142,7 @@ public class PartSelectDialog extends Dialog{
 
                         if(resultTemp.get("success").toString().equals("true")){
                             idList.add(idListItem);
+                            testingList.add(false);
                         }else{
                             Log.d("실패!", partNumTemp + ", " +resultTemp.toString());
                             if(resultTemp.get("message").toString().equals("black")){
@@ -147,12 +151,12 @@ public class PartSelectDialog extends Dialog{
                                 idList.add(R.drawable.examining_falsepush);
                             }else if(resultTemp.get("message").toString().equals("needtest")){
                                 idList.add(R.drawable.btn_x);
+                                testingList.add(true);
                             }else if(resultTemp.get("message").toString().equals("exceed")){
                                 idList.add(R.drawable.examining_truepush);
                             }else {
                                 idList.add(R.drawable.examining_true);
                             }
-
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

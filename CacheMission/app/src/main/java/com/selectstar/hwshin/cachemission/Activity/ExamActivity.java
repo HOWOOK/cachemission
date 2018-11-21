@@ -149,7 +149,6 @@ public class ExamActivity extends PatherActivity {
                         taskUserIDtv.setText("작업자 ID : " + taskUserID);
                     if(answerID != null)
                         answerIDtv.setText("Answer ID : " + answerID);
-
                     if(taskType.equals("BOXCROPEXAM")||taskType.equals("TWOPOINTEXAM"))
                         mTaskView.setContent(currentTask.get("content")+"*<"+currentTask.get("answer"));
                     else
