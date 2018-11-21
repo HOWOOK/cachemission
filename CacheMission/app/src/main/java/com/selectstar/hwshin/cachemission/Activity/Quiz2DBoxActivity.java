@@ -80,28 +80,35 @@ public class Quiz2DBoxActivity extends PatherActivity {
          */
         explainDialog = new Dialog(this);
         intent = getIntent();
-        upGold = Integer.parseInt(intent.getStringExtra("upGold").substring(1)); //string(0)은 \표시
-        gold =intent.getStringExtra("goldNow");
-        maybe = intent.getStringExtra("goldPre");
-        nowGold.setText("현재 : \uFFE6 " + gold);
-        pendingGold.setText("예정 : \uFFE6 " + maybe);
+
+//        upGold = Integer.parseInt(intent.getStringExtra("upGold").substring(1)); //string(0)은 \표시
+//        gold =intent.getStringExtra("goldNow");
+//        maybe = intent.getStringExtra("goldPre");
+//        nowGold.setText("현재 : \uFFE6 " + gold);
+//        pendingGold.setText("예정 : \uFFE6 " + maybe);
         uiHashMap = new UIHashMap();
-        taskID = (String)intent.getStringExtra("taskId");
-        mTaskView =  uiHashMap.taskViewHashMap.get(intent.getStringExtra("taskView"));
+        taskID = (String)intent.getStringExtra("taskID");
+        mTaskView =  uiHashMap.taskViewHashMap.get("photoview");
         mTaskView.setParentActivity(this);
-        mController =  uiHashMap.controllerHashMap.get(intent.getStringExtra("controller"));
+        mController =  uiHashMap.controllerHashMap.get("2dbox");
         findViewById(R.id.howbtn).bringToFront();
-        mParameter =  (int[][]) uiHashMap.taskHashMap.get(intent.getStringExtra("taskType"));
-        taskTitle = intent.getStringExtra("taskTitle");
-        if(intent.hasExtra("buttons"))
-            buttons= intent.getStringExtra("buttons");
+        mParameter =  (int[][]) uiHashMap.taskHashMap.get("BOXCROP");
+        //taskTitle = intent.getStringExtra("taskTitle");
+//        if(intent.hasExtra("buttons"))
+//            buttons= intent.getStringExtra("buttons");
         TextView mTaskTitle = findViewById(R.id.tasktitletext);
         mTaskTitle.setText(taskTitle);
         taskViewID = mTaskView.taskViewID;
         controllerID = mController.controllerID;
+        taskDifficulty=intent.getStringExtra("difficulty");
 
-        taskType = intent.getStringExtra("taskType");
-        questString=intent.getStringExtra("questList");
+        taskType = "BOXCROP";
+        forcedShowDescription(intent.getStringExtra("part"));
+        SharedPreferences firstTimeExplain = getSharedPreferences("firstTimeExplain", MODE_PRIVATE);
+        SharedPreferences.Editor editor = firstTimeExplain.edit();
+        editor.putString(intent.getStringExtra("part"), "notFirst");
+        editor.commit();
+        //questString=intent.getStringExtra("questList");
 
         // TaskView Inflating
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -143,18 +150,18 @@ public class Quiz2DBoxActivity extends PatherActivity {
         controllerView = findViewById(R.id.controller);
         mController.setParentActivity( this);
         mController.setLayout(controllerView,  taskID);
-
+        startTask();
         // boxcrop이면 파트 선택되고나서 로딩해야함
         // reccord, dialect, directrecord면 지역 선택되고나서 로딩해야함, 물론 지역선택 예전에 해놨으면 바로 테스크 시작될 거임
         if(!(taskType.equals("BOXCROP")||taskType.equals("RECORD")||taskType.equals("DIALECT")||taskType.equals("DIRECTRECORD")))
             startTask();
 
         //boxcrop이면 partSelectDialog를 띄워줘야한다.
-        if((taskType.equals("BOXCROP"))){
-            findViewById(R.id.option).setBackgroundColor(this.getResources().getColor(R.color.colorDark2));
-            ((TextView) findViewById(R.id.optionText)).setTextColor(this.getResources().getColor(R.color.colorPrimary));
-            partDialogShow(optionText);
-        }
+//        if((taskType.equals("BOXCROP"))){
+//            findViewById(R.id.option).setBackgroundColor(this.getResources().getColor(R.color.colorDark2));
+//            ((TextView) findViewById(R.id.optionText)).setTextColor(this.getResources().getColor(R.color.colorPrimary));
+//            partDialogShow(optionText);
+//        }
 
         //DIALECT, RECOR, DIRECTRECORD이면 regionSelectDialog를 띄워줘야한다.
         String regionText;
@@ -239,7 +246,7 @@ public class Quiz2DBoxActivity extends PatherActivity {
                     JSONObject resultTemp = null;
                     try {
                         resultTemp = new JSONObject(result);
-                        System.out.println(result);
+                        System.out.println("퀴즈퀴즈대탐험:"+result);
                         if ((boolean) resultTemp.get("success")) {
                             waitingTasks = new ArrayList<>();
                             JSONArray tempTasks = (JSONArray)resultTemp.get("answers");
@@ -267,7 +274,7 @@ public class Quiz2DBoxActivity extends PatherActivity {
 
 
                 }
-            }.execute(getString(R.string.mainurl) + "/taskGet", param, getLoginToken());
+            }.execute(getString(R.string.mainurl) + "/getTest", param, getLoginToken());
         } catch(JSONException e)
         {
             e.printStackTrace();

@@ -76,6 +76,8 @@ public abstract class PatherActivity extends AppCompatActivity {
         return this.mTaskView;
     }
 
+    public String getTaskDifficulty(){return  this.taskDifficulty;}
+
     public int getUpGold()
     {
         return upGold;

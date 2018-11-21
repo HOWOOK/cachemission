@@ -1,5 +1,6 @@
 package com.selectstar.hwshin.cachemission.Adapter;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.selectstar.hwshin.cachemission.Activity.PatherActivity;
+import com.selectstar.hwshin.cachemission.Activity.Quiz2DBoxActivity;
 import com.selectstar.hwshin.cachemission.Dialog.PartSelectDialog;
 import com.selectstar.hwshin.cachemission.R;
 
@@ -26,8 +28,9 @@ public class PartAdapter extends RecyclerView.Adapter<PartAdapter.ItemViewHolder
     ArrayList<Integer> levelMaxList;  //해당 TaskRank에서 최대로 할수 있는 테스크의 개수
     PartSelectDialog mDialog;
     PatherActivity mActivity;
+    ArrayList<Boolean> isTestNeeded;
 
-    public PartAdapter(PatherActivity mActivity, ArrayList<Integer> idList, ArrayList<String> nameList, ArrayList<Integer> levelCountList, ArrayList<Integer> levelMaxList, PartSelectDialog mDialog) {
+    public PartAdapter(PatherActivity mActivity, ArrayList<Integer> idList, ArrayList<String> nameList, ArrayList<Integer> levelCountList, ArrayList<Integer> levelMaxList, PartSelectDialog mDialog, ArrayList<Boolean> testing) {
         this.context = context;
         this.idList = idList;
         this.nameList = nameList;
@@ -35,6 +38,7 @@ public class PartAdapter extends RecyclerView.Adapter<PartAdapter.ItemViewHolder
         this.levelMaxList = levelMaxList;
         this.mDialog = mDialog;
         this.mActivity = mActivity;
+        this.isTestNeeded=testing;
     }
 
     @Override
@@ -52,38 +56,71 @@ public class PartAdapter extends RecyclerView.Adapter<PartAdapter.ItemViewHolder
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TextView tv = mActivity.findViewById(R.id.optionText);
-                tv.setText(nameList.get(position));
-                mDialog.dismiss();
+                if(isTestNeeded.get(position)){
+                    TextView tv = mActivity.findViewById(R.id.optionText);
+                    tv.setText(nameList.get(position));
+                    String taskName = "a";
+                    if (nameList.get(position).equals("변압기"))
+                        taskName = "transformer";
+                    if (nameList.get(position).equals("나무"))
+                        taskName = "tree";
+                    if (nameList.get(position).equals("전봇대"))
+                        taskName = "pole";
+                    if (nameList.get(position).equals("전봇대 부품들"))
+                        taskName = "preProcess";
+                    if (nameList.get(position).equals("부품 A"))
+                        taskName = "partA";
+                    if (nameList.get(position).equals("부품 B"))
+                        taskName = "partB";
+                    if (nameList.get(position).equals("부품 C"))
+                        taskName = "partC";
+                    if (nameList.get(position).equals("부품 D"))
+                        taskName = "partD";
+                    if (nameList.get(position).equals("부품 E"))
+                        taskName = "partE";
+                    if (nameList.get(position).equals("부품 G"))
+                        taskName = "partG";
+                    Intent testIntent=new Intent(mActivity, Quiz2DBoxActivity.class);
+                    testIntent.putExtra("taskID",mActivity.getTaskID());
+                    testIntent.putExtra("part",taskName);
+                    testIntent.putExtra("difficulty",mActivity.getTaskDifficulty());
+                    mActivity.startActivity(testIntent);
 
-                //이하, 설명서 보여주기 위한 코드
-                String taskName="a";
-                if(nameList.get(position).equals("변압기"))
-                    taskName="transformer";
-                if(nameList.get(position).equals("나무"))
-                    taskName="tree";
-                if(nameList.get(position).equals("전봇대"))
-                    taskName="pole";
-                if(nameList.get(position).equals("전봇대 부품들"))
-                    taskName="preProcess";
-                if(nameList.get(position).equals("부품 A"))
-                    taskName="partA";
-                if(nameList.get(position).equals("부품 B"))
-                    taskName="partB";
-                if(nameList.get(position).equals("부품 C"))
-                    taskName="partC";
-                if(nameList.get(position).equals("부품 D"))
-                    taskName="partD";
-                if(nameList.get(position).equals("부품 E"))
-                    taskName="partE";
-                if(nameList.get(position).equals("부품 G"))
-                    taskName="partG";
 
-                mActivity.forcedShowDescription(taskName);
-                SharedPreferences firstTimeExplain = mActivity.getSharedPreferences("firstTimeExplain", MODE_PRIVATE);
-                SharedPreferences.Editor editor=firstTimeExplain.edit();
-                editor.putString(taskName,"notFirst");
-                editor.commit();
+                }else {
+                    TextView tv = mActivity.findViewById(R.id.optionText);
+                    tv.setText(nameList.get(position));
+                    mDialog.dismiss();
+
+                    //이하, 설명서 보여주기 위한 코드
+                    String taskName = "a";
+                    if (nameList.get(position).equals("변압기"))
+                        taskName = "transformer";
+                    if (nameList.get(position).equals("나무"))
+                        taskName = "tree";
+                    if (nameList.get(position).equals("전봇대"))
+                        taskName = "pole";
+                    if (nameList.get(position).equals("전봇대 부품들"))
+                        taskName = "preProcess";
+                    if (nameList.get(position).equals("부품 A"))
+                        taskName = "partA";
+                    if (nameList.get(position).equals("부품 B"))
+                        taskName = "partB";
+                    if (nameList.get(position).equals("부품 C"))
+                        taskName = "partC";
+                    if (nameList.get(position).equals("부품 D"))
+                        taskName = "partD";
+                    if (nameList.get(position).equals("부품 E"))
+                        taskName = "partE";
+                    if (nameList.get(position).equals("부품 G"))
+                        taskName = "partG";
+
+                    mActivity.forcedShowDescription(taskName);
+                    SharedPreferences firstTimeExplain = mActivity.getSharedPreferences("firstTimeExplain", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = firstTimeExplain.edit();
+                    editor.putString(taskName, "notFirst");
+                    editor.commit();
+                }
             }
         });
 
