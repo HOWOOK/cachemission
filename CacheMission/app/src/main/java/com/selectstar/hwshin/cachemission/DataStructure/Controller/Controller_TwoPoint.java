@@ -524,7 +524,7 @@ public class Controller_TwoPoint extends Controller {
                                 try {
                                     JSONObject resultTemp = new JSONObject(result);
                                     if (resultTemp.get("success").toString().equals("false")) {
-                                        new ServerMessageParser().taskGetFailParse(parentActivity,resultTemp);
+                                        new ServerMessageParser().taskSubmitFailParse(parentActivity,resultTemp);
                                         parentActivity.finish();
                                     } else {
                                         mTaskViewPhotoWithLine.removeAnswer();

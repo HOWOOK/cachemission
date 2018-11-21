@@ -171,7 +171,6 @@ public abstract class PatherActivity extends AppCompatActivity {
             answer = 1003;
 
         TextView partType = findViewById(R.id.optionText);
-        System.out.println(partType.getText().toString());
 
         if(partType.getText().toString().equals("전봇대 부품들"))
             answer += 2;
@@ -193,15 +192,19 @@ public abstract class PatherActivity extends AppCompatActivity {
             answer += 10;
         else if(partType.getText().toString().equals("부품 G"))
             answer += 1;
+        else if(taskType.equals("CLASSIFICATION"))
+            ;//nothing to change
         else
             answer = -1;
+
+        System.out.println("파트파입 함수 answer : " +answer);
 
         return answer;
     }
 
     protected void partDialogShow(TextView optionText) {
         final TextView partTextTemp = optionText;
-        com.selectstar.hwshin.cachemission.Dialog.PartSelectDialog dialog = new com.selectstar.hwshin.cachemission.Dialog.PartSelectDialog(this, R.style.AppTheme_Transparent_Dialog, taskID, taskType, taskDifficulty);
+        com.selectstar.hwshin.cachemission.Dialog.PartSelectDialog dialog = new com.selectstar.hwshin.cachemission.Dialog.PartSelectDialog(this, R.style.AppTheme_Transparent_Dialog, taskID, taskType, examType, taskDifficulty);
         dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {

@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -96,6 +95,7 @@ public class ExamActivity extends PatherActivity {
                             if(answerID != null)
                                 answerIDtv.setText("Answer ID : " + answerID);
 
+                            //examType 2에서는 이렇게 안보내주던가?? (확인요망)
                             if(taskType.equals("BOXCROPEXAM") || taskType.equals("TWOPOINTEXAM"))
                                 mTaskView.setContent(currentTask.get("content")+"*<"+currentTask.get("answer"));
                             else if (taskType.equals("SUGGESTEXAM"))
@@ -106,7 +106,7 @@ public class ExamActivity extends PatherActivity {
                             mExamView.setContent((String) currentTask.get("answer"),taskID);
 
                         } else if (resultTemp.get("success").toString().equals("false")) {
-                                new ServerMessageParser().examGetFailParse(mContext, resultTemp);
+                                new ServerMessageParser().examSubmitFailParse(mContext, resultTemp);
                                 finish();
                             }
                     } catch (JSONException e) {
@@ -144,13 +144,12 @@ public class ExamActivity extends PatherActivity {
                     currentTask = (JSONObject)waitingTasks.get(waitingTasks.size()-1);
 
                     String taskUserID = currentTask.getString("user");
-                    String answerID = currentTask.getString("id");
+                    answerID = currentTask.get("id").toString();
                     if(taskUserID != null)
                         taskUserIDtv.setText("작업자 ID : " + taskUserID);
                     if(answerID != null)
                         answerIDtv.setText("Answer ID : " + answerID);
 
-                    answerID = currentTask.get("id").toString();
                     if(taskType.equals("BOXCROPEXAM")||taskType.equals("TWOPOINTEXAM"))
                         mTaskView.setContent(currentTask.get("content")+"*<"+currentTask.get("answer"));
                     else
@@ -334,9 +333,11 @@ public class ExamActivity extends PatherActivity {
                     Toast.makeText(getApplicationContext(),"테스크가 잘 되었는지 여부를 먼저 선택해 주세요",Toast.LENGTH_SHORT).show();
                     return;
                 }
-                boolean answer = false;
+                String answer = "0";
                 if(examFlag.equals("confirm"))
-                    answer=true;
+                    answer = "1";
+                if(examFlag.equals("reject"))
+                    answer = "3";
                 examFlag = "";
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     reject.setBackground(getDrawable(R.drawable.examining_false));
@@ -371,7 +372,7 @@ public class ExamActivity extends PatherActivity {
                                     maybeSetting(String.valueOf(resultTemp.get("maybe")));
 
                                 } else {
-                                    Toast.makeText(getApplicationContext(),"남은 검수작업이 없습니다. 테스크리스트로 돌아갑니다.",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(),"false : "+resultTemp.get("message"),Toast.LENGTH_SHORT).show();
                                     deleteWaitingTasks();
                                     finish();
                                 }

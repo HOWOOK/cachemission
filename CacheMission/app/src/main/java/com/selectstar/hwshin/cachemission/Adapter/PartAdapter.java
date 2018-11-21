@@ -94,6 +94,7 @@ public class PartAdapter extends RecyclerView.Adapter<PartAdapter.ItemViewHolder
     public int getItemCount() {
         return idList.size();
     }
+
     class ItemViewHolder extends RecyclerView.ViewHolder {
         private ImageView image;
         private TextView name;

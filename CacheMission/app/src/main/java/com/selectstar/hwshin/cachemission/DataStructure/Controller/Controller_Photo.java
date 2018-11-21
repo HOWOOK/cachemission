@@ -25,8 +25,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.selectstar.hwshin.cachemission.Activity.GalleryActivity;
-import com.selectstar.hwshin.cachemission.Activity.LoginActivity;
-import com.selectstar.hwshin.cachemission.Activity.TaskActivity;
 import com.selectstar.hwshin.cachemission.Adapter.PhotoPagerAdapter;
 import com.selectstar.hwshin.cachemission.DataStructure.FileHttpRequest;
 import com.selectstar.hwshin.cachemission.DataStructure.ServerMessageParser;
@@ -39,7 +37,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -175,7 +172,7 @@ public class Controller_Photo extends Controller {
                                     parentActivity.maybeSetting(String.valueOf(resultTemp.get("maybe")));
 
                                 }else{
-                                    new ServerMessageParser().taskGetFailParse(parentActivity,resultTemp);
+                                    new ServerMessageParser().taskSubmitFailParse(parentActivity,resultTemp);
                                     parentActivity.finish();
                                 }
 

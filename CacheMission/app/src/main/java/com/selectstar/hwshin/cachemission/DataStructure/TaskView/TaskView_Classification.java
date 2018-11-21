@@ -18,7 +18,7 @@ public class TaskView_Classification extends TaskView {
     public ClassificationAdapter mAdapter;
     private PhotoView photoView;
     private RecyclerView classificationrv;
-    private String[] arrayURI, arrayClass;
+    private String[] arrayExpand, arrayURI, arrayClass;
     public ArrayList<Integer> idList;
     public ArrayList<Boolean> checkList;
 
@@ -32,7 +32,8 @@ public class TaskView_Classification extends TaskView {
         classificationrv = parentActivity.findViewById(R.id.classRecyclerView);
 
         System.out.println("콘텐츠 : " + content);
-        arrayURI = content.split("\\*<");
+        arrayExpand = content.split(">");
+        arrayURI = arrayExpand[1].split("\\*");
         arrayClass = arrayURI[1].split(",");
 
         idList = new ArrayList<>();

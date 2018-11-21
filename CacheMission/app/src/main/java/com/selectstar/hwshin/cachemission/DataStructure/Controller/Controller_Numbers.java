@@ -59,7 +59,7 @@ public class Controller_Numbers extends Controller {
                                 JSONObject resultTemp = new JSONObject(result);
                                 System.out.println("resultTemp : "+resultTemp);
                                 if (resultTemp.get("success").toString().equals("false")) {
-                                    new ServerMessageParser().taskGetFailParse(parentActivity,resultTemp);
+                                    new ServerMessageParser().taskSubmitFailParse(parentActivity,resultTemp);
                                     parentActivity.finish();
                                 } else {
                                     parentActivity.goldSetting(String.valueOf(resultTemp.get("gold")));

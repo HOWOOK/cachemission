@@ -24,6 +24,7 @@ public class ClassificationAdapter extends RecyclerView.Adapter<ClassificationAd
     class ItemViewHolder extends RecyclerView.ViewHolder {
         private ImageView image;
         private CheckBox checkBox;
+
         public ItemViewHolder(View itemView){
             super(itemView);
             image = itemView.findViewById(R.id.classification_image);
@@ -39,7 +40,7 @@ public class ClassificationAdapter extends RecyclerView.Adapter<ClassificationAd
 
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.dialog_partitem, parent, false);
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.taskview_classificiation_item, parent, false);
         return new ItemViewHolder(view);
     }
 

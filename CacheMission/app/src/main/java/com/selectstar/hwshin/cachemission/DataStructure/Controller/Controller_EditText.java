@@ -1,7 +1,6 @@
 package com.selectstar.hwshin.cachemission.DataStructure.Controller;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.constraint.ConstraintLayout;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.selectstar.hwshin.cachemission.Activity.LoginActivity;
 import com.selectstar.hwshin.cachemission.Activity.TaskActivity;
 import com.selectstar.hwshin.cachemission.DataStructure.ServerMessageParser;
 import com.selectstar.hwshin.cachemission.DataStructure.WaitHttpRequest;
@@ -71,7 +69,7 @@ public class Controller_EditText extends Controller {
                             try {
                                 JSONObject resultTemp = new JSONObject(result);
                                 if (resultTemp.get("success").toString().equals("false")) {
-                                    new ServerMessageParser().taskGetFailParse(parentActivity,resultTemp);
+                                    new ServerMessageParser().taskSubmitFailParse(parentActivity,resultTemp);
                                     parentActivity.finish();
                                 } else {
                                     ((TaskActivity)parentActivity).startTask();

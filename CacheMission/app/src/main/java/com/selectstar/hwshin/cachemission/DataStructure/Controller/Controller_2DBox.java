@@ -156,7 +156,7 @@ public class Controller_2DBox extends Controller {
                                                 System.out.println("resultTemp : " + resultTemp);
                                                 System.out.println("서버반응 : " + resultTemp.get("success").toString());
                                                 if (resultTemp.get("success").toString().equals("false")) {
-                                                    new ServerMessageParser().taskGetFailParse(parentActivity,resultTemp);
+                                                    new ServerMessageParser().taskSubmitFailParse(parentActivity,resultTemp);
                                                     parentActivity.finish();
                                                 } else {
                                                     System.out.println("서버반응 2: " + resultTemp.get("success").toString());
@@ -211,35 +211,25 @@ public class Controller_2DBox extends Controller {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
-                            JSONObject param = new JSONObject();
+                            final JSONObject param = new JSONObject();
                             try {
                                 param.put("answerID", ((TaskActivity) parentActivity).getAnswerID());
                                 param.put("taskID", taskID);
 
                                 //보내야하는 데이타
                                 String submit = "<" + String.valueOf(parentActivity.partType()) + "><allclear>";
+                                System.out.println("올클리어 서브밋 : " + submit);
                                 param.put("submit", submit);
-
                                 new WaitHttpRequest(parentActivity) {
                                     @Override
                                     protected void onPostExecute(Object o) {
                                         super.onPostExecute(o);
                                         try {
                                             JSONObject resultTemp = new JSONObject(result);
+                                            System.out.println("다찾음 제출 결과 : " + resultTemp);
                                             if (resultTemp.get("success").toString().equals("false")) {
-                                                if (resultTemp.get("message").toString().equals("login")) {
-                                                    Intent in = new Intent(parentActivity, LoginActivity.class);
-                                                    parentActivity.startActivity(in);
-                                                    Toast.makeText(parentActivity, "로그인이 만료되었습니다. 다시 로그인해주세요", Toast.LENGTH_SHORT).show();
-                                                    parentActivity.finish();
-                                                } else if (resultTemp.get("message").toString().equals("task")) {
-                                                    Toast.makeText(parentActivity, "테스크가 만료되었습니다. 다른 테스크를 선택해주세요", Toast.LENGTH_SHORT).show();
-                                                    parentActivity.deleteWaitingTasks();
-                                                    parentActivity.finish();
-                                                } else {
-                                                    Toast.makeText(parentActivity, "남은 테스크가 없습니다.", Toast.LENGTH_SHORT).show();
-                                                    parentActivity.finish();
-                                                }
+                                                new ServerMessageParser().taskSubmitFailParse(parentActivity,resultTemp);
+                                                parentActivity.finish();
                                             } else {
                                                 mTaskViewPhotoWithBox.removeAnswer();
                                                 parentActivity.updateWaitingTasks();

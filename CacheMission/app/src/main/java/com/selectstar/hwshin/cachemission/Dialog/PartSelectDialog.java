@@ -29,6 +29,7 @@ public class PartSelectDialog extends Dialog{
     private Context context;
     private String taskID;
     private String taskType;
+    private int examType;
     private String taskDifficulty;
     private int partNumber;
     private  PartAdapter mAdapter;
@@ -46,11 +47,12 @@ public class PartSelectDialog extends Dialog{
         this.context = context;
     }
 
-    public PartSelectDialog(@NonNull Context context, int themeResId, String taskID, String taskType, String taskDifficulty) {
+    public PartSelectDialog(@NonNull Context context, int themeResId, String taskID, String taskType, int examType, String taskDifficulty) {
         super(context, themeResId);
         this.context = context;
         this.taskID = taskID;
         this.taskType = taskType;
+        this.examType = examType;
         this.taskDifficulty = taskDifficulty;
     }
 
@@ -78,7 +80,10 @@ public class PartSelectDialog extends Dialog{
         partRecycler.setLayoutManager(new GridLayoutManager(context,2));
         partRecycler.setAdapter(mAdapter);
 
-        if(taskType.equals("BOXCROP") && taskDifficulty.equals("EASY")) {
+        System.out.println("테타 : "+taskType);
+        System.out.println("테디 : "+taskDifficulty);
+
+        if((taskType.equals("BOXCROP") || taskType.equals("BOXCROPEXAM")) && taskDifficulty.equals("EASY")) {
             partNumber = 100;
             checkPossible(partNumber + 1, idList, R.drawable.part_g, nameList,"부품 G", levelCountList, levelMaxList);
             checkPossible(partNumber + 2, idList, R.drawable.part_pre, nameList,"전봇대 부품들", levelCountList, levelMaxList);
@@ -91,7 +96,7 @@ public class PartSelectDialog extends Dialog{
             checkPossible(partNumber + 9, idList, R.drawable.part_d, nameList,"부품 D", levelCountList, levelMaxList);
             checkPossible(partNumber + 10, idList, R.drawable.part_e, nameList,"부품 E", levelCountList, levelMaxList);
         }
-        if(taskType.equals("BOXCROP") && taskDifficulty.equals("NORMAL")) {
+        if((taskType.equals("BOXCROP") || taskType.equals("BOXCROPEXAM")) && taskDifficulty.equals("NORMAL")) {
             partNumber = 200;
             checkPossible(partNumber + 6, idList, R.drawable.part_a, nameList,"부품 A", levelCountList, levelMaxList);
             checkPossible(partNumber + 7, idList, R.drawable.part_b, nameList,"부품 B", levelCountList, levelMaxList);
@@ -105,6 +110,8 @@ public class PartSelectDialog extends Dialog{
         JSONObject param = new JSONObject();
         try {
             param.put("taskID", taskID);
+            if(taskType.contains("EXAM"))
+                param.put("examType", examType);
             param.put("version", "9.9.9"); //버전은 의미 없어서 임의값
             param.put("option", partNum);
 
@@ -121,22 +128,29 @@ public class PartSelectDialog extends Dialog{
                         System.out.println("테스크 어베일 결과 : "+result);
 
                         nameList.add(nameListItem);
-                        levelCountList.add((Integer) resultTemp.get("level_count"));
-                        levelMaxList.add((Integer) resultTemp.get("level_max"));
+
+                        if(taskType.contains("EXAM")) {
+                            levelCountList.add((Integer) 123);//일단은 임의의 숫자. (수정요망) EXAM에서는 레벨이 없기 때문에 얘를 띄울 필요가 없다.
+                            levelMaxList.add((Integer) 456);
+                        }else{
+                            levelCountList.add((Integer) resultTemp.get("level_count"));
+                            levelMaxList.add((Integer) resultTemp.get("level_max"));
+                        }
+
                         if(resultTemp.get("success").toString().equals("true")){
                             idList.add(idListItem);
                         }else{
                             Log.d("실패!", partNumTemp + ", " +resultTemp.toString());
-                            if(resultTemp.get("message").toString().equals("needtest")){
-                                idList.add(R.drawable.btn_x);
+                            if(resultTemp.get("message").toString().equals("black")){
+                                idList.add(R.drawable.examining_false);
                             }else if(resultTemp.get("message").toString().equals("nomore")){
-
-                            }else if(resultTemp.get("message").toString().equals("black")){
-
+                                idList.add(R.drawable.examining_falsepush);
+                            }else if(resultTemp.get("message").toString().equals("needtest")){
+                                idList.add(R.drawable.btn_x);
                             }else if(resultTemp.get("message").toString().equals("exceed")){
-
+                                idList.add(R.drawable.examining_truepush);
                             }else {
-
+                                idList.add(R.drawable.examining_true);
                             }
 
                         }
