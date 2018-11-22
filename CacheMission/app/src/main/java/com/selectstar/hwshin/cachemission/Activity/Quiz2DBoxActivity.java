@@ -265,7 +265,7 @@ public class Quiz2DBoxActivity extends PatherActivity {
                             mController.resetContent(controllerView, taskID);
 
                         } else {
-                            new ServerMessageParser().taskGetFailParse(Quiz2DBoxActivity.this, resultTemp);
+                            new ServerMessageParser().taskSubmitFailParse(Quiz2DBoxActivity.this, resultTemp);
                             finish();
                         }
                     } catch (JSONException e) {

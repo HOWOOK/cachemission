@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class ClassificationAdapter extends RecyclerView.Adapter<ClassificationAdapter.ItemViewHolder>{
     PatherActivity mActivity;
     ArrayList<Integer> idList;
+    ArrayList<Integer> partList;
     ArrayList<Boolean> checkList;
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -32,9 +33,10 @@ public class ClassificationAdapter extends RecyclerView.Adapter<ClassificationAd
         }
     }
 
-    public ClassificationAdapter(PatherActivity mActivity, ArrayList<Integer> idList, ArrayList<Boolean> checkList){
+    public ClassificationAdapter(PatherActivity mActivity, ArrayList<Integer> idList, ArrayList<Integer> partList, ArrayList<Boolean> checkList){
         this.mActivity = mActivity;
         this.idList = idList;
+        this.partList = partList;
         this.checkList = checkList;
     }
 
