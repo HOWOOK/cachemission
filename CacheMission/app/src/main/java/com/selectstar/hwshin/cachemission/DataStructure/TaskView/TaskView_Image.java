@@ -65,16 +65,10 @@ public class TaskView_Image extends TaskView {
                 final String content = jsonObject.get("content").toString();
                 new Thread() {
                     public void run() {
-
                         Bitmap bitmap = getBitmap(parentActivity.getString(R.string.mainurl) + "/media/" + content);
                         bitmaps.put(content, bitmap);
-
-
                     }
                 }.start();
-
-
-
             }
         }
         catch(JSONException e)

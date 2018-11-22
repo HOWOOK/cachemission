@@ -20,4 +20,11 @@
         app:layout_constraintStart_toStartOf="@+id/classification_image"
         />
 
+    <View
+        android:id="@+id/classification_clickView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorTransparentAbsolute"
+        />
+
 </android.support.constraint.ConstraintLayout>
