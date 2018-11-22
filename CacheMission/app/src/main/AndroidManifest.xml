@@ -169,7 +169,10 @@
         </provider>
 
         <activity android:name=".Activity.ExamResultActivity" />
-        <activity android:name=".Activity.Quiz2DBoxActivity"></activity>
+        <activity android:name=".Activity.Quiz2DBoxActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

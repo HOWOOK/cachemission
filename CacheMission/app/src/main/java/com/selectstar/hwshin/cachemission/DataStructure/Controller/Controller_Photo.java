@@ -143,7 +143,12 @@ public class Controller_Photo extends Controller {
                     Log.d("lflflflflf",String.valueOf(getEXIFWidth(uri)));
                     Log.d("lflflflflffff",String.valueOf(getEXIFLength(uri)));
                     Log.d("asdadsas",String.valueOf(getBitmapWidth(uri)));
-                    if(getEXIFWidth(uri)<1920||getEXIFLength(uri)<1080){
+//                    if(getEXIFWidth(uri)<1920||getEXIFLength(uri)<1080){
+//                        getDialog("사진 해상도 낮음",String.valueOf(i+1)+"번째 사진의 해상도가 1920*1080 미만입니다. 해상도가 1920*1080 이상인 사진만 업로드할 수 있습니다.");
+//                        adapter.dropPhoto(i+1);
+//                        break;
+//                    }
+                    if(!adapter.resolution.get(i)){
                         getDialog("사진 해상도 낮음",String.valueOf(i+1)+"번째 사진의 해상도가 1920*1080 미만입니다. 해상도가 1920*1080 이상인 사진만 업로드할 수 있습니다.");
                         adapter.dropPhoto(i+1);
                         break;
@@ -173,7 +178,7 @@ public class Controller_Photo extends Controller {
 
                                 }else{
                                     new ServerMessageParser().taskSubmitFailParse(parentActivity,resultTemp);
-                                    parentActivity.finish();
+
                                 }
 
                             }

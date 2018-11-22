@@ -56,6 +56,7 @@ public class TaskActivity extends PatherActivity {
     private TextView answerIDtv;
 
 
+
 //    public TaskView getmTaskView() {
 //        return this.mTaskView;
 //    }
@@ -173,6 +174,7 @@ public class TaskActivity extends PatherActivity {
             findViewById(R.id.option).setBackgroundColor(this.getResources().getColor(R.color.colorDark2));
             ((TextView) findViewById(R.id.optionText)).setTextColor(this.getResources().getColor(R.color.colorPrimary));
             partDialogShow(optionText);
+            partDialogShowingFlag=true;
         }
 
         //DIALECT, RECOR, DIRECTRECORD이면 regionSelectDialog를 띄워줘야한다.
@@ -280,6 +282,7 @@ public class TaskActivity extends PatherActivity {
             } else if(taskView.expandFlag){
                 partText.setText("");
                 partDialogShow(partText);
+                partDialogShowingFlag=true;
                 taskView.removeAnswer();
             }else{
                 super.onBackPressed();
@@ -324,6 +327,16 @@ public class TaskActivity extends PatherActivity {
         super.onStop();
         GoogleAnalytics.getInstance(this).reportActivityStop(this);
     }
+//    @Override
+//    protected void onResume(){
+//        super.onResume();
+//        if(partDialogShowingFlag){
+//            dialog.dismiss();
+//            TextView opt=findViewById(R.id.optionText);
+//            partDialogShow(opt);
+//        }
+//
+//    }
 
     public void getNewTask(){
         JSONObject param = new JSONObject();
@@ -369,7 +382,7 @@ public class TaskActivity extends PatherActivity {
 
                         } else {
                             new ServerMessageParser().taskSubmitFailParse(TaskActivity.this, resultTemp);
-                            finish();
+
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

@@ -63,6 +63,8 @@ public abstract class PatherActivity extends AppCompatActivity {
     protected int partNum=-1;
     String questString="";
     int currentIndex=0;
+    boolean partDialogShowingFlag=false;
+    com.selectstar.hwshin.cachemission.Dialog.PartSelectDialog dialog;
 
     public int getPartNum() {
         return partNum;
@@ -168,8 +170,11 @@ public abstract class PatherActivity extends AppCompatActivity {
 
     public int partType() {
         int answer = -1;
-        if((taskType.equals("BOXCROP") || taskType.equals("BOXCROPEXAM")) && taskDifficulty.equals("EASY"))
+        if((taskType.equals("BOXCROP") || taskType.equals("BOXCROPEXAM")) && taskDifficulty.equals("EASY")){
+
             answer = 100;
+            Log.d("insideparttype","aa");
+        }
         if((taskType.equals("BOXCROP") || taskType.equals("BOXCROPEXAM")) && taskDifficulty.equals("NORMAL"))
             answer = 200;
         if(taskType.equals("CLASSIFICATION") && taskDifficulty.equals("1"))
@@ -213,10 +218,11 @@ public abstract class PatherActivity extends AppCompatActivity {
 
     protected void partDialogShow(TextView optionText) {
         final TextView partTextTemp = optionText;
-        com.selectstar.hwshin.cachemission.Dialog.PartSelectDialog dialog = new com.selectstar.hwshin.cachemission.Dialog.PartSelectDialog(this, R.style.AppTheme_Transparent_Dialog, taskID, taskType, examType, taskDifficulty);
+        dialog = new com.selectstar.hwshin.cachemission.Dialog.PartSelectDialog(this, R.style.AppTheme_Transparent_Dialog, taskID, taskType, examType, taskDifficulty);
         dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
+                partDialogShowingFlag=false;
                 if(partTextTemp.getText().toString().equals(""))
                     finish();
             }
@@ -224,6 +230,7 @@ public abstract class PatherActivity extends AppCompatActivity {
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
+                partDialogShowingFlag=false;
                 if(partTextTemp.getText().toString().equals(""))
                     finish();
                 startTask();
