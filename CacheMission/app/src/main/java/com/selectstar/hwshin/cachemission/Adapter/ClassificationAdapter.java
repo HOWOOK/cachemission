@@ -19,22 +19,26 @@ import java.util.ArrayList;
 public class ClassificationAdapter extends RecyclerView.Adapter<ClassificationAdapter.ItemViewHolder>{
     PatherActivity mActivity;
     ArrayList<Integer> idList;
+    ArrayList<Integer> partList;
     ArrayList<Boolean> checkList;
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
         private ImageView image;
+        private View chickView;
         private CheckBox checkBox;
 
         public ItemViewHolder(View itemView){
             super(itemView);
             image = itemView.findViewById(R.id.classification_image);
             checkBox = itemView.findViewById(R.id.classification_checkbox);
+            chickView = itemView.findViewById(R.id.classification_clickView);
         }
     }
 
-    public ClassificationAdapter(PatherActivity mActivity, ArrayList<Integer> idList, ArrayList<Boolean> checkList){
+    public ClassificationAdapter(PatherActivity mActivity, ArrayList<Integer> idList, ArrayList<Integer> partList, ArrayList<Boolean> checkList){
         this.mActivity = mActivity;
         this.idList = idList;
+        this.partList = partList;
         this.checkList = checkList;
     }
 
@@ -48,15 +52,17 @@ public class ClassificationAdapter extends RecyclerView.Adapter<ClassificationAd
     public void onBindViewHolder(@NonNull final ClassificationAdapter.ItemViewHolder holder, final int position) {
         holder.image.setImageDrawable(ContextCompat.getDrawable(mActivity, idList.get(position)));
         holder.checkBox.setChecked(false);
-        holder.image.setOnClickListener(new View.OnClickListener() {
+        holder.chickView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(holder.checkBox.isChecked()){
                     holder.checkBox.setChecked(false);
                     checkList.set(position, false);
+                    System.out.println("체크가 되어있었는데 안되는걸로, 체크리스트는 : " + checkList.get(position));
                 }else{
                     holder.checkBox.setChecked(true);
                     checkList.set(position, true);
+                    System.out.println("체크가 안되어있었는데 되는걸로, 체크리스트는 : " + checkList.get(position));
                 }
             }
         });

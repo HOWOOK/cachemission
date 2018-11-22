@@ -19,7 +19,8 @@ public class TaskView_Classification extends TaskView {
     private PhotoView photoView;
     private RecyclerView classificationrv;
     private String[] arrayExpand, arrayURI, arrayClass;
-    public ArrayList<Integer> idList;
+    private int[] arrayintClass;
+    public ArrayList<Integer> idList, partList;
     public ArrayList<Boolean> checkList;
 
     public TaskView_Classification(){
@@ -35,32 +36,54 @@ public class TaskView_Classification extends TaskView {
         arrayExpand = content.split(">");
         arrayURI = arrayExpand[1].split("\\*");
         arrayClass = arrayURI[1].split(",");
+        arrayintClass = new int[arrayClass.length];
+
+        for (int i = 0; i < arrayClass.length; i++)
+            arrayintClass[i] = Integer.parseInt(arrayClass[i]) % 100;
 
         idList = new ArrayList<>();
+        partList = new ArrayList<>();
         checkList = new ArrayList<>();
-        mAdapter = new ClassificationAdapter(parentActivity, idList, checkList);
+
+        mAdapter = new ClassificationAdapter(parentActivity, idList, partList, checkList);
 
         classificationrv.setLayoutManager(new GridLayoutManager(parentActivity, 4));
         classificationrv.setAdapter(mAdapter);
 
         //Adapter에 아이템 넣어주기
-        for(int i = 0; i < arrayClass.length; i++){
-            if(arrayClass[i].equals("1"))
+        for(int i = 0; i < arrayintClass.length; i++){
+            if(arrayintClass[i] == 1) {
                 idList.add(R.drawable.part_g);
-            if(arrayClass[i].equals("4"))
+                partList.add(1);
+            }
+            if(arrayintClass[i] == 4) {
                 idList.add(R.drawable.part_tree);
-            if(arrayClass[i].equals("5"))
+                partList.add(4);
+            }
+            if(arrayintClass[i] == 5){
                 idList.add(R.drawable.part_transformer);
-            if(arrayClass[i].equals("6"))
+                partList.add(5);
+            }
+            if(arrayintClass[i] == 6) {
                 idList.add(R.drawable.part_a);
-            if(arrayClass[i].equals("7"))
+                partList.add(6);
+            }
+            if(arrayintClass[i] == 7) {
                 idList.add(R.drawable.part_b);
-            if(arrayClass[i].equals("8"))
+                partList.add(7);
+            }
+            if(arrayintClass[i] == 8) {
                 idList.add(R.drawable.part_c);
-            if(arrayClass[i].equals("9"))
+                partList.add(8);
+            }
+            if(arrayintClass[i] == 9) {
                 idList.add(R.drawable.part_d);
-            if(arrayClass[i].equals("10"))
+                partList.add(9);
+            }
+            if(arrayintClass[i] == 10) {
                 idList.add(R.drawable.part_e);
+                partList.add(10);
+            }
         }
 
         for(int i = 0; i < arrayClass.length; i++){

@@ -36,22 +36,38 @@ public class Controller_Classification extends Controller {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         JSONObject param = new JSONObject();
-                        JSONObject parmaMap = new JSONObject();
                         try {
                             param.put("answerID", ((TaskActivity) parentActivity).getAnswerID());
                             param.put("taskID", taskID);
 
                             //보내야하는 데이타
-                            ArrayList<Integer> idList = ((TaskView_Classification)parentActivity.getmTaskView()).idList;
+                            ArrayList<Integer> partList = ((TaskView_Classification)parentActivity.getmTaskView()).partList;
                             ArrayList<Boolean> checkList = ((TaskView_Classification)parentActivity.getmTaskView()).checkList;
 
-                            for(int i = 0; i < idList.size(); i++){
-                                parmaMap.put(idList.get(i).toString(), checkList.get(i).toString());
+                            System.out.println("----파트리스트----");
+                            for (int i = 0; i < partList.size(); i++){
+                                System.out.print(partList.get(i)+" ");
+                            }
+                            System.out.println("\n------------------");
+
+                            System.out.println("----체크리스트----");
+                            for (int i = 0; i < checkList.size(); i++){
+                                System.out.print(checkList.get(i)+" ");
+                            }
+                            System.out.println("\n------------------");
+
+
+                            String submitString = "<group>";
+
+                            for(int i = 0; i < partList.size(); i++){
+                                if (checkList.get(i) == true)
+                                    submitString += partList.get(i).toString()+",";
                             }
 
-                            System.out.println("파라미터 매치 : " + parmaMap);
-                            param.put("submit", parmaMap);
+                            submitString = submitString.substring(0,submitString.length()-1);
 
+                            System.out.println("classification 서브밋 데이타 : " + submitString);
+                            param.put("submit", submitString);
                             new WaitHttpRequest(parentActivity) {
                                 @Override
                                 protected void onPostExecute(Object o) {
