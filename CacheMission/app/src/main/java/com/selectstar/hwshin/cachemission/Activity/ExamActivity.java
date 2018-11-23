@@ -125,15 +125,7 @@ public class ExamActivity extends PatherActivity {
     public void startTask()
     {
         try{
-            String key = taskID;
-            if(taskType.contains("BOXCROP"))
-                key = key +"/"+ String.valueOf(partType());
-            else
-                key = key + "/-1";
-            if(taskType.contains("EXAM"))
-                key = key + "/" + String.valueOf(examType);
-            else
-                key = key + "/-1";
+            String key = keyGet();
             waitingTasks = JSONtoArray(new JSONArray(getPreference("waitingTasks",key)));
             System.out.println("flag1");
             System.out.println(waitingTasks);
@@ -145,10 +137,12 @@ public class ExamActivity extends PatherActivity {
 
                     String taskUserID = currentTask.getString("user");
                     answerID = currentTask.get("id").toString();
+
                     if(taskUserID != null)
                         taskUserIDtv.setText("작업자 ID : " + taskUserID);
                     if(answerID != null)
                         answerIDtv.setText("Answer ID : " + answerID);
+
                     if(taskType.equals("BOXCROPEXAM")||taskType.equals("TWOPOINTEXAM"))
                         mTaskView.setContent(currentTask.get("content")+"*<"+currentTask.get("answer"));
                     else

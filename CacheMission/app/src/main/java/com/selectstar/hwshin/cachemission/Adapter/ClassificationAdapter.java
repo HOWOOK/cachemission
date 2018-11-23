@@ -58,11 +58,9 @@ public class ClassificationAdapter extends RecyclerView.Adapter<ClassificationAd
                 if(holder.checkBox.isChecked()){
                     holder.checkBox.setChecked(false);
                     checkList.set(position, false);
-                    System.out.println("체크가 되어있었는데 안되는걸로, 체크리스트는 : " + checkList.get(position));
                 }else{
                     holder.checkBox.setChecked(true);
                     checkList.set(position, true);
-                    System.out.println("체크가 안되어있었는데 되는걸로, 체크리스트는 : " + checkList.get(position));
                 }
             }
         });

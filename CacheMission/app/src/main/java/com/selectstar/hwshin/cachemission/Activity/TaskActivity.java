@@ -211,7 +211,6 @@ public class TaskActivity extends PatherActivity {
                     intent_taskExplain.putExtra("part", optionText.getText());
                     intent_taskExplain.putExtra("partNum", partType());
                     intent_taskExplain.putExtra("taskID", taskID);
-                    System.out.println("shibal"+taskID);
                     intent_taskExplain.putExtra("loginToken", getLoginToken());
                     System.out.println("가져온 텍스트 : "+optionText.getText());
 
@@ -310,7 +309,7 @@ public class TaskActivity extends PatherActivity {
                 ((Controller_TwoPoint.LineView) controller.pointLine).samePointSetting(
                         ((Controller_TwoPoint.LineView) controller.pointLine).getLines()[0],
                         ((Controller_TwoPoint.LineView) controller.pointLine).getLines()[1]);
-
+                taskView.answerLineView.invalidate();
             }else{
                 super.onBackPressed();
             }
@@ -341,6 +340,8 @@ public class TaskActivity extends PatherActivity {
                 region = ((TextView)findViewById(R.id.optionText)).getText().toString();
                 param.put("option", region);
             }
+
+            System.out.println("taskGet 옵션 : " + param.get("option"));
             new HurryHttpRequest(this) {
                 @Override
                 protected void onPostExecute(Object o) {
@@ -353,17 +354,19 @@ public class TaskActivity extends PatherActivity {
                         if ((boolean) resultTemp.get("success")) {
                             waitingTasks = new ArrayList<>();
                             JSONArray tempTasks = (JSONArray)resultTemp.get("answers");
-                            for(int i=0;i<tempTasks.length();i++)
+
+                            for(int i = 0; i < tempTasks.length(); i++)
                                 waitingTasks.add((JSONObject)tempTasks.get(i));
                             mTaskView.setPreviewContents(waitingTasks);
                             Date after28time = addMinutesToDate(28,new Date());
+
                             ((JSONObject)waitingTasks.get(0)).put("time",DateToString(after28time));
                             currentTask = waitingTasks.get(waitingTasks.size()-1);
                             answerID = currentTask.getString("id");
+
                             if(answerID != null)
                                 answerIDtv.setText("Answer ID : " + answerID);
-                            System.out.println("컨텐츠 : "+ currentTask.get("content"));
-                            System.out.println("------------");
+
                             mTaskView.setContent((String) currentTask.get("content"));
                             mController.resetContent(controllerView, taskID);
 
@@ -386,17 +389,11 @@ public class TaskActivity extends PatherActivity {
     @Override
     public void startTask(){
         try {
-            String key = taskID;
-            if(taskType.contains("BOXCROP"))
-                key = key +"/"+ String.valueOf(partType());
-            else
-                key = key + "/-1";
-            if(taskType.contains("EXAM"))
-                key = key + "/" + String.valueOf(examType);
-            else
-                key = key + "/-1";
+            String key = keyGet();
             waitingTasks = JSONtoArray(new JSONArray(getPreference("waitingTasks",key)));
-            if(waitingTasks.size()>0) {
+            System.out.println("TaskActivity 키 : " + key);
+            System.out.println("TaskActivity 웨이팅테스크 : "+waitingTasks);
+            if(waitingTasks.size() > 0) {
                 if (timeCheck(((JSONObject) waitingTasks.get(0)).get("time").toString())) {
                     if(mTaskView.isEmpty())
                         mTaskView.setPreviewContents(waitingTasks);
@@ -408,6 +405,7 @@ public class TaskActivity extends PatherActivity {
                         answerIDtv.setText("Answer ID : " + answerID);
 
                     mTaskView.setContent((String) currentTask.get("content"));
+
                     mController.resetContent(controllerView,taskID);
                 }else{
                     getNewTask();
