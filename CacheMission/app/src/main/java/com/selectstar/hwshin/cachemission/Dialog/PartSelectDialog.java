@@ -160,7 +160,7 @@ public class PartSelectDialog extends Dialog{
                                 idList.add(R.drawable.examining_true);
                                 testingList.add(false);
                             }else{
-                                idList.add(R.drawable.btn_x);
+                                idList.add(R.drawable.cashmissionicon);
                                 testingList.add(false);
                             }
                         }
