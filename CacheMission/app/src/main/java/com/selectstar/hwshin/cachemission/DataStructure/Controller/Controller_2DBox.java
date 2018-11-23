@@ -262,6 +262,9 @@ public class Controller_2DBox extends Controller {
                                                 JSONObject paramForRankUp = new JSONObject();
                                                 paramForRankUp.put("option", parentActivity.partType());
                                                 paramForRankUp.put("taskID", taskID);
+                                                paramForRankUp.put("id",parentActivity.answerID);
+                                                paramForRankUp.put("pass",false);
+                                                paramForRankUp.put("failDetail","박스 안에 부품이 없습니다.");
 
                                                 new HurryHttpRequest(parentActivity) {
                                                     @Override
@@ -291,11 +294,71 @@ public class Controller_2DBox extends Controller {
                                                 testCountForGraduate = 0;
                                                 countText.setText(String.valueOf(testCountForGraduate) + "/10");
                                                 getDialog("부품이 잘렸습니다.", "박스를 좀더 크게 쳐 주세요.");
+                                                JSONObject paramForRankUp = new JSONObject();
+                                                paramForRankUp.put("option", parentActivity.partType());
+                                                paramForRankUp.put("taskID", taskID);
+                                                paramForRankUp.put("id",parentActivity.answerID);
+                                                paramForRankUp.put("pass",false);
+                                                paramForRankUp.put("failDetail","부품이 잘렸습니다.");
+
+                                                new HurryHttpRequest(parentActivity) {
+                                                    @Override
+                                                    protected void onPostExecute(Object o) {
+                                                        super.onPostExecute(o);
+                                                        System.out.println("나 여기 들어왔어");
+
+                                                        try {
+                                                            JSONObject resultTemp = new JSONObject(result);
+                                                            System.out.println("resultTemp : " + resultTemp);
+                                                            System.out.println("서버반응 : " + resultTemp.get("success").toString());
+                                                            if (resultTemp.get("success").toString().equals("false")) {
+                                                                new ServerMessageParser().taskSubmitFailParse(parentActivity, resultTemp);
+
+                                                            } else {
+                                                                System.out.println("서버반응 2: " + resultTemp.get("success").toString());
+
+
+                                                            }
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                }.execute(parentActivity.getString(R.string.mainurl) + "/testing/logTest", paramForRankUp, ((Quiz2DBoxActivity) parentActivity).getLoginToken());
 
                                             } else if (mTaskViewPhotoWithBox.isBoundaryLimitExceededForTest(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend, candidate)) {
                                                 testCountForGraduate = 0;
                                                 countText.setText(String.valueOf(testCountForGraduate) + "/10");
                                                 getDialog("박스가 너무 큽니다.", "부품의 경계에 맞게 박스를 쳐 주세요.");
+                                                JSONObject paramForRankUp = new JSONObject();
+                                                paramForRankUp.put("option", parentActivity.partType());
+                                                paramForRankUp.put("taskID", taskID);
+                                                paramForRankUp.put("id",parentActivity.answerID);
+                                                paramForRankUp.put("pass",false);
+                                                paramForRankUp.put("failDetail","박스가 너무 큽니다.");
+
+                                                new HurryHttpRequest(parentActivity) {
+                                                    @Override
+                                                    protected void onPostExecute(Object o) {
+                                                        super.onPostExecute(o);
+                                                        System.out.println("나 여기 들어왔어");
+
+                                                        try {
+                                                            JSONObject resultTemp = new JSONObject(result);
+                                                            System.out.println("resultTemp : " + resultTemp);
+                                                            System.out.println("서버반응 : " + resultTemp.get("success").toString());
+                                                            if (resultTemp.get("success").toString().equals("false")) {
+                                                                new ServerMessageParser().taskSubmitFailParse(parentActivity, resultTemp);
+
+                                                            } else {
+                                                                System.out.println("서버반응 2: " + resultTemp.get("success").toString());
+
+
+                                                            }
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                }.execute(parentActivity.getString(R.string.mainurl) + "/testing/logTest", paramForRankUp, ((Quiz2DBoxActivity) parentActivity).getLoginToken());
 
                                             } else {
                                                 mTaskViewPhotoWithBox.addAnswer(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend);

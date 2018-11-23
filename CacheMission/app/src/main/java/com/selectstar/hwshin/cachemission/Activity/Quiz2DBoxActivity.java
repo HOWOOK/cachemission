@@ -288,7 +288,7 @@ countText.setText("0/10");
                                     JSONArray a=new JSONArray(currentTask.getString("answers").toString());
                                     mController.BoxCropTestAnswer=a;
                                     mTaskView.BoxCropTestAnswer=a;
-                                    mController.id=currentTask.getString("id").toString();
+                                    //mController.id=currentTask.getString("id").toString();
 
                                     Log.d("로그",a.get(0).toString());
 
