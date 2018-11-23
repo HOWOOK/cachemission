@@ -288,30 +288,8 @@ public abstract class PatherActivity extends AppCompatActivity {
         spinnerAnim.start();
     }
 
-    protected String keyGet() {
-        String rtnKey;
-        rtnKey = taskID;
-        if(taskType.contains("BOXCROP") || taskType.contains("TWOPOINT") || taskType.contains("CLASSIFICATION"))
-            rtnKey = rtnKey +"/"+ String.valueOf(partType());
-        else
-            rtnKey = rtnKey + "/-1";
-        if(taskType.contains("EXAM"))
-            rtnKey = rtnKey + "/" + String.valueOf(examType);
-        else
-            rtnKey = rtnKey + "/-1";
-
-        return rtnKey;
-    }
-
-    public void deleteWaitingTasks(){
-        String key = keyGet();
-        savePreference("waitingTasks", key, new JSONArray().toString());
-    }
-
     public void updateWaitingTasks(){
         waitingTasks.remove(waitingTasks.size() - 1);
-        String key = keyGet();
-        savePreference("waitingTasks", key, ARRAYtoJSON(waitingTasks).toString());
     }
 
     protected JSONArray ARRAYtoJSON(ArrayList<JSONObject> list){

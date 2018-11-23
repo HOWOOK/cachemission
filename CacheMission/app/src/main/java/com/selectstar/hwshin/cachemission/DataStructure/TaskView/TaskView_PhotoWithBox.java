@@ -120,12 +120,6 @@ public class TaskView_PhotoWithBox extends TaskView {
         }
     }
 
-
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
     public void setContent(String content)
     {
         //플래그 처리

@@ -172,8 +172,4 @@ public class TaskView_Classification extends TaskView {
 
     }
 
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
 }

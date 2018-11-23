@@ -52,11 +52,6 @@ public class TaskView_Image extends TaskView {
     }
 
     @Override
-    public boolean isEmpty() {
-        return bitmaps.isEmpty();
-    }
-
-    @Override
     public void setPreviewContents(ArrayList<JSONObject> list)
     {
         try {

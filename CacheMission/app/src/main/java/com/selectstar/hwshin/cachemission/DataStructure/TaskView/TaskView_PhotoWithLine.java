@@ -319,10 +319,6 @@ public class TaskView_PhotoWithLine extends TaskView {
         return returnBitmap;
     }
 
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
 
     //String 형태로 서버에서 넘어온 좌표를 float[][] 형식으로 바꾸어 answerCoordination에 넣어줌
     private void coordinationParsing(String[] array) {

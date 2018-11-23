@@ -321,33 +321,19 @@ countText.setText("0/10");
     @Override
     public void startTask(){
         try {
-            String key = taskID;
-            if(taskType.contains("BOXCROP"))
-                key = key +"/"+ String.valueOf(partType());
-            else
-                key = key + "/-1";
-            if(taskType.contains("EXAM"))
-                key = key + "/" + String.valueOf(examType);
-            else
-                key = key + "/-1";
-            waitingTasks = JSONtoArray(new JSONArray(getPreference("waitingTasks",key)));
-            if(waitingTasks.size()>0) {
-                if (timeCheck(((JSONObject) waitingTasks.get(0)).get("time").toString())) {
-                    if(mTaskView.isEmpty())
-                        mTaskView.setPreviewContents(waitingTasks);
-                    currentTask = (JSONObject)waitingTasks.get(waitingTasks.size()-1);
-                    answerID = currentTask.get("id").toString();
-                    if(answerID != null)
-                        answerIDtv.setText("Answer ID : " + answerID);
+            if(waitingTasks != null && waitingTasks.size() > 0) {
+                currentTask = (JSONObject)waitingTasks.get(waitingTasks.size()-1);
+                answerID = currentTask.get("id").toString();
 
-                    mTaskView.setContent((String) currentTask.get("content"));
-                    mController.resetContent(controllerView,taskID);
+                if(answerID != null)
+                    answerIDtv.setText("Answer ID : " + answerID);
+
+                mTaskView.setContent((String) currentTask.get("content"));
+                mController.resetContent(controllerView,taskID);
+
                 }else{
                     getNewTask();
                 }
-            }else{
-                getNewTask();
-            }
         }catch(JSONException e){
             e.printStackTrace();
         }

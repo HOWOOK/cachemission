@@ -338,7 +338,6 @@ public class TaskActivity extends PatherActivity {
             editor.commit();
             partDialogShow(opt);
         }
-
     }
 
     public void getNewTask(){
@@ -375,12 +374,10 @@ public class TaskActivity extends PatherActivity {
                             for(int i = 0; i < tempTasks.length(); i++)
                                 waitingTasks.add((JSONObject)tempTasks.get(i));
                             mTaskView.setPreviewContents(waitingTasks);
-                            Date after28time = addMinutesToDate(28,new Date());
+                            currentTask = waitingTasks.get(waitingTasks.size() - 1);
 
-                            ((JSONObject)waitingTasks.get(0)).put("time",DateToString(after28time));
-                            currentTask = waitingTasks.get(waitingTasks.size()-1);
+                            //answerID 화면에 띄우는거 세팅
                             answerID = currentTask.getString("id");
-
                             if(answerID != null)
                                 answerIDtv.setText("Answer ID : " + answerID);
 
@@ -406,30 +403,20 @@ public class TaskActivity extends PatherActivity {
     @Override
     public void startTask(){
         try {
-            String key = keyGet();
-            waitingTasks = JSONtoArray(new JSONArray(getPreference("waitingTasks",key)));
-            System.out.println("TaskActivity 키 : " + key);
-            System.out.println("TaskActivity 웨이팅테스크 : "+waitingTasks);
-            if(waitingTasks.size() > 0) {
-                if (timeCheck(((JSONObject) waitingTasks.get(0)).get("time").toString())) {
-                    if(mTaskView.isEmpty())
-                        mTaskView.setPreviewContents(waitingTasks);
-                    currentTask = (JSONObject)waitingTasks.get(waitingTasks.size()-1);
+            if(waitingTasks != null && waitingTasks.size() > 0) {
+                System.out.println("TaskActivity 웨이팅테스크 : " + waitingTasks);
+                currentTask = (JSONObject)waitingTasks.get(waitingTasks.size() - 1);
+                answerID = currentTask.get("id").toString();
 
-                    answerID = currentTask.get("id").toString();
+                if(answerID != null)
+                    answerIDtv.setText("Answer ID : " + answerID);
 
-                    if(answerID != null)
-                        answerIDtv.setText("Answer ID : " + answerID);
+                mTaskView.setContent((String) currentTask.get("content"));
+                mController.resetContent(controllerView,taskID);
 
-                    mTaskView.setContent((String) currentTask.get("content"));
-
-                    mController.resetContent(controllerView,taskID);
-                }else{
-                    getNewTask();
-                }
-            }else{
+            }else
                 getNewTask();
-            }
+
         }catch(JSONException e){
             e.printStackTrace();
         }

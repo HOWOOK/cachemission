@@ -125,42 +125,29 @@ public class ExamActivity extends PatherActivity {
     public void startTask()
     {
         try{
-            String key = keyGet();
-            waitingTasks = JSONtoArray(new JSONArray(getPreference("waitingTasks",key)));
-            System.out.println("flag1");
-            System.out.println(waitingTasks);
-            if(waitingTasks.size()>0) {
-                if (timeCheck(((JSONObject) waitingTasks.get(0)).get("time").toString())) {
-                    if(mTaskView.isEmpty())
-                        mTaskView.setPreviewContents(waitingTasks);
-                    currentTask = (JSONObject)waitingTasks.get(waitingTasks.size()-1);
+            System.out.println("Exam Activity 웨이팅 테스크 : " + waitingTasks);
+            if(waitingTasks != null && waitingTasks.size() > 0) {
+                currentTask = (JSONObject)waitingTasks.get(waitingTasks.size()-1);
+                String taskUserID = currentTask.getString("user");
+                answerID = currentTask.get("id").toString();
 
-                    String taskUserID = currentTask.getString("user");
-                    answerID = currentTask.get("id").toString();
+                if(taskUserID != null)
+                    taskUserIDtv.setText("작업자 ID : " + taskUserID);
+                if(answerID != null)
+                    answerIDtv.setText("Answer ID : " + answerID);
 
-                    if(taskUserID != null)
-                        taskUserIDtv.setText("작업자 ID : " + taskUserID);
-                    if(answerID != null)
-                        answerIDtv.setText("Answer ID : " + answerID);
-
-                    if(taskType.equals("BOXCROPEXAM")||taskType.equals("TWOPOINTEXAM"))
-                        mTaskView.setContent(currentTask.get("content")+"*<"+currentTask.get("answer"));
-                    else
-                        mTaskView.setContent((String) currentTask.get("content"));
-
-                    mExamView.setContent((String) currentTask.get("answer"),taskID);
-                }
+                if(taskType.equals("BOXCROPEXAM")||taskType.equals("TWOPOINTEXAM"))
+                    mTaskView.setContent(currentTask.get("content")+"*<"+currentTask.get("answer"));
                 else
-                {
+                    mTaskView.setContent((String) currentTask.get("content"));
+
+                mExamView.setContent((String) currentTask.get("answer"),taskID);
+
+                }else{
                     getNewTask();
                 }
-            }
-            else
-            {
-                getNewTask();
-            }
-        }catch(JSONException e)
-        {
+
+        }catch(JSONException e){
             e.printStackTrace();
         }
     }
@@ -366,7 +353,6 @@ public class ExamActivity extends PatherActivity {
 
                                 } else {
                                     Toast.makeText(getApplicationContext(),"false : "+resultTemp.get("message"),Toast.LENGTH_SHORT).show();
-                                    deleteWaitingTasks();
                                     finish();
                                 }
                             } catch (JSONException e) {
@@ -407,8 +393,6 @@ public class ExamActivity extends PatherActivity {
     protected void onStart(){
         super.onStart();
         GoogleAnalytics.getInstance(this).reportActivityStart(this);
-
-
     }
 
     @Override

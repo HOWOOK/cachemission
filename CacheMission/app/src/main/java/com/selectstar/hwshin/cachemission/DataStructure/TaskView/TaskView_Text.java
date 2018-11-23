@@ -16,11 +16,6 @@ public class TaskView_Text extends TaskView {
     }
 
     @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
     public void setPreviewContents(ArrayList<JSONObject> list) {
 
     }
