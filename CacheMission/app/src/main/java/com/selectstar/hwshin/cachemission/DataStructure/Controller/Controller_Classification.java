@@ -56,12 +56,21 @@ public class Controller_Classification extends Controller {
                             }
                             System.out.println("\n------------------");
 
-
                             String submitString = "<group>";
 
+                            int partTemp = 0;
                             for(int i = 0; i < partList.size(); i++){
-                                if (checkList.get(i) == true)
-                                    submitString += partList.get(i).toString()+",";
+                                if (checkList.get(i) == true) {
+                                    partTemp = 0;
+                                    if(parentActivity.taskDifficulty.equals("1")) {
+                                        partTemp = 100;
+                                    }
+                                    if(parentActivity.taskDifficulty.equals("2") || parentActivity.taskDifficulty.equals("3")) {
+                                        partTemp = 200;
+                                    }
+                                    partTemp += partList.get(i);
+                                    submitString += ((Integer)partTemp).toString() + ",";
+                                }
                             }
 
                             submitString = submitString.substring(0,submitString.length()-1);
@@ -78,6 +87,8 @@ public class Controller_Classification extends Controller {
                                             new ServerMessageParser().taskSubmitFailParse(parentActivity,resultTemp);
 
                                         } else {
+                                            parentActivity.goldSetting(String.valueOf(resultTemp.get("gold")));
+                                            parentActivity.maybeSetting(String.valueOf(resultTemp.get("maybe")));
                                             parentActivity.updateWaitingTasks();
                                             ((TaskActivity) parentActivity).startTask();
                                         }

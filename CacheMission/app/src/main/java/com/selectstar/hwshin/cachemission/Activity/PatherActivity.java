@@ -43,8 +43,8 @@ public abstract class PatherActivity extends AppCompatActivity {
         return taskID;
     }
     protected String taskTitle;
-    protected String taskType;
-    protected String taskDifficulty;
+    public String taskType;
+    public String taskDifficulty;
     public String getTaskType() {
         return taskType;
     }
@@ -288,32 +288,8 @@ public abstract class PatherActivity extends AppCompatActivity {
         spinnerAnim.start();
     }
 
-    public void deleteWaitingTasks(){
-        System.out.println("FHFH"+partType());
-        String key = taskID;
-        if(taskType.contains("BOXCROP"))
-            key = key +"/"+ String.valueOf(partType());
-        else
-            key = key + "/-1";
-        if(taskType.contains("EXAM"))
-            key = key + "/" + String.valueOf(examType);
-        else
-            key = key + "/-1";
-        savePreference("waitingTasks", key, new JSONArray().toString());
-    }
-
     public void updateWaitingTasks(){
         waitingTasks.remove(waitingTasks.size() - 1);
-        String key = taskID;
-        if(taskType.contains("BOXCROP"))
-            key = key +"/"+ String.valueOf(partType());
-        else
-            key = key + "/-1";
-        if(taskType.contains("EXAM"))
-            key = key + "/" + String.valueOf(examType);
-        else
-            key = key + "/-1";
-        savePreference("waitingTasks",key,ARRAYtoJSON(waitingTasks).toString());
     }
 
     protected JSONArray ARRAYtoJSON(ArrayList<JSONObject> list){
@@ -358,7 +334,7 @@ public abstract class PatherActivity extends AppCompatActivity {
         return list;
     }
 
-    public String getPreference(String title,String key){
+    public String getPreference(String title, String key){
         SharedPreferences SPF = getSharedPreferences(title, MODE_PRIVATE);
         return SPF.getString(key, (new ArrayList<JSONObject>()).toString());
     }

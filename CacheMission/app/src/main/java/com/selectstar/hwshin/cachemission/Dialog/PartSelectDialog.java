@@ -142,7 +142,6 @@ public class PartSelectDialog extends Dialog{
 
                         if(resultTemp.get("success").toString().equals("true")){
                             idList.add(idListItem);
-                            testingList.add(false);
                         }else{
                             Log.d("실패!", partNumTemp + ", " +resultTemp.toString());
                             if(resultTemp.get("message").toString().equals("black")){
@@ -153,12 +152,15 @@ public class PartSelectDialog extends Dialog{
                                 testingList.add(true);
                             }else if(resultTemp.get("message").toString().equals("needtest")){
                                 idList.add(R.drawable.btn_x);
-                                testingList.add(true);
+                                testingList.add(false);
                             }else if(resultTemp.get("message").toString().equals("exceed")){
                                 idList.add(R.drawable.examining_truepush);
                                 testingList.add(false);
-                            }else {
+                            }else if(resultTemp.get("message").toString().equals("needcert")){
                                 idList.add(R.drawable.examining_true);
+                                testingList.add(false);
+                            }else{
+                                idList.add(R.drawable.cashmissionicon);
                                 testingList.add(false);
                             }
                         }

@@ -1,17 +1,25 @@
 package com.selectstar.hwshin.cachemission.DataStructure.TaskView;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.bumptech.glide.Glide;
 import com.selectstar.hwshin.cachemission.Adapter.ClassificationAdapter;
 import com.selectstar.hwshin.cachemission.Photoview.PhotoView;
 import com.selectstar.hwshin.cachemission.R;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class TaskView_Classification extends TaskView {
 
@@ -20,11 +28,64 @@ public class TaskView_Classification extends TaskView {
     private RecyclerView classificationrv;
     private String[] arrayExpand, arrayURI, arrayClass;
     private int[] arrayintClass;
+    private HashMap<String, Bitmap> bitmaps;
     public ArrayList<Integer> idList, partList;
     public ArrayList<Boolean> checkList;
 
     public TaskView_Classification(){
         taskViewID = R.layout.taskview_classification;
+        bitmaps = new HashMap<>();
+    }
+
+    //사진 url을 서버에서 받아와서 미리 로딩해놓는 함수이다.
+    private Bitmap getBitmap(String url) {
+        URL imgUrl = null;
+        HttpURLConnection connection = null;
+        InputStream is = null;
+        Bitmap retBitmap = null;
+
+        try{
+            imgUrl = new URL(url);
+            connection = (HttpURLConnection) imgUrl.openConnection();
+            connection.setDoInput(true); //url로 input받는 flag 허용
+            connection.connect(); //연결
+            is = connection.getInputStream(); // get inputstream
+            retBitmap = BitmapFactory.decodeStream(is);
+        }catch(Exception e) {
+            e.printStackTrace();
+            return null;
+        }finally {
+            if(connection!=null) {
+                connection.disconnect();
+            }
+            return retBitmap;
+        }
+    }
+
+    @Override
+    public void setPreviewContents(ArrayList<JSONObject> list)
+    {
+        try {
+            for (int i = 0; i < list.size(); i++) {
+                JSONObject jsonObject = list.get(i);
+                final String content = jsonObject.get("content").toString();
+                System.out.println("TaskView_Classification, setPreviewContents, 컨텐츠 : " + content);
+                String[] preArray0 = content.split(">");
+                final String[] preArray1 = preArray0[1].split("\\*");
+                Log.d("arrayset",preArray0[1]);
+                new Thread() {
+                    public void run() {
+                        Bitmap bitmap = getBitmap(parentActivity.getString(R.string.mainurl) + "/media/" + preArray1[0]);
+                        bitmaps.put(preArray1[0], bitmap);
+                    }
+                }.start();
+
+            }
+        }
+        catch(JSONException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -90,20 +151,25 @@ public class TaskView_Classification extends TaskView {
             checkList.add(false);
         }
 
-        //source 띄우기
-        Glide.with(parentActivity)
-                .asBitmap()
-                .load(Uri.parse(parentActivity.getString(R.string.mainurl)+"/media/"+arrayURI[0]))
-                .into(photoView);
+        if(bitmaps.containsKey(arrayURI[0])) {
+            System.out.println("TaskView_Classification, Http 통신안함, arrayURI[0] : " + arrayURI[0].toString());
+
+            Glide.with(parentActivity)
+                    .asBitmap()
+                    .load(bitmaps.get(arrayURI[0]))
+                    .into(photoView);
+
+        }else{
+            System.out.println("TaskView_Classification, Http 통신함, arrayURI[0] : " + arrayURI[0].toString());
+
+            Glide.with(parentActivity)
+                    .asBitmap()
+                    .load(Uri.parse(parentActivity.getString(R.string.mainurl)+"/media/"+arrayURI[0]))
+                    .into(photoView);
+
+        }
+
+
     }
 
-    @Override
-    public void setPreviewContents(ArrayList<JSONObject> list) {
-
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
 }

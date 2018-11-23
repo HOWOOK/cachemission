@@ -120,15 +120,8 @@ public class TaskView_PhotoWithBox extends TaskView {
         }
     }
 
-
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
     public void setContent(String content)
     {
-        Log.d("contenttttt",content);
         //플래그 처리
         ImageReady = false;
         isExamFlag = false;
@@ -199,7 +192,6 @@ public class TaskView_PhotoWithBox extends TaskView {
         photoView.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
         if(bitmaps.containsKey(array1[0])) {
-            Log.d("imin",array1[0]);
             Glide.with(parentActivity)
                     .asBitmap()
                     .load(bitmaps.get(array1[0]))

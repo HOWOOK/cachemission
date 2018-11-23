@@ -2,6 +2,7 @@ package com.selectstar.hwshin.cachemission.DataStructure.TaskView;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
@@ -21,9 +22,14 @@ import com.selectstar.hwshin.cachemission.Photoview.OnMatrixChangedListener;
 import com.selectstar.hwshin.cachemission.Photoview.PhotoView;
 import com.selectstar.hwshin.cachemission.R;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class TaskView_PhotoWithLine extends TaskView {
 
@@ -67,7 +73,7 @@ public class TaskView_PhotoWithLine extends TaskView {
     public ImageView expandView;
     boolean isExamFlag;
     public boolean ImageReady;
-    private TaskView_PhotoWithLine.LineView answerLineView;
+    public TaskView_PhotoWithLine.LineView answerLineView;
     private TaskView_PhotoWithLine.LineView answerLineViewSubmit;
     private float [] answerLines, answerLinesSubmit;
     private Bitmap expandBitmap;
@@ -75,10 +81,12 @@ public class TaskView_PhotoWithLine extends TaskView {
     private ConstraintLayout photoWithLineCL;
     private int getDeviceDpi;
     private float dpScale;
+    private HashMap<String, Bitmap> bitmaps;
     private float iouValue;
 
     public TaskView_PhotoWithLine(){
         taskViewID = R.layout.taskview_photowithline;
+        bitmaps = new HashMap<>();
     }
 
     @Override
@@ -89,6 +97,64 @@ public class TaskView_PhotoWithLine extends TaskView {
     public PhotoView getPhotoView() {
         return this.photoView;
     }
+
+    //사진 url을 서버에서 받아와서 미리 로딩해놓는 함수이다.
+    private Bitmap getBitmap(String url) {
+        URL imgUrl = null;
+        HttpURLConnection connection = null;
+        InputStream is = null;
+
+        Bitmap retBitmap = null;
+
+
+        try{
+            imgUrl = new URL(url);
+            connection = (HttpURLConnection) imgUrl.openConnection();
+            connection.setDoInput(true); //url로 input받는 flag 허용
+            connection.connect(); //연결
+            is = connection.getInputStream(); // get inputstream
+            retBitmap = BitmapFactory.decodeStream(is);
+        }catch(Exception e) {
+            e.printStackTrace();
+            return null;
+        }finally {
+            if(connection!=null) {
+                connection.disconnect();
+            }
+            return retBitmap;
+        }
+    }
+
+    @Override
+    public void setPreviewContents(ArrayList<JSONObject> list)
+    {
+        try {
+            for (int i = 0; i < list.size(); i++) {
+                JSONObject jsonObject = list.get(i);
+                final String content = jsonObject.get("content").toString();
+                String[] preArray0 = content.split(">");
+                final String[] preArray1 = preArray0[1].split("\\*");
+                Log.d("arrayset",preArray0[1]);
+                new Thread() {
+                    public void run() {
+
+                        Bitmap bitmap = getBitmap(parentActivity.getString(R.string.mainurl) + "/media/" + preArray1[0]);
+                        bitmaps.put(preArray1[0], bitmap);
+
+
+                    }
+                }.start();
+
+
+
+            }
+        }
+        catch(JSONException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public void setContent(String content) {
@@ -143,20 +209,38 @@ public class TaskView_PhotoWithLine extends TaskView {
         photoView = parentActivity.findViewById(R.id.srcview);
         photoView.setMaximumScale(15);
         photoView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        Glide.with(parentActivity)
-                .asBitmap()
-                .load(Uri.parse(parentActivity.getString(R.string.mainurl) + "/media/" + arrayURI[0])) // 임시로
-                .into(new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                        resource = BitmapResourceFitScreenSize(resource);
-                        expandBitmap = resource;
-                        photoView.setImageBitmap(resource);
-                        ImageReady = true;
-                        drawAnswer(answerCoordination, answerCoordinationSubmit);
-                        parentActivity.findViewById(R.id.expandViewCL).bringToFront();
+
+        if(bitmaps.containsKey(arrayURI[0])) {
+            Glide.with(parentActivity)
+                    .asBitmap()
+                    .load(bitmaps.get(arrayURI[0]))
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                            resource = BitmapResourceFitScreenSize(resource);
+                            expandBitmap = resource;
+                            photoView.setImageBitmap(resource);
+                            ImageReady = true;
+                            drawAnswer(answerCoordination, answerCoordinationSubmit);
+                            parentActivity.findViewById(R.id.expandViewCL).bringToFront();
                         }
-                });
+                    });
+        }else{
+            Glide.with(parentActivity)
+                    .asBitmap()
+                    .load(Uri.parse(parentActivity.getString(R.string.mainurl) + "/media/" + arrayURI[0]))
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                            resource = BitmapResourceFitScreenSize(resource);
+                            expandBitmap = resource;
+                            photoView.setImageBitmap(resource);
+                            ImageReady = true;
+                            drawAnswer(answerCoordination, answerCoordinationSubmit);
+                            parentActivity.findViewById(R.id.expandViewCL).bringToFront();
+                        }
+                    });
+        }
 
         photoView.setOnMatrixChangeListener(new OnMatrixChangedListener() {
             @Override
@@ -235,14 +319,6 @@ public class TaskView_PhotoWithLine extends TaskView {
         return returnBitmap;
     }
 
-    @Override
-    public void setPreviewContents(ArrayList<JSONObject> list) {
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
 
     //String 형태로 서버에서 넘어온 좌표를 float[][] 형식으로 바꾸어 answerCoordination에 넣어줌
     private void coordinationParsing(String[] array) {

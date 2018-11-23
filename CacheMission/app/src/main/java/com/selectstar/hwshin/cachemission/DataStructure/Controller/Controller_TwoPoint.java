@@ -268,8 +268,10 @@ public class Controller_TwoPoint extends Controller {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                float YCorrectionHeight = (float) parentActivity.findViewById(R.id.title).getHeight() + (float) parentActivity.findViewById(R.id.option).getHeight();
+                System.out.println("Controller_TwoPoint, YCorrectionHeight : " + YCorrectionHeight);
                 curX = event.getRawX();
-                curY = event.getRawY() - 70f * dpScale - getStatusBarHeight(parentActivity); //70 : taskActivity의 title와 option CL의 크기
+                curY = event.getRawY() - YCorrectionHeight * dpScale - getStatusBarHeight(parentActivity);
 
                 //OutOfBound 처리
                 curX = setXOutOfBound(curX);

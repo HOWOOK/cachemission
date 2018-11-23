@@ -14,11 +14,6 @@ public class TaskView_Video extends TaskView {
     }
 
     @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
     public void setPreviewContents(ArrayList<JSONObject> list) {
 
     }

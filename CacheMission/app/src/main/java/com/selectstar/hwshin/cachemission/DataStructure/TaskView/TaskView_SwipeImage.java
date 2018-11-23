@@ -12,11 +12,6 @@ public class TaskView_SwipeImage extends TaskView {
     }
 
     @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
     public void setContent(String content)
     {
 
