@@ -81,13 +81,14 @@ public class ExamActivity extends PatherActivity {
                         if ((boolean) resultTemp.get("success")) {
                             waitingTasks = new ArrayList<>();
                             JSONArray tempTasks = (JSONArray)resultTemp.get("answers");
+
                             for(int i=0;i<tempTasks.length();i++)
                                 waitingTasks.add((JSONObject)tempTasks.get(i));
+
                             mTaskView.setPreviewContents(waitingTasks);
-                            Date after28time = addMinutesToDate(28,new Date());
-                            ((JSONObject)waitingTasks.get(0)).put("time",DateToString(after28time));
                             currentTask = waitingTasks.get(waitingTasks.size()-1);
 
+                            //answer ID랑 작업자 화면에 띄우는거 세팅
                             String taskUserID = currentTask.getString("user");
                             answerID = ((Integer)currentTask.get("id")).toString();
                             if(taskUserID != null)

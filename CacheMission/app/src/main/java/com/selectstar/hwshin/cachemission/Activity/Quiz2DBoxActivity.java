@@ -270,17 +270,16 @@ countText.setText("0/10");
                         if ((boolean) resultTemp.get("success")) {
                             waitingTasks = new ArrayList<>();
                             JSONArray tempTasks = (JSONArray)resultTemp.get("answers");
+
                             for(int i=0;i<tempTasks.length();i++)
                                 waitingTasks.add((JSONObject)tempTasks.get(i));
                             mTaskView.setPreviewContents(waitingTasks);
-                            Date after28time = addMinutesToDate(28,new Date());
-                            ((JSONObject)waitingTasks.get(0)).put("time",DateToString(after28time));
                             currentTask = waitingTasks.get(waitingTasks.size()-1);
+
+                            //answerID 화면에 띄우는거 세팅
                             answerID = currentTask.getString("id");
                             if(answerID != null)
                                 answerIDtv.setText("Answer ID : " + answerID);
-                            System.out.println("컨텐츠 : "+ currentTask.get("content"));
-                            System.out.println("------------");
 
                             try {
 
