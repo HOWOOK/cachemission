@@ -1,7 +1,9 @@
 package com.selectstar.hwshin.cachemission.Activity;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -19,9 +21,13 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller;
+import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_2DBox;
+import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_TwoPoint;
 import com.selectstar.hwshin.cachemission.DataStructure.HurryHttpRequest;
 import com.selectstar.hwshin.cachemission.DataStructure.ServerMessageParser;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView;
+import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoWithBox;
+import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoWithLine;
 import com.selectstar.hwshin.cachemission.DataStructure.UIHashMap;
 import com.selectstar.hwshin.cachemission.R;
 
@@ -45,12 +51,14 @@ public class Quiz2DBoxActivity extends PatherActivity {
     String questString="";
     int currentIndex=0;
     private TextView answerIDtv;
+    TextView countText;
 
     public TaskView getmTaskView() {
         return this.mTaskView;
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        System.out.println("shishishi");
 
         super.onCreate(savedInstanceState);
         Tracker t = ((GlobalApplication)getApplication()).getTracker(GlobalApplication.TrackerName.APP_TRACKER);
@@ -59,8 +67,10 @@ public class Quiz2DBoxActivity extends PatherActivity {
         setContentView(R.layout.activity_quiz_2dbox);
         //캡쳐방지
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
-
+countText=findViewById(R.id.questText);
+countText.setText("0/10");
         final TextView optionText = findViewById(R.id.optionText);
+
         answerIDtv = findViewById(R.id.answerID);
         nowGold = findViewById(R.id.goldnow);
         pendingGold = findViewById(R.id.goldpre);
@@ -80,6 +90,7 @@ public class Quiz2DBoxActivity extends PatherActivity {
          */
         explainDialog = new Dialog(this);
         intent = getIntent();
+        optionText.setText(intent.getStringExtra("partkorean"));
 
 //        upGold = Integer.parseInt(intent.getStringExtra("upGold").substring(1)); //string(0)은 \표시
 //        gold =intent.getStringExtra("goldNow");
@@ -101,6 +112,7 @@ public class Quiz2DBoxActivity extends PatherActivity {
         taskViewID = mTaskView.taskViewID;
         controllerID = mController.controllerID;
         taskDifficulty=intent.getStringExtra("difficulty");
+        Log.d("djdjdjd",taskDifficulty);
 
         taskType = "BOXCROP";
         forcedShowDescription(intent.getStringExtra("part"));
@@ -150,12 +162,14 @@ public class Quiz2DBoxActivity extends PatherActivity {
         controllerView = findViewById(R.id.controller);
         mController.setParentActivity( this);
         mController.setLayout(controllerView,  taskID);
+        mController.testFlag=true;
+        mTaskView.testFlag=true;
         startTask();
         // boxcrop이면 파트 선택되고나서 로딩해야함
         // reccord, dialect, directrecord면 지역 선택되고나서 로딩해야함, 물론 지역선택 예전에 해놨으면 바로 테스크 시작될 거임
         if(!(taskType.equals("BOXCROP")||taskType.equals("RECORD")||taskType.equals("DIALECT")||taskType.equals("DIRECTRECORD")))
             startTask();
-
+        getDialog(optionText.getText()+"테스트",optionText.getText()+"테스트입니다. 10번 연속으로 실수없이 정답을 맞추면 테스크를 진행하실 수 있습니다.");
         //boxcrop이면 partSelectDialog를 띄워줘야한다.
 //        if((taskType.equals("BOXCROP"))){
 //            findViewById(R.id.option).setBackgroundColor(this.getResources().getColor(R.color.colorDark2));
@@ -220,6 +234,11 @@ public class Quiz2DBoxActivity extends PatherActivity {
         super.onStop();
         GoogleAnalytics.getInstance(this).reportActivityStop(this);
     }
+//    @Override
+//    protected void onDestroy(){
+//        super.onDestroy();
+//
+//    }
 
     public void getNewTask(){
         JSONObject param = new JSONObject();
@@ -228,6 +247,7 @@ public class Quiz2DBoxActivity extends PatherActivity {
             if(taskType.equals("BOXCROP")){//BOXCROP에서는 파트를 넣어서 요청해야함
                 partNum = partType();
                 param.put("option",partNum);
+                Log.d("opttttt",String.valueOf(partNum));
             }
             if(taskType.equals("TWOPOINT")){//TWOPOINT에서는 파트(11=전선)를 넣어서 요청해야함
                 param.put("option",11);
@@ -261,12 +281,29 @@ public class Quiz2DBoxActivity extends PatherActivity {
                                 answerIDtv.setText("Answer ID : " + answerID);
                             System.out.println("컨텐츠 : "+ currentTask.get("content"));
                             System.out.println("------------");
+
+                            try {
+
+                                if (!(currentTask.getString("answers").toString()).equals("")) {
+                                    JSONArray a=new JSONArray(currentTask.getString("answers").toString());
+                                    mController.BoxCropTestAnswer=a;
+                                    mTaskView.BoxCropTestAnswer=a;
+
+                                    Log.d("로그",a.get(0).toString());
+
+                                    //forcedUpdate();
+
+                                }
+
+                            }catch (JSONException e){
+                                e.printStackTrace();
+                            }
                             mTaskView.setContent((String) currentTask.get("content"));
                             mController.resetContent(controllerView, taskID);
 
                         } else {
                             new ServerMessageParser().taskSubmitFailParse(Quiz2DBoxActivity.this, resultTemp);
-                            finish();
+
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -315,4 +352,78 @@ public class Quiz2DBoxActivity extends PatherActivity {
             e.printStackTrace();
         }
     }
+    @Override
+    public void onBackPressed() {
+        //박스 테스크의 경우 확대 잘못하면 취소 눌렀을 때 다시 확대 할수있도록 해야함
+        if(taskType.equals("BOXCROP")){
+            TaskView_PhotoWithBox taskView = (TaskView_PhotoWithBox) mTaskView;
+            Controller_2DBox controller = (Controller_2DBox) mController;
+            TextView partText = findViewById(R.id.optionText);
+            if(!taskView.expandFlag && taskView.getPhotoView()!=null){
+                taskView.expandFlag = true;
+                controller.getPinButton().setBackgroundResource(R.drawable.twodbox_icon_pin_on);
+                controller.pinFlag = true;
+                taskView.getPhotoView().setScale(1);
+                findViewById(R.id.boxCL).setVisibility(View.INVISIBLE);
+                findViewById(R.id.textDragCL).setVisibility(View.VISIBLE);
+                findViewById(R.id.textDragCL).bringToFront();
+            }else{
+                System.out.println("ㅏ마마마마맘");
+                super.onBackPressed();
+                SharedPreferences testFlag=getSharedPreferences("testFlag",MODE_PRIVATE);
+                SharedPreferences.Editor editor=testFlag.edit();
+                editor.putBoolean("isTesting",true);
+                editor.commit();
+
+
+            }
+        }else if(taskType.equals("TWOPOINT")){
+            TaskView_PhotoWithLine taskView = (TaskView_PhotoWithLine) mTaskView;
+            Controller_TwoPoint controller = (Controller_TwoPoint) mController;
+            if(!controller.firstPointFlag && controller.secondPointFlag){//한점만 쳐진경우
+                controller.firstPointFlag = true;
+                controller.secondPointFlag = false;
+                ((TextView) findViewById(R.id.textDrag)).setText("라인의 시작점을 지정해 주세요.");
+                if(controller.firstPoint.getVisibility() == View.VISIBLE)
+                    controller.firstPoint.setVisibility(View.INVISIBLE);
+                if(controller.firstPointTouch.getVisibility() == View.VISIBLE)
+                    controller.firstPointTouch.setVisibility(View.INVISIBLE);
+                ((Controller_TwoPoint.LineView) controller.pointLine).pointReset();
+
+            }else if(!controller.firstPointFlag && !controller.secondPointFlag){//두점이 다 쳐진경우
+                controller.firstPointFlag = false;
+                controller.secondPointFlag = true;
+                if(controller.secondPoint.getVisibility() == View.VISIBLE)
+                    controller.secondPoint.setVisibility(View.INVISIBLE);
+                if(controller.secondPointTouch.getVisibility() == View.VISIBLE)
+                    controller.secondPointTouch.setVisibility(View.INVISIBLE);
+                if(((ConstraintLayout) findViewById(R.id.textDragCL)).getVisibility() == View.INVISIBLE)
+                    ((ConstraintLayout) findViewById(R.id.textDragCL)).setVisibility(View.VISIBLE);
+                ((TextView) findViewById(R.id.textDrag)).setText("라인의 끝점을 지정해 주세요.");
+                ((Controller_TwoPoint.LineView) controller.pointLine).samePointSetting(
+                        ((Controller_TwoPoint.LineView) controller.pointLine).getLines()[0],
+                        ((Controller_TwoPoint.LineView) controller.pointLine).getLines()[1]);
+
+            }else{
+                super.onBackPressed();
+            }
+        }else{
+            super.onBackPressed();
+        }
+    }
+    private void getDialog(final String title, String value)
+    {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Quiz2DBoxActivity.this);
+        alertDialogBuilder.setTitle(title);
+        alertDialogBuilder.setMessage(value);
+        alertDialogBuilder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.dismiss();
+            }
+        });
+        alertDialogBuilder.show();
+    }
+
 }

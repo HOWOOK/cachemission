@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +29,7 @@ public class PartAdapter extends RecyclerView.Adapter<PartAdapter.ItemViewHolder
     ArrayList<Integer> levelMaxList;  //해당 TaskRank에서 최대로 할수 있는 테스크의 개수
     PartSelectDialog mDialog;
     PatherActivity mActivity;
-    ArrayList<Boolean> isTestNeeded;
+    public ArrayList<Boolean> isTestNeeded;
 
     public PartAdapter(PatherActivity mActivity, ArrayList<Integer> idList, ArrayList<String> nameList, ArrayList<Integer> levelCountList, ArrayList<Integer> levelMaxList, PartSelectDialog mDialog, ArrayList<Boolean> testing) {
         this.context = context;
@@ -57,6 +58,7 @@ public class PartAdapter extends RecyclerView.Adapter<PartAdapter.ItemViewHolder
             @Override
             public void onClick(View v) {
                 if(isTestNeeded.get(position)){
+                    System.out.println("gragra");
                     TextView tv = mActivity.findViewById(R.id.optionText);
                     tv.setText(nameList.get(position));
                     String taskName = "a";
@@ -83,8 +85,11 @@ public class PartAdapter extends RecyclerView.Adapter<PartAdapter.ItemViewHolder
                     Intent testIntent=new Intent(mActivity, Quiz2DBoxActivity.class);
                     testIntent.putExtra("taskID",mActivity.getTaskID());
                     testIntent.putExtra("part",taskName);
+                    testIntent.putExtra("partkorean",nameList.get(position));
                     testIntent.putExtra("difficulty",mActivity.getTaskDifficulty());
+                    Log.d("diffdiff",mActivity.getTaskDifficulty());
                     mActivity.startActivity(testIntent);
+                    mDialog.dismiss();
 
 
                 }else {

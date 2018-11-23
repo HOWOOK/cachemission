@@ -60,7 +60,7 @@ public class Controller_Numbers extends Controller {
                                 System.out.println("resultTemp : "+resultTemp);
                                 if (resultTemp.get("success").toString().equals("false")) {
                                     new ServerMessageParser().taskSubmitFailParse(parentActivity,resultTemp);
-                                    parentActivity.finish();
+
                                 } else {
                                     parentActivity.goldSetting(String.valueOf(resultTemp.get("gold")));
                                     parentActivity.maybeSetting(String.valueOf(resultTemp.get("maybe")));

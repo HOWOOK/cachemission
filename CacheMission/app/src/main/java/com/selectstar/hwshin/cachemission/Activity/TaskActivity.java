@@ -56,6 +56,7 @@ public class TaskActivity extends PatherActivity {
     private TextView answerIDtv;
 
 
+
 //    public TaskView getmTaskView() {
 //        return this.mTaskView;
 //    }
@@ -65,6 +66,7 @@ public class TaskActivity extends PatherActivity {
         super.onStart();
         GoogleAnalytics.getInstance(this).reportActivityStart(this);
         setQuestList(intent.getStringExtra("questList"));
+
     }
 
     @Override
@@ -173,6 +175,7 @@ public class TaskActivity extends PatherActivity {
             findViewById(R.id.option).setBackgroundColor(this.getResources().getColor(R.color.colorDark2));
             ((TextView) findViewById(R.id.optionText)).setTextColor(this.getResources().getColor(R.color.colorPrimary));
             partDialogShow(optionText);
+            partDialogShowingFlag=true;
         }
 
         //DIALECT, RECOR, DIRECTRECORD이면 regionSelectDialog를 띄워줘야한다.
@@ -279,6 +282,7 @@ public class TaskActivity extends PatherActivity {
             } else if(taskView.expandFlag){
                 partText.setText("");
                 partDialogShow(partText);
+                partDialogShowingFlag=true;
                 taskView.removeAnswer();
             }else{
                 super.onBackPressed();
@@ -322,6 +326,19 @@ public class TaskActivity extends PatherActivity {
     protected void onStop(){
         super.onStop();
         GoogleAnalytics.getInstance(this).reportActivityStop(this);
+    }
+    @Override
+    protected void onResume(){
+        super.onResume();
+        SharedPreferences testFlag=getSharedPreferences("testFlag",MODE_PRIVATE);
+        SharedPreferences.Editor editor=testFlag.edit();
+        TextView opt=findViewById(R.id.optionText);
+        if(testFlag.getBoolean("isTesting",false)){
+            editor.putBoolean("isTesting",false);
+            editor.commit();
+            partDialogShow(opt);
+        }
+
     }
 
     public void getNewTask(){
@@ -372,7 +389,7 @@ public class TaskActivity extends PatherActivity {
 
                         } else {
                             new ServerMessageParser().taskSubmitFailParse(TaskActivity.this, resultTemp);
-                            finish();
+
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

@@ -23,6 +23,7 @@ import com.selectstar.hwshin.cachemission.Photoview.OnMatrixChangedListener;
 import com.selectstar.hwshin.cachemission.R;
 import com.selectstar.hwshin.cachemission.Photoview.PhotoView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,10 +35,12 @@ import java.util.HashMap;
 
 public class TaskView_PhotoWithBox extends TaskView {
     private PhotoView photoView;
+    public float[][] testAnswerCoordination;
     public float[][] answerCoordination;
     public float[][] changedCoordination;
     public int[] answerType; //0이면 서버에서 보내준거, 1이면 유저가 그린거
     private String[] array0, array1, array2, array3;
+    private String[] testArray0, testArray1, testArray2, testArray3;
     private ConstraintLayout photoWithBoxCL;
     public ConstraintLayout[] answerList;
     public View[][] answerEdges;
@@ -48,6 +51,7 @@ public class TaskView_PhotoWithBox extends TaskView {
     private int drawAnswerCount = 0;
     private HashMap<String,Bitmap> bitmaps;
     private float iouValue;
+    private ArrayList<String>BoxCropTestAnswerArray;
 
     public TaskView_PhotoWithBox()
     {
@@ -162,6 +166,33 @@ public class TaskView_PhotoWithBox extends TaskView {
                 coordinationParsing(array2);
             }
         }
+        //array0 = content.split(">");
+        //array1 = array0[1].split("\\*");
+        //좌표를 찾은적이 있는 놈이라면..
+        System.out.println("미친놈2");
+            if(testFlag) {
+                System.out.println("미친놈"+String.valueOf(BoxCropTestAnswer.length()));
+                BoxCropTestAnswerArray= jsonToArrayList(BoxCropTestAnswer);
+                testArray2 = new String[BoxCropTestAnswer.length()];
+                for (int i = 0; i < BoxCropTestAnswer.length(); i++) {
+                    try {
+                        testArray2[i] = BoxCropTestAnswer.get(i).toString();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (!(testArray2.length == 0)) {
+                    System.out.println("미친년"+String.valueOf(testArray2[0])+"머머"+String.valueOf(testArray2.length));
+                    testAnswerCoordination = new float[testArray2.length ][4];
+//                changedCoordination = new float[answerCoordination.length][4];
+//                answerType = new int[answerCoordination.length];
+//                answerCount = answerCoordination.length;
+                    coordinationParsingForTest(testArray2);
+                }
+            }
+
+
+
         photoView = parentActivity.findViewById(R.id.srcview);
         photoView.setMaximumScale(15);
         photoView.setScaleType(ImageView.ScaleType.FIT_CENTER);
@@ -729,6 +760,19 @@ public class TaskView_PhotoWithBox extends TaskView {
             answerType[i-1] = 0;
         }
     }
+    private void coordinationParsingForTest(String[] array) {
+        System.out.println("들왔다");
+        for(int i =0; i < array.length; i++){
+
+            array3 = array[i].split(",");
+            System.out.println("parsing"+Float.parseFloat(array3[0]));
+            testAnswerCoordination[i][0] = (float) Float.parseFloat(array3[0]);
+            testAnswerCoordination[i][1] = (float) Float.parseFloat(array3[1]);
+            testAnswerCoordination[i][2] = (float) Float.parseFloat(array3[2]);
+            testAnswerCoordination[i][3] = (float) Float.parseFloat(array3[3]);
+            //answerType[i-1] = 0;
+        }
+    }
 
     //서버에서 보내준 확대 좌표를 바탕으로 bitmap을 잘라준다.
     private Bitmap cropBitmap(Bitmap original, String cropCoordination) {
@@ -831,7 +875,124 @@ public class TaskView_PhotoWithBox extends TaskView {
             }
         }
         return  rtnVal;
-    };
+    }
+    public float similarityTestForTest(float left, float top, float right, float bottom, int boxIndex){
+        Boolean rtnVal = true;
+        float leftIntersect, topIntersect, rightIntersect, bottomIntersect;
+        float answerArea, drawArea;
+        float interArea, unionArea;
+        float iou=0; //intersection over union
+        drawArea = (right - left) * ( bottom - top );
+        if(testAnswerCoordination != null) {
+
+                leftIntersect = Math.max(testAnswerCoordination[boxIndex][0], left);
+                topIntersect = Math.max(testAnswerCoordination[boxIndex][1], top);
+                rightIntersect = Math.min(testAnswerCoordination[boxIndex][2], right);
+                bottomIntersect = Math.min(testAnswerCoordination[boxIndex][3], bottom);
+
+                interArea = Math.max((rightIntersect - leftIntersect), 0) * Math.max((bottomIntersect - topIntersect), 0);
+                answerArea = (testAnswerCoordination[boxIndex][2] - testAnswerCoordination[boxIndex][0]) * (testAnswerCoordination[boxIndex][3] - testAnswerCoordination[boxIndex][1]);
+                unionArea = answerArea + drawArea - interArea;
+                iou = interArea / unionArea;
+
+                Log.d("겹치는 비율", ((Float)iou).toString());
+
+
+        }
+        if(iou<(float)0.01)
+            iou= (float) 0.01;
+        return  iou;
+    }
+    public boolean isIntersectionExistForTest(float left, float top, float right, float bottom,int boxIndex){
+        Boolean rtnVal = true;
+        if(testAnswerCoordination != null) {
+
+                System.out.println("개빡"+String.valueOf(testAnswerCoordination[boxIndex][0]));
+                System.out.println("개빡"+String.valueOf(testAnswerCoordination[boxIndex][1]));
+                System.out.println("개빡"+String.valueOf(testAnswerCoordination[boxIndex][2]));
+                System.out.println("개빡"+String.valueOf(testAnswerCoordination[boxIndex][3]));
+
+                System.out.println("개빡ㅇㅇ"+String.valueOf(left));
+                System.out.println("개빡ㅇㅇ"+String.valueOf(top));
+                System.out.println("개빡ㅇㅇ"+String.valueOf(right));
+                System.out.println("개빡ㅇㅇ"+String.valueOf(bottom));
+                if((testAnswerCoordination[boxIndex][0]>=left)&&(testAnswerCoordination[boxIndex][1]>=top)&&(testAnswerCoordination[boxIndex][2]<=right)&&(testAnswerCoordination[boxIndex][3]<=bottom)){
+
+                    rtnVal=false;
+                }
+
+
+        }
+        return rtnVal;
+    }
+    public int findCandidate(float left, float top, float right, float bottom){
+        float centerX=(left+right)/2;
+        float centerY=(top+bottom)/2;
+        float minDistance=10000;
+        int minDistanceIndex=0;
+        if(testAnswerCoordination != null) {
+            for (int i = 0; i < BoxCropTestAnswerArray.size(); i++) {
+                float cur= (float) Math.sqrt(Math.pow(centerX-(testAnswerCoordination[i][0]+testAnswerCoordination[i][2])/2,2)+Math.pow(centerY-(testAnswerCoordination[i][1]+testAnswerCoordination[i][3])/2,2));
+                System.out.println("미차미차"+String.valueOf(cur));
+                if (cur<minDistance) {
+                    minDistance = cur;
+                    minDistanceIndex=i;
+                }
+            }
+        }
+        return minDistanceIndex;
+    }
+    public boolean isBoundaryLimitExceededForTest(float left, float top, float right, float bottom, int boxIndex){
+        Boolean rtnVal = true;
+        float x=0;
+        float w=Math.abs(testAnswerCoordination[boxIndex][0]-testAnswerCoordination[boxIndex][2]);
+        float h=Math.abs(testAnswerCoordination[boxIndex][1]-testAnswerCoordination[boxIndex][3]);
+        System.out.println("w"+String.valueOf(w));
+        System.out.println("h"+String.valueOf(h));
+
+        if(testAnswerCoordination != null) {
+            x= (float) ((Math.sqrt((w+h)*(w+h)+4*w*h*(1/0.5-1))-w-h)/4);
+            System.out.println("x"+String.valueOf(x));
+
+
+        }
+        if((Math.abs(testAnswerCoordination[boxIndex][0]-left)<x)&&(Math.abs(testAnswerCoordination[boxIndex][1]-top)<x)&&(Math.abs(testAnswerCoordination[boxIndex][2]-right)<x)&&(Math.abs(testAnswerCoordination[boxIndex][3]-bottom)<x)){
+            rtnVal=false;
+        }
+        return rtnVal;
+    }
+    public void updateTestSet(int boxIndex){
+        System.out.println("미친놈"+String.valueOf(BoxCropTestAnswerArray.size()));
+        BoxCropTestAnswerArray= jsonToArrayList(BoxCropTestAnswer);
+        BoxCropTestAnswerArray.remove(boxIndex);
+        testArray2 = new String[BoxCropTestAnswerArray.size()];
+        for (int i = 0; i < BoxCropTestAnswerArray.size(); i++) {
+
+                testArray2[i] = BoxCropTestAnswerArray.get(i).toString();
+
+        }
+        if (!(testArray2.length == 0)) {
+            System.out.println("미친년"+String.valueOf(testArray2[0])+"머머"+String.valueOf(testArray2.length));
+            testAnswerCoordination = new float[testArray2.length ][4];
+//                changedCoordination = new float[answerCoordination.length][4];
+//                answerType = new int[answerCoordination.length];
+//                answerCount = answerCoordination.length;
+            coordinationParsingForTest(testArray2);
+        }
+    }
+    public ArrayList<String> jsonToArrayList(JSONArray jsonArray) {
+        ArrayList<String> listdata = new ArrayList<String>();
+        if (jsonArray != null) {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                try {
+                    listdata.add(jsonArray.getString(i));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return listdata;
+    }
 
 
 

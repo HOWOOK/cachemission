@@ -40,7 +40,7 @@ import static android.support.constraint.Constraints.TAG;
 public class PhotoPagerAdapter extends RecyclerView.Adapter<PhotoPagerAdapter.ItemViewHolder> {
     ArrayList<Uri> photoList;
     AppCompatActivity parentActivity;
-    ArrayList<Boolean> resolution;
+    public ArrayList<Boolean> resolution;
     public void addPhoto(Uri photoUri)
     {
         photoList.add(photoUri);
@@ -209,6 +209,10 @@ public class PhotoPagerAdapter extends RecyclerView.Adapter<PhotoPagerAdapter.It
 
                                     holder.image.setImageBitmap(bmRotated);
                                     Log.d("???????",String.valueOf(bm.getHeight()*options.inSampleSize));
+                                    Log.d("???????",String.valueOf(bm.getWidth()*options.inSampleSize));
+                                    if((bm.getHeight()*options.inSampleSize<1080)||(bm.getWidth()*options.inSampleSize<1920))
+                                    resolution.set(position,false);
+
                                 }
 
                             }

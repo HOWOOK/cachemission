@@ -70,7 +70,7 @@ public class Controller_EditText extends Controller {
                                 JSONObject resultTemp = new JSONObject(result);
                                 if (resultTemp.get("success").toString().equals("false")) {
                                     new ServerMessageParser().taskSubmitFailParse(parentActivity,resultTemp);
-                                    parentActivity.finish();
+
                                 } else {
                                     ((TaskActivity)parentActivity).startTask();
                                     parentActivity.goldSetting(String.valueOf(resultTemp.get("gold")));

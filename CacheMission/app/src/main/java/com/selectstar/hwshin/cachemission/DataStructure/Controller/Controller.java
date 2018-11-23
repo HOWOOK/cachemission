@@ -6,10 +6,13 @@ import android.view.View;
 import com.selectstar.hwshin.cachemission.Activity.PatherActivity;
 import com.selectstar.hwshin.cachemission.Activity.TaskActivity;
 
+import org.json.JSONArray;
+
 public abstract class Controller {
     public int controllerID;
     public Uri photoUri;
-    public String BoxCropTestAnswer="";
+    public JSONArray BoxCropTestAnswer;
+    public boolean testFlag=false;
     public Uri getPhotoUri(){
         return photoUri;
     }
