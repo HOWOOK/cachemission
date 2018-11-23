@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.selectstar.hwshin.cachemission.Activity.PatherActivity;
 import com.selectstar.hwshin.cachemission.Activity.Quiz2DBoxActivity;
@@ -30,8 +31,9 @@ public class PartAdapter extends RecyclerView.Adapter<PartAdapter.ItemViewHolder
     PartSelectDialog mDialog;
     PatherActivity mActivity;
     public ArrayList<Boolean> isTestNeeded;
+    ArrayList<String> stateList;
 
-    public PartAdapter(PatherActivity mActivity, ArrayList<Integer> idList, ArrayList<String> nameList, ArrayList<Integer> levelCountList, ArrayList<Integer> levelMaxList, PartSelectDialog mDialog, ArrayList<Boolean> testing) {
+    public PartAdapter(PatherActivity mActivity, ArrayList<Integer> idList, ArrayList<String> nameList, ArrayList<Integer> levelCountList, ArrayList<Integer> levelMaxList, PartSelectDialog mDialog, ArrayList<Boolean> testing, ArrayList<String> stateList) {
         this.context = context;
         this.idList = idList;
         this.nameList = nameList;
@@ -40,6 +42,7 @@ public class PartAdapter extends RecyclerView.Adapter<PartAdapter.ItemViewHolder
         this.mDialog = mDialog;
         this.mActivity = mActivity;
         this.isTestNeeded=testing;
+        this.stateList=stateList;
     }
 
     @Override
@@ -57,6 +60,7 @@ public class PartAdapter extends RecyclerView.Adapter<PartAdapter.ItemViewHolder
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if(isTestNeeded.get(position)){
                     System.out.println("gragra");
                     TextView tv = mActivity.findViewById(R.id.optionText);
@@ -92,7 +96,12 @@ public class PartAdapter extends RecyclerView.Adapter<PartAdapter.ItemViewHolder
                     mDialog.dismiss();
 
 
-                }else {
+                }
+                else if(!stateList.get(position).equals("proceed")){
+                    Toast.makeText(mActivity,stateList.get(position),Toast.LENGTH_SHORT).show();
+
+                }
+                else {
                     TextView tv = mActivity.findViewById(R.id.optionText);
                     tv.setText(nameList.get(position));
                     mDialog.dismiss();
