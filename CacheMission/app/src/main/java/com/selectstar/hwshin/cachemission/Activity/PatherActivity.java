@@ -292,20 +292,13 @@ public abstract class PatherActivity extends AppCompatActivity {
         waitingTasks.remove(waitingTasks.size() - 1);
     }
 
-    protected JSONArray ARRAYtoJSON(ArrayList<JSONObject> list){
-        JSONArray jsonArray = new JSONArray();
-        for(int i = 0; i < list.size(); i++)
-            jsonArray.put(list.get(i));
-        return jsonArray;
-    }
-
-    protected static Date addMinutesToDate(int minutes, Date beforeTime){
-        final long ONE_MINUTE_IN_MILLIS = 60000;//millisecs
-
-        long curTimeInMs = beforeTime.getTime();
-        Date afterAddingMins = new Date(curTimeInMs + (minutes * ONE_MINUTE_IN_MILLIS));
-        return afterAddingMins;
-    }
+//    protected static Date addMinutesToDate(int minutes, Date beforeTime){
+//        final long ONE_MINUTE_IN_MILLIS = 60000;//millisecs
+//
+//        long curTimeInMs = beforeTime.getTime();
+//        Date afterAddingMins = new Date(curTimeInMs + (minutes * ONE_MINUTE_IN_MILLIS));
+//        return afterAddingMins;
+//    }
 
     public String getAnswerID() {
         try {
