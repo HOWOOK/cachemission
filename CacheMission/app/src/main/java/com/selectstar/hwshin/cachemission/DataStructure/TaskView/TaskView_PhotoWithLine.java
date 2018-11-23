@@ -73,7 +73,7 @@ public class TaskView_PhotoWithLine extends TaskView {
     public ImageView expandView;
     boolean isExamFlag;
     public boolean ImageReady;
-    public TaskView_PhotoWithLine.LineView answerLineView;
+    private TaskView_PhotoWithLine.LineView answerLineView;
     private TaskView_PhotoWithLine.LineView answerLineViewSubmit;
     private float [] answerLines, answerLinesSubmit;
     private Bitmap expandBitmap;

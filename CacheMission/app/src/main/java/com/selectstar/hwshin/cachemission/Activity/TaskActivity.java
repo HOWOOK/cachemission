@@ -299,6 +299,7 @@ public class TaskActivity extends PatherActivity {
                 if(controller.firstPointTouch.getVisibility() == View.VISIBLE)
                     controller.firstPointTouch.setVisibility(View.INVISIBLE);
                 ((Controller_TwoPoint.LineView) controller.pointLine).pointReset();
+                controller.pointLine.invalidate();
 
             }else if(!controller.firstPointFlag && !controller.secondPointFlag){//두점이 다 쳐진경우
                 controller.firstPointFlag = false;
@@ -313,7 +314,7 @@ public class TaskActivity extends PatherActivity {
                 ((Controller_TwoPoint.LineView) controller.pointLine).samePointSetting(
                         ((Controller_TwoPoint.LineView) controller.pointLine).getLines()[0],
                         ((Controller_TwoPoint.LineView) controller.pointLine).getLines()[1]);
-                taskView.answerLineView.invalidate();
+                controller.pointLine.invalidate();
             }else{
                 super.onBackPressed();
             }
