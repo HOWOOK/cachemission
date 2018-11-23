@@ -3,11 +3,15 @@ package com.selectstar.hwshin.cachemission.DataStructure.TaskView;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.selectstar.hwshin.cachemission.Adapter.ClassificationAdapter;
 import com.selectstar.hwshin.cachemission.Photoview.PhotoView;
 import com.selectstar.hwshin.cachemission.R;
@@ -152,24 +156,59 @@ public class TaskView_Classification extends TaskView {
         }
 
         if(bitmaps.containsKey(arrayURI[0])) {
-            System.out.println("TaskView_Classification, Http 통신안함, arrayURI[0] : " + arrayURI[0].toString());
-
             Glide.with(parentActivity)
                     .asBitmap()
                     .load(bitmaps.get(arrayURI[0]))
-                    .into(photoView);
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                            resource = cropBitmap(resource, arrayExpand[0]);
+                            photoView.setImageBitmap(resource);
+                        }
+                    });
 
         }else{
-            System.out.println("TaskView_Classification, Http 통신함, arrayURI[0] : " + arrayURI[0].toString());
-
+//            Glide.with(parentActivity)
+//                    .asBitmap()
+//                    .load(Uri.parse(parentActivity.getString(R.string.mainurl)+"/media/"+arrayURI[0]))
+//                    .into(photoView);
             Glide.with(parentActivity)
                     .asBitmap()
                     .load(Uri.parse(parentActivity.getString(R.string.mainurl)+"/media/"+arrayURI[0]))
-                    .into(photoView);
-
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                            resource = cropBitmap(resource, arrayExpand[0]);
+                            photoView.setImageBitmap(resource);
+                        }
+                    });
         }
-
 
     }
 
+    //서버에서 보내준 확대 좌표를 바탕으로 bitmap을 잘라준다.
+    private Bitmap cropBitmap(Bitmap original, String cropCoordination) {
+
+        String[] cropCoord = cropCoordination.split(",");
+        float[] cropCoordParse = new float[4];
+
+        for(int i = 0; i < cropCoord.length; i++){
+            cropCoordParse[i] = Float.parseFloat(cropCoord[i]);
+        }
+
+        if(cropCoordParse[0] < 0f)
+            cropCoordParse[0] = 0f;
+        if(cropCoordParse[1] < 0f)
+            cropCoordParse[1] = 0f;
+        if(cropCoordParse[2] > 1f)
+            cropCoordParse[2] = 1f;
+        if(cropCoordParse[3] > 1f)
+            cropCoordParse[3] = 1f;
+        original = Bitmap.createBitmap(original
+                , (int)(original.getWidth() * cropCoordParse[0]) //X 시작위치
+                , (int)(original.getHeight() * cropCoordParse[1]) //Y 시작위치
+                , (int)(original.getWidth() * (cropCoordParse[2]-cropCoordParse[0])) // 넓이
+                , (int)(original.getHeight() * (cropCoordParse[3]-cropCoordParse[1]))); // 높이
+        return original;
+    }
 }
