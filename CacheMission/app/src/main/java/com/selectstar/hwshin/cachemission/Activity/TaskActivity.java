@@ -66,6 +66,7 @@ public class TaskActivity extends PatherActivity {
         super.onStart();
         GoogleAnalytics.getInstance(this).reportActivityStart(this);
         setQuestList(intent.getStringExtra("questList"));
+
     }
 
     @Override
@@ -327,16 +328,19 @@ public class TaskActivity extends PatherActivity {
         super.onStop();
         GoogleAnalytics.getInstance(this).reportActivityStop(this);
     }
-//    @Override
-//    protected void onResume(){
-//        super.onResume();
-//        if(partDialogShowingFlag){
-//            dialog.dismiss();
-//            TextView opt=findViewById(R.id.optionText);
-//            partDialogShow(opt);
-//        }
-//
-//    }
+    @Override
+    protected void onResume(){
+        super.onResume();
+        SharedPreferences testFlag=getSharedPreferences("testFlag",MODE_PRIVATE);
+        SharedPreferences.Editor editor=testFlag.edit();
+        TextView opt=findViewById(R.id.optionText);
+        if(testFlag.getBoolean("isTesting",false)){
+            editor.putBoolean("isTesting",false);
+            editor.commit();
+            partDialogShow(opt);
+        }
+
+    }
 
     public void getNewTask(){
         JSONObject param = new JSONObject();

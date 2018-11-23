@@ -23,6 +23,7 @@ import com.selectstar.hwshin.cachemission.Photoview.OnMatrixChangedListener;
 import com.selectstar.hwshin.cachemission.R;
 import com.selectstar.hwshin.cachemission.Photoview.PhotoView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -50,6 +51,7 @@ public class TaskView_PhotoWithBox extends TaskView {
     private int drawAnswerCount = 0;
     private HashMap<String,Bitmap> bitmaps;
     private float iouValue;
+    private ArrayList<String>BoxCropTestAnswerArray;
 
     public TaskView_PhotoWithBox()
     {
@@ -171,6 +173,7 @@ public class TaskView_PhotoWithBox extends TaskView {
         System.out.println("미친놈2");
             if(testFlag) {
                 System.out.println("미친놈"+String.valueOf(BoxCropTestAnswer.length()));
+                BoxCropTestAnswerArray= jsonToArrayList(BoxCropTestAnswer);
                 testArray2 = new String[BoxCropTestAnswer.length()];
                 for (int i = 0; i < BoxCropTestAnswer.length(); i++) {
                     try {
@@ -930,7 +933,7 @@ public class TaskView_PhotoWithBox extends TaskView {
         float minDistance=10000;
         int minDistanceIndex=0;
         if(testAnswerCoordination != null) {
-            for (int i = 0; i < BoxCropTestAnswer.length(); i++) {
+            for (int i = 0; i < BoxCropTestAnswerArray.size(); i++) {
                 float cur= (float) Math.sqrt(Math.pow(centerX-(testAnswerCoordination[i][0]+testAnswerCoordination[i][2])/2,2)+Math.pow(centerY-(testAnswerCoordination[i][1]+testAnswerCoordination[i][3])/2,2));
                 System.out.println("미차미차"+String.valueOf(cur));
                 if (cur<minDistance) {
@@ -959,6 +962,38 @@ public class TaskView_PhotoWithBox extends TaskView {
             rtnVal=false;
         }
         return rtnVal;
+    }
+    public void updateTestSet(int boxIndex){
+        System.out.println("미친놈"+String.valueOf(BoxCropTestAnswerArray.size()));
+        BoxCropTestAnswerArray= jsonToArrayList(BoxCropTestAnswer);
+        BoxCropTestAnswerArray.remove(boxIndex);
+        testArray2 = new String[BoxCropTestAnswerArray.size()];
+        for (int i = 0; i < BoxCropTestAnswerArray.size(); i++) {
+
+                testArray2[i] = BoxCropTestAnswerArray.get(i).toString();
+
+        }
+        if (!(testArray2.length == 0)) {
+            System.out.println("미친년"+String.valueOf(testArray2[0])+"머머"+String.valueOf(testArray2.length));
+            testAnswerCoordination = new float[testArray2.length ][4];
+//                changedCoordination = new float[answerCoordination.length][4];
+//                answerType = new int[answerCoordination.length];
+//                answerCount = answerCoordination.length;
+            coordinationParsingForTest(testArray2);
+        }
+    }
+    public ArrayList<String> jsonToArrayList(JSONArray jsonArray) {
+        ArrayList<String> listdata = new ArrayList<String>();
+        if (jsonArray != null) {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                try {
+                    listdata.add(jsonArray.getString(i));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return listdata;
     }
 
 

@@ -89,6 +89,7 @@ public class PartAdapter extends RecyclerView.Adapter<PartAdapter.ItemViewHolder
                     testIntent.putExtra("difficulty",mActivity.getTaskDifficulty());
                     Log.d("diffdiff",mActivity.getTaskDifficulty());
                     mActivity.startActivity(testIntent);
+                    mDialog.dismiss();
 
 
                 }else {

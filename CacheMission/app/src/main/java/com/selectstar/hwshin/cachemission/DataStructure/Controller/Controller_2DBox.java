@@ -3,6 +3,7 @@ package com.selectstar.hwshin.cachemission.DataStructure.Controller;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.util.DisplayMetrics;
@@ -205,85 +206,128 @@ public class Controller_2DBox extends Controller {
                                 }
                                 else {
                                     //test라면 이곳으로 들어옴
-                                    TextView countText=parentActivity.findViewById(R.id.questText);
-                                    if (testCount == 0) {
-                                        testCountForGraduate=0;
+                                    if (testCountForGraduate >= 0) {
+                                        TextView opt = parentActivity.findViewById(R.id.optionText);
+                                        getDialog(opt.getText().toString() + "테스트 통과", "축하합니다. " + opt.getText().toString() + "테스트를 통과하셨습니다. 이제 " + opt.getText().toString() + "라벨링 작업을 시작할 수 있습니다.");
+                                        SharedPreferences testFlag = parentActivity.getSharedPreferences("testFlag", parentActivity.MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = testFlag.edit();
+                                        editor.putBoolean("isTesting", true);
+                                        editor.commit();
 
-                                        countText.setText(String.valueOf(testCountForGraduate)+"/10");
-                                        getDialog("더이상 찾을 부품이 없습니다.", "테스트 통과 횟수가 초기화됩니다. 모든 부품 제출 완료 버튼을 눌러 주세요");
-                                    } else {
-                                        int candidate = mTaskViewPhotoWithBox.findCandidate(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend);
-                                        System.out.println(String.valueOf(leftPercentSend));
-                                        System.out.println(String.valueOf(topPercentSend));
-                                        System.out.println(String.valueOf(rightPercentSend));
-                                        System.out.println(String.valueOf(bottomPercentSend));
-                                        if (mTaskViewPhotoWithBox.similarityTestForTest(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend, candidate) < (float) 0.02) {
-                                            testCountForGraduate=0;
-                                            countText.setText(String.valueOf(testCountForGraduate)+"/10");
-                                            getDialog("박스 안에 부품이 없습니다.", "다시 한번 확인하고 박스를 쳐 주세요.");
-                                        } else if (mTaskViewPhotoWithBox.isIntersectionExistForTest(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend, candidate)) {
-                                            testCountForGraduate=0;
-                                            countText.setText(String.valueOf(testCountForGraduate)+"/10");
-                                            getDialog("부품이 잘렸습니다.", "박스를 좀더 크게 쳐 주세요.");
-                                        } else if (mTaskViewPhotoWithBox.isBoundaryLimitExceededForTest(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend, candidate)) {
-                                            testCountForGraduate=0;
-                                            countText.setText(String.valueOf(testCountForGraduate)+"/10");
-                                            getDialog("박스가 너무 큽니다.", "부품의 경계에 맞게 박스를 쳐 주세요.");
-                                        } else {
-                                            mTaskViewPhotoWithBox.addAnswer(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend);
-                                            testCountForGraduate++;
-                                            countText.setText(String.valueOf(testCountForGraduate)+"/10");
+                                        JSONObject paramForRankUp = new JSONObject();
+                                        paramForRankUp.put("option", parentActivity.partType());
+                                        paramForRankUp.put("taskID", taskID);
+                                        new WaitHttpRequest(parentActivity) {
+                                            @Override
+                                            protected void onPostExecute(Object o) {
+                                                super.onPostExecute(o);
+                                                System.out.println("나 여기 들어왔어");
 
-                                            if(testCountForGraduate>=10){
-                                                TextView opt=parentActivity.findViewById(R.id.optionText);
-                                                getDialog(opt.getText().toString()+"테스트 통과", "축하합니다. "+opt.getText().toString()+"테스트를 통과하셨습니다. 이제 "+opt.getText().toString()+"라벨링 작업을 시작할 수 있습니다.");
-                                                JSONObject paramForRankUp = new JSONObject();
-                                                paramForRankUp.put("option",parentActivity.partType());
-//                                                new WaitHttpRequest(parentActivity) {
-//                                                    @Override
-//                                                    protected void onPostExecute(Object o) {
-//                                                        super.onPostExecute(o);
-//                                                        System.out.println("나 여기 들어왔어");
-//
-//                                                        try {
-//                                                            JSONObject resultTemp = new JSONObject(result);
-//                                                            System.out.println("resultTemp : " + resultTemp);
-//                                                            System.out.println("서버반응 : " + resultTemp.get("success").toString());
-//                                                            if (resultTemp.get("success").toString().equals("false")) {
-//                                                                new ServerMessageParser().taskSubmitFailParse(parentActivity, resultTemp);
-//
-//                                                            } else {
-//                                                                System.out.println("서버반응 2: " + resultTemp.get("success").toString());
-//
-//
-//                                                            }
-//                                                        } catch (JSONException e) {
-//                                                            e.printStackTrace();
-//                                                        }
-//                                                    }
-//                                                }.execute(parentActivity.getString(R.string.mainurl) + "/testing/submitTest", paramForRankUp, ((Quiz2DBoxActivity)parentActivity).getLoginToken());
-                                            }else {
-                                                getDialog("잘 하셨습니다!", "다음 부품을 찾아 주세요. 다 찾았다면 모든 부품 제출 완료 버튼을 눌러 주세요");
-                                                completeButton.setText("모든 부품 제출 완료 +5원");
-                                                testCount--;
+                                                try {
+                                                    JSONObject resultTemp = new JSONObject(result);
+                                                    System.out.println("resultTemp : " + resultTemp);
+                                                    System.out.println("서버반응 : " + resultTemp.get("success").toString());
+                                                    if (resultTemp.get("success").toString().equals("false")) {
+                                                        new ServerMessageParser().taskSubmitFailParse(parentActivity, resultTemp);
 
-                                                mTaskViewPhotoWithBox.drawAnswer(mTaskViewPhotoWithBox.answerCoordination);
-                                                ConstraintLayout textDragCL = parentActivity.findViewById(R.id.textDragCL);
-                                                Toast.makeText(parentActivity, "제출 완료! 계속 찾아주세요.", Toast.LENGTH_SHORT).show();
-                                                boxCL.setVisibility(View.INVISIBLE);
-                                                textDragCL.setVisibility(View.VISIBLE);
-                                                textDragCL.bringToFront();
-                                                pinFlag = true;
-                                                photoView.setScale(1);
-                                                ((TaskView_PhotoWithBox) parentActivity.getmTaskView()).expandFlag = true;
-                                                ConstraintSet constraintSet = new ConstraintSet();
-                                                constraintSet.clone((ConstraintLayout) (parentActivity.findViewById(R.id.controllerCL)));
-                                                constraintSet.connect(parentActivity.findViewById(R.id.textAnimation).getId(), ConstraintSet.BOTTOM, parentActivity.findViewById(R.id.btnCL).getId(), ConstraintSet.BOTTOM, (int) (86 * dpScale));
-                                                constraintSet.connect(parentActivity.findViewById(R.id.imageAnimation).getId(), ConstraintSet.BOTTOM, parentActivity.findViewById(R.id.btnCL).getId(), ConstraintSet.BOTTOM, (int) (86 * dpScale));
-                                                constraintSet.applyTo((ConstraintLayout) (parentActivity.findViewById(R.id.controllerCL)));
+                                                    } else {
+                                                        System.out.println("서버반응 2: " + resultTemp.get("success").toString());
+
+
+                                                    }
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
                                             }
-                                        }
+                                        }.execute(parentActivity.getString(R.string.mainurl) + "/testing/passTest", paramForRankUp, ((Quiz2DBoxActivity) parentActivity).getLoginToken());
+                                    } else {
+                                        TextView countText = parentActivity.findViewById(R.id.questText);
+                                        if (testCount <= 0) {
+                                            testCountForGraduate = 0;
 
+                                            countText.setText(String.valueOf(testCountForGraduate) + "/10");
+                                            getDialog("더이상 찾을 부품이 없습니다.", "테스트 통과 횟수가 초기화됩니다. 모든 부품 제출 완료 버튼을 눌러 주세요");
+                                        } else {
+                                            int candidate = mTaskViewPhotoWithBox.findCandidate(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend);
+                                            System.out.println(String.valueOf(leftPercentSend));
+                                            System.out.println(String.valueOf(topPercentSend));
+                                            System.out.println(String.valueOf(rightPercentSend));
+                                            System.out.println(String.valueOf(bottomPercentSend));
+                                            if (mTaskViewPhotoWithBox.similarityTestForTest(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend, candidate) < (float) 0.02) {
+                                                testCountForGraduate = 0;
+                                                countText.setText(String.valueOf(testCountForGraduate) + "/10");
+                                                getDialog("박스 안에 부품이 없습니다.", "다시 한번 확인하고 박스를 쳐 주세요.");
+                                            } else if (mTaskViewPhotoWithBox.isIntersectionExistForTest(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend, candidate)) {
+                                                testCountForGraduate = 0;
+                                                countText.setText(String.valueOf(testCountForGraduate) + "/10");
+                                                getDialog("부품이 잘렸습니다.", "박스를 좀더 크게 쳐 주세요.");
+                                            } else if (mTaskViewPhotoWithBox.isBoundaryLimitExceededForTest(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend, candidate)) {
+                                                testCountForGraduate = 0;
+                                                countText.setText(String.valueOf(testCountForGraduate) + "/10");
+                                                getDialog("박스가 너무 큽니다.", "부품의 경계에 맞게 박스를 쳐 주세요.");
+                                            } else {
+                                                mTaskViewPhotoWithBox.addAnswer(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend);
+                                                testCountForGraduate++;
+                                                countText.setText(String.valueOf(testCountForGraduate) + "/10");
+
+                                                if (testCountForGraduate >= 0) {
+                                                    TextView opt = parentActivity.findViewById(R.id.optionText);
+                                                    getDialog(opt.getText().toString() + "테스트 통과", "축하합니다. " + opt.getText().toString() + "테스트를 통과하셨습니다. 이제 " + opt.getText().toString() + "라벨링 작업을 시작할 수 있습니다.");
+                                                    SharedPreferences testFlag = parentActivity.getSharedPreferences("testFlag", parentActivity.MODE_PRIVATE);
+                                                    SharedPreferences.Editor editor = testFlag.edit();
+                                                    editor.putBoolean("isTesting", true);
+                                                    editor.commit();
+
+                                                    JSONObject paramForRankUp = new JSONObject();
+                                                    paramForRankUp.put("option", parentActivity.partType());
+                                                    paramForRankUp.put("taskID", taskID);
+                                                    new WaitHttpRequest(parentActivity) {
+                                                        @Override
+                                                        protected void onPostExecute(Object o) {
+                                                            super.onPostExecute(o);
+                                                            System.out.println("나 여기 들어왔어");
+
+                                                            try {
+                                                                JSONObject resultTemp = new JSONObject(result);
+                                                                System.out.println("resultTemp : " + resultTemp);
+                                                                System.out.println("서버반응 : " + resultTemp.get("success").toString());
+                                                                if (resultTemp.get("success").toString().equals("false")) {
+                                                                    new ServerMessageParser().taskSubmitFailParse(parentActivity, resultTemp);
+
+                                                                } else {
+                                                                    System.out.println("서버반응 2: " + resultTemp.get("success").toString());
+
+
+                                                                }
+                                                            } catch (JSONException e) {
+                                                                e.printStackTrace();
+                                                            }
+                                                        }
+                                                    }.execute(parentActivity.getString(R.string.mainurl) + "/testing/passTest", paramForRankUp, ((Quiz2DBoxActivity) parentActivity).getLoginToken());
+                                                } else {
+                                                    getDialog("잘 하셨습니다!", "다음 부품을 찾아 주세요. 다 찾았다면 모든 부품 제출 완료 버튼을 눌러 주세요");
+                                                    completeButton.setText("모든 부품 제출 완료 +5원");
+                                                    testCount--;
+                                                    mTaskViewPhotoWithBox.updateTestSet(candidate);
+
+                                                    mTaskViewPhotoWithBox.drawAnswer(mTaskViewPhotoWithBox.answerCoordination);
+                                                    ConstraintLayout textDragCL = parentActivity.findViewById(R.id.textDragCL);
+                                                    Toast.makeText(parentActivity, "제출 완료! 계속 찾아주세요.", Toast.LENGTH_SHORT).show();
+                                                    boxCL.setVisibility(View.INVISIBLE);
+                                                    textDragCL.setVisibility(View.VISIBLE);
+                                                    textDragCL.bringToFront();
+                                                    pinFlag = true;
+                                                    photoView.setScale(1);
+                                                    ((TaskView_PhotoWithBox) parentActivity.getmTaskView()).expandFlag = true;
+                                                    ConstraintSet constraintSet = new ConstraintSet();
+                                                    constraintSet.clone((ConstraintLayout) (parentActivity.findViewById(R.id.controllerCL)));
+                                                    constraintSet.connect(parentActivity.findViewById(R.id.textAnimation).getId(), ConstraintSet.BOTTOM, parentActivity.findViewById(R.id.btnCL).getId(), ConstraintSet.BOTTOM, (int) (86 * dpScale));
+                                                    constraintSet.connect(parentActivity.findViewById(R.id.imageAnimation).getId(), ConstraintSet.BOTTOM, parentActivity.findViewById(R.id.btnCL).getId(), ConstraintSet.BOTTOM, (int) (86 * dpScale));
+                                                    constraintSet.applyTo((ConstraintLayout) (parentActivity.findViewById(R.id.controllerCL)));
+                                                }
+                                            }
+
+                                        }
                                     }
                                 }
                             } catch (JSONException e) {
@@ -1352,6 +1396,7 @@ public class Controller_2DBox extends Controller {
             public void onClick(DialogInterface dialog, int which) {
                 TextView opt=parentActivity.findViewById(R.id.optionText);
                 if(title.equals(opt.getText().toString()+"테스트 통과")){
+
 
                     dialog.dismiss();
                     parentActivity.finish();

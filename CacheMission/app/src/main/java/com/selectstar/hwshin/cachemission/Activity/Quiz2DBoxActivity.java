@@ -367,12 +367,15 @@ countText.setText("0/10");
                 findViewById(R.id.boxCL).setVisibility(View.INVISIBLE);
                 findViewById(R.id.textDragCL).setVisibility(View.VISIBLE);
                 findViewById(R.id.textDragCL).bringToFront();
-            } else if(taskView.expandFlag){
-                partText.setText("");
-                partDialogShow(partText);
-                taskView.removeAnswer();
             }else{
+                System.out.println("ㅏ마마마마맘");
                 super.onBackPressed();
+                SharedPreferences testFlag=getSharedPreferences("testFlag",MODE_PRIVATE);
+                SharedPreferences.Editor editor=testFlag.edit();
+                editor.putBoolean("isTesting",true);
+                editor.commit();
+
+
             }
         }else if(taskType.equals("TWOPOINT")){
             TaskView_PhotoWithLine taskView = (TaskView_PhotoWithLine) mTaskView;
