@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.selectstar.hwshin.cachemission.Activity.LoginActivity;
 import com.selectstar.hwshin.cachemission.Activity.Quiz2DBoxActivity;
 import com.selectstar.hwshin.cachemission.Activity.TaskActivity;
+import com.selectstar.hwshin.cachemission.DataStructure.HurryHttpRequest;
 import com.selectstar.hwshin.cachemission.DataStructure.ServerMessageParser;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoWithBox;
 import com.selectstar.hwshin.cachemission.DataStructure.WaitHttpRequest;
@@ -247,6 +248,7 @@ public class Controller_2DBox extends Controller {
 
                                             countText.setText(String.valueOf(testCountForGraduate) + "/10");
                                             getDialog("더이상 찾을 부품이 없습니다.", "테스트 통과 횟수가 초기화됩니다. 모든 부품 제출 완료 버튼을 눌러 주세요");
+
                                         } else {
                                             int candidate = mTaskViewPhotoWithBox.findCandidate(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend);
                                             System.out.println(String.valueOf(leftPercentSend));
@@ -257,14 +259,44 @@ public class Controller_2DBox extends Controller {
                                                 testCountForGraduate = 0;
                                                 countText.setText(String.valueOf(testCountForGraduate) + "/10");
                                                 getDialog("박스 안에 부품이 없습니다.", "다시 한번 확인하고 박스를 쳐 주세요.");
+                                                JSONObject paramForRankUp = new JSONObject();
+                                                paramForRankUp.put("option", parentActivity.partType());
+                                                paramForRankUp.put("taskID", taskID);
+
+                                                new HurryHttpRequest(parentActivity) {
+                                                    @Override
+                                                    protected void onPostExecute(Object o) {
+                                                        super.onPostExecute(o);
+                                                        System.out.println("나 여기 들어왔어");
+
+                                                        try {
+                                                            JSONObject resultTemp = new JSONObject(result);
+                                                            System.out.println("resultTemp : " + resultTemp);
+                                                            System.out.println("서버반응 : " + resultTemp.get("success").toString());
+                                                            if (resultTemp.get("success").toString().equals("false")) {
+                                                                new ServerMessageParser().taskSubmitFailParse(parentActivity, resultTemp);
+
+                                                            } else {
+                                                                System.out.println("서버반응 2: " + resultTemp.get("success").toString());
+
+
+                                                            }
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                }.execute(parentActivity.getString(R.string.mainurl) + "/testing/logTest", paramForRankUp, ((Quiz2DBoxActivity) parentActivity).getLoginToken());
+
                                             } else if (mTaskViewPhotoWithBox.isIntersectionExistForTest(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend, candidate)) {
                                                 testCountForGraduate = 0;
                                                 countText.setText(String.valueOf(testCountForGraduate) + "/10");
                                                 getDialog("부품이 잘렸습니다.", "박스를 좀더 크게 쳐 주세요.");
+
                                             } else if (mTaskViewPhotoWithBox.isBoundaryLimitExceededForTest(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend, candidate)) {
                                                 testCountForGraduate = 0;
                                                 countText.setText(String.valueOf(testCountForGraduate) + "/10");
                                                 getDialog("박스가 너무 큽니다.", "부품의 경계에 맞게 박스를 쳐 주세요.");
+
                                             } else {
                                                 mTaskViewPhotoWithBox.addAnswer(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend);
                                                 testCountForGraduate++;
