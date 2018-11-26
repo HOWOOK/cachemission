@@ -24,7 +24,6 @@ import com.selectstar.hwshin.cachemission.DataStructure.HurryHttpRequest;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller;
 import com.selectstar.hwshin.cachemission.DataStructure.Controller.Controller_Photo;
 import com.selectstar.hwshin.cachemission.DataStructure.ServerMessageParser;
-import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoWithBox;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoWithLine;
 import com.selectstar.hwshin.cachemission.DataStructure.UIHashMap;
@@ -35,7 +34,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
 
 import static java.lang.Integer.parseInt;
 
@@ -374,6 +373,7 @@ public class TaskActivity extends PatherActivity {
 
                             for(int i = 0; i < tempTasks.length(); i++)
                                 waitingTasks.add((JSONObject)tempTasks.get(i));
+                            waitingTasks.get(0).put("taskOption", taskOption);
                             mTaskView.setPreviewContents(waitingTasks);
                             currentTask = waitingTasks.get(waitingTasks.size() - 1);
 
@@ -404,7 +404,7 @@ public class TaskActivity extends PatherActivity {
     @Override
     public void startTask(){
         try {
-            if(waitingTasks != null && waitingTasks.size() > 0) {
+            if(waitingTasks != null && waitingTasks.get(0).get("taskOption").toString().equals(taskOption) && waitingTasks.size() > 0) {
                 System.out.println("TaskActivity 웨이팅테스크 : " + waitingTasks);
                 currentTask = (JSONObject)waitingTasks.get(waitingTasks.size() - 1);
                 answerID = currentTask.get("id").toString();

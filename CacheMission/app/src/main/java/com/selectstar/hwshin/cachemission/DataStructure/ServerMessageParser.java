@@ -32,6 +32,8 @@ public class ServerMessageParser {
             ((PatherActivity) context).finish();
         } else if (result.get("message").toString().equals("needtest")){
             Toast.makeText(context, "먼저 테스트를 통과하셔야 진행할 수 있습니다.", Toast.LENGTH_SHORT).show();
+        } else if (result.get("message").toString().equals("task")){
+            Toast.makeText(context, "남은 검수 작업이 없습니다.", Toast.LENGTH_SHORT).show();
         } else if(result.get("message").toString().equals("INVALID_ALL_ANSWER_STATUS")){
             ((PatherActivity) context).finish();
         } else{

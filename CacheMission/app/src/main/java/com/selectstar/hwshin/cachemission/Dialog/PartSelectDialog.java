@@ -101,7 +101,7 @@ public class PartSelectDialog extends Dialog{
             checkPossible(partNumber + 10, idList, R.drawable.part_e, nameList,"부품 E", levelCountList, levelMaxList,testingList,stateList);
         }
         if((taskType.equals("BOXCROP") || taskType.equals("BOXCROPEXAM")) && taskDifficulty.equals("NORMAL")) {
-            partNumber = 200;
+            partNumber = 100;
             checkPossible(partNumber + 6, idList, R.drawable.part_a, nameList,"부품 A", levelCountList, levelMaxList,testingList,stateList);
             checkPossible(partNumber + 7, idList, R.drawable.part_b, nameList,"부품 B", levelCountList, levelMaxList,testingList,stateList);
             checkPossible(partNumber + 8, idList, R.drawable.part_c, nameList,"부품 C", levelCountList, levelMaxList,testingList,stateList);

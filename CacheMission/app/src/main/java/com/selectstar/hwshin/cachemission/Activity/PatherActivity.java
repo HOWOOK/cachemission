@@ -31,6 +31,7 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 public abstract class PatherActivity extends AppCompatActivity {
 
@@ -45,6 +46,7 @@ public abstract class PatherActivity extends AppCompatActivity {
     protected String taskTitle;
     public String taskType;
     public String taskDifficulty;
+    public String taskOption;
     public String getTaskType() {
         return taskType;
     }
@@ -63,7 +65,7 @@ public abstract class PatherActivity extends AppCompatActivity {
     protected int partNum=-1;
     String questString="";
     int currentIndex=0;
-    boolean partDialogShowingFlag=false;
+    boolean partDialogShowingFlag = false;
     com.selectstar.hwshin.cachemission.Dialog.PartSelectDialog dialog;
 
     public int getPartNum() {
@@ -233,7 +235,10 @@ public abstract class PatherActivity extends AppCompatActivity {
                 partDialogShowingFlag=false;
                 if(partTextTemp.getText().toString().equals(""))
                     finish();
-                startTask();
+                else {
+                    taskOption = ((Integer)partType()).toString();
+                    startTask();
+                }
             }
         });
         dialog.show();
