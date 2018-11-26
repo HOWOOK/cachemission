@@ -212,9 +212,9 @@ public class TaskView_PhotoWithBox extends TaskView {
                                     System.out.print(" 타입 : " + answerType[i]);
                                     System.out.println(")");
                                 }
-                                drawAnswer(answerCoordination);
                                 parentActivity.findViewById(R.id.textDragCL).bringToFront();
                                 scaleUpForExam();
+                                drawAnswer(answerCoordination);
                             }
                             else{
                                 Log.d("aswr:null","shit");
@@ -244,9 +244,9 @@ public class TaskView_PhotoWithBox extends TaskView {
                                     System.out.print(" 타입 : " + answerType[i]);
                                     System.out.println(")");
                                 }
-                                drawAnswer(answerCoordination);
                                 parentActivity.findViewById(R.id.textDragCL).bringToFront();
                                 scaleUpForExam();
+                                drawAnswer(answerCoordination);
                             }
                             else{
                                 Log.d("aswr:null","shit");

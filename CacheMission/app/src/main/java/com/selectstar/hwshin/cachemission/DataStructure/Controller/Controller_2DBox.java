@@ -140,11 +140,11 @@ public class Controller_2DBox extends Controller {
                                 topPercent = (y4 - originTopMargin) / originHeight;
                                 rightPercent = (x5 - originLeftMargin) / originWidth;
                                 bottomPercent = (y5 - originTopMargin) / originHeight;
-                                if (leftPercent < 0.013f)
+                                if (leftPercent < 0.013f) //박스가 끝에 있을경우 0으로 생각하도록
                                     leftPercent = 0f;
                                 if (rightPercent > 0.987f) //박스가 끝에 있을경우 1로 생각하도록
                                     rightPercent = 1f;
-                                if (topPercent < 0.013f)
+                                if (topPercent < 0.013f) //박스가 끝에 있을경우 0으로 생각하도록
                                     topPercent = 0f;
                                 if (bottomPercent > 0.987f) //박스가 끝에 있을경우 1로 생각하도록
                                     bottomPercent = 1f;
@@ -162,7 +162,6 @@ public class Controller_2DBox extends Controller {
                                             @Override
                                             protected void onPostExecute(Object o) {
                                                 super.onPostExecute(o);
-                                                System.out.println("나 여기 들어왔어");
 
                                                 try {
                                                     JSONObject resultTemp = new JSONObject(result);
@@ -204,8 +203,7 @@ public class Controller_2DBox extends Controller {
                                     } else {
                                         Toast.makeText(parentActivity, "이미 박스를 친 곳인 것 같네요 T^T", Toast.LENGTH_SHORT).show();
                                     }
-                                }
-                                else {
+                                }else {
                                     //test라면 이곳으로 들어옴
                                     if (testCountForGraduate >= 0) {
                                         TextView opt = parentActivity.findViewById(R.id.optionText);
@@ -222,7 +220,6 @@ public class Controller_2DBox extends Controller {
                                             @Override
                                             protected void onPostExecute(Object o) {
                                                 super.onPostExecute(o);
-                                                System.out.println("나 여기 들어왔어");
 
                                                 try {
                                                     JSONObject resultTemp = new JSONObject(result);
@@ -233,8 +230,6 @@ public class Controller_2DBox extends Controller {
 
                                                     } else {
                                                         System.out.println("서버반응 2: " + resultTemp.get("success").toString());
-
-
                                                     }
                                                 } catch (JSONException e) {
                                                     e.printStackTrace();
@@ -259,7 +254,6 @@ public class Controller_2DBox extends Controller {
                                                 @Override
                                                 protected void onPostExecute(Object o) {
                                                     super.onPostExecute(o);
-                                                    System.out.println("나 여기 들어왔어");
 
                                                     try {
                                                         JSONObject resultTemp = new JSONObject(result);
@@ -300,7 +294,6 @@ public class Controller_2DBox extends Controller {
                                                     @Override
                                                     protected void onPostExecute(Object o) {
                                                         super.onPostExecute(o);
-                                                        System.out.println("나 여기 들어왔어");
 
                                                         try {
                                                             JSONObject resultTemp = new JSONObject(result);
@@ -335,7 +328,6 @@ public class Controller_2DBox extends Controller {
                                                     @Override
                                                     protected void onPostExecute(Object o) {
                                                         super.onPostExecute(o);
-                                                        System.out.println("나 여기 들어왔어");
 
                                                         try {
                                                             JSONObject resultTemp = new JSONObject(result);
@@ -370,7 +362,6 @@ public class Controller_2DBox extends Controller {
                                                     @Override
                                                     protected void onPostExecute(Object o) {
                                                         super.onPostExecute(o);
-                                                        System.out.println("나 여기 들어왔어");
 
                                                         try {
                                                             JSONObject resultTemp = new JSONObject(result);
@@ -407,7 +398,6 @@ public class Controller_2DBox extends Controller {
                                                         @Override
                                                         protected void onPostExecute(Object o) {
                                                             super.onPostExecute(o);
-                                                            System.out.println("나 여기 들어왔어");
 
                                                             try {
                                                                 JSONObject resultTemp = new JSONObject(result);
@@ -440,7 +430,6 @@ public class Controller_2DBox extends Controller {
                                                         @Override
                                                         protected void onPostExecute(Object o) {
                                                             super.onPostExecute(o);
-                                                            System.out.println("나 여기 들어왔어");
 
                                                             try {
                                                                 JSONObject resultTemp = new JSONObject(result);
@@ -472,7 +461,6 @@ public class Controller_2DBox extends Controller {
                                                         @Override
                                                         protected void onPostExecute(Object o) {
                                                             super.onPostExecute(o);
-                                                            System.out.println("나 여기 들어왔어");
 
                                                             try {
                                                                 JSONObject resultTemp = new JSONObject(result);

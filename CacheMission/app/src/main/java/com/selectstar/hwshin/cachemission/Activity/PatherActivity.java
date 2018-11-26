@@ -46,7 +46,7 @@ public abstract class PatherActivity extends AppCompatActivity {
     protected String taskTitle;
     public String taskType;
     public String taskDifficulty;
-    public String taskOption;
+    public String taskOption = "-1";
     public String getTaskType() {
         return taskType;
     }
@@ -173,7 +173,6 @@ public abstract class PatherActivity extends AppCompatActivity {
     public int partType() {
         int answer = -1;
         if((taskType.equals("BOXCROP") || taskType.equals("BOXCROPEXAM")) && taskDifficulty.equals("EASY")){
-
             answer = 100;
             Log.d("insideparttype","aa");
         }

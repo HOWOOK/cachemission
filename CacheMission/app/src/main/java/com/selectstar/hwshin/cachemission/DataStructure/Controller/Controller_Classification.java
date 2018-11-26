@@ -62,10 +62,10 @@ public class Controller_Classification extends Controller {
                             for(int i = 0; i < partList.size(); i++){
                                 if (checkList.get(i) == true) {
                                     partTemp = 0;
-                                    if(parentActivity.taskDifficulty.equals("1")) {
+                                    if(parentActivity.taskDifficulty.equals("1") || parentActivity.taskDifficulty.equals("2")) {
                                         partTemp = 100;
                                     }
-                                    if(parentActivity.taskDifficulty.equals("2") || parentActivity.taskDifficulty.equals("3")) {
+                                    if(parentActivity.taskDifficulty.equals("3")) {
                                         partTemp = 200;
                                     }
                                     partTemp += partList.get(i);
