@@ -62,9 +62,9 @@ public class QuizLineToPointActivity extends PatherActivity {
 
         super.onCreate(savedInstanceState);
         Tracker t = ((GlobalApplication)getApplication()).getTracker(GlobalApplication.TrackerName.APP_TRACKER);
-        t.setScreenName("Quiz2DBoxActivity");
+        t.setScreenName("QuizLineToPointActivity");
         t.send(new HitBuilders.AppViewBuilder().build());
-        setContentView(R.layout.activity_quiz_2dbox);
+        setContentView(R.layout.activity_quiz_line_to_point);
         //캡쳐방지
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
         countText=findViewById(R.id.questText);
@@ -99,11 +99,11 @@ public class QuizLineToPointActivity extends PatherActivity {
 //        pendingGold.setText("예정 : \uFFE6 " + maybe);
         uiHashMap = new UIHashMap();
         taskID = (String)intent.getStringExtra("taskID");
-        mTaskView =  uiHashMap.taskViewHashMap.get("photoview");
+        mTaskView =  uiHashMap.taskViewHashMap.get("photowithline");
         mTaskView.setParentActivity(this);
-        mController =  uiHashMap.controllerHashMap.get("2dbox");
+        mController =  uiHashMap.controllerHashMap.get("twopoint");
         findViewById(R.id.howbtn).bringToFront();
-        mParameter =  (int[][]) uiHashMap.taskHashMap.get("BOXCROP");
+        mParameter =  (int[][]) uiHashMap.taskHashMap.get("TWOPOINT");
         //taskTitle = intent.getStringExtra("taskTitle");
 //        if(intent.hasExtra("buttons"))
 //            buttons= intent.getStringExtra("buttons");
@@ -114,7 +114,7 @@ public class QuizLineToPointActivity extends PatherActivity {
         taskDifficulty=intent.getStringExtra("difficulty");
         Log.d("djdjdjd",taskDifficulty);
 
-        taskType = "BOXCROP";
+        taskType = "TWOPOINT";
         forcedShowDescription(intent.getStringExtra("part"));
         SharedPreferences firstTimeExplain = getSharedPreferences("firstTimeExplain", MODE_PRIVATE);
         SharedPreferences.Editor editor = firstTimeExplain.edit();

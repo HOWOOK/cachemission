@@ -387,7 +387,8 @@ public class Controller_2DBox extends Controller {
                                 else{
                                     getDialog("아직 찾지 못한 부품이 있습니다.","테스트 통과 횟수가 초기화됩니다. 부품을 마저 찾아주세요.");
                                     testCountForGraduate=0;
-
+                                    TextView countText = parentActivity.findViewById(R.id.questText);
+                                    countText.setText(String.valueOf(testCountForGraduate) + "/10");
                                 }
 
                             }
