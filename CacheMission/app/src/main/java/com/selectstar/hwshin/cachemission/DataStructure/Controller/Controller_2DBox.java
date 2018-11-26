@@ -206,38 +206,7 @@ public class Controller_2DBox extends Controller {
                                     }
                                 }else {
                                     //test라면 이곳으로 들어옴
-                                    if (testCountForGraduate >= 0) {
-                                        TextView opt = parentActivity.findViewById(R.id.optionText);
-                                        getDialog(opt.getText().toString() + "테스트 통과", "축하합니다. " + opt.getText().toString() + "테스트를 통과하셨습니다. 이제 " + opt.getText().toString() + "라벨링 작업을 시작할 수 있습니다.");
-                                        SharedPreferences testFlag = parentActivity.getSharedPreferences("testFlag", parentActivity.MODE_PRIVATE);
-                                        SharedPreferences.Editor editor = testFlag.edit();
-                                        editor.putBoolean("isTesting", true);
-                                        editor.commit();
 
-                                        JSONObject paramForRankUp = new JSONObject();
-                                        paramForRankUp.put("option", parentActivity.partType());
-                                        paramForRankUp.put("taskID", taskID);
-                                        new WaitHttpRequest(parentActivity) {
-                                            @Override
-                                            protected void onPostExecute(Object o) {
-                                                super.onPostExecute(o);
-
-                                                try {
-                                                    JSONObject resultTemp = new JSONObject(result);
-                                                    System.out.println("resultTemp : " + resultTemp);
-                                                    System.out.println("서버반응 : " + resultTemp.get("success").toString());
-                                                    if (resultTemp.get("success").toString().equals("false")) {
-                                                        new ServerMessageParser().taskSubmitFailParse(parentActivity, resultTemp);
-
-                                                    } else {
-                                                        System.out.println("서버반응 2: " + resultTemp.get("success").toString());
-                                                    }
-                                                } catch (JSONException e) {
-                                                    e.printStackTrace();
-                                                }
-                                            }
-                                        }.execute(parentActivity.getString(R.string.mainurl) + "/testing/passTest", paramForRankUp, ((Quiz2DBoxActivity) parentActivity).getLoginToken());
-                                    } else {
                                         TextView countText = parentActivity.findViewById(R.id.questText);
                                         if (testCount <= 0) {
                                             testCountForGraduate = 0;
@@ -502,7 +471,7 @@ public class Controller_2DBox extends Controller {
                                             }
 
                                         }
-                                    }
+
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -583,6 +552,8 @@ public class Controller_2DBox extends Controller {
                                 }
                                 else{
                                     getDialog("아직 찾지 못한 부품이 있습니다.","부품을 마저 찾아주세요.");
+                                    testCountForGraduate=0;
+
                                 }
 
                             }
