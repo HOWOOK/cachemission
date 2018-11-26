@@ -11,6 +11,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -180,7 +181,7 @@ public class TaskView_PhotoWithLine extends TaskView {
         constraintSet.applyTo((ConstraintLayout) parentActivity.findViewById(R.id.photoWithLineCL));
 
         //플래그 처리
-        if(parentActivity.getTaskType().equals("TWOPOINTEXAM"))
+        if(parentActivity.getTaskType().contains("EXAM"))
             isExamFlag = true;
 
         //box 좌표 구해서 저장
@@ -313,8 +314,8 @@ public class TaskView_PhotoWithLine extends TaskView {
                 returnBitmap
                 , (int)(setX) //X 시작위치
                 , (int)(setY) //Y 시작위치
-                , 100 // 너비
-                , 100); // 높이
+                , padding_val * 2 // 너비
+                , padding_val * 2); // 높이
 
         return returnBitmap;
     }
