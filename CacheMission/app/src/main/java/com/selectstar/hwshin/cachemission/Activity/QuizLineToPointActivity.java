@@ -38,7 +38,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Quiz2DBoxActivity extends PatherActivity {
+public class QuizLineToPointActivity extends PatherActivity {
     View controllerView;
     Controller mController;
     String buttons;
@@ -67,8 +67,8 @@ public class Quiz2DBoxActivity extends PatherActivity {
         setContentView(R.layout.activity_quiz_2dbox);
         //캡쳐방지
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
-countText=findViewById(R.id.questText);
-countText.setText("0/10");
+        countText=findViewById(R.id.questText);
+        countText.setText("0/10");
         final TextView optionText = findViewById(R.id.optionText);
 
         answerIDtv = findViewById(R.id.answerID);
@@ -209,7 +209,7 @@ countText.setText("0/10");
                 Log.d("boxbox",taskType);
 
                 if(taskType.equals("BOXCROP")||taskType.equals("PHOTO")){
-                    intent_taskExplain = new Intent(Quiz2DBoxActivity.this, NewExplainActivity.class);
+                    intent_taskExplain = new Intent(QuizLineToPointActivity.this, NewExplainActivity.class);
                     intent_taskExplain.putExtra("part", optionText.getText());
                     intent_taskExplain.putExtra("partNum", partType());
                     intent_taskExplain.putExtra("taskID", taskID);
@@ -219,7 +219,7 @@ countText.setText("0/10");
                     System.out.println("가져온 텍스트 : "+optionText.getText());
 
                 }else{
-                    intent_taskExplain = new Intent(Quiz2DBoxActivity.this, TaskExplainActivity.class);
+                    intent_taskExplain = new Intent(QuizLineToPointActivity.this, TaskExplainActivity.class);
                 }
 
                 intent_taskExplain.putExtra("taskType", taskType);
@@ -305,7 +305,7 @@ countText.setText("0/10");
                             mController.resetContent(controllerView, taskID);
 
                         } else {
-                            new ServerMessageParser().taskSubmitFailParse(Quiz2DBoxActivity.this, resultTemp);
+                            new ServerMessageParser().taskSubmitFailParse(QuizLineToPointActivity.this, resultTemp);
 
                         }
                     } catch (JSONException e) {
@@ -340,9 +340,9 @@ countText.setText("0/10");
 
                 mController.resetContent(controllerView,taskID);
 
-                }else{
-                    getNewTask();
-                }
+            }else{
+                getNewTask();
+            }
         }catch(JSONException e){
             e.printStackTrace();
         }
@@ -407,7 +407,7 @@ countText.setText("0/10");
     }
     private void getDialog(final String title, String value)
     {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Quiz2DBoxActivity.this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(QuizLineToPointActivity.this);
         alertDialogBuilder.setTitle(title);
         alertDialogBuilder.setMessage(value);
         alertDialogBuilder.setPositiveButton("확인", new DialogInterface.OnClickListener() {

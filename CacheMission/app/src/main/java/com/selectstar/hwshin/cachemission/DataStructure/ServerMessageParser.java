@@ -31,7 +31,7 @@ public class ServerMessageParser {
             Toast.makeText(context, "현재 랭크에서 할 수 있는 테스크의 수를 초과했습니다.", Toast.LENGTH_SHORT).show();
             ((PatherActivity) context).finish();
         } else if (result.get("message").toString().equals("needtest")){
-            Toast.makeText(context, "먼저 테스트를 통과하셔야 진행할 수 있습니다.", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "먼저 테스트를 통과하셔야 진행할 수 있습니다.", Toast.LENGTH_SHORT).show();
         } else if (result.get("message").toString().equals("task")){
             Toast.makeText(context, "남은 검수 작업이 없습니다.", Toast.LENGTH_SHORT).show();
         } else if(result.get("message").toString().equals("INVALID_ALL_ANSWER_STATUS")){

@@ -84,7 +84,7 @@ public class ExamActivity extends PatherActivity {
 
                             for(int i=0;i<tempTasks.length();i++)
                                 waitingTasks.add((JSONObject)tempTasks.get(i));
-
+                            waitingTasks.get(0).put("taskOption", taskOption);
                             mTaskView.setPreviewContents(waitingTasks);
                             currentTask = waitingTasks.get(waitingTasks.size()-1);
 
