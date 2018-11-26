@@ -90,7 +90,7 @@ public class QuizLineToPointActivity extends PatherActivity {
          */
         explainDialog = new Dialog(this);
         intent = getIntent();
-        optionText.setText(intent.getStringExtra("partkorean"));
+        //optionText.setText(intent.getStringExtra("partkorean"));
 
 //        upGold = Integer.parseInt(intent.getStringExtra("upGold").substring(1)); //string(0)은 \표시
 //        gold =intent.getStringExtra("goldNow");
@@ -169,7 +169,7 @@ public class QuizLineToPointActivity extends PatherActivity {
         // reccord, dialect, directrecord면 지역 선택되고나서 로딩해야함, 물론 지역선택 예전에 해놨으면 바로 테스크 시작될 거임
         if(!(taskType.equals("BOXCROP")||taskType.equals("RECORD")||taskType.equals("DIALECT")||taskType.equals("DIRECTRECORD")))
             startTask();
-        getDialog(optionText.getText()+"테스트",optionText.getText()+"테스트입니다. 10번 연속으로 실수없이 정답을 맞추면 테스크를 진행하실 수 있습니다.");
+        getDialog(""+"테스트",optionText.getText()+"테스트입니다. 10번 연속으로 실수없이 정답을 맞추면 테스크를 진행하실 수 있습니다.");
         //boxcrop이면 partSelectDialog를 띄워줘야한다.
 //        if((taskType.equals("BOXCROP"))){
 //            findViewById(R.id.option).setBackgroundColor(this.getResources().getColor(R.color.colorDark2));

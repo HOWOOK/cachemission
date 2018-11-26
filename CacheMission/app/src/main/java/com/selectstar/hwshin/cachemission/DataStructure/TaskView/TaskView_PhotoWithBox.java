@@ -937,16 +937,26 @@ public class TaskView_PhotoWithBox extends TaskView {
         }
         return minDistanceIndex;
     }
-    public boolean isBoundaryLimitExceededForTest(float left, float top, float right, float bottom, int boxIndex){
+    public boolean isBoundaryLimitExceededForTest(float left, float top, float right, float bottom, int boxIndex, int partNum){
         Boolean rtnVal = true;
         float x=0;
         float w=Math.abs(testAnswerCoordination[boxIndex][0]-testAnswerCoordination[boxIndex][2]);
         float h=Math.abs(testAnswerCoordination[boxIndex][1]-testAnswerCoordination[boxIndex][3]);
         System.out.println("w"+String.valueOf(w));
         System.out.println("h"+String.valueOf(h));
+        float iou=0;
+        float areaPrime=0;
+        float area=0;
+
+        area=w*h;
+        areaPrime= (float) Math.max(Math.min(area,0.211),0.0008);
+        iou= (float) (((0.9502-0.8286)/(0.211-0.0008))*(areaPrime-0.211)+0.9502);
+        if(partNum==102){
+            iou= (float) 0.5;
+        }
 
         if(testAnswerCoordination != null) {
-            x= (float) ((Math.sqrt((w+h)*(w+h)+4*w*h*(1/0.5-1))-w-h)/4);
+            x= (float) ((Math.sqrt((w+h)*(w+h)+4*w*h*(1/iou-1))-w-h)/4);
             System.out.println("x"+String.valueOf(x));
 
 

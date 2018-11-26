@@ -235,7 +235,7 @@ public class Controller_2DBox extends Controller {
                                                 reportPassFail(false,"부품이 잘렸습니다.",taskID);
 
 
-                                            } else if (mTaskViewPhotoWithBox.isBoundaryLimitExceededForTest(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend, candidate)) {
+                                            } else if (mTaskViewPhotoWithBox.isBoundaryLimitExceededForTest(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend, candidate,parentActivity.partType())) {
                                                 testCountForGraduate = 0;
                                                 countText.setText(String.valueOf(testCountForGraduate) + "/10");
                                                 getDialog("박스가 너무 큽니다.", "부품의 경계에 맞게 박스를 쳐 주세요.");
