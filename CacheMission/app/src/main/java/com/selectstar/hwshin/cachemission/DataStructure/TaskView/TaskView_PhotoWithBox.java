@@ -148,6 +148,7 @@ public class TaskView_PhotoWithBox extends TaskView {
         //box 좌표 구해서 저장
         // *content의 양식 =>    확대좌표>URI*<답<답<답...
         //                      f,f,f,f>String*<f,f,f,f<f,f,f,f<f,f,f,f....
+        System.out.println(content);
         array0 = content.split(">");
         array1 = array0[1].split("\\*");
         if(array1.length == 2) {//좌표를 찾은적이 있는 놈이라면..
