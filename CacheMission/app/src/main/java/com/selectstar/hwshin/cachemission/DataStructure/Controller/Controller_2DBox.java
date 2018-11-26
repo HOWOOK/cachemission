@@ -213,35 +213,8 @@ public class Controller_2DBox extends Controller {
 
                                             countText.setText(String.valueOf(testCountForGraduate) + "/10");
                                             getDialog("더이상 찾을 부품이 없습니다.", "테스트 통과 횟수가 초기화됩니다. 모든 부품 제출 완료 버튼을 눌러 주세요");
-                                            JSONObject paramForRankUp = new JSONObject();
-                                            paramForRankUp.put("option", parentActivity.partType());
-                                            paramForRankUp.put("taskID", taskID);
-                                            paramForRankUp.put("id",parentActivity.answerID);
-                                            paramForRankUp.put("pass",false);
-                                            paramForRankUp.put("failDetail","더이상 찾을 부품이 없습니다.");
+                                            reportPassFail(false,"더이상 찾을 부품이 없습니다.",taskID);
 
-                                            new HurryHttpRequest(parentActivity) {
-                                                @Override
-                                                protected void onPostExecute(Object o) {
-                                                    super.onPostExecute(o);
-
-                                                    try {
-                                                        JSONObject resultTemp = new JSONObject(result);
-                                                        System.out.println("resultTemp : " + resultTemp);
-                                                        System.out.println("서버반응 : " + resultTemp.get("success").toString());
-                                                        if (resultTemp.get("success").toString().equals("false")) {
-                                                            new ServerMessageParser().taskSubmitFailParse(parentActivity, resultTemp);
-
-                                                        } else {
-                                                            System.out.println("서버반응 2: " + resultTemp.get("success").toString());
-
-
-                                                        }
-                                                    } catch (JSONException e) {
-                                                        e.printStackTrace();
-                                                    }
-                                                }
-                                            }.execute(parentActivity.getString(R.string.mainurl) + "/testing/logTest", paramForRankUp, ((Quiz2DBoxActivity) parentActivity).getLoginToken());
 
                                         } else {
                                             int candidate = mTaskViewPhotoWithBox.findCandidate(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend);
@@ -253,103 +226,20 @@ public class Controller_2DBox extends Controller {
                                                 testCountForGraduate = 0;
                                                 countText.setText(String.valueOf(testCountForGraduate) + "/10");
                                                 getDialog("박스 안에 부품이 없습니다.", "다시 한번 확인하고 박스를 쳐 주세요.");
-                                                JSONObject paramForRankUp = new JSONObject();
-                                                paramForRankUp.put("option", parentActivity.partType());
-                                                paramForRankUp.put("taskID", taskID);
-                                                paramForRankUp.put("id",parentActivity.answerID);
-                                                paramForRankUp.put("pass",false);
-                                                paramForRankUp.put("failDetail","박스 안에 부품이 없습니다.");
-
-                                                new HurryHttpRequest(parentActivity) {
-                                                    @Override
-                                                    protected void onPostExecute(Object o) {
-                                                        super.onPostExecute(o);
-
-                                                        try {
-                                                            JSONObject resultTemp = new JSONObject(result);
-                                                            System.out.println("resultTemp : " + resultTemp);
-                                                            System.out.println("서버반응 : " + resultTemp.get("success").toString());
-                                                            if (resultTemp.get("success").toString().equals("false")) {
-                                                                new ServerMessageParser().taskSubmitFailParse(parentActivity, resultTemp);
-
-                                                            } else {
-                                                                System.out.println("서버반응 2: " + resultTemp.get("success").toString());
-
-
-                                                            }
-                                                        } catch (JSONException e) {
-                                                            e.printStackTrace();
-                                                        }
-                                                    }
-                                                }.execute(parentActivity.getString(R.string.mainurl) + "/testing/logTest", paramForRankUp, ((Quiz2DBoxActivity) parentActivity).getLoginToken());
+                                                reportPassFail(false,"박스 안에 부품이 없습니다.",taskID);
 
                                             } else if (mTaskViewPhotoWithBox.isIntersectionExistForTest(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend, candidate)) {
                                                 testCountForGraduate = 0;
                                                 countText.setText(String.valueOf(testCountForGraduate) + "/10");
                                                 getDialog("부품이 잘렸습니다.", "박스를 좀더 크게 쳐 주세요.");
-                                                JSONObject paramForRankUp = new JSONObject();
-                                                paramForRankUp.put("option", parentActivity.partType());
-                                                paramForRankUp.put("taskID", taskID);
-                                                paramForRankUp.put("id",parentActivity.answerID);
-                                                paramForRankUp.put("pass",false);
-                                                paramForRankUp.put("failDetail","부품이 잘렸습니다.");
+                                                reportPassFail(false,"부품이 잘렸습니다.",taskID);
 
-                                                new HurryHttpRequest(parentActivity) {
-                                                    @Override
-                                                    protected void onPostExecute(Object o) {
-                                                        super.onPostExecute(o);
-
-                                                        try {
-                                                            JSONObject resultTemp = new JSONObject(result);
-                                                            System.out.println("resultTemp : " + resultTemp);
-                                                            System.out.println("서버반응 : " + resultTemp.get("success").toString());
-                                                            if (resultTemp.get("success").toString().equals("false")) {
-                                                                new ServerMessageParser().taskSubmitFailParse(parentActivity, resultTemp);
-
-                                                            } else {
-                                                                System.out.println("서버반응 2: " + resultTemp.get("success").toString());
-
-
-                                                            }
-                                                        } catch (JSONException e) {
-                                                            e.printStackTrace();
-                                                        }
-                                                    }
-                                                }.execute(parentActivity.getString(R.string.mainurl) + "/testing/logTest", paramForRankUp, ((Quiz2DBoxActivity) parentActivity).getLoginToken());
 
                                             } else if (mTaskViewPhotoWithBox.isBoundaryLimitExceededForTest(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend, candidate)) {
                                                 testCountForGraduate = 0;
                                                 countText.setText(String.valueOf(testCountForGraduate) + "/10");
                                                 getDialog("박스가 너무 큽니다.", "부품의 경계에 맞게 박스를 쳐 주세요.");
-                                                JSONObject paramForRankUp = new JSONObject();
-                                                paramForRankUp.put("option", parentActivity.partType());
-                                                paramForRankUp.put("taskID", taskID);
-                                                paramForRankUp.put("id",parentActivity.answerID);
-                                                paramForRankUp.put("pass",false);
-                                                paramForRankUp.put("failDetail","박스가 너무 큽니다.");
-
-                                                new HurryHttpRequest(parentActivity) {
-                                                    @Override
-                                                    protected void onPostExecute(Object o) {
-                                                        super.onPostExecute(o);
-
-                                                        try {
-                                                            JSONObject resultTemp = new JSONObject(result);
-                                                            System.out.println("resultTemp : " + resultTemp);
-                                                            System.out.println("서버반응 : " + resultTemp.get("success").toString());
-                                                            if (resultTemp.get("success").toString().equals("false")) {
-                                                                new ServerMessageParser().taskSubmitFailParse(parentActivity, resultTemp);
-
-                                                            } else {
-                                                                System.out.println("서버반응 2: " + resultTemp.get("success").toString());
-
-
-                                                            }
-                                                        } catch (JSONException e) {
-                                                            e.printStackTrace();
-                                                        }
-                                                    }
-                                                }.execute(parentActivity.getString(R.string.mainurl) + "/testing/logTest", paramForRankUp, ((Quiz2DBoxActivity) parentActivity).getLoginToken());
+                                                reportPassFail(false,"박스가 너무 큽니다.",taskID);
 
                                             } else {
                                                 mTaskViewPhotoWithBox.addAnswer(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend);
@@ -357,35 +247,7 @@ public class Controller_2DBox extends Controller {
                                                 countText.setText(String.valueOf(testCountForGraduate) + "/10");
 
                                                 if (testCountForGraduate >= 10) {
-                                                    JSONObject paramForRankUpo = new JSONObject();
-                                                    paramForRankUpo.put("option", parentActivity.partType());
-                                                    paramForRankUpo.put("taskID", taskID);
-                                                    paramForRankUpo.put("id",parentActivity.answerID);
-                                                    paramForRankUpo.put("pass",false);
-                                                    paramForRankUpo.put("failDetail","통과");
-
-                                                    new HurryHttpRequest(parentActivity) {
-                                                        @Override
-                                                        protected void onPostExecute(Object o) {
-                                                            super.onPostExecute(o);
-
-                                                            try {
-                                                                JSONObject resultTemp = new JSONObject(result);
-                                                                System.out.println("resultTemp : " + resultTemp);
-                                                                System.out.println("서버반응 : " + resultTemp.get("success").toString());
-                                                                if (resultTemp.get("success").toString().equals("false")) {
-                                                                    new ServerMessageParser().taskSubmitFailParse(parentActivity, resultTemp);
-
-                                                                } else {
-                                                                    System.out.println("서버반응 2: " + resultTemp.get("success").toString());
-
-
-                                                                }
-                                                            } catch (JSONException e) {
-                                                                e.printStackTrace();
-                                                            }
-                                                        }
-                                                    }.execute(parentActivity.getString(R.string.mainurl) + "/testing/logTest", paramForRankUpo, ((Quiz2DBoxActivity) parentActivity).getLoginToken());
+                                                    reportPassFail(true,"통과",taskID);
                                                     TextView opt = parentActivity.findViewById(R.id.optionText);
                                                     getDialog(opt.getText().toString() + "테스트 통과", "축하합니다. " + opt.getText().toString() + "테스트를 통과하셨습니다. 이제 " + opt.getText().toString() + "라벨링 작업을 시작할 수 있습니다.");
                                                     SharedPreferences testFlag = parentActivity.getSharedPreferences("testFlag", parentActivity.MODE_PRIVATE);
@@ -420,35 +282,7 @@ public class Controller_2DBox extends Controller {
                                                     }.execute(parentActivity.getString(R.string.mainurl) + "/testing/passTest", paramForRankUp, ((Quiz2DBoxActivity) parentActivity).getLoginToken());
                                                 } else {
                                                     getDialog("잘 하셨습니다!", "다음 부품을 찾아 주세요. 다 찾았다면 모든 부품 제출 완료 버튼을 눌러 주세요");
-                                                    JSONObject paramForRankUp = new JSONObject();
-                                                    paramForRankUp.put("option", parentActivity.partType());
-                                                    paramForRankUp.put("taskID", taskID);
-                                                    paramForRankUp.put("id",parentActivity.answerID);
-                                                    paramForRankUp.put("pass",true);
-                                                    paramForRankUp.put("failDetail","통과");
-
-                                                    new HurryHttpRequest(parentActivity) {
-                                                        @Override
-                                                        protected void onPostExecute(Object o) {
-                                                            super.onPostExecute(o);
-
-                                                            try {
-                                                                JSONObject resultTemp = new JSONObject(result);
-                                                                System.out.println("resultTemp : " + resultTemp);
-                                                                System.out.println("서버반응 : " + resultTemp.get("success").toString());
-                                                                if (resultTemp.get("success").toString().equals("false")) {
-                                                                    new ServerMessageParser().taskSubmitFailParse(parentActivity, resultTemp);
-
-                                                                } else {
-                                                                    System.out.println("서버반응 2: " + resultTemp.get("success").toString());
-
-
-                                                                }
-                                                            } catch (JSONException e) {
-                                                                e.printStackTrace();
-                                                            }
-                                                        }
-                                                    }.execute(parentActivity.getString(R.string.mainurl) + "/testing/logTest", paramForRankUp, ((Quiz2DBoxActivity) parentActivity).getLoginToken());
+                                                    reportPassFail(true,"통과",taskID);
                                                     completeButton.setText("모든 부품 제출 완료 +" + parentActivity.getUpGold2() +"원");
                                                     testCount--;
                                                     mTaskViewPhotoWithBox.updateTestSet(candidate);
@@ -551,7 +385,7 @@ public class Controller_2DBox extends Controller {
                                     //그냥 제출과 다찾음의 금액이 달라서 일단은 하드텍스트로 박아넣음 (수정요망)
                                 }
                                 else{
-                                    getDialog("아직 찾지 못한 부품이 있습니다.","부품을 마저 찾아주세요.");
+                                    getDialog("아직 찾지 못한 부품이 있습니다.","테스트 통과 횟수가 초기화됩니다. 부품을 마저 찾아주세요.");
                                     testCountForGraduate=0;
 
                                 }
@@ -1550,6 +1384,42 @@ public class Controller_2DBox extends Controller {
             }
         });
         alertDialogBuilder.show();
+    }
+    private void reportPassFail(boolean pass, String failDetail, String taskID){
+        try {
+            JSONObject paramForRankUp = new JSONObject();
+            paramForRankUp.put("option", parentActivity.partType());
+            paramForRankUp.put("taskID", taskID);
+            paramForRankUp.put("id", parentActivity.answerID);
+            paramForRankUp.put("pass", pass);
+            paramForRankUp.put("failDetail", failDetail);
+
+            new HurryHttpRequest(parentActivity) {
+                @Override
+                protected void onPostExecute(Object o) {
+                    super.onPostExecute(o);
+
+                    try {
+                        JSONObject resultTemp = new JSONObject(result);
+                        System.out.println("resultTemp : " + resultTemp);
+                        System.out.println("서버반응 : " + resultTemp.get("success").toString());
+                        if (resultTemp.get("success").toString().equals("false")) {
+                            new ServerMessageParser().taskSubmitFailParse(parentActivity, resultTemp);
+
+                        } else {
+                            System.out.println("서버반응 2: " + resultTemp.get("success").toString());
+
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.execute(parentActivity.getString(R.string.mainurl) + "/testing/logTest", paramForRankUp, ((Quiz2DBoxActivity) parentActivity).getLoginToken());
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
     }
 
 
