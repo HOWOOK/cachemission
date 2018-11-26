@@ -541,8 +541,7 @@ public class Controller_TwoPoint extends Controller {
                                         constraintSet.connect(parentActivity.findViewById(R.id.textAnimation).getId(), ConstraintSet.BOTTOM, parentActivity.findViewById(R.id.btnCL).getId(), ConstraintSet.BOTTOM, (int) (43 * dpScale));
                                         constraintSet.connect(parentActivity.findViewById(R.id.imageAnimation).getId(), ConstraintSet.BOTTOM, parentActivity.findViewById(R.id.btnCL).getId(), ConstraintSet.BOTTOM, (int) (43 * dpScale));
                                         constraintSet.applyTo((ConstraintLayout) (parentActivity.findViewById(R.id.controllerCL)));
-                                        //그냥 제출과 다찾음의 금액이 달라서 일단은 하드텍스트로 박아넣음 (수정요망)
-                                        parentActivity.showAnimation(R.drawable.coin_animation_list, Integer.parseInt("5"));
+                                        parentActivity.showAnimation(R.drawable.coin_animation_list, parentActivity.getUpGold2());
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
