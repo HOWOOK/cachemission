@@ -32,8 +32,6 @@ public class ServerMessageParser {
             ((PatherActivity) context).finish();
         } else if (result.get("message").toString().equals("needtest")){
             Toast.makeText(context, "먼저 테스트를 통과하셔야 진행할 수 있습니다.", Toast.LENGTH_LONG).show();
-        } else if(result.get("message").toString().equals("INVALID_ALL_ANSWER_STATUS")){
-            ((PatherActivity) context).finish();
         } else{
             Toast.makeText(context, "false : " + result.get("message").toString(), Toast.LENGTH_LONG).show();
             ((PatherActivity) context).finish();
@@ -53,8 +51,6 @@ public class ServerMessageParser {
             Toast.makeText(context, "현재 서버에 문제가 있습니다.", Toast.LENGTH_LONG).show();
         } else if (result.get("message").toString().equals("task")){
             Toast.makeText(context, "남은 검수 작업이 없습니다.", Toast.LENGTH_LONG).show();
-        } else if(result.get("message").toString().equals("INVALID_ALL_ANSWER_STATUS")){
-
         } else {
             Toast.makeText(context, "false : " + result.get("message").toString(), Toast.LENGTH_LONG).show();
         }
