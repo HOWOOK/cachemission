@@ -127,7 +127,7 @@ public class ExamActivity extends PatherActivity {
     {
         try{
             System.out.println("Exam Activity 웨이팅 테스크 : " + waitingTasks);
-            if(waitingTasks != null && waitingTasks.get(0).get("taskOption").toString().equals(taskOption) && waitingTasks.size() > 0) {
+            if(waitingTasks != null && waitingTasks.size() > 0 && waitingTasks.get(0).get("taskOption").toString().equals(taskOption)) {
                 currentTask = (JSONObject)waitingTasks.get(waitingTasks.size()-1);
                 String taskUserID = currentTask.getString("user");
                 answerID = currentTask.get("id").toString();

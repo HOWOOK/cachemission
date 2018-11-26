@@ -62,6 +62,7 @@ public abstract class PatherActivity extends AppCompatActivity {
     protected TextView nowGold;
     protected TextView pendingGold;
     protected int upGold;
+    protected int upGold2;
     protected int partNum=-1;
     String questString="";
     int currentIndex=0;
@@ -85,6 +86,10 @@ public abstract class PatherActivity extends AppCompatActivity {
     public int getUpGold()
     {
         return upGold;
+    }
+
+    public int getUpGold2(){
+        return upGold2;
     }
 
     public String getLoginToken() {

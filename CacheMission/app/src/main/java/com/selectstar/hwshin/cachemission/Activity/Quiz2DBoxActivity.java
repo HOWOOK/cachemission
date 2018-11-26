@@ -321,7 +321,7 @@ countText.setText("0/10");
     @Override
     public void startTask(){
         try {
-            if(waitingTasks != null && waitingTasks.get(0).get("taskOption").toString().equals(taskOption) && waitingTasks.size() > 0) {
+            if(waitingTasks != null && waitingTasks.size() > 0 && waitingTasks.get(0).get("taskOption").toString().equals(taskOption)) {
                 currentTask = (JSONObject)waitingTasks.get(waitingTasks.size()-1);
                 answerID = currentTask.get("id").toString();
 
@@ -354,7 +354,6 @@ countText.setText("0/10");
                 findViewById(R.id.textDragCL).setVisibility(View.VISIBLE);
                 findViewById(R.id.textDragCL).bringToFront();
             }else{
-                System.out.println("ㅏ마마마마맘");
                 super.onBackPressed();
                 SharedPreferences testFlag=getSharedPreferences("testFlag",MODE_PRIVATE);
                 SharedPreferences.Editor editor=testFlag.edit();

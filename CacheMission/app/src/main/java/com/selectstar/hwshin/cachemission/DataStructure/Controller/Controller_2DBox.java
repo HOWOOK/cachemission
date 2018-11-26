@@ -89,6 +89,7 @@ public class Controller_2DBox extends Controller {
         });
 
             sendButton = view.findViewById(R.id.sendbtn);
+            sendButton.setText("제출하기 +"+ parentActivity.getUpGold() +"원");
             if(sendButton != null) {
                 sendButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -174,7 +175,7 @@ public class Controller_2DBox extends Controller {
                                                         System.out.println("서버반응 2: " + resultTemp.get("success").toString());
 
                                                         mTaskViewPhotoWithBox.addAnswer(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend);
-                                                        completeButton.setText("모든 부품 제출 완료 +5원");
+                                                        completeButton.setText("모든 부품 제출 완료 +" + parentActivity.getUpGold2() +"원");
 
                                                         mTaskViewPhotoWithBox.drawAnswer(mTaskViewPhotoWithBox.answerCoordination);
 
@@ -479,7 +480,7 @@ public class Controller_2DBox extends Controller {
                                                             }
                                                         }
                                                     }.execute(parentActivity.getString(R.string.mainurl) + "/testing/logTest", paramForRankUp, ((Quiz2DBoxActivity) parentActivity).getLoginToken());
-                                                    completeButton.setText("모든 부품 제출 완료 +5원");
+                                                    completeButton.setText("모든 부품 제출 완료 +" + parentActivity.getUpGold2() +"원");
                                                     testCount--;
                                                     mTaskViewPhotoWithBox.updateTestSet(candidate);
 
@@ -512,7 +513,7 @@ public class Controller_2DBox extends Controller {
             }
 
         completeButton = view.findViewById(R.id.completebtn);
-            completeButton.setText("찾을 부품 없음 +5원");
+            completeButton.setText("찾을 부품 없음 +"+parentActivity.getUpGold2()+"원");
 
         completeButton.setOnClickListener(new View.OnClickListener() {
             @Override

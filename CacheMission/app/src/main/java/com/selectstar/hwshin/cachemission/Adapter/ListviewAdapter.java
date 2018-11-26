@@ -201,7 +201,6 @@ public class ListviewAdapter extends RecyclerView.Adapter<ListviewAdapter.ItemVi
                 }
 
             }else{
-
 //                if(holder.itemCL != null) {
 //                    holder.itemCL.removeView(holder.quest1);
 //                    holder.itemCL.removeView(holder.quest1money);
@@ -224,6 +223,7 @@ public class ListviewAdapter extends RecyclerView.Adapter<ListviewAdapter.ItemVi
         String taskType="";
         String taskName="";
         String taskGold="0";
+        String taskGold2="0";
         JSONArray questList=new JSONArray();
         JSONObject taskItem = mTaskList.get(pos);
         questReset(holder);
@@ -232,6 +232,7 @@ public class ListviewAdapter extends RecyclerView.Adapter<ListviewAdapter.ItemVi
             taskType = taskItem.get("taskType").toString();
             taskName = taskItem.get("taskName").toString();
             taskGold = taskItem.get("gold").toString();
+            taskGold2 = taskItem.get("gold2").toString();
             Log.d("taskItem",taskItem.toString());
             questList=(JSONArray) taskItem.get("questList");
             updateItem(holder,questList);
@@ -248,7 +249,8 @@ public class ListviewAdapter extends RecyclerView.Adapter<ListviewAdapter.ItemVi
 
         intent.putExtra("taskType",taskType);
         intent.putExtra("taskTitle",taskName);
-        intent.putExtra("upGold","\uFFE6"+taskGold);
+        intent.putExtra("upGold", taskGold);
+        intent.putExtra("upGold2", taskGold2);
         intent.putExtra("questList",questList.toString());
 
         try {

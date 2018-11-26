@@ -151,11 +151,11 @@ public class PartSelectDialog extends Dialog{
                             if(resultTemp.get("message").toString().equals("black")){
                                 idList.add(R.drawable.examining_false);
                                 testingList.add(false);
-                                stateList.add("이 부품에 대해 블랙처리되었습니다.");
+                                stateList.add("이 부품에 대해 블랙 처리되었습니다.");
                             }else if(resultTemp.get("message").toString().equals("nomore")){
                                 idList.add(R.drawable.examining_falsepush);
                                 testingList.add(false);
-                                stateList.add("서버에 남은 테스크가 없습니다.");
+                                stateList.add("현재 할 수 있는 작업이 없습니다.");
                             }else if(resultTemp.get("message").toString().equals("needtest")){
                                 idList.add(R.drawable.btn_x);
                                 testingList.add(true);
@@ -163,11 +163,11 @@ public class PartSelectDialog extends Dialog{
                             }else if(resultTemp.get("message").toString().equals("exceed")){
                                 idList.add(R.drawable.examining_truepush);
                                 testingList.add(false);
-                                stateList.add("회원님의 랭크에 해당하는 작업횟수를 모두 소진하였습니다.");
+                                stateList.add("회원님의 랭크에 해당하는 작업 횟수를 모두 소진하였습니다.");
                             }else if(resultTemp.get("message").toString().equals("needcert")){
                                 idList.add(R.drawable.examining_true);
                                 testingList.add(false);
-                                stateList.add("먼저 검수자격을 얻어야 진행할 수 있습니다.");
+                                stateList.add("먼저 검수 자격을 얻어야 진행할 수 있습니다.");
                             }else{
                                 idList.add(R.drawable.cashmissionicon);
                                 testingList.add(false);

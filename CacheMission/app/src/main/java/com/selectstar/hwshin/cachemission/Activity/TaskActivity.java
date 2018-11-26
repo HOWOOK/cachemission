@@ -99,7 +99,8 @@ public class TaskActivity extends PatherActivity {
          */
         explainDialog = new Dialog(this);
         intent = getIntent();
-        upGold = Integer.parseInt(intent.getStringExtra("upGold").substring(1)); //string(0)은 \표시
+        upGold = Integer.parseInt(intent.getStringExtra("upGold"));
+        upGold2 = Integer.parseInt(intent.getStringExtra("upGold2"));
         gold =intent.getStringExtra("goldNow");
         maybe = intent.getStringExtra("goldPre");
         nowGold.setText("현재 : \uFFE6 " + gold);
@@ -404,7 +405,7 @@ public class TaskActivity extends PatherActivity {
     @Override
     public void startTask(){
         try {
-            if(waitingTasks != null && waitingTasks.get(0).get("taskOption").toString().equals(taskOption) && waitingTasks.size() > 0) {
+            if(waitingTasks != null && waitingTasks.size() > 0 && waitingTasks.get(0).get("taskOption").toString().equals(taskOption) ) {
                 System.out.println("TaskActivity 웨이팅테스크 : " + waitingTasks);
                 currentTask = (JSONObject)waitingTasks.get(waitingTasks.size() - 1);
                 answerID = currentTask.get("id").toString();

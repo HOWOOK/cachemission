@@ -742,11 +742,9 @@ runningHTTPRequest++;
                     Log.d("getTaskList",resultTemp.toString());
 
                     try {
-
                         if ((resultTemp.getString("forced")).equals("True")) {
                             getForcedUpdateDialog("필수적인 업데이트사항이 있습니다.","먼저 버전 업데이트를 진행해 주세요.");
                             //forcedUpdate();
-
                         }
 
                     }catch (JSONException e){
@@ -779,31 +777,33 @@ runningHTTPRequest++;
                     int allGold = (int) user.get("gold") + (int) user.get("maybe");
                     userGold.setText(String.valueOf(allGold));
 
+                    //오늘번돈 상단고정바 셋팅
                     SharedPreferences currentGold=getSharedPreferences("currentGold",MODE_PRIVATE);
                     SharedPreferences.Editor currentGoldEditor=currentGold.edit();
                     currentGoldEditor.putString("currentGold",String.valueOf(allGold));
-
                     Log.d("todayStartfirst",String.valueOf(allGold));
                     currentGoldEditor.commit();
                     updateTodayEarnedMoney();
                     notifManager = (NotificationManager) getSystemService  (Context.NOTIFICATION_SERVICE);
-
                     notifManager.cancelAll();
                     SharedPreferences notificationOnOffBoolean=getSharedPreferences("notificationOnOffBoolean",MODE_PRIVATE);
-
-
                     topBarSetting(notificationOnOffBoolean.getBoolean("OnOff",true));
 
-                    TextView userNameDrawer = findViewById(R.id.usernamedrawer);
+                    // 이거의 역할은 뭐지...?
                     mTaskList.clear();
                     clearItem();
                     insertTime();
+
+                    //drawView에 userNameSetting
+                    TextView userNameDrawer = findViewById(R.id.usernamedrawer);
                     userNameDrawer.setText(String.valueOf(user.get("name")));
                     setUserRankImage(userRank, userLevel, (int)user.get("rank"));
                     ProgressBar progress = findViewById(R.id.mainProgressBar);
                     setUserProgressBar(progress,(int)user.get("rank"), (int)user.get("success_count"));
 //                    if(!resultTemp.get("emergency").toString().equals(""))
 //                        Toast.makeText(mContext,resultTemp.get("emergency").toString(),Toast.LENGTH_SHORT);
+
+                    //tasklist, examlist 인플레이팅
                     JSONArray examList = (JSONArray) resultTemp.get("exam_data");
                     for (int i = 0; i < examList.length(); i++)
                         mTaskList.add((JSONObject) examList.get(i));
@@ -817,7 +817,6 @@ runningHTTPRequest++;
                     lv_main.setLayoutManager(layoutManager);
                     lv_main.setAdapter(adapter);
 
-                    System.out.println("붸뷉"+mTaskList.size());
                     for (int i =0;i < mTaskList.size(); i++)
                     {
                         getOneTask(i,loginToken,true);

@@ -361,6 +361,7 @@ public class Controller_TwoPoint extends Controller {
             }
         });
 
+        sendbtn.setText("제출하기 +"+ parentActivity.getUpGold() +"원");
         sendbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -424,7 +425,6 @@ public class Controller_TwoPoint extends Controller {
                                 @Override
                                 protected void onPostExecute(Object o) {
                                     super.onPostExecute(o);
-                                    System.out.println("나 여기 들어왔어");
 
                                     try {
                                         JSONObject resultTemp = new JSONObject(result);
@@ -447,7 +447,7 @@ public class Controller_TwoPoint extends Controller {
                                             System.out.println("서버반응 2: " + resultTemp.get("success").toString());
 
                                             mTaskViewPhotoWithLine.addAnswer(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend);
-                                            completebtn.setText("모든 부품 제출 완료 +5원");
+                                            completebtn.setText("모든 부품 제출 완료 +" + parentActivity.getUpGold2() +"원");
 
                                             mTaskViewPhotoWithLine.drawAnswer(mTaskViewPhotoWithLine.answerCoordination, mTaskViewPhotoWithLine.answerCoordinationSubmit);
 
