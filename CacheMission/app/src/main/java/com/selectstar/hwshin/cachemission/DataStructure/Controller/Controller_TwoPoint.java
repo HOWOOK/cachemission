@@ -167,7 +167,7 @@ public class Controller_TwoPoint extends Controller {
                 curX = event.getX();
                 curY = event.getY();
 
-                if (firstPointFlag || secondPointFlag) {
+                if (firstPointFlag ^ secondPointFlag) {
                     if (mTaskViewPhotoWithLine.ImageReady) {
 
                         //OutOfBound 처리
@@ -256,12 +256,14 @@ public class Controller_TwoPoint extends Controller {
 
                     return true;
                 }
-                return false;
+                return true;
             }
 
         });
 
         firstPointTouch.setOnTouchListener(new View.OnTouchListener() {
+            float PointCenterX = firstPointTouch.getX() + (float) firstPointTouch.getWidth() / 2;
+            float PointCenterY = secondPointTouch.getY() + (float) firstPointTouch.getHeight() / 2;
             float curX = 0;
             float curY = 0;
             float pvRatio = 0;
@@ -269,9 +271,8 @@ public class Controller_TwoPoint extends Controller {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 float YCorrectionHeight = (float) parentActivity.findViewById(R.id.title).getHeight() + (float) parentActivity.findViewById(R.id.option).getHeight();
-                System.out.println("Controller_TwoPoint, YCorrectionHeight : " + YCorrectionHeight);
                 curX = event.getRawX();
-                curY = event.getRawY() - YCorrectionHeight * dpScale - getStatusBarHeight(parentActivity);
+                curY = event.getRawY() - YCorrectionHeight - getStatusBarHeight(parentActivity);
 
                 //OutOfBound 처리
                 curX = setXOutOfBound(curX);
@@ -322,8 +323,9 @@ public class Controller_TwoPoint extends Controller {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                float YCorrectionHeight = (float) parentActivity.findViewById(R.id.title).getHeight() + (float) parentActivity.findViewById(R.id.option).getHeight();
                 curX = event.getRawX();
-                curY = event.getRawY() - 70f * dpScale - getStatusBarHeight(parentActivity); //70 : taskActivity의 title와 option CL의 크기
+                curY = event.getRawY() - YCorrectionHeight - getStatusBarHeight(parentActivity); //70 : taskActivity의 title와 option CL의 크기
 
                 //OutOfBound 처리
                 curX = setXOutOfBound(curX);
@@ -416,7 +418,7 @@ public class Controller_TwoPoint extends Controller {
                         topPercentSend = topPercent;
                         rightPercentSend = rightPercent;
                         bottomPercentSend = bottomPercent;
-                        int ans = 11; //전선
+                        int ans = 111; //전선
                         submit = "<" + ans + ">" + leftPercent + "," + topPercent + "," + rightPercent + "," + bottomPercent;
                         param.put("submit", submit);
 
@@ -431,18 +433,8 @@ public class Controller_TwoPoint extends Controller {
                                         System.out.println("resultTemp : " + resultTemp);
                                         System.out.println("서버반응 : " + resultTemp.get("success").toString());
                                         if (resultTemp.get("success").toString().equals("false")) {
-                                            if (resultTemp.get("message").toString().equals("login")) {
-                                                Intent in = new Intent(parentActivity, LoginActivity.class);
-                                                parentActivity.startActivity(in);
-                                                Toast.makeText(parentActivity, "로그인이 만료되었습니다. 다시 로그인해주세요", Toast.LENGTH_SHORT).show();
-                                                parentActivity.finish();
-                                            } else if (resultTemp.get("message").toString().equals("task")) {
-                                                Toast.makeText(parentActivity, "테스크가 만료되었습니다. 다른 테스크를 선택해주세요", Toast.LENGTH_SHORT).show();
-                                                parentActivity.finish();
-                                            } else {
-                                                Toast.makeText(parentActivity, "남은 테스크가 없습니다.", Toast.LENGTH_SHORT).show();
-                                                parentActivity.finish();
-                                            }
+                                            new ServerMessageParser().taskSubmitFailParse(parentActivity,resultTemp);
+
                                         } else {
                                             System.out.println("서버반응 2: " + resultTemp.get("success").toString());
 
@@ -516,7 +508,7 @@ public class Controller_TwoPoint extends Controller {
                             param.put("taskID", taskID);
 
                             //보내야하는 데이타
-                            String submit = "<" + 11 + "><allclear>";
+                            String submit = "<" + 111 + "><allclear>";
                             param.put("submit", submit);
 
                         new WaitHttpRequest(parentActivity) {
@@ -527,7 +519,6 @@ public class Controller_TwoPoint extends Controller {
                                     JSONObject resultTemp = new JSONObject(result);
                                     if (resultTemp.get("success").toString().equals("false")) {
                                         new ServerMessageParser().taskSubmitFailParse(parentActivity,resultTemp);
-
                                     } else {
                                         mTaskViewPhotoWithLine.removeAnswer();
                                         parentActivity.updateWaitingTasks();
@@ -575,22 +566,18 @@ public class Controller_TwoPoint extends Controller {
         constraintSet.clone(photoWithLineCL);
 
         if(curX <= expandViewCL.getWidth() + leftRightMargin && curY <= expandViewCL.getHeight() + topBottomMargin) { //현재좌표가 좌상단, 포토뷰는 우하단으로
-            Log.d("어디들어갔게", "좌상단" );
             constraintSetClear(expandViewCL, constraintSet);
             constraintSet.connect(expandViewCL.getId(), ConstraintSet.BOTTOM, photoWithLineCL.getId(), ConstraintSet.BOTTOM, (int) topBottomMargin);
             constraintSet.connect(expandViewCL.getId(), ConstraintSet.RIGHT, photoWithLineCL.getId(), ConstraintSet.RIGHT, (int) leftRightMargin);
         }else if(curX > CLWidth - (expandViewCL.getWidth() + leftRightMargin) && curY <= expandViewCL.getHeight() + topBottomMargin) { //현재좌표가 우상단, 포토뷰는 좌하단으로
-            Log.d("어디들어갔게", "우상단" );
             constraintSetClear(expandViewCL, constraintSet);
             constraintSet.connect(expandViewCL.getId(), ConstraintSet.BOTTOM, photoWithLineCL.getId(), ConstraintSet.BOTTOM, (int) topBottomMargin);
             constraintSet.connect(expandViewCL.getId(), ConstraintSet.LEFT, photoWithLineCL.getId(), ConstraintSet.LEFT, (int) leftRightMargin);
         }else if(curX <= expandViewCL.getWidth() + leftRightMargin && curY > CLHeight - (expandViewCL.getHeight() + topBottomMargin)) { //현재좌표가 좌하단, 포토뷰는 우상단으로
-            Log.d("어디들어갔게", "좌하단" );
             constraintSetClear(expandViewCL, constraintSet);
             constraintSet.connect(expandViewCL.getId(), ConstraintSet.TOP, photoWithLineCL.getId(), ConstraintSet.TOP, (int) topBottomMargin);
             constraintSet.connect(expandViewCL.getId(), ConstraintSet.RIGHT, photoWithLineCL.getId(), ConstraintSet.RIGHT, (int) leftRightMargin);
         }else if(curX > CLWidth - (expandViewCL.getWidth() + leftRightMargin) && curY > CLHeight - (expandViewCL.getHeight() + topBottomMargin)) { //현재좌표가 우하단, 포토뷰는 좌상단으로
-            Log.d("어디들어갔게", "우하단" );
             constraintSetClear(expandViewCL, constraintSet);
             constraintSet.connect(expandViewCL.getId(), ConstraintSet.TOP, photoWithLineCL.getId(), ConstraintSet.TOP, (int) topBottomMargin);
             constraintSet.connect(expandViewCL.getId(), ConstraintSet.LEFT, photoWithLineCL.getId(), ConstraintSet.LEFT, (int) leftRightMargin);
