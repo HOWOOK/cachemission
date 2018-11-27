@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.support.constraint.ConstraintLayout;
@@ -16,7 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.selectstar.hwshin.cachemission.Activity.LoginActivity;
+import com.selectstar.hwshin.cachemission.Activity.Quiz2DBoxActivity;
 import com.selectstar.hwshin.cachemission.Activity.TaskActivity;
+import com.selectstar.hwshin.cachemission.DataStructure.HurryHttpRequest;
 import com.selectstar.hwshin.cachemission.DataStructure.ServerMessageParser;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoWithLine;
 import com.selectstar.hwshin.cachemission.DataStructure.WaitHttpRequest;
@@ -103,6 +106,8 @@ public class Controller_TwoPoint extends Controller {
     private float dpScale;
     private Canvas canvas;
     private float originWidth, originHeight, originLeftMargin, originTopMargin;
+    private int testCountForGraduate=0;
+    private int testCount;
 
     //상태바 높이 구하기
     public static int getStatusBarHeight(Context context) {
@@ -130,7 +135,9 @@ public class Controller_TwoPoint extends Controller {
         photoView = mTaskViewPhotoWithLine.getPhotoView();
         canvas = new Canvas();
         final float expandSize = 2f;
-
+        if(testFlag){
+            testCount=LineTestAnswer.length();
+        }
         //뷰를 추가하고나면 point들이 뒤에 있어서 클릭할수가 없어서 앞으로 가져온다.
         pointLine = new LineView(parentActivity);
         pointLine.setId(View.generateViewId());
@@ -450,65 +457,159 @@ public class Controller_TwoPoint extends Controller {
                         int ans = 111; //전선
                         submit = "<" + ans + ">" + leftPercent + "," + topPercent + "," + rightPercent + "," + bottomPercent;
                         param.put("submit", submit);
+                        if (!testFlag){
+                            if (mTaskViewPhotoWithLine.similarityTest(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend)) {
+                                new WaitHttpRequest(parentActivity) {
+                                    @Override
+                                    protected void onPostExecute(Object o) {
+                                        super.onPostExecute(o);
 
-                        if (mTaskViewPhotoWithLine.similarityTest(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend)) {
-                            new WaitHttpRequest(parentActivity) {
-                                @Override
-                                protected void onPostExecute(Object o) {
-                                    super.onPostExecute(o);
+                                        try {
+                                            JSONObject resultTemp = new JSONObject(result);
+                                            System.out.println("resultTemp : " + resultTemp);
+                                            System.out.println("서버반응 : " + resultTemp.get("success").toString());
+                                            if (resultTemp.get("success").toString().equals("false")) {
+                                                new ServerMessageParser().taskSubmitFailParse(parentActivity, resultTemp);
 
-                                    try {
-                                        JSONObject resultTemp = new JSONObject(result);
-                                        System.out.println("resultTemp : " + resultTemp);
-                                        System.out.println("서버반응 : " + resultTemp.get("success").toString());
-                                        if (resultTemp.get("success").toString().equals("false")) {
-                                            new ServerMessageParser().taskSubmitFailParse(parentActivity,resultTemp);
+                                            } else {
+                                                System.out.println("서버반응 2: " + resultTemp.get("success").toString());
 
-                                        } else {
-                                            System.out.println("서버반응 2: " + resultTemp.get("success").toString());
+                                                mTaskViewPhotoWithLine.addAnswer(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend);
+                                                completebtn.setText("모든 부품 제출 완료 +" + parentActivity.getUpGold2() + "원");
 
-                                            mTaskViewPhotoWithLine.addAnswer(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend);
-                                            completebtn.setText("모든 부품 제출 완료 +" + parentActivity.getUpGold2() +"원");
+                                                mTaskViewPhotoWithLine.drawAnswer(mTaskViewPhotoWithLine.answerCoordination, mTaskViewPhotoWithLine.answerCoordinationSubmit);
 
-                                            mTaskViewPhotoWithLine.drawAnswer(mTaskViewPhotoWithLine.answerCoordination, mTaskViewPhotoWithLine.answerCoordinationSubmit);
+                                                ConstraintLayout textDragCL = parentActivity.findViewById(R.id.textDragCL);
+                                                Toast.makeText(parentActivity, "제출 완료! 계속 찾아주세요.", Toast.LENGTH_SHORT).show();
+                                                textDragCL.setVisibility(View.VISIBLE);
+                                                textDragCL.bringToFront();
 
-                                            ConstraintLayout textDragCL = parentActivity.findViewById(R.id.textDragCL);
-                                            Toast.makeText(parentActivity, "제출 완료! 계속 찾아주세요.", Toast.LENGTH_SHORT).show();
-                                            textDragCL.setVisibility(View.VISIBLE);
-                                            textDragCL.bringToFront();
+                                                firstPointFlag = true;
+                                                secondPointFlag = false;
+                                                ((TextView) parentActivity.findViewById(R.id.textDrag)).setText("라인의 시작점을 지정해 주세요.");
+                                                if (firstPoint.getVisibility() == View.VISIBLE)
+                                                    firstPoint.setVisibility(View.INVISIBLE);
+                                                if (firstPointTouch.getVisibility() == View.VISIBLE)
+                                                    firstPointTouch.setVisibility(View.INVISIBLE);
+                                                if (secondPoint.getVisibility() == View.VISIBLE)
+                                                    secondPoint.setVisibility(View.INVISIBLE);
+                                                if (secondPointTouch.getVisibility() == View.VISIBLE)
+                                                    secondPointTouch.setVisibility(View.INVISIBLE);
+                                                pointLine.Lines = new float[4];
+                                                pointLine.invalidate();
+                                                photoView.setScale(1);
 
-                                            firstPointFlag = true;
-                                            secondPointFlag = false;
-                                            ((TextView) parentActivity.findViewById(R.id.textDrag)).setText("라인의 시작점을 지정해 주세요.");
-                                            if (firstPoint.getVisibility() == View.VISIBLE)
-                                                firstPoint.setVisibility(View.INVISIBLE);
-                                            if (firstPointTouch.getVisibility() == View.VISIBLE)
-                                                firstPointTouch.setVisibility(View.INVISIBLE);
-                                            if (secondPoint.getVisibility() == View.VISIBLE)
-                                                secondPoint.setVisibility(View.INVISIBLE);
-                                            if (secondPointTouch.getVisibility() == View.VISIBLE)
-                                                secondPointTouch.setVisibility(View.INVISIBLE);
-                                            pointLine.Lines = new float[4];
-                                            pointLine.invalidate();
-                                            photoView.setScale(1);
-
-                                            //에니메이션
-                                            parentActivity.goldSetting(String.valueOf(resultTemp.get("gold")));
-                                            parentActivity.maybeSetting(String.valueOf(resultTemp.get("maybe")));
-                                            ConstraintSet constraintSet = new ConstraintSet();
-                                            constraintSet.clone((ConstraintLayout) (parentActivity.findViewById(R.id.controllerCL)));
-                                            constraintSet.connect(parentActivity.findViewById(R.id.textAnimation).getId(), ConstraintSet.BOTTOM, parentActivity.findViewById(R.id.btnCL).getId(), ConstraintSet.BOTTOM, (int) (86 * dpScale));
-                                            constraintSet.connect(parentActivity.findViewById(R.id.imageAnimation).getId(), ConstraintSet.BOTTOM, parentActivity.findViewById(R.id.btnCL).getId(), ConstraintSet.BOTTOM, (int) (86 * dpScale));
-                                            constraintSet.applyTo((ConstraintLayout) (parentActivity.findViewById(R.id.controllerCL)));
-                                            parentActivity.showAnimation(R.drawable.coin_animation_list, parentActivity.getUpGold());
+                                                //에니메이션
+                                                parentActivity.goldSetting(String.valueOf(resultTemp.get("gold")));
+                                                parentActivity.maybeSetting(String.valueOf(resultTemp.get("maybe")));
+                                                ConstraintSet constraintSet = new ConstraintSet();
+                                                constraintSet.clone((ConstraintLayout) (parentActivity.findViewById(R.id.controllerCL)));
+                                                constraintSet.connect(parentActivity.findViewById(R.id.textAnimation).getId(), ConstraintSet.BOTTOM, parentActivity.findViewById(R.id.btnCL).getId(), ConstraintSet.BOTTOM, (int) (86 * dpScale));
+                                                constraintSet.connect(parentActivity.findViewById(R.id.imageAnimation).getId(), ConstraintSet.BOTTOM, parentActivity.findViewById(R.id.btnCL).getId(), ConstraintSet.BOTTOM, (int) (86 * dpScale));
+                                                constraintSet.applyTo((ConstraintLayout) (parentActivity.findViewById(R.id.controllerCL)));
+                                                parentActivity.showAnimation(R.drawable.coin_animation_list, parentActivity.getUpGold());
+                                            }
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
                                         }
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
                                     }
+                                }.execute(parentActivity.getString(R.string.mainurl) + "/testing/taskSubmit", param, ((TaskActivity) parentActivity).getLoginToken());
+                            } else {
+                                Toast.makeText(parentActivity, "이미 박스를 친 곳인 것 같네요 T^T", Toast.LENGTH_SHORT).show();
+                            }
+                        }else{
+                            //여기에 테스트하는 방법 구현(테스크뷰에 있는 함수 사용)
+                            TextView countText = parentActivity.findViewById(R.id.questText);
+                            int candidate=mTaskViewPhotoWithLine.findCandidate(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend);
+                            String passFailCondition=mTaskViewPhotoWithLine.compareCoordination(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend,candidate);
+                            if(passFailCondition.equals("pass")){
+                                mTaskViewPhotoWithLine.addAnswer(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend);
+                                testCountForGraduate++;
+                                countText.setText(String.valueOf(testCountForGraduate) + "/10");
+
+                                if(testCountForGraduate>=10){
+
+                                    reportPassFail(true,"통과",taskID);
+
+                                    getDialog( "테스트 통과", "축하합니다. " + "전선찾기" + "테스트를 통과하셨습니다. 이제 " + "전선찾기" + "라벨링 작업을 시작할 수 있습니다.");
+                                    SharedPreferences testFlag = parentActivity.getSharedPreferences("testFlag", parentActivity.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = testFlag.edit();
+                                    editor.putBoolean("isTesting", true);
+                                    editor.commit();
+
+                                    JSONObject paramForRankUp = new JSONObject();
+                                    paramForRankUp.put("option", 111);
+                                    paramForRankUp.put("taskID", taskID);
+                                    new WaitHttpRequest(parentActivity) {
+                                        @Override
+                                        protected void onPostExecute(Object o) {
+                                            super.onPostExecute(o);
+
+                                            try {
+                                                JSONObject resultTemp = new JSONObject(result);
+                                                System.out.println("resultTemp : " + resultTemp);
+                                                System.out.println("서버반응 : " + resultTemp.get("success").toString());
+                                                if (resultTemp.get("success").toString().equals("false")) {
+                                                    new ServerMessageParser().taskSubmitFailParse(parentActivity, resultTemp);
+
+                                                } else {
+                                                    System.out.println("서버반응 2: " + resultTemp.get("success").toString());
+
+
+                                                }
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }.execute(parentActivity.getString(R.string.mainurl) + "/testing/passTest", paramForRankUp, ((Quiz2DBoxActivity) parentActivity).getLoginToken());
+                                }else{
+                                    getDialog("잘 하셨습니다!", "다음 부품을 찾아 주세요. 다 찾았다면 모든 부품 제출 완료 버튼을 눌러 주세요");
+                                    reportPassFail(true,"통과",taskID);
+                                    completebtn.setText("모든 부품 제출 완료 +" + parentActivity.getUpGold2() +"원");
+                                    testCount--;
+                                    mTaskViewPhotoWithLine.updateTestSet(candidate);
+
+                                    mTaskViewPhotoWithLine.drawAnswer(mTaskViewPhotoWithLine.answerCoordination, mTaskViewPhotoWithLine.answerCoordinationSubmit);
+
+                                    ConstraintLayout textDragCL = parentActivity.findViewById(R.id.textDragCL);
+                                    Toast.makeText(parentActivity, "제출 완료! 계속 찾아주세요.", Toast.LENGTH_SHORT).show();
+                                    textDragCL.setVisibility(View.VISIBLE);
+                                    textDragCL.bringToFront();
+
+                                    firstPointFlag = true;
+                                    secondPointFlag = false;
+                                    ((TextView) parentActivity.findViewById(R.id.textDrag)).setText("라인의 시작점을 지정해 주세요.");
+                                    if (firstPoint.getVisibility() == View.VISIBLE)
+                                        firstPoint.setVisibility(View.INVISIBLE);
+                                    if (firstPointTouch.getVisibility() == View.VISIBLE)
+                                        firstPointTouch.setVisibility(View.INVISIBLE);
+                                    if (secondPoint.getVisibility() == View.VISIBLE)
+                                        secondPoint.setVisibility(View.INVISIBLE);
+                                    if (secondPointTouch.getVisibility() == View.VISIBLE)
+                                        secondPointTouch.setVisibility(View.INVISIBLE);
+                                    pointLine.Lines = new float[4];
+                                    pointLine.invalidate();
+                                    photoView.setScale(1);
+
                                 }
-                            }.execute(parentActivity.getString(R.string.mainurl) + "/testing/taskSubmit", param, ((TaskActivity) parentActivity).getLoginToken());
-                        } else {
-                            Toast.makeText(parentActivity, "이미 박스를 친 곳인 것 같네요 T^T", Toast.LENGTH_SHORT).show();
+                            }else if(passFailCondition.equals("leftWrong")){
+                                testCountForGraduate = 0;
+                                countText.setText(String.valueOf(testCountForGraduate) + "/10");
+                                getDialog("왼쪽 점이 정확하지 않습니다.", "왼쪽 점을 좀더 정확하게 정해 주세요");
+                                reportPassFail(false,"왼쪽 점이 정확하지 않습니다.",taskID);
+                            }
+                            else if(passFailCondition.equals("rightWrong")){
+                                testCountForGraduate = 0;
+                                countText.setText(String.valueOf(testCountForGraduate) + "/10");
+                                getDialog("오른쪽 점이 정확하지 않습니다.", "오른쪽 점을 좀더 정확하게 정해 주세요");
+                                reportPassFail(false,"오른쪽 점이 정확하지 않습니다.",taskID);
+                            }
+                            else if(passFailCondition.equals("allWrong")){
+                                testCountForGraduate = 0;
+                                countText.setText(String.valueOf(testCountForGraduate) + "/10");
+                                getDialog("양쪽 점이 모두 정확하지 않습니다.", "양쪽 점을 모두 좀더 정확하게 정해 주세요");
+                                reportPassFail(false,"양쪽 점이 정확하지 않습니다.",taskID);
+                            }
                         }
 
                     } catch (JSONException e) {
@@ -530,48 +631,64 @@ public class Controller_TwoPoint extends Controller {
                 alertDialogBuilder.setPositiveButton("네",new DialogInterface.OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        JSONObject param = new JSONObject();
-                        try {
-                            param.put("answerID", ((TaskActivity) parentActivity).getAnswerID());
-                            param.put("taskID", taskID);
+                        if (!testFlag) {
+                            dialog.dismiss();
+                            JSONObject param = new JSONObject();
+                            try {
+                                param.put("answerID", ((TaskActivity) parentActivity).getAnswerID());
+                                param.put("taskID", taskID);
 
-                            //보내야하는 데이타
-                            String submit = "<" + 111 + "><allclear>";
-                            param.put("submit", submit);
+                                //보내야하는 데이타
+                                String submit = "<" + 111 + "><allclear>";
+                                param.put("submit", submit);
 
-                        new WaitHttpRequest(parentActivity) {
-                            @Override
-                            protected void onPostExecute(Object o) {
-                                super.onPostExecute(o);
-                                try {
-                                    JSONObject resultTemp = new JSONObject(result);
-                                    if (resultTemp.get("success").toString().equals("false")) {
-                                        new ServerMessageParser().taskSubmitFailParse(parentActivity,resultTemp);
-                                    } else {
-                                        mTaskViewPhotoWithLine.removeAnswer();
-                                        parentActivity.updateWaitingTasks();
-                                        ((TaskActivity) parentActivity).startTask();
+                                new WaitHttpRequest(parentActivity) {
+                                    @Override
+                                    protected void onPostExecute(Object o) {
+                                        super.onPostExecute(o);
+                                        try {
+                                            JSONObject resultTemp = new JSONObject(result);
+                                            if (resultTemp.get("success").toString().equals("false")) {
+                                                new ServerMessageParser().taskSubmitFailParse(parentActivity, resultTemp);
+                                            } else {
+                                                mTaskViewPhotoWithLine.removeAnswer();
+                                                parentActivity.updateWaitingTasks();
+                                                ((TaskActivity) parentActivity).startTask();
 
-                                        //에니메이션
-                                        parentActivity.goldSetting(String.valueOf(resultTemp.get("gold")));
-                                        parentActivity.maybeSetting(String.valueOf(resultTemp.get("maybe")));
-                                        ConstraintSet constraintSet = new ConstraintSet();
-                                        constraintSet.clone((ConstraintLayout) (parentActivity.findViewById(R.id.controllerCL)));
-                                        constraintSet.connect(parentActivity.findViewById(R.id.textAnimation).getId(), ConstraintSet.BOTTOM, parentActivity.findViewById(R.id.btnCL).getId(), ConstraintSet.BOTTOM, (int) (43 * dpScale));
-                                        constraintSet.connect(parentActivity.findViewById(R.id.imageAnimation).getId(), ConstraintSet.BOTTOM, parentActivity.findViewById(R.id.btnCL).getId(), ConstraintSet.BOTTOM, (int) (43 * dpScale));
-                                        constraintSet.applyTo((ConstraintLayout) (parentActivity.findViewById(R.id.controllerCL)));
-                                        parentActivity.showAnimation(R.drawable.coin_animation_list, parentActivity.getUpGold2());
+                                                //에니메이션
+                                                parentActivity.goldSetting(String.valueOf(resultTemp.get("gold")));
+                                                parentActivity.maybeSetting(String.valueOf(resultTemp.get("maybe")));
+                                                ConstraintSet constraintSet = new ConstraintSet();
+                                                constraintSet.clone((ConstraintLayout) (parentActivity.findViewById(R.id.controllerCL)));
+                                                constraintSet.connect(parentActivity.findViewById(R.id.textAnimation).getId(), ConstraintSet.BOTTOM, parentActivity.findViewById(R.id.btnCL).getId(), ConstraintSet.BOTTOM, (int) (43 * dpScale));
+                                                constraintSet.connect(parentActivity.findViewById(R.id.imageAnimation).getId(), ConstraintSet.BOTTOM, parentActivity.findViewById(R.id.btnCL).getId(), ConstraintSet.BOTTOM, (int) (43 * dpScale));
+                                                constraintSet.applyTo((ConstraintLayout) (parentActivity.findViewById(R.id.controllerCL)));
+                                                parentActivity.showAnimation(R.drawable.coin_animation_list, parentActivity.getUpGold2());
+                                            }
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
                                     }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }.execute(parentActivity.getString(R.string.mainurl) + "/testing/taskSubmit", param, ((TaskActivity) parentActivity).getLoginToken());
+                                }.execute(parentActivity.getString(R.string.mainurl) + "/testing/taskSubmit", param, ((TaskActivity) parentActivity).getLoginToken());
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+                        }else{
+                            dialog.dismiss();
+                            if(testCount==0){
+                                mTaskViewPhotoWithLine.removeAnswer();
+                                parentActivity.updateWaitingTasks();
+                                parentActivity.startTask();
+
+                            }
+                            else{
+                                getDialog("아직 찾지 못한 부품이 있습니다.","테스트 통과 횟수가 초기화됩니다. 부품을 마저 찾아주세요.");
+                                testCountForGraduate=0;
+                                TextView countText = parentActivity.findViewById(R.id.questText);
+                                countText.setText(String.valueOf(testCountForGraduate) + "/10");
+                            }
                         }
+                    }
                     });
                     alertDialogBuilder.setNegativeButton("아니오",new DialogInterface.OnClickListener(){
                         @Override
@@ -649,5 +766,61 @@ public class Controller_TwoPoint extends Controller {
         constraintSet.connect(targetView.getId(), ConstraintSet.START, boxCL.getId(), ConstraintSet.START, leftMargin);
         constraintSet.connect(targetView.getId(), ConstraintSet.TOP, boxCL.getId(), ConstraintSet.TOP, topMargin);
         constraintSet.applyTo(boxCL);
+    }
+    private void getDialog(final String title, String value)
+    {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(parentActivity);
+        alertDialogBuilder.setTitle(title);
+        alertDialogBuilder.setMessage(value);
+        alertDialogBuilder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                TextView opt=parentActivity.findViewById(R.id.optionText);
+                if(title.equals(opt.getText().toString()+"테스트 통과")){
+
+
+                    dialog.dismiss();
+                    parentActivity.finish();
+                }
+                dialog.dismiss();
+            }
+        });
+        alertDialogBuilder.show();
+    }
+    private void reportPassFail(boolean pass, String failDetail, String taskID){
+        try {
+            JSONObject paramForRankUp = new JSONObject();
+            paramForRankUp.put("option", 111);
+            paramForRankUp.put("taskID", taskID);
+            paramForRankUp.put("id", parentActivity.answerID);
+            paramForRankUp.put("pass", pass);
+            paramForRankUp.put("failDetail", failDetail);
+
+            new HurryHttpRequest(parentActivity) {
+                @Override
+                protected void onPostExecute(Object o) {
+                    super.onPostExecute(o);
+
+                    try {
+                        JSONObject resultTemp = new JSONObject(result);
+                        System.out.println("resultTemp : " + resultTemp);
+                        System.out.println("서버반응 : " + resultTemp.get("success").toString());
+                        if (resultTemp.get("success").toString().equals("false")) {
+                            new ServerMessageParser().taskSubmitFailParse(parentActivity, resultTemp);
+
+                        } else {
+                            System.out.println("서버반응 2: " + resultTemp.get("success").toString());
+
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.execute(parentActivity.getString(R.string.mainurl) + "/testing/logTest", paramForRankUp, ((Quiz2DBoxActivity) parentActivity).getLoginToken());
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
     }
 }

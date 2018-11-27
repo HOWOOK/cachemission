@@ -13,6 +13,7 @@ public abstract class TaskView {
     protected PatherActivity parentActivity;
     public int taskViewID;
     public JSONArray BoxCropTestAnswer;
+    public JSONArray LineTestAnswer;
     public boolean testFlag=false;
     public abstract void setContent(String content);
     public abstract void setPreviewContents(ArrayList<JSONObject> list);
