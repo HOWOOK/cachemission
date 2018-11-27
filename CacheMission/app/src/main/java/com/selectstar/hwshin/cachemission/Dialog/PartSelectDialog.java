@@ -179,9 +179,6 @@ public class PartSelectDialog extends Dialog{
                                 nameList.remove(nameList.size() - 1);
                                 levelCountList.remove(levelCountList.size() - 1);
                                 levelMaxList.remove(levelMaxList.size() - 1);
-//                                idList.add(R.drawable.examining_falsepush);
-//                                testingList.add(false);
-//                                stateList.add("현재 할 수 있는 작업이 없습니다.");
                             }else if(resultTemp.get("message").toString().equals("needtest")){
                                 reallyNoMoreTask.setVisibility(View.INVISIBLE);
                                 testingList.add(true);

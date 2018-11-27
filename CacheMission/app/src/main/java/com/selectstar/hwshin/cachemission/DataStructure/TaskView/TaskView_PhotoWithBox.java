@@ -975,16 +975,16 @@ public class TaskView_PhotoWithBox extends TaskView {
 
 
         }
-        if(testAnswerCoordination[boxIndex][0]-left>x){
+        if(Math.abs(testAnswerCoordination[boxIndex][0]-left)>x){
             rtnVal=rtnVal+" 왼쪽";
         }
-        if (testAnswerCoordination[boxIndex][1]-top>x){
+        if (Math.abs(testAnswerCoordination[boxIndex][1]-top)>x){
             rtnVal=rtnVal+" 위쪽";
         }
-        if(testAnswerCoordination[boxIndex][2]-right>x){
+        if(Math.abs(testAnswerCoordination[boxIndex][2]-right)>x){
             rtnVal=rtnVal+" 오른쪽";
         }
-        if(testAnswerCoordination[boxIndex][3]-bottom>x){
+        if(Math.abs(testAnswerCoordination[boxIndex][3]-bottom)>x){
             rtnVal=rtnVal+" 아래쪽";
         }
 //        if((Math.abs(testAnswerCoordination[boxIndex][0]-left)<x)&&(Math.abs(testAnswerCoordination[boxIndex][1]-top)<x)&&(Math.abs(testAnswerCoordination[boxIndex][2]-right)<x)&&(Math.abs(testAnswerCoordination[boxIndex][3]-bottom)<x)){
