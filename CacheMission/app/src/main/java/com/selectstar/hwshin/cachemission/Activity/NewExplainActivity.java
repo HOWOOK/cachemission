@@ -77,11 +77,11 @@ public class NewExplainActivity extends AppCompatActivity {
         taskID=intent.getStringExtra("taskID");
         loginToken=intent.getStringExtra("loginToken");
 
-        System.out.println("테스크"+taskID);
+        System.out.println("테스크" + taskID);
         getUrlList();
         SharedPreferences explainImageSet=getSharedPreferences(taskID+"explainImageSet"+String.valueOf(partNum),MODE_PRIVATE);
         String urlListFinal=explainImageSet.getString("imageSet","");
-        Log.d("ghghhgh",urlListFinal);
+
         try {
             JSONObject urlObjectFinal=new JSONObject(urlListFinal);
             if(!urlListFinal.equals("")) {
@@ -149,7 +149,7 @@ public class NewExplainActivity extends AppCompatActivity {
             version= urlObject.getInt("version");
             }
             param.put("taskID", taskID);
-            param.put("option", partNum);
+            param.put("option", partNum % 100);
             param.put("version", version);
 
 
