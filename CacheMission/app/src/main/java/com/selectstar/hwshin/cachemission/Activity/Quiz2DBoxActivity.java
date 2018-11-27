@@ -364,6 +364,7 @@ countText.setText("0/10");
                 findViewById(R.id.textDragCL).bringToFront();
             }else{
                 super.onBackPressed();
+
                 SharedPreferences testFlag=getSharedPreferences("testFlag",MODE_PRIVATE);
                 SharedPreferences.Editor editor=testFlag.edit();
                 editor.putBoolean("isTesting",true);

@@ -351,6 +351,8 @@ public class TaskActivity extends PatherActivity {
         if(testFlag.getBoolean("isTesting",false)){
             editor.putBoolean("isTesting",false);
             editor.commit();
+            TextView option=findViewById(R.id.optionText);
+            option.setText("");
             partDialogShow(opt);
         }
         if(testFlag.getBoolean("isTestingForLine",false)){
