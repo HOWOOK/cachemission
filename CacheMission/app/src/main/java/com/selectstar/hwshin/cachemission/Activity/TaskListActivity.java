@@ -668,20 +668,23 @@ runningHTTPRequest++;
             };
             if(taskType.contains("TWOPOINT"))
                 param.put("option", 111);
-            if(taskType.equals("CLASSIFICIATION") && mTaskList.get(i).get("taskDifficulty").toString().equals("1"))
+            if(taskType.equals("CLASSIFICATION") && mTaskList.get(i).get("difficulty").toString().equals("1"))
                 param.put("option", 1001);
-            if(taskType.equals("CLASSIFICIATION") && mTaskList.get(i).get("taskDifficulty").toString().equals("2"))
+            if(taskType.equals("CLASSIFICATION") && mTaskList.get(i).get("difficulty").toString().equals("2"))
                 param.put("option", 1002);
-            if(taskType.equals("CLASSIFICIATION") && mTaskList.get(i).get("taskDifficulty").toString().equals("3"))
+            if(taskType.equals("CLASSIFICATION") && mTaskList.get(i).get("difficulty").toString().equals("3"))
                 param.put("option", 1003);
 
             final JSONObject pp = param;
+            System.out.println("안녕 난 "+taskType);
+            System.out.println("안녕 변수야 : "+param);
             HurryHttpRequest asyncTask = new HurryHttpRequest(TaskListActivity.this) {
                 @Override
                 protected void onPostExecute(Object o) {
                     super.onPostExecute(o);
                     try {
                         JSONObject resultTemp = new JSONObject(result);
+                        System.out.println("안녕 결과야 : "+result);
                         if(resultTemp.get("success").toString().equals("true")) {
                             if (isNew) {
                                 mTaskList.get(i).put("questList",resultTemp.get("questList"));
