@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.selectstar.hwshin.cachemission.Activity.LoginActivity;
 import com.selectstar.hwshin.cachemission.Activity.Quiz2DBoxActivity;
+import com.selectstar.hwshin.cachemission.Activity.QuizLineToPointActivity;
 import com.selectstar.hwshin.cachemission.Activity.TaskActivity;
 import com.selectstar.hwshin.cachemission.DataStructure.HurryHttpRequest;
 import com.selectstar.hwshin.cachemission.DataStructure.ServerMessageParser;
@@ -406,9 +407,10 @@ public class Controller_TwoPoint extends Controller {
                 if (!firstPointFlag && !secondPointFlag) {
                     JSONObject param = new JSONObject();
                     try {
-                        param.put("answerID", ((TaskActivity) parentActivity).getAnswerID());
-                        param.put("taskID", taskID);
-
+                        if(!testFlag) {
+                            param.put("answerID", ((TaskActivity) parentActivity).getAnswerID());
+                            param.put("taskID", taskID);
+                        }
                         float widthCL = boxCL.getWidth();
                         float heightCL = boxCL.getHeight();
                         /********************************
@@ -520,8 +522,21 @@ public class Controller_TwoPoint extends Controller {
                         }else{
                             //여기에 테스트하는 방법 구현(테스크뷰에 있는 함수 사용)
                             TextView countText = parentActivity.findViewById(R.id.questText);
-                            int candidate=mTaskViewPhotoWithLine.findCandidate(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend);
-                            String passFailCondition=mTaskViewPhotoWithLine.compareCoordination(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend,candidate);
+                            float leftPercentSendParsed, topPercentSendParsed, rightPercentSendParsed, bottomPercentSendParsed;
+                            if(leftPercentSend>rightPercentSend){
+                                leftPercentSendParsed=rightPercentSend;
+                                topPercentSendParsed=bottomPercentSend;
+                                rightPercentSendParsed=leftPercentSend;
+                                bottomPercentSendParsed=topPercentSend;
+                            }
+                            else{
+                                leftPercentSendParsed=leftPercentSend;
+                                topPercentSendParsed=topPercentSend;
+                                rightPercentSendParsed=rightPercentSend;
+                                bottomPercentSendParsed=bottomPercentSend;
+                            }
+                            int candidate=mTaskViewPhotoWithLine.findCandidate(leftPercentSendParsed, topPercentSendParsed, rightPercentSendParsed, bottomPercentSendParsed);
+                            String passFailCondition=mTaskViewPhotoWithLine.compareCoordination(leftPercentSendParsed, topPercentSendParsed, rightPercentSendParsed, bottomPercentSendParsed,candidate);
                             if(passFailCondition.equals("pass")){
                                 mTaskViewPhotoWithLine.addAnswer(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend);
                                 testCountForGraduate++;
@@ -561,7 +576,7 @@ public class Controller_TwoPoint extends Controller {
                                                 e.printStackTrace();
                                             }
                                         }
-                                    }.execute(parentActivity.getString(R.string.mainurl) + "/testing/passTest", paramForRankUp, ((Quiz2DBoxActivity) parentActivity).getLoginToken());
+                                    }.execute(parentActivity.getString(R.string.mainurl) + "/testing/passTest", paramForRankUp, ((QuizLineToPointActivity) parentActivity).getLoginToken());
                                 }else{
                                     getDialog("잘 하셨습니다!", "다음 부품을 찾아 주세요. 다 찾았다면 모든 부품 제출 완료 버튼을 눌러 주세요");
                                     reportPassFail(true,"통과",taskID);
@@ -817,7 +832,7 @@ public class Controller_TwoPoint extends Controller {
                         e.printStackTrace();
                     }
                 }
-            }.execute(parentActivity.getString(R.string.mainurl) + "/testing/logTest", paramForRankUp, ((Quiz2DBoxActivity) parentActivity).getLoginToken());
+            }.execute(parentActivity.getString(R.string.mainurl) + "/testing/logTest", paramForRankUp, ((QuizLineToPointActivity) parentActivity).getLoginToken());
         }catch (JSONException e){
             e.printStackTrace();
         }

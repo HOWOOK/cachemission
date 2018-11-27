@@ -209,10 +209,10 @@ public class Controller_2DBox extends Controller {
 
                                         TextView countText = parentActivity.findViewById(R.id.questText);
                                         if (testCount <= 0) {
-                                            testCountForGraduate = 0;
+                                            //testCountForGraduate = 0;
 
                                             countText.setText(String.valueOf(testCountForGraduate) + "/10");
-                                            getDialog("더이상 찾을 부품이 없습니다.", "테스트 통과 횟수가 초기화됩니다. 모든 부품 제출 완료 버튼을 눌러 주세요");
+                                            getDialog("더이상 찾을 부품이 없습니다.", " 모든 부품 제출 완료 버튼을 눌러 주세요");
                                             reportPassFail(false,"더이상 찾을 부품이 없습니다.",taskID);
 
 
@@ -223,22 +223,22 @@ public class Controller_2DBox extends Controller {
                                             System.out.println(String.valueOf(rightPercentSend));
                                             System.out.println(String.valueOf(bottomPercentSend));
                                             if (mTaskViewPhotoWithBox.similarityTestForTest(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend, candidate) < (float) 0.02) {
-                                                testCountForGraduate = 0;
+                                                //testCountForGraduate = 0;
                                                 countText.setText(String.valueOf(testCountForGraduate) + "/10");
                                                 getDialog("박스 안에 부품이 없습니다.", "다시 한번 확인하고 박스를 쳐 주세요.");
                                                 reportPassFail(false,"박스 안에 부품이 없습니다.",taskID);
 
-                                            } else if (mTaskViewPhotoWithBox.isIntersectionExistForTest(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend, candidate)) {
-                                                testCountForGraduate = 0;
+                                            } else if (!mTaskViewPhotoWithBox.isIntersectionExistForTest(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend, candidate).equals("")) {
+                                                //testCountForGraduate = 0;
                                                 countText.setText(String.valueOf(testCountForGraduate) + "/10");
-                                                getDialog("부품이 잘렸습니다.", "박스를 좀더 크게 쳐 주세요.");
+                                                getDialog("부품의"+mTaskViewPhotoWithBox.isIntersectionExistForTest(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend, candidate)+"이 잘렸습니다.", "박스를 좀더 크게 쳐 주세요.");
                                                 reportPassFail(false,"부품이 잘렸습니다.",taskID);
 
 
-                                            } else if (mTaskViewPhotoWithBox.isBoundaryLimitExceededForTest(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend, candidate,parentActivity.partType())) {
-                                                testCountForGraduate = 0;
+                                            } else if (!mTaskViewPhotoWithBox.isBoundaryLimitExceededForTest(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend, candidate,parentActivity.partType()).equals("")) {
+                                                //testCountForGraduate = 0;
                                                 countText.setText(String.valueOf(testCountForGraduate) + "/10");
-                                                getDialog("박스가 너무 큽니다.", "부품의 경계에 맞게 박스를 쳐 주세요.");
+                                                getDialog("박스의"+mTaskViewPhotoWithBox.isBoundaryLimitExceededForTest(leftPercentSend, topPercentSend, rightPercentSend, bottomPercentSend, candidate,parentActivity.partType())+"이 너무 큽니다.", "부품의 경계에 맞게 박스를 쳐 주세요.");
                                                 reportPassFail(false,"박스가 너무 큽니다.",taskID);
 
                                             } else {
@@ -379,8 +379,8 @@ public class Controller_2DBox extends Controller {
 
                                 }
                                 else{
-                                    getDialog("아직 찾지 못한 부품이 있습니다.","테스트 통과 횟수가 초기화됩니다. 부품을 마저 찾아주세요.");
-                                    testCountForGraduate=0;
+                                    getDialog("아직 찾지 못한 부품이 있습니다."," 부품을 마저 찾아주세요.");
+                                    //testCountForGraduate=0;
                                     TextView countText = parentActivity.findViewById(R.id.questText);
                                     countText.setText(String.valueOf(testCountForGraduate) + "/10");
                                 }
