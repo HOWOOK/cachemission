@@ -898,8 +898,8 @@ public class TaskView_PhotoWithBox extends TaskView {
             iou= (float) 0.01;
         return  iou;
     }
-    public boolean isIntersectionExistForTest(float left, float top, float right, float bottom,int boxIndex){
-        Boolean rtnVal = true;
+    public String isIntersectionExistForTest(float left, float top, float right, float bottom,int boxIndex){
+        String rtnVal = "";
         if(testAnswerCoordination != null) {
 
                 System.out.println("개빡"+String.valueOf(testAnswerCoordination[boxIndex][0]));
@@ -911,10 +911,24 @@ public class TaskView_PhotoWithBox extends TaskView {
                 System.out.println("개빡ㅇㅇ"+String.valueOf(top));
                 System.out.println("개빡ㅇㅇ"+String.valueOf(right));
                 System.out.println("개빡ㅇㅇ"+String.valueOf(bottom));
-                if((testAnswerCoordination[boxIndex][0]>=left)&&(testAnswerCoordination[boxIndex][1]>=top)&&(testAnswerCoordination[boxIndex][2]<=right)&&(testAnswerCoordination[boxIndex][3]<=bottom)){
-
-                    rtnVal=false;
+                if(testAnswerCoordination[boxIndex][0]<left){
+                    rtnVal=rtnVal+" 왼쪽";
                 }
+                if (testAnswerCoordination[boxIndex][1]<top){
+                    rtnVal=rtnVal+" 위쪽";
+                }
+                if(testAnswerCoordination[boxIndex][2]>right){
+                    rtnVal=rtnVal+" 오른쪽";
+                }
+                if(testAnswerCoordination[boxIndex][3]>bottom){
+                    rtnVal=rtnVal+" 아래쪽";
+                }
+
+
+//                if((testAnswerCoordination[boxIndex][0]>=left)&&(testAnswerCoordination[boxIndex][1]>=top)&&(testAnswerCoordination[boxIndex][2]<=right)&&(testAnswerCoordination[boxIndex][3]<=bottom)){
+//
+//                    rtnVal=false;
+//                }
 
 
         }
@@ -937,8 +951,8 @@ public class TaskView_PhotoWithBox extends TaskView {
         }
         return minDistanceIndex;
     }
-    public boolean isBoundaryLimitExceededForTest(float left, float top, float right, float bottom, int boxIndex, int partNum){
-        Boolean rtnVal = true;
+    public String isBoundaryLimitExceededForTest(float left, float top, float right, float bottom, int boxIndex, int partNum){
+        String rtnVal = "";
         float x=0;
         float w=Math.abs(testAnswerCoordination[boxIndex][0]-testAnswerCoordination[boxIndex][2]);
         float h=Math.abs(testAnswerCoordination[boxIndex][1]-testAnswerCoordination[boxIndex][3]);
@@ -961,9 +975,21 @@ public class TaskView_PhotoWithBox extends TaskView {
 
 
         }
-        if((Math.abs(testAnswerCoordination[boxIndex][0]-left)<x)&&(Math.abs(testAnswerCoordination[boxIndex][1]-top)<x)&&(Math.abs(testAnswerCoordination[boxIndex][2]-right)<x)&&(Math.abs(testAnswerCoordination[boxIndex][3]-bottom)<x)){
-            rtnVal=false;
+        if(testAnswerCoordination[boxIndex][0]-left>x){
+            rtnVal=rtnVal+" 왼쪽";
         }
+        if (testAnswerCoordination[boxIndex][1]-top>x){
+            rtnVal=rtnVal+" 위쪽";
+        }
+        if(testAnswerCoordination[boxIndex][2]-right>x){
+            rtnVal=rtnVal+" 오른쪽";
+        }
+        if(testAnswerCoordination[boxIndex][3]-bottom>x){
+            rtnVal=rtnVal+" 아래쪽";
+        }
+//        if((Math.abs(testAnswerCoordination[boxIndex][0]-left)<x)&&(Math.abs(testAnswerCoordination[boxIndex][1]-top)<x)&&(Math.abs(testAnswerCoordination[boxIndex][2]-right)<x)&&(Math.abs(testAnswerCoordination[boxIndex][3]-bottom)<x)){
+//            rtnVal=false;
+//        }
         return rtnVal;
     }
     public void updateTestSet(int boxIndex){

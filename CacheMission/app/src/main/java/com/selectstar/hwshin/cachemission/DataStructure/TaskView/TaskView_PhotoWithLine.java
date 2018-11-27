@@ -360,11 +360,23 @@ public class TaskView_PhotoWithLine extends TaskView {
         for(int i =0; i < array.length; i++){
 
             arrayTemp = array[i].split(",");
+            String[] arrayTempParsed=new String[4];
+            if(Float.parseFloat(arrayTemp[0])>Float.parseFloat(arrayTemp[2])) {
+                arrayTempParsed[0]=arrayTemp[2];
+                arrayTempParsed[1]=arrayTemp[3];
+                arrayTempParsed[2]=arrayTemp[0];
+                arrayTempParsed[3]=arrayTemp[1];
+            }else{
+                arrayTempParsed[0]=arrayTemp[0];
+                arrayTempParsed[1]=arrayTemp[1];
+                arrayTempParsed[2]=arrayTemp[2];
+                arrayTempParsed[3]=arrayTemp[3];
+            }
             System.out.println("parsing"+Float.parseFloat(arrayTemp[0]));
-            testAnswerCoordination[i][0] = (float) Float.parseFloat(arrayTemp[0]);
-            testAnswerCoordination[i][1] = (float) Float.parseFloat(arrayTemp[1]);
-            testAnswerCoordination[i][2] = (float) Float.parseFloat(arrayTemp[2]);
-            testAnswerCoordination[i][3] = (float) Float.parseFloat(arrayTemp[3]);
+            testAnswerCoordination[i][0] = (float) Float.parseFloat(arrayTempParsed[0]);
+            testAnswerCoordination[i][1] = (float) Float.parseFloat(arrayTempParsed[1]);
+            testAnswerCoordination[i][2] = (float) Float.parseFloat(arrayTempParsed[2]);
+            testAnswerCoordination[i][3] = (float) Float.parseFloat(arrayTempParsed[3]);
             //answerType[i-1] = 0;
         }
     }
