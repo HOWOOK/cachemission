@@ -269,21 +269,21 @@ public class Controller_TwoPoint extends Controller {
         });
 
         firstPointTouch.setOnTouchListener(new View.OnTouchListener() {
-            float PointCenterX = firstPointTouch.getX() + (float) firstPointTouch.getWidth() / 2;
-            float PointCenterY = secondPointTouch.getY() + (float) firstPointTouch.getHeight() / 2;
+            float YCorrectionHeight = (float) parentActivity.findViewById(R.id.title).getHeight() + (float) parentActivity.findViewById(R.id.option).getHeight();
             float curX = 0;
             float curY = 0;
             float pvRatio = 0;
+            float pointCenterX = 0;
+            float pointCenterY = 0;
+            float distanceX = 0;
+            float distanceY = 0;
+            float setX = 0;
+            float setY = 0;
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                float YCorrectionHeight = (float) parentActivity.findViewById(R.id.title).getHeight() + (float) parentActivity.findViewById(R.id.option).getHeight();
                 curX = event.getRawX();
                 curY = event.getRawY() - YCorrectionHeight - getStatusBarHeight(parentActivity);
-
-                //OutOfBound 처리
-                curX = setXOutOfBound(curX);
-                curY = setYOutOfBound(curY);
 
                 //expandView의 위치변경
                 setExpandViewPos(curX, curY);
@@ -292,30 +292,43 @@ public class Controller_TwoPoint extends Controller {
                     pvRatio = (float) boxCL.getWidth() / (float) boxCL.getHeight();
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_DOWN:
+                            pointCenterX = firstPointTouch.getX() + (float) firstPointTouch.getWidth() / 2f;
+                            pointCenterY = firstPointTouch.getY() + (float) firstPointTouch.getHeight() / 2f;
+                            distanceX = curX - pointCenterX;
+                            distanceY = curY - pointCenterY;
                             //expandView 설정
                             if (parentActivity.findViewById(R.id.expandViewCL).getVisibility() == View.INVISIBLE)
                                 parentActivity.findViewById(R.id.expandViewCL).setVisibility(View.VISIBLE);
+
                         case MotionEvent.ACTION_MOVE:
-                            mTaskViewPhotoWithLine.expandBitmapSetting(curX, curY, expandSize);
-                            updateConstraintSet1(firstPoint, (int) curX, (int) curY);
+                            //OutOfBound 처리
+                            setX = setXOutOfBound(curX - distanceX);
+                            setY = setYOutOfBound(curY - distanceY);
+
+                            mTaskViewPhotoWithLine.expandBitmapSetting(setX, setY, expandSize);
+                            updateConstraintSet1(firstPoint, (int) setX, (int) setY);
                             if (secondPointFlag)
-                                pointLine.samePointSetting(curX, curY);
+                                pointLine.samePointSetting(setX, setY);
                             else
-                                pointLine.firstPointSetting(curX, curY);
+                                pointLine.firstPointSetting(setX, setY);
                             pointLine.invalidate();
                             break;
 
                         case MotionEvent.ACTION_UP:
-                            updateConstraintSet1(firstPoint, (int) curX, (int) curY);
+                            //OutOfBound 처리
+                            setX = setXOutOfBound(curX - distanceX);
+                            setY = setYOutOfBound(curY - distanceY);
+
+                            mTaskViewPhotoWithLine.expandBitmapSetting(setX, setY, expandSize);
+                            updateConstraintSet1(firstPoint, (int) setX, (int) setY);
                             if (secondPointFlag)
-                                pointLine.samePointSetting(curX, curY);
+                                pointLine.samePointSetting(setX, setY);
                             else
-                                pointLine.firstPointSetting(curX, curY);
+                                pointLine.firstPointSetting(setX, setY);
                             pointLine.invalidate();
                             //expandView 설정
                             if (parentActivity.findViewById(R.id.expandViewCL).getVisibility() == View.VISIBLE)
                                 parentActivity.findViewById(R.id.expandViewCL).setVisibility(View.INVISIBLE);
-                            mTaskViewPhotoWithLine.expandBitmapSetting(curX, curY, expandSize);
                             break;
                     }
                 }
@@ -324,19 +337,21 @@ public class Controller_TwoPoint extends Controller {
         });
 
         secondPointTouch.setOnTouchListener(new View.OnTouchListener() {
+            float YCorrectionHeight = (float) parentActivity.findViewById(R.id.title).getHeight() + (float) parentActivity.findViewById(R.id.option).getHeight();
             float curX = 0;
             float curY = 0;
             float pvRatio = 0;
+            float pointCenterX = 0;
+            float pointCenterY = 0;
+            float distanceX = 0;
+            float distanceY = 0;
+            float setX = 0;
+            float setY = 0;
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                float YCorrectionHeight = (float) parentActivity.findViewById(R.id.title).getHeight() + (float) parentActivity.findViewById(R.id.option).getHeight();
                 curX = event.getRawX();
-                curY = event.getRawY() - YCorrectionHeight - getStatusBarHeight(parentActivity); //70 : taskActivity의 title와 option CL의 크기
-
-                //OutOfBound 처리
-                curX = setXOutOfBound(curX);
-                curY = setYOutOfBound(curY);
+                curY = event.getRawY() - YCorrectionHeight - getStatusBarHeight(parentActivity);
 
                 //expandView의 위치변경
                 setExpandViewPos(curX, curY);
@@ -345,19 +360,33 @@ public class Controller_TwoPoint extends Controller {
                     pvRatio = (float) boxCL.getWidth() / (float) boxCL.getHeight();
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_DOWN:
+                            pointCenterX = secondPointTouch.getX() + (float) secondPointTouch.getWidth() / 2f;
+                            pointCenterY = secondPointTouch.getY() + (float) secondPointTouch.getHeight() / 2f;
+                            distanceX = curX - pointCenterX;
+                            distanceY = curY - pointCenterY;
                             //expandView 설정
                             if (parentActivity.findViewById(R.id.expandViewCL).getVisibility() == View.INVISIBLE)
                                 parentActivity.findViewById(R.id.expandViewCL).setVisibility(View.VISIBLE);
+
                         case MotionEvent.ACTION_MOVE:
-                            mTaskViewPhotoWithLine.expandBitmapSetting(curX, curY, expandSize);
-                            updateConstraintSet1(secondPoint, (int) curX, (int) curY);
-                            pointLine.secondPointSetting(curX, curY);
+                            //OutOfBound 처리
+                            setX = setXOutOfBound(curX - distanceX);
+                            setY = setYOutOfBound(curY - distanceY);
+
+                            mTaskViewPhotoWithLine.expandBitmapSetting(setX, setY, expandSize);
+                            updateConstraintSet1(secondPoint, (int) setX, (int) setY);
+                            pointLine.secondPointSetting(setX, setY);
                             pointLine.invalidate();
                             break;
 
                         case MotionEvent.ACTION_UP:
-                            updateConstraintSet1(secondPoint, (int) curX, (int) curY);
-                            pointLine.secondPointSetting(curX, curY);
+                            //OutOfBound 처리
+                            setX = setXOutOfBound(curX - distanceX);
+                            setY = setYOutOfBound(curY - distanceY);
+
+                            mTaskViewPhotoWithLine.expandBitmapSetting(setX, setY, expandSize);
+                            updateConstraintSet1(secondPoint, (int) setX, (int) setY);
+                            pointLine.secondPointSetting(setX, setY);
                             pointLine.invalidate();
                             //expandView 설정
                             if (parentActivity.findViewById(R.id.expandViewCL).getVisibility() == View.VISIBLE)

@@ -30,8 +30,8 @@
            android:id="@+id/firstPoint"
            android:layout_width="3dp"
            android:layout_height="3dp"
-           android:layout_marginTop="70dp"
-           android:layout_marginStart="20dp"
+           android:layout_marginTop="80dp"
+           android:layout_marginStart="30dp"
            android:background="@color/colorTransparentAbsolute"
            app:layout_constraintStart_toStartOf="parent"
            app:layout_constraintTop_toTopOf="parent"
@@ -39,8 +39,8 @@
 
        <View
            android:id="@+id/firstPointTouch"
-           android:layout_width="40dp"
-           android:layout_height="40dp"
+           android:layout_width="60dp"
+           android:layout_height="60dp"
            android:background="@drawable/line_small"
            app:layout_constraintStart_toStartOf="@+id/firstPoint"
            app:layout_constraintEnd_toEndOf="@+id/firstPoint"
@@ -52,7 +52,7 @@
            android:id="@+id/secondPoint"
            android:layout_width="3dp"
            android:layout_height="3dp"
-           android:layout_marginStart="70dp"
+           android:layout_marginStart="80dp"
            android:layout_marginTop="30dp"
            android:background="@color/colorTransparentAbsolute"
            app:layout_constraintStart_toStartOf="parent"
@@ -61,8 +61,8 @@
 
        <View
            android:id="@+id/secondPointTouch"
-           android:layout_width="40dp"
-           android:layout_height="40dp"
+           android:layout_width="60dp"
+           android:layout_height="60dp"
            android:background="@drawable/line_small"
            app:layout_constraintStart_toStartOf="@+id/secondPoint"
            app:layout_constraintEnd_toEndOf="@+id/secondPoint"
