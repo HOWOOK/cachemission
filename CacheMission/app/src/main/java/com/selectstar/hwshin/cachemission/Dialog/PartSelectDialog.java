@@ -3,7 +3,6 @@ package com.selectstar.hwshin.cachemission.Dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -13,7 +12,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.selectstar.hwshin.cachemission.Activity.PatherActivity;
 import com.selectstar.hwshin.cachemission.Adapter.PartAdapter;
@@ -35,7 +33,9 @@ public class PartSelectDialog extends Dialog{
     private int examType;
     private String taskDifficulty;
     private int partNumber;
-    private  PartAdapter mAdapter;
+    private PartAdapter mAdapter;
+    private int asyncNum = 0;
+    private boolean taskIsExist = false;
 
     private ImageView cancelbtn;
     private ConstraintLayout dialogCL;
@@ -96,6 +96,7 @@ public class PartSelectDialog extends Dialog{
 
         if((taskType.equals("BOXCROP") || taskType.equals("BOXCROPEXAM")) && taskDifficulty.equals("EASY")) {
             partNumber = 100;
+            asyncNum = 10;
             checkPossible(partNumber + 1, idList, R.drawable.part_g, nameList, "부품 G", maskList, maskImageList, maskTextList, levelCountList, levelMaxList,testingList, stateList);
             checkPossible(partNumber + 2, idList, R.drawable.part_pre, nameList,"전봇대 부품들", maskList, maskImageList, maskTextList, levelCountList, levelMaxList,testingList, stateList);
             checkPossible(partNumber + 3, idList, R.drawable.part_pole, nameList,"전봇대", maskList, maskImageList, maskTextList, levelCountList, levelMaxList,testingList, stateList);
@@ -109,6 +110,7 @@ public class PartSelectDialog extends Dialog{
         }
         if((taskType.equals("BOXCROP") || taskType.equals("BOXCROPEXAM")) && taskDifficulty.equals("NORMAL")) {
             partNumber = 200;
+            asyncNum = 5;
             checkPossible(partNumber + 6, idList, R.drawable.part_a, nameList,"부품 A", maskList, maskImageList, maskTextList, levelCountList, levelMaxList,testingList,stateList);
             checkPossible(partNumber + 7, idList, R.drawable.part_b, nameList,"부품 B", maskList, maskImageList, maskTextList, levelCountList, levelMaxList,testingList,stateList);
             checkPossible(partNumber + 8, idList, R.drawable.part_c, nameList,"부품 C", maskList, maskImageList, maskTextList, levelCountList, levelMaxList,testingList,stateList);
@@ -140,6 +142,7 @@ public class PartSelectDialog extends Dialog{
                 @Override
                 protected void onPostExecute(Object o) {
                     super.onPostExecute(o);
+                    asyncNum--;
                     try {
                         JSONObject resultTemp = new JSONObject(result);
                         System.out.println("테스크 어베일 결과 : "+result);
@@ -159,7 +162,7 @@ public class PartSelectDialog extends Dialog{
 
                         //idList, testingList, stateList, maskList, maskImageList, maskTextList 넣기;
                         if(resultTemp.get("success").toString().equals("true")){
-                            //reallyNoMoreTask.setVisibility(View.INVISIBLE);
+                            taskIsExist = true;
                             testingList.add(false);
                             stateList.add("proceed");
                             maskList.add(R.drawable.color_transparency);
@@ -168,43 +171,43 @@ public class PartSelectDialog extends Dialog{
                         }else{
                             Log.d("실패!", partNumTemp + ", " +resultTemp.toString());
                             if(resultTemp.get("message").toString().equals("black")){
-                                reallyNoMoreTask.setVisibility(View.INVISIBLE);
+                                taskIsExist = true;
                                 testingList.add(false);
                                 stateList.add("이 부품에 대해 블랙 처리되었습니다.");
                                 maskList.add(R.drawable.color_blacktransparency);
                                 maskImageList.add(R.drawable.partselectdialog_black);
                                 maskTextList.add("작업 자격 박탈");
                             }else if(resultTemp.get("message").toString().equals("nomore")){//안띄우는걸로 타결
+                                if(asyncNum == 0){//모든 부품 로딩이 끝났다면 '가능한 부품 로딩중..'삭제
+                                    reallyNoMoreTask.setText("남은 작업이 없습니다.");
+                                }
                                 idList.remove(idList.size() - 1);
                                 nameList.remove(nameList.size() - 1);
                                 levelCountList.remove(levelCountList.size() - 1);
                                 levelMaxList.remove(levelMaxList.size() - 1);
-//                                idList.add(R.drawable.examining_falsepush);
-//                                testingList.add(false);
-//                                stateList.add("현재 할 수 있는 작업이 없습니다.");
                             }else if(resultTemp.get("message").toString().equals("needtest")){
-                                reallyNoMoreTask.setVisibility(View.INVISIBLE);
+                                taskIsExist = true;
                                 testingList.add(true);
                                 stateList.add("먼저 이 부품에 대한 테스트를 통과하셔야 합니다.");
                                 maskList.add(R.drawable.color_blueblackgradient);
                                 maskImageList.add(R.drawable.color_transparency);
                                 maskTextList.add("테스트 받기");
                             }else if(resultTemp.get("message").toString().equals("exceed")){
-                                reallyNoMoreTask.setVisibility(View.INVISIBLE);
+                                taskIsExist = true;
                                 testingList.add(false);
                                 stateList.add("회원님의 랭크에 해당하는 작업 횟수를 모두 소진하였습니다.");
                                 maskList.add(R.drawable.color_blacktransparency);
                                 maskImageList.add(R.drawable.partselectdialog_exceed);
                                 maskTextList.add("미션 검사 중");
                             }else if(resultTemp.get("message").toString().equals("needcert")){
-                                reallyNoMoreTask.setVisibility(View.INVISIBLE);
+                                taskIsExist = true;
                                 testingList.add(false);
                                 stateList.add("먼저 검수 자격을 얻어야 진행할 수 있습니다.");
                                 maskList.add(R.drawable.color_blacktransparency);
                                 maskImageList.add(R.drawable.partselectdialog_needcert);
                                 maskTextList.add("작업 조건 필요");
                             }else{
-                                reallyNoMoreTask.setVisibility(View.INVISIBLE);
+                                taskIsExist = true;
                                 testingList.add(false);
                                 stateList.add("잘못된 접근");
                                 maskList.add(R.drawable.color_transparency);
@@ -212,6 +215,10 @@ public class PartSelectDialog extends Dialog{
                                 maskTextList.add("");
                             }
                         }
+                        if(asyncNum == 0 && taskIsExist){//모든 부품 로딩이 끝났다면 '가능한 부품 로딩중..'삭제
+                            reallyNoMoreTask.setText("");
+                        }
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
