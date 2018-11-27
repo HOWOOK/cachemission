@@ -111,15 +111,15 @@ public class QuizLineToPointActivity extends PatherActivity {
         mTaskTitle.setText(taskTitle);
         taskViewID = mTaskView.taskViewID;
         controllerID = mController.controllerID;
-        taskDifficulty=intent.getStringExtra("difficulty");
-        Log.d("djdjdjd",taskDifficulty);
+//        taskDifficulty=intent.getStringExtra("difficulty");
+//        Log.d("djdjdjd",taskDifficulty);
 
         taskType = "TWOPOINT";
-        forcedShowDescription(intent.getStringExtra("part"));
-        SharedPreferences firstTimeExplain = getSharedPreferences("firstTimeExplain", MODE_PRIVATE);
-        SharedPreferences.Editor editor = firstTimeExplain.edit();
-        editor.putString(intent.getStringExtra("part"), "notFirst");
-        editor.commit();
+        //forcedShowDescription(intent.getStringExtra("part"));
+//        SharedPreferences firstTimeExplain = getSharedPreferences("firstTimeExplain", MODE_PRIVATE);
+//        SharedPreferences.Editor editor = firstTimeExplain.edit();
+//        editor.putString(intent.getStringExtra("part"), "notFirst");
+//        editor.commit();
         //questString=intent.getStringExtra("questList");
 
         // TaskView Inflating
@@ -250,14 +250,14 @@ public class QuizLineToPointActivity extends PatherActivity {
                 Log.d("opttttt",String.valueOf(partNum));
             }
             if(taskType.equals("TWOPOINT")){//TWOPOINT에서는 파트(11=전선)를 넣어서 요청해야함
-                param.put("option",11);
+                param.put("option",111);
             }
             if(taskType.equals("RECORD")){//RECORD일때는 지역을 같이 넣어서 요청해야함
                 String region;
                 region = ((TextView)findViewById(R.id.optionText)).getText().toString();
                 param.put("option", region);
             }
-            param.put("num",3);
+            param.put("num",1);
             new HurryHttpRequest(this) {
                 @Override
                 protected void onPostExecute(Object o) {
@@ -286,8 +286,8 @@ public class QuizLineToPointActivity extends PatherActivity {
 
                                 if (!(currentTask.getString("answers").toString()).equals("")) {
                                     JSONArray a=new JSONArray(currentTask.getString("answers").toString());
-                                    mController.BoxCropTestAnswer=a;
-                                    mTaskView.BoxCropTestAnswer=a;
+                                    mController.LineTestAnswer=a;
+                                    mTaskView.LineTestAnswer=a;
                                     mController.testFlag=true;
                                     mTaskView.testFlag=true;
                                     //mController.id=currentTask.getString("id").toString();
@@ -333,8 +333,8 @@ public class QuizLineToPointActivity extends PatherActivity {
                 if(answerID != null)
                     answerIDtv.setText("Answer ID : " + answerID);
                 JSONArray a=new JSONArray(currentTask.getString("answers").toString());
-                mController.BoxCropTestAnswer=a;
-                mTaskView.BoxCropTestAnswer=a;
+                mController.LineTestAnswer=a;
+                mTaskView.LineTestAnswer=a;
                 mTaskView.setContent((String) currentTask.get("content"));
 
 
@@ -400,6 +400,10 @@ public class QuizLineToPointActivity extends PatherActivity {
 
             }else{
                 super.onBackPressed();
+                SharedPreferences testFlag=getSharedPreferences("testFlag",MODE_PRIVATE);
+                SharedPreferences.Editor editor=testFlag.edit();
+                editor.putBoolean("isTestingForLine",true);
+                editor.commit();
             }
         }else{
             super.onBackPressed();

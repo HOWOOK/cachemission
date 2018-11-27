@@ -377,12 +377,6 @@ public class Controller_2DBox extends Controller {
                                     parentActivity.updateWaitingTasks();
                                     parentActivity.startTask();
 
-                                    ConstraintSet constraintSet = new ConstraintSet();
-                                    constraintSet.clone((ConstraintLayout) (parentActivity.findViewById(R.id.controllerCL)));
-                                    constraintSet.connect(parentActivity.findViewById(R.id.textAnimation).getId(), ConstraintSet.BOTTOM, parentActivity.findViewById(R.id.btnCL).getId(), ConstraintSet.BOTTOM, (int) (43 * dpScale));
-                                    constraintSet.connect(parentActivity.findViewById(R.id.imageAnimation).getId(), ConstraintSet.BOTTOM, parentActivity.findViewById(R.id.btnCL).getId(), ConstraintSet.BOTTOM, (int) (43 * dpScale));
-                                    constraintSet.applyTo((ConstraintLayout) (parentActivity.findViewById(R.id.controllerCL)));
-                                    //그냥 제출과 다찾음의 금액이 달라서 일단은 하드텍스트로 박아넣음 (수정요망)
                                 }
                                 else{
                                     getDialog("아직 찾지 못한 부품이 있습니다.","테스트 통과 횟수가 초기화됩니다. 부품을 마저 찾아주세요.");

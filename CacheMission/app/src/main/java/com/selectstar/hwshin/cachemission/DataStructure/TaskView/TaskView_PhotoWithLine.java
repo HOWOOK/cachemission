@@ -11,7 +11,6 @@ import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -23,6 +22,7 @@ import com.selectstar.hwshin.cachemission.Photoview.OnMatrixChangedListener;
 import com.selectstar.hwshin.cachemission.Photoview.PhotoView;
 import com.selectstar.hwshin.cachemission.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -68,6 +68,7 @@ public class TaskView_PhotoWithLine extends TaskView {
 
     private PhotoView photoView;
     public float[][] answerCoordination;
+    public float[][] testAnswerCoordination;
     public float[][] changedCoordination;
     public float[][] answerCoordinationSubmit;
     public float[][] changedCoordinationSubmit;
@@ -79,11 +80,13 @@ public class TaskView_PhotoWithLine extends TaskView {
     private float [] answerLines, answerLinesSubmit;
     private Bitmap expandBitmap;
     private String[] arrayExpand, arrayURI, arrayAnswer, arrayTemp;
+    private String[] tempAnswer, testAnswer;
     private ConstraintLayout photoWithLineCL;
     private int getDeviceDpi;
     private float dpScale;
     private HashMap<String, Bitmap> bitmaps;
     private float iouValue;
+    private ArrayList<String>LineTestAnswerArray;
 
     public TaskView_PhotoWithLine(){
         taskViewID = R.layout.taskview_photowithline;
@@ -195,6 +198,26 @@ public class TaskView_PhotoWithLine extends TaskView {
                 answerCoordination = new float[arrayAnswer.length - 1][4];
                 changedCoordination = new float[answerCoordination.length][4];
                 coordinationParsing(arrayAnswer);
+            }
+        }
+        if(testFlag) {
+            System.out.println("미친놈"+String.valueOf(LineTestAnswer.length()));
+            LineTestAnswerArray= jsonToArrayList(LineTestAnswer);
+            testAnswer = new String[LineTestAnswer.length()];
+            for (int i = 0; i < LineTestAnswer.length(); i++) {
+                try {
+                    testAnswer[i] = LineTestAnswer.get(i).toString();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (!(testAnswer.length == 0)) {
+                System.out.println("미친년"+String.valueOf(testAnswer[0])+"머머"+String.valueOf(testAnswer.length));
+                testAnswerCoordination = new float[testAnswer.length ][4];
+//                changedCoordination = new float[answerCoordination.length][4];
+//                answerType = new int[answerCoordination.length];
+//                answerCount = answerCoordination.length;
+                coordinationParsingForTest(testAnswer);
             }
         }
 
@@ -332,6 +355,20 @@ public class TaskView_PhotoWithLine extends TaskView {
         }
     }
 
+    private void coordinationParsingForTest(String[] array) {
+        System.out.println("들왔다");
+        for(int i =0; i < array.length; i++){
+
+            arrayTemp = array[i].split(",");
+            System.out.println("parsing"+Float.parseFloat(arrayTemp[0]));
+            testAnswerCoordination[i][0] = (float) Float.parseFloat(arrayTemp[0]);
+            testAnswerCoordination[i][1] = (float) Float.parseFloat(arrayTemp[1]);
+            testAnswerCoordination[i][2] = (float) Float.parseFloat(arrayTemp[2]);
+            testAnswerCoordination[i][3] = (float) Float.parseFloat(arrayTemp[3]);
+            //answerType[i-1] = 0;
+        }
+    }
+
     public boolean similarityTest(float leftPercentSend, float topPercentSend, float rightPercentSend, float bottomPercentSend) {
         return true;
     }
@@ -441,4 +478,75 @@ public class TaskView_PhotoWithLine extends TaskView {
         }
     }
 
+    public void updateTestSet(int boxIndex){
+        System.out.println("미친놈"+String.valueOf(LineTestAnswerArray.size()));
+        LineTestAnswerArray= jsonToArrayList(LineTestAnswer);
+        LineTestAnswerArray.remove(boxIndex);
+        testAnswer = new String[LineTestAnswerArray.size()];
+        for (int i = 0; i < LineTestAnswerArray.size(); i++) {
+
+            testAnswer[i] = LineTestAnswerArray.get(i).toString();
+
+        }
+        if (!(testAnswer.length == 0)) {
+            System.out.println("미친년"+String.valueOf(testAnswer[0])+"머머"+String.valueOf(testAnswer.length));
+            testAnswerCoordination = new float[testAnswer.length ][4];
+//                changedCoordination = new float[answerCoordination.length][4];
+//                answerType = new int[answerCoordination.length];
+//                answerCount = answerCoordination.length;
+            coordinationParsingForTest(testAnswer);
+        }
+    }
+    public ArrayList<String> jsonToArrayList(JSONArray jsonArray) {
+        ArrayList<String> listdata = new ArrayList<String>();
+        if (jsonArray != null) {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                try {
+                    listdata.add(jsonArray.getString(i));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return listdata;
+    }
+    public String compareCoordination(float left, float top, float right, float bottom, int boxIndex){
+        String returnVal="";
+        float firstPointDifference,secondPointDifference;
+        firstPointDifference= (float) Math.sqrt(Math.pow((testAnswerCoordination[boxIndex][0]-left),2)+Math.pow((testAnswerCoordination[boxIndex][1]-top),2));
+        secondPointDifference=(float) Math.sqrt(Math.pow((testAnswerCoordination[boxIndex][2]-right),2)+Math.pow((testAnswerCoordination[boxIndex][3]-bottom),2));
+        if(firstPointDifference<0.05&&secondPointDifference<0.05)
+            returnVal="pass";
+        else if(!(firstPointDifference<0.05)&&secondPointDifference<0.05)
+            returnVal="leftWrong";
+        else if((firstPointDifference<0.05)&&!(secondPointDifference<0.05))
+            returnVal="rightWrong";
+        else
+            returnVal="allWrong";
+
+
+
+        return returnVal;
+
+    }
+    public int findCandidate(float left, float top, float right, float bottom){
+
+        float minDistance=10000;
+        int minDistanceIndex=0;
+        float firstPointDifference,secondPointDifference;
+        if(testAnswerCoordination != null) {
+            for (int i = 0; i < LineTestAnswerArray.size(); i++) {
+                firstPointDifference= (float) Math.sqrt(Math.pow((testAnswerCoordination[i][0]-left),2)+Math.pow((testAnswerCoordination[i][1]-top),2));
+                secondPointDifference=(float) Math.sqrt(Math.pow((testAnswerCoordination[i][2]-right),2)+Math.pow((testAnswerCoordination[i][3]-bottom),2));
+                System.out.println("미차미차"+String.valueOf(firstPointDifference+secondPointDifference));
+                if (firstPointDifference+secondPointDifference<minDistance) {
+                    minDistance = firstPointDifference+secondPointDifference;
+                    minDistanceIndex=i;
+                }
+            }
+        }
+        return minDistanceIndex;
+    }
+
 }
+

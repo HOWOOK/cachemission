@@ -53,6 +53,7 @@ public class TaskActivity extends PatherActivity {
 //    String questString="";
 //    int currentIndex=0;
     private TextView answerIDtv;
+    boolean testPassedOrNot=false;
 
 
 
@@ -151,6 +152,19 @@ public class TaskActivity extends PatherActivity {
         ConstraintLayout.LayoutParams params2 = (ConstraintLayout.LayoutParams) parent2.getLayoutParams();
         params2.verticalWeight = mParameter[5][0];
         parent2.setLayoutParams(params2);
+
+        if(taskType.equals("TWOPOINT")){
+            checkPossible();
+            if(!testPassedOrNot) {
+                Intent testIntent = new Intent(TaskActivity.this, QuizLineToPointActivity.class);
+                testIntent.putExtra("taskID", getTaskID());
+                // testIntent.putExtra("part",taskName);
+                // testIntent.putExtra("partkorean",nameList.get(position));
+                // testIntent.putExtra("difficulty",mActivity.getTaskDifficulty());
+                //Log.d("diffdiff",mActivity.getTaskDifficulty());
+                startActivity(testIntent);
+            }
+        }
 
 
         //해당 task가 처음이라면 설명서 띄워주는 것ㄴ
@@ -339,6 +353,11 @@ public class TaskActivity extends PatherActivity {
             editor.commit();
             partDialogShow(opt);
         }
+        if(testFlag.getBoolean("isTestingForLine",false)){
+            editor.putBoolean("isTestingForLine",false);
+            editor.commit();
+            finish();
+        }
     }
 
     public void getNewTask(){
@@ -505,5 +524,49 @@ public class TaskActivity extends PatherActivity {
 //        }
 //        return rawText;
 //    }
+    private void checkPossible() {
+        JSONObject param = new JSONObject();
+        try {
+            param.put("taskID", taskID);
+            if(taskType.contains("EXAM"))
+                param.put("examType", examType);
+            param.put("version", "9.9.9"); //버전은 의미 없어서 임의값
+            param.put("option", 111);
 
+            SharedPreferences token = getSharedPreferences("token", 0);//mode 0 means MODE_PRIVATE
+            final String loginToken = token.getString("loginToken","");
+
+            HurryHttpRequest asyncTask = new HurryHttpRequest(this){
+                @Override
+                protected void onPostExecute(Object o) {
+                    super.onPostExecute(o);
+                    try {
+                        JSONObject resultTemp = new JSONObject(result);
+                        System.out.println("테스크 어베일 결과 : "+result);
+
+                        if(resultTemp.get("success").toString().equals("true")){
+                            testPassedOrNot=true;
+
+                        }else{
+                            Log.d("실패!", "111" + ", " +resultTemp.toString());
+                            testPassedOrNot=false;
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            };
+            asyncTask.execute(getString(R.string.mainurl) + "/testing/taskValid", param, loginToken);
+
+
+
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

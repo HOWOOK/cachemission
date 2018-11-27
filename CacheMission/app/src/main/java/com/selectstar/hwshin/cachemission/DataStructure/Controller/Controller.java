@@ -12,6 +12,7 @@ public abstract class Controller {
     public int controllerID;
     public Uri photoUri;
     public JSONArray BoxCropTestAnswer;
+    public JSONArray LineTestAnswer;
    // public String id;
     public boolean testFlag=false;
     public Uri getPhotoUri(){
