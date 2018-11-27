@@ -3,6 +3,7 @@ package com.selectstar.hwshin.cachemission.Dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -11,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.selectstar.hwshin.cachemission.Activity.PatherActivity;
@@ -29,6 +31,7 @@ public class PartSelectDialog extends Dialog{
     private Context context;
     private String taskID;
     private String taskType;
+    private TextView reallyNoMoreTask;
     private int examType;
     private String taskDifficulty;
     private int partNumber;
@@ -72,15 +75,19 @@ public class PartSelectDialog extends Dialog{
                 PartSelectDialog.this.dismiss();
             }
         });
+        reallyNoMoreTask = findViewById(R.id.reallyNoMoreTask);
         RecyclerView partRecycler = findViewById(R.id.partRecycler);
 
         ArrayList<Integer> idList = new ArrayList<>();
         ArrayList<String> nameList = new ArrayList<>();
+        ArrayList<Integer> maskList = new ArrayList<>();
+        ArrayList<Integer> maskImageList = new ArrayList<>();
+        ArrayList<String> maskTextList = new ArrayList<>();
         ArrayList<Integer> levelCountList = new ArrayList<>();
         ArrayList<Integer> levelMaxList = new ArrayList<>();
         ArrayList<Boolean> testingList = new ArrayList<>();
         ArrayList<String> stateList=new ArrayList<>();
-        mAdapter = new PartAdapter((PatherActivity)context, idList, nameList, levelCountList, levelMaxList, this,testingList,stateList);
+        mAdapter = new PartAdapter((PatherActivity)context, idList, nameList, maskList, maskImageList, maskTextList, levelCountList, levelMaxList, testingList, stateList, this);
         partRecycler.setLayoutManager(new GridLayoutManager(context,2));
         partRecycler.setAdapter(mAdapter);
 
@@ -89,28 +96,34 @@ public class PartSelectDialog extends Dialog{
 
         if((taskType.equals("BOXCROP") || taskType.equals("BOXCROPEXAM")) && taskDifficulty.equals("EASY")) {
             partNumber = 100;
-            checkPossible(partNumber + 1, idList, R.drawable.part_g, nameList,"부품 G", levelCountList, levelMaxList,testingList,stateList);
-            checkPossible(partNumber + 2, idList, R.drawable.part_pre, nameList,"전봇대 부품들", levelCountList, levelMaxList,testingList,stateList);
-            checkPossible(partNumber + 3, idList, R.drawable.part_pole, nameList,"전봇대", levelCountList, levelMaxList,testingList,stateList);
-            checkPossible(partNumber + 4, idList, R.drawable.part_tree, nameList,"나무", levelCountList, levelMaxList,testingList,stateList);
-            checkPossible(partNumber + 5, idList, R.drawable.part_transformer, nameList,"변압기", levelCountList, levelMaxList,testingList,stateList);
-            checkPossible(partNumber + 6, idList, R.drawable.part_a, nameList,"부품 A", levelCountList, levelMaxList,testingList,stateList);
-            checkPossible(partNumber + 7, idList, R.drawable.part_b, nameList,"부품 B", levelCountList, levelMaxList,testingList,stateList);
-            checkPossible(partNumber + 8, idList, R.drawable.part_c, nameList,"부품 C", levelCountList, levelMaxList,testingList,stateList);
-            checkPossible(partNumber + 9, idList, R.drawable.part_d, nameList,"부품 D", levelCountList, levelMaxList,testingList,stateList);
-            checkPossible(partNumber + 10, idList, R.drawable.part_e, nameList,"부품 E", levelCountList, levelMaxList,testingList,stateList);
+            checkPossible(partNumber + 1, idList, R.drawable.part_g, nameList, "부품 G", maskList, maskImageList, maskTextList, levelCountList, levelMaxList,testingList, stateList);
+            checkPossible(partNumber + 2, idList, R.drawable.part_pre, nameList,"전봇대 부품들", maskList, maskImageList, maskTextList, levelCountList, levelMaxList,testingList, stateList);
+            checkPossible(partNumber + 3, idList, R.drawable.part_pole, nameList,"전봇대", maskList, maskImageList, maskTextList, levelCountList, levelMaxList,testingList, stateList);
+            checkPossible(partNumber + 4, idList, R.drawable.part_tree, nameList,"나무", maskList, maskImageList, maskTextList, levelCountList, levelMaxList,testingList, stateList);
+            checkPossible(partNumber + 5, idList, R.drawable.part_transformer, nameList,"변압기", maskList, maskImageList, maskTextList, levelCountList, levelMaxList,testingList, stateList);
+            checkPossible(partNumber + 6, idList, R.drawable.part_a, nameList,"부품 A", maskList, maskImageList, maskTextList, levelCountList, levelMaxList,testingList, stateList);
+            checkPossible(partNumber + 7, idList, R.drawable.part_b, nameList,"부품 B", maskList, maskImageList, maskTextList, levelCountList, levelMaxList,testingList, stateList);
+            checkPossible(partNumber + 8, idList, R.drawable.part_c, nameList,"부품 C", maskList, maskImageList, maskTextList, levelCountList, levelMaxList,testingList, stateList);
+            checkPossible(partNumber + 9, idList, R.drawable.part_d, nameList,"부품 D", maskList, maskImageList, maskTextList, levelCountList, levelMaxList,testingList, stateList);
+            checkPossible(partNumber + 10, idList, R.drawable.part_e, nameList,"부품 E", maskList, maskImageList, maskTextList, levelCountList, levelMaxList,testingList, stateList);
         }
         if((taskType.equals("BOXCROP") || taskType.equals("BOXCROPEXAM")) && taskDifficulty.equals("NORMAL")) {
             partNumber = 200;
-            checkPossible(partNumber + 6, idList, R.drawable.part_a, nameList,"부품 A", levelCountList, levelMaxList,testingList,stateList);
-            checkPossible(partNumber + 7, idList, R.drawable.part_b, nameList,"부품 B", levelCountList, levelMaxList,testingList,stateList);
-            checkPossible(partNumber + 8, idList, R.drawable.part_c, nameList,"부품 C", levelCountList, levelMaxList,testingList,stateList);
-            checkPossible(partNumber + 9, idList, R.drawable.part_d, nameList,"부품 D", levelCountList, levelMaxList,testingList,stateList);
-            checkPossible(partNumber + 10, idList, R.drawable.part_e, nameList,"부품 E", levelCountList, levelMaxList,testingList,stateList);
+            checkPossible(partNumber + 6, idList, R.drawable.part_a, nameList,"부품 A", maskList, maskImageList, maskTextList, levelCountList, levelMaxList,testingList,stateList);
+            checkPossible(partNumber + 7, idList, R.drawable.part_b, nameList,"부품 B", maskList, maskImageList, maskTextList, levelCountList, levelMaxList,testingList,stateList);
+            checkPossible(partNumber + 8, idList, R.drawable.part_c, nameList,"부품 C", maskList, maskImageList, maskTextList, levelCountList, levelMaxList,testingList,stateList);
+            checkPossible(partNumber + 9, idList, R.drawable.part_d, nameList,"부품 D", maskList, maskImageList, maskTextList, levelCountList, levelMaxList,testingList,stateList);
+            checkPossible(partNumber + 10, idList, R.drawable.part_e, nameList,"부품 E", maskList, maskImageList, maskTextList, levelCountList, levelMaxList,testingList,stateList);
         }
     }
 
-    private void checkPossible(int partNum, final ArrayList<Integer> idList, final Integer idListItem, final ArrayList<String> nameList, final String nameListItem, final ArrayList<Integer> levelCountList, final ArrayList<Integer> levelMaxList,final ArrayList<Boolean> testingList,final ArrayList<String> stateList) {
+    private void checkPossible(int partNum, final ArrayList<Integer> idList, final Integer idListItem,
+                               final ArrayList<String> nameList, final String nameListItem,
+                               final ArrayList<Integer> maskList, final ArrayList<Integer> maskImageList,
+                               final ArrayList<String> maskTextList, final ArrayList<Integer> levelCountList,
+                               final ArrayList<Integer> levelMaxList,final ArrayList<Boolean> testingList,
+                               final ArrayList<String> stateList) {
+
         JSONObject param = new JSONObject();
         try {
             param.put("taskID", taskID);
@@ -131,8 +144,11 @@ public class PartSelectDialog extends Dialog{
                         JSONObject resultTemp = new JSONObject(result);
                         System.out.println("테스크 어베일 결과 : "+result);
 
+                        //idList, nameList 넣기
+                        idList.add(idListItem);
                         nameList.add(nameListItem);
 
+                        //levelCountList, levelMaxList 넣기
                         if(taskType.contains("EXAM")) {
                             levelCountList.add((Integer) 123);//일단은 임의의 숫자. (수정요망) EXAM에서는 레벨이 없기 때문에 얘를 띄울 필요가 없다.
                             levelMaxList.add((Integer) 456);
@@ -141,36 +157,59 @@ public class PartSelectDialog extends Dialog{
                             levelMaxList.add((Integer) resultTemp.get("level_max"));
                         }
 
+                        //idList, testingList, stateList, maskList, maskImageList, maskTextList 넣기;
                         if(resultTemp.get("success").toString().equals("true")){
-                            idList.add(idListItem);
+                            //reallyNoMoreTask.setVisibility(View.INVISIBLE);
                             testingList.add(false);
                             stateList.add("proceed");
-
+                            maskList.add(R.drawable.color_transparency);
+                            maskImageList.add(R.drawable.color_transparency);
+                            maskTextList.add("");
                         }else{
                             Log.d("실패!", partNumTemp + ", " +resultTemp.toString());
                             if(resultTemp.get("message").toString().equals("black")){
-                                idList.add(R.drawable.examining_false);
+                                reallyNoMoreTask.setVisibility(View.INVISIBLE);
                                 testingList.add(false);
                                 stateList.add("이 부품에 대해 블랙 처리되었습니다.");
-                            }else if(resultTemp.get("message").toString().equals("nomore")){
-                                idList.add(R.drawable.examining_falsepush);
-                                testingList.add(false);
-                                stateList.add("현재 할 수 있는 작업이 없습니다.");
+                                maskList.add(R.drawable.color_blacktransparency);
+                                maskImageList.add(R.drawable.partselectdialog_black);
+                                maskTextList.add("작업 자격 박탈");
+                            }else if(resultTemp.get("message").toString().equals("nomore")){//안띄우는걸로 타결
+                                idList.remove(idList.size() - 1);
+                                nameList.remove(nameList.size() - 1);
+                                levelCountList.remove(levelCountList.size() - 1);
+                                levelMaxList.remove(levelMaxList.size() - 1);
+//                                idList.add(R.drawable.examining_falsepush);
+//                                testingList.add(false);
+//                                stateList.add("현재 할 수 있는 작업이 없습니다.");
                             }else if(resultTemp.get("message").toString().equals("needtest")){
-                                idList.add(R.drawable.btn_x);
+                                reallyNoMoreTask.setVisibility(View.INVISIBLE);
                                 testingList.add(true);
                                 stateList.add("먼저 이 부품에 대한 테스트를 통과하셔야 합니다.");
+                                maskList.add(R.drawable.color_blueblackgradient);
+                                maskImageList.add(R.drawable.color_transparency);
+                                maskTextList.add("테스트 받기");
                             }else if(resultTemp.get("message").toString().equals("exceed")){
-                                idList.add(R.drawable.examining_truepush);
+                                reallyNoMoreTask.setVisibility(View.INVISIBLE);
                                 testingList.add(false);
                                 stateList.add("회원님의 랭크에 해당하는 작업 횟수를 모두 소진하였습니다.");
+                                maskList.add(R.drawable.color_blacktransparency);
+                                maskImageList.add(R.drawable.partselectdialog_exceed);
+                                maskTextList.add("미션 검사 중");
                             }else if(resultTemp.get("message").toString().equals("needcert")){
-                                idList.add(R.drawable.examining_true);
+                                reallyNoMoreTask.setVisibility(View.INVISIBLE);
                                 testingList.add(false);
                                 stateList.add("먼저 검수 자격을 얻어야 진행할 수 있습니다.");
+                                maskList.add(R.drawable.color_blacktransparency);
+                                maskImageList.add(R.drawable.partselectdialog_needcert);
+                                maskTextList.add("작업 조건 필요");
                             }else{
-                                idList.add(R.drawable.cashmissionicon);
+                                reallyNoMoreTask.setVisibility(View.INVISIBLE);
                                 testingList.add(false);
+                                stateList.add("잘못된 접근");
+                                maskList.add(R.drawable.color_transparency);
+                                maskImageList.add(R.drawable.color_transparency);
+                                maskTextList.add("");
                             }
                         }
                     } catch (JSONException e) {
