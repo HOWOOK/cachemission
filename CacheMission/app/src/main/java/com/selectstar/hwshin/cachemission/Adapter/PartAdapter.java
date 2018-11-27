@@ -26,6 +26,9 @@ public class PartAdapter extends RecyclerView.Adapter<PartAdapter.ItemViewHolder
     Context context;
     ArrayList<Integer> idList;
     ArrayList<String> nameList;
+    ArrayList<Integer> maskList;
+    ArrayList<Integer> maskImageList;
+    ArrayList<String> maskTextList;
     ArrayList<Integer> levelCountList; //유저가 해당 Rank에서 현재 진행한 테스크의 개수
     ArrayList<Integer> levelMaxList;  //해당 TaskRank에서 최대로 할수 있는 테스크의 개수
     PartSelectDialog mDialog;
@@ -33,10 +36,13 @@ public class PartAdapter extends RecyclerView.Adapter<PartAdapter.ItemViewHolder
     public ArrayList<Boolean> isTestNeeded;
     ArrayList<String> stateList;
 
-    public PartAdapter(PatherActivity mActivity, ArrayList<Integer> idList, ArrayList<String> nameList, ArrayList<Integer> levelCountList, ArrayList<Integer> levelMaxList, PartSelectDialog mDialog, ArrayList<Boolean> testing, ArrayList<String> stateList) {
+    public PartAdapter(PatherActivity mActivity, ArrayList<Integer> idList, ArrayList<String> nameList, ArrayList<Integer> maskList, ArrayList<Integer> maskImageList, ArrayList<String> maskTextList, ArrayList<Integer> levelCountList, ArrayList<Integer> levelMaxList,ArrayList<Boolean> testing, ArrayList<String> stateList, PartSelectDialog mDialog) {
         this.context = context;
         this.idList = idList;
         this.nameList = nameList;
+        this.maskList = maskList;
+        this.maskImageList = maskImageList;
+        this.maskTextList = maskTextList;
         this.levelCountList = levelCountList;
         this.levelMaxList = levelMaxList;
         this.mDialog = mDialog;
@@ -54,7 +60,10 @@ public class PartAdapter extends RecyclerView.Adapter<PartAdapter.ItemViewHolder
     @Override
     public void onBindViewHolder(final @NonNull PartAdapter.ItemViewHolder holder, int pos) {
         final int position = pos;
-        holder.image.setImageDrawable(ContextCompat.getDrawable(mActivity,idList.get(pos)));
+        holder.image.setImageDrawable(ContextCompat.getDrawable(mActivity, idList.get(pos)));
+        holder.imageMask.setImageDrawable(ContextCompat.getDrawable(mActivity, maskList.get(pos)));
+        holder.imageMaskImage.setImageDrawable(ContextCompat.getDrawable(mActivity, maskImageList.get(pos)));
+        holder.imageMaskText.setText(maskTextList.get(pos));
         holder.name.setText(nameList.get(pos));
         holder.countText.setText("["+ levelCountList.get(pos)+"/"+ levelMaxList.get(pos)+"]");
         holder.image.setOnClickListener(new View.OnClickListener() {
@@ -150,12 +159,18 @@ public class PartAdapter extends RecyclerView.Adapter<PartAdapter.ItemViewHolder
         private ImageView image;
         private TextView name;
         private TextView countText;
+        private ImageView imageMaskImage;
+        private ImageView imageMask;
+        private TextView imageMaskText;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.part_thumb);
             name = itemView.findViewById(R.id.part_text);
             countText = itemView.findViewById(R.id.part_countText);
+            imageMask = itemView.findViewById(R.id.part_thumbMask);
+            imageMaskImage = itemView.findViewById(R.id.part_thumbMaskImage);
+            imageMaskText = itemView.findViewById(R.id.part_thumbMaskText);
         }
     }
 }

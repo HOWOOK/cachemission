@@ -666,6 +666,15 @@ runningHTTPRequest++;
             if(taskType.contains("EXAM")){
                 param.put("examType", examType);
             };
+            if(taskType.contains("TWOPOINT"))
+                param.put("option", 111);
+            if(taskType.equals("CLASSIFICIATION") && mTaskList.get(i).get("taskDifficulty").toString().equals("1"))
+                param.put("option", 1001);
+            if(taskType.equals("CLASSIFICIATION") && mTaskList.get(i).get("taskDifficulty").toString().equals("2"))
+                param.put("option", 1002);
+            if(taskType.equals("CLASSIFICIATION") && mTaskList.get(i).get("taskDifficulty").toString().equals("3"))
+                param.put("option", 1003);
+
             final JSONObject pp = param;
             HurryHttpRequest asyncTask = new HurryHttpRequest(TaskListActivity.this) {
                 @Override

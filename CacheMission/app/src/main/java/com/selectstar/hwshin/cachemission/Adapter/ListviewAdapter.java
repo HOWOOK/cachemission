@@ -114,6 +114,7 @@ public class ListviewAdapter extends RecyclerView.Adapter<ListviewAdapter.ItemVi
         JSONObject targetItem = mTaskList.get(position);
         try {
             targetItem.put("questList",questList);
+//            System.out.println("어뎁터, 퀘스트리스트 : "+ questList);
 
             mTaskList.set(position,targetItem);
         } catch (JSONException e) {
@@ -148,7 +149,7 @@ public class ListviewAdapter extends RecyclerView.Adapter<ListviewAdapter.ItemVi
     }
     public void updateItem( ListviewAdapter.ItemViewHolder holder, JSONArray questList)
     {
-    Log.d("fullupdate",questList.toString());
+    Log.d("questList",questList.toString());
 
         JSONObject[] questItem=new JSONObject[questList.length()];
         String[] questName=new String[questList.length()];
@@ -174,7 +175,7 @@ public class ListviewAdapter extends RecyclerView.Adapter<ListviewAdapter.ItemVi
                     }
                 }
 
-                Log.d("quest11",questName[0]);
+                Log.d("quest1",questName[0]);
 
                 if((int)questItem[0].get("questTotal") != 10000) {
                     holder.quest1.setText(questName[0]);
