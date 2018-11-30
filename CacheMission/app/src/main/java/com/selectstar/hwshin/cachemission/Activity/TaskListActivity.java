@@ -71,6 +71,7 @@ public class TaskListActivity extends AppCompatActivity {
     private  TextView refreshText;
     private TextView nowGold;
 
+
     public int runningHTTPRequest = 0;
     NotificationCompat.Builder mBuilder;
 
@@ -137,6 +138,14 @@ public class TaskListActivity extends AppCompatActivity {
             getTaskList(loginToken);
         else{
             getTaskList(loginToken);
+        }
+        SharedPreferences noticeFlag=getSharedPreferences("noticeFlag",MODE_PRIVATE);
+
+
+        if(noticeFlag.getBoolean("noticeActivation",true)&&!(loginToken.equals(""))){
+            Intent noticeIntent=new Intent(TaskListActivity.this,TaskExplainActivity.class);
+            noticeIntent.putExtra("notice","notice");
+            startActivity(noticeIntent);
         }
 
     }

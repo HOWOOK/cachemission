@@ -81,6 +81,7 @@ public class LoginActivity extends AppCompatActivity {
             //do nothing
         }else{
             Intent intent_mainExplain = new Intent(LoginActivity.this, ExplainActivity.class);
+
             SharedPreferences.Editor editor = explain.edit();
             editor.putString("first", "done");
             editor.commit();

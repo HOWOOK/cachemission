@@ -5,6 +5,9 @@
     <color name="colorTransparentMoreWhite">#64ffffff</color>
     <color name="colorTransparentAbsolute">#00ffffff</color>
     <color name="colorBlack">#000000</color>
+    <color name="colorBlackTransparent">#64000000</color>
+
+
 
     <color name="colorPrimary">#fab902</color>
     <color name="colorPrimaryDark">#f5a511</color>

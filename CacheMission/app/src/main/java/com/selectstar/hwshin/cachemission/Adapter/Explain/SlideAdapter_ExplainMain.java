@@ -47,6 +47,7 @@ public class SlideAdapter_ExplainMain extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
+        System.out.println("호로로로로롤ㄹㄹㅇ오온");
         inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.explain_main,container,false);
 

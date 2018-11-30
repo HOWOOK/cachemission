@@ -1,5 +1,6 @@
 package com.selectstar.hwshin.cachemission.Activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -38,34 +39,36 @@ public class ExplainActivity extends AppCompatActivity {
         t.setScreenName("ExplainActivity");
         t.send(new HitBuilders.AppViewBuilder().build());
 
-        viewPager=(ViewPager)findViewById(R.id.explainViewpager);
-        liner=(LinearLayout)findViewById(R.id.dots);
 
-        myAdapter=new SlideAdapter_ExplainMain(this);
-        viewPager.setAdapter(myAdapter);
-        adddots(0);
+            viewPager = (ViewPager) findViewById(R.id.explainViewpager);
+            liner = (LinearLayout) findViewById(R.id.dots);
 
-        viewPager.addOnPageChangeListener(viewListener);
+            myAdapter = new SlideAdapter_ExplainMain(this);
+            viewPager.setAdapter(myAdapter);
+            adddots(0);
 
-        prev = findViewById(R.id.prev);
-        next = findViewById(R.id.next);
+            viewPager.addOnPageChangeListener(viewListener);
 
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mCurrentPage == maxPage - 1)
-                    finish();
-                else
-                    viewPager.setCurrentItem(mCurrentPage+1);
-            }
-        });
+            prev = findViewById(R.id.prev);
+            next = findViewById(R.id.next);
 
-        prev.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewPager.setCurrentItem(mCurrentPage-1);
-            }
-        });
+            next.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mCurrentPage == maxPage - 1)
+                        finish();
+                    else
+                        viewPager.setCurrentItem(mCurrentPage + 1);
+                }
+            });
+
+            prev.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    viewPager.setCurrentItem(mCurrentPage - 1);
+                }
+            });
+
 
     }
 

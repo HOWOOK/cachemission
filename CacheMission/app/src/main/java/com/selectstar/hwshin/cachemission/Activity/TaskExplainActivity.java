@@ -3,6 +3,7 @@ package com.selectstar.hwshin.cachemission.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.selectstar.hwshin.cachemission.Adapter.Explain.NoticeAdapter;
 import com.selectstar.hwshin.cachemission.Adapter.Explain.SlideAdapter_ExplainTask_Dialect;
 import com.selectstar.hwshin.cachemission.Adapter.Explain.SlideAdapter_ExplainTask_DirectRecord;
 import com.selectstar.hwshin.cachemission.Adapter.Explain.SlideAdapter_ExplainTask_None;
@@ -46,20 +48,29 @@ public class TaskExplainActivity extends AppCompatActivity {
 
         viewpager=(ViewPager)findViewById(R.id.explainViewpager);
         intent = getIntent();
-        taskType = intent.getStringExtra("taskType");
+        if(!intent.getStringExtra("notice").equals("notice")) {
+            taskType = intent.getStringExtra("taskType");
 
-        SharedPreferences taskToken = getSharedPreferences("taskToken", MODE_PRIVATE);
-        SharedPreferences.Editor editor = taskToken.edit();
-        editor.putInt(taskType + "taskToken", 100);
-        if(taskType.contains("EXAM")) {
-            examType = intent.getIntExtra("examType", 0);
-            editor.putInt(taskType + examType + "taskToken", 100);
+            SharedPreferences taskToken = getSharedPreferences("taskToken", MODE_PRIVATE);
+            SharedPreferences.Editor editor = taskToken.edit();
+            editor.putInt(taskType + "taskToken", 100);
+            if (taskType.contains("EXAM")) {
+                examType = intent.getIntExtra("examType", 0);
+                editor.putInt(taskType + examType + "taskToken", 100);
+            }
+            editor.commit();
+
+            myadapter = findAdaptingTaskExplain(taskType);
+            viewpager.setAdapter(myadapter);
+            viewpager.addOnPageChangeListener(viewlistener);
         }
-        editor.commit();
-
-        myadapter= findAdaptingTaskExplain(taskType);
-        viewpager.setAdapter(myadapter);
-        viewpager.addOnPageChangeListener(viewlistener);
+        else{
+            myadapter = new NoticeAdapter(this);
+            viewpager.setAdapter(myadapter);
+            viewpager.addOnPageChangeListener(viewlistener);
+            ConstraintLayout cons=findViewById(R.id.explainConstLayout);
+            cons.setBackground(getResources().getDrawable(R.color.colorBlackTransparent));
+        }
 
     }
 
