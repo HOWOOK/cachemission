@@ -994,8 +994,10 @@ public class TaskView_PhotoWithBox extends TaskView {
     }
     public void updateTestSet(int boxIndex){
         System.out.println("미친놈"+String.valueOf(BoxCropTestAnswerArray.size()));
+        BoxCropTestAnswer.remove(boxIndex);
         BoxCropTestAnswerArray= jsonToArrayList(BoxCropTestAnswer);
-        BoxCropTestAnswerArray.remove(boxIndex);
+        //BoxCropTestAnswerArray.remove(boxIndex);
+
         testArray2 = new String[BoxCropTestAnswerArray.size()];
         for (int i = 0; i < BoxCropTestAnswerArray.size(); i++) {
 
@@ -1003,7 +1005,7 @@ public class TaskView_PhotoWithBox extends TaskView {
 
         }
         if (!(testArray2.length == 0)) {
-            System.out.println("미친년"+String.valueOf(testArray2[0])+"머머"+String.valueOf(testArray2.length));
+            System.out.println("김세엽이"+String.valueOf(testArray2[0])+"머머"+String.valueOf(testArray2.length));
             testAnswerCoordination = new float[testArray2.length ][4];
 //                changedCoordination = new float[answerCoordination.length][4];
 //                answerType = new int[answerCoordination.length];
