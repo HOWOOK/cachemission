@@ -27,6 +27,7 @@ import com.selectstar.hwshin.cachemission.DataStructure.ServerMessageParser;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoWithBox;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoWithLine;
 import com.selectstar.hwshin.cachemission.DataStructure.UIHashMap;
+import com.selectstar.hwshin.cachemission.DataStructure.WaitHttpRequest;
 import com.selectstar.hwshin.cachemission.R;
 
 import org.json.JSONArray;
@@ -155,15 +156,15 @@ public class TaskActivity extends PatherActivity {
 
         if(taskType.equals("TWOPOINT")){
             checkPossible();
-            if(!testPassedOrNot) {
-                Intent testIntent = new Intent(TaskActivity.this, QuizLineToPointActivity.class);
-                testIntent.putExtra("taskID", getTaskID());
-                // testIntent.putExtra("part",taskName);
-                // testIntent.putExtra("partkorean",nameList.get(position));
-                // testIntent.putExtra("difficulty",mActivity.getTaskDifficulty());
-                //Log.d("diffdiff",mActivity.getTaskDifficulty());
-                startActivity(testIntent);
-            }
+//            if(!testPassedOrNot) {
+//                Intent testIntent = new Intent(TaskActivity.this, QuizLineToPointActivity.class);
+//                testIntent.putExtra("taskID", getTaskID());
+//                 testIntent.putExtra("part",taskName);
+//                 testIntent.putExtra("partkorean",nameList.get(position));
+//                 testIntent.putExtra("difficulty",mActivity.getTaskDifficulty());
+//                Log.d("diffdiff",mActivity.getTaskDifficulty());
+//                startActivity(testIntent);
+//            }
         }
 
 
@@ -538,7 +539,7 @@ public class TaskActivity extends PatherActivity {
             SharedPreferences token = getSharedPreferences("token", 0);//mode 0 means MODE_PRIVATE
             final String loginToken = token.getString("loginToken","");
 
-            HurryHttpRequest asyncTask = new HurryHttpRequest(this){
+            WaitHttpRequest asyncTask = new WaitHttpRequest(this){
                 @Override
                 protected void onPostExecute(Object o) {
                     super.onPostExecute(o);
@@ -549,9 +550,18 @@ public class TaskActivity extends PatherActivity {
                         if(resultTemp.get("success").toString().equals("true")){
                             testPassedOrNot=true;
 
+
+
                         }else{
                             Log.d("실패!", "111" + ", " +resultTemp.toString());
                             testPassedOrNot=false;
+                            Intent testIntent = new Intent(TaskActivity.this, QuizLineToPointActivity.class);
+                            testIntent.putExtra("taskID", getTaskID());
+                            // testIntent.putExtra("part",taskName);
+                            // testIntent.putExtra("partkorean",nameList.get(position));
+                            // testIntent.putExtra("difficulty",mActivity.getTaskDifficulty());
+                            //Log.d("diffdiff",mActivity.getTaskDifficulty());
+                            startActivity(testIntent);
 
                         }
                     } catch (JSONException e) {
