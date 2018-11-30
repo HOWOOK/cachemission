@@ -152,7 +152,9 @@ public class Controller_TwoPoint extends Controller {
         getDeviceDpi = displayMetrics.densityDpi;
         dpScale = (float) getDeviceDpi / 160f;
 
-        //처음에는 두개의 포인트가 없어야한다.
+        //처음에는 라인과 두개의 포인트가 없어야한다.
+        pointLine.Lines = new float[4];
+        pointLine.invalidate();
         if (firstPoint.getVisibility() == firstPoint.VISIBLE)
             firstPoint.setVisibility(View.INVISIBLE);
         if (firstPointTouch.getVisibility() == firstPointTouch.VISIBLE)

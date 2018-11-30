@@ -446,87 +446,6 @@ public class TaskActivity extends PatherActivity {
         }
     }
 
-    //해당 task가 처음이라면 설명서 띄워주는 것
-//    public void showDescription(){
-//        SharedPreferences taskToken = getSharedPreferences("taskToken", MODE_PRIVATE);
-//        if(taskToken.getInt(taskType + "taskToken",0) == 100)
-//            return;
-//        Intent intent_taskExplain;
-//        TextView partText = findViewById(R.id.optionText);
-//        Log.d("boxbox",taskType);
-//        if(taskType.equals("PHOTO")){
-//            intent_taskExplain = new Intent(TaskActivity.this, NewExplainActivity.class);
-//            intent_taskExplain.putExtra("part", partText.getText());
-//            intent_taskExplain.putExtra("partNum", partType());
-//            intent_taskExplain.putExtra("taskID", taskID);
-//            intent_taskExplain.putExtra("taskType", taskType);
-//
-//            System.out.println("shibal"+taskID);
-//            intent_taskExplain.putExtra("loginToken", getLoginToken());
-//            System.out.println("가져온 텍스트 : "+partText.getText());
-//            startActivity(intent_taskExplain);
-//        }else if(taskType.equals("BOXCROP")){
-//
-//        }
-//        else{
-//            intent_taskExplain = new Intent(TaskActivity.this, TaskExplainActivity.class);
-//            intent_taskExplain.putExtra("taskType", taskType);
-//            startActivity(intent_taskExplain);
-//        }
-//
-//    }
-
-//    public void setQuestList(String questString)
-//    {
-//
-//        try {
-//            final TextView questText=findViewById(R.id.questText);
-//            JSONArray questList=new JSONArray(questString);
-//            JSONArray parsedQuestList=parseQuestList(questList);
-//            final JSONObject questName=(JSONObject) parsedQuestList.get(0);
-//            final JSONObject questReward=(JSONObject) parsedQuestList.get(1);
-//            if(questName.length()>0) {
-//
-//                if((int)questReward.get(String.valueOf(currentIndex))!=0) {
-//                    questText.setText(questName.get(String.valueOf(currentIndex)).toString() + "+\uFFE6" + String.valueOf(questReward.get(String.valueOf(currentIndex))));
-//                }else{
-//                    questText.setText(questName.get(String.valueOf(currentIndex)).toString() );
-//                }
-//
-//                questText.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        if (currentIndex+1 < questName.length()) {
-//                            currentIndex++;
-//                        } else {
-//                            currentIndex = 0;
-//                        }
-//                        try {
-//                            if((int)questReward.get(String.valueOf(currentIndex))!=0) {
-//                                questText.setText(questName.get(String.valueOf(currentIndex)).toString() + "+\uFFE6" + String.valueOf(questReward.get(String.valueOf(currentIndex))));
-//                            }else{
-//                                questText.setText(questName.get(String.valueOf(currentIndex)).toString() );
-//                            }
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                });
-//            }
-//
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    private String parseDailyQuest(String rawText) {
-//        if(rawText.contains("\n"))
-//        {
-//            rawText = rawText.replace("\n"," (");
-//            rawText = rawText + ")";
-//        }
-//        return rawText;
-//    }
     private void checkPossible() {
         JSONObject param = new JSONObject();
         try {
@@ -571,10 +490,6 @@ public class TaskActivity extends PatherActivity {
 
             };
             asyncTask.execute(getString(R.string.mainurl) + "/testing/taskValid", param, loginToken);
-
-
-
-
 
         } catch (JSONException e) {
             e.printStackTrace();

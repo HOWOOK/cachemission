@@ -89,6 +89,7 @@ public class Controller_Classification extends Controller {
                                         } else {
                                             parentActivity.goldSetting(String.valueOf(resultTemp.get("gold")));
                                             parentActivity.maybeSetting(String.valueOf(resultTemp.get("maybe")));
+                                            parentActivity.setQuestList(String.valueOf(resultTemp.get("questList")));
                                             parentActivity.updateWaitingTasks();
                                             ((TaskActivity) parentActivity).startTask();
                                         }
