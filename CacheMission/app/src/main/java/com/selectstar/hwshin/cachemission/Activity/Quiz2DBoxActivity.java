@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
@@ -52,6 +53,9 @@ public class Quiz2DBoxActivity extends PatherActivity {
     int currentIndex=0;
     private TextView answerIDtv;
     TextView countText;
+    Context context=this;
+    DialogInterface mDialog;
+
 
     public TaskView getmTaskView() {
         return this.mTaskView;
@@ -169,7 +173,7 @@ countText.setText("0/10");
         // reccord, dialect, directrecord면 지역 선택되고나서 로딩해야함, 물론 지역선택 예전에 해놨으면 바로 테스크 시작될 거임
         if(!(taskType.equals("BOXCROP")||taskType.equals("RECORD")||taskType.equals("DIALECT")||taskType.equals("DIRECTRECORD")))
             startTask();
-        getDialog(optionText.getText()+"테스트",optionText.getText()+"테스트입니다. 10번 연속으로 실수없이 정답을 맞추면 테스크를 진행하실 수 있습니다.");
+
         //boxcrop이면 partSelectDialog를 띄워줘야한다.
 //        if((taskType.equals("BOXCROP"))){
 //            findViewById(R.id.option).setBackgroundColor(this.getResources().getColor(R.color.colorDark2));
@@ -268,6 +272,9 @@ countText.setText("0/10");
                         resultTemp = new JSONObject(result);
                         System.out.println("퀴즈퀴즈대탐험:"+result);
                         if ((boolean) resultTemp.get("success")) {
+                            if(!(resultTemp.get("answers").toString()).equals("[]")){
+                                TextView optionText=findViewById(R.id.optionText);
+                            getDialog(optionText.getText()+"테스트",optionText.getText()+"테스트입니다. 10번 연속으로 실수없이 정답을 맞추면 테스크를 진행하실 수 있습니다.");
                             waitingTasks = new ArrayList<>();
                             JSONArray tempTasks = (JSONArray)resultTemp.get("answers");
 
@@ -304,6 +311,16 @@ countText.setText("0/10");
                             mTaskView.setContent((String) currentTask.get("content"));
                             mController.resetContent(controllerView, taskID);
 
+                        }
+                        else{
+                                Toast.makeText(context,"현재 제공가능한 테스트셋이 없습니다. 나중에 다시 시도해 주세요.",Toast.LENGTH_LONG).show();
+                                SharedPreferences testFlag=getSharedPreferences("testFlag",MODE_PRIVATE);
+                                SharedPreferences.Editor editor=testFlag.edit();
+                                editor.putBoolean("isTesting",true);
+                                editor.commit();
+                                finish();
+
+                            }
                         } else {
                             new ServerMessageParser().taskSubmitFailParse(Quiz2DBoxActivity.this, resultTemp);
 

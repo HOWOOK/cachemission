@@ -188,7 +188,7 @@ public class PartSelectDialog extends Dialog{
                             }else if(resultTemp.get("message").toString().equals("needtest")){
                                 taskIsExist = true;
                                 testingList.add(true);
-                                stateList.add("먼저 이 부품에 대한 테스트를 통과하셔야 합니다.");
+                                stateList.add("needtest");
                                 maskList.add(R.drawable.color_blueblackgradient);
                                 maskImageList.add(R.drawable.color_transparency);
                                 maskTextList.add("테스트 받기");

@@ -48,7 +48,12 @@ public class TaskExplainActivity extends AppCompatActivity {
 
         viewpager=(ViewPager)findViewById(R.id.explainViewpager);
         intent = getIntent();
-        if(!intent.getStringExtra("notice").equals("notice")) {
+        String noticeflag="";
+        noticeflag=intent.getStringExtra("notice");
+        if(noticeflag==null){
+            noticeflag="";
+        }
+        if(!noticeflag.equals("notice")) {
             taskType = intent.getStringExtra("taskType");
 
             SharedPreferences taskToken = getSharedPreferences("taskToken", MODE_PRIVATE);

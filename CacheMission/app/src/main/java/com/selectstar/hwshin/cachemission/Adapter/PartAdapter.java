@@ -106,7 +106,7 @@ public class PartAdapter extends RecyclerView.Adapter<PartAdapter.ItemViewHolder
 
 
                 }
-                else if(!stateList.get(position).equals("proceed")){
+                else if(!stateList.get(position).equals("proceed")&&!stateList.get(position).equals("needtest")){
                     Toast.makeText(mActivity,stateList.get(position),Toast.LENGTH_SHORT).show();
 
                 }
