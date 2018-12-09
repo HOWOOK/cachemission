@@ -281,7 +281,7 @@ public class TaskListActivity extends AppCompatActivity {
 
 
     }
-//리스트인포 쉐프퍼 내용 전부 비우기
+    //리스트인포 쉐프퍼 내용 전부 비우기
     public void clearItem(){
         SharedPreferences listInfo=getSharedPreferences("listInfo",MODE_PRIVATE);
         SharedPreferences.Editor editor=listInfo.edit();
@@ -927,37 +927,6 @@ runningHTTPRequest++;
             return;
 
         defaultTopBarSetting(updateTodayEarnedMoney());
-//        SharedPreferences token = getSharedPreferences("token",MODE_PRIVATE);
-//        final String loginToken = token.getString("loginToken","");
-//        JSONObject param = new JSONObject();
-//
-//        WaitHttpRequest asyncTask=new WaitHttpRequest(mContext) {
-//            @Override
-//            protected void onPostExecute(Object o) {
-//                super.onPostExecute(o);
-//
-//                try {
-//                    if (result == "")
-//                        return;
-//                    JSONObject resultTemp = new JSONObject(result);
-//                    String todayMoney=resultTemp.get("todayMoney").toString();
-//                    defaultTopBarSetting(todayMoney);
-//
-//
-//
-//
-//
-//                }
-//                catch(JSONException e)
-//                {
-//                    e.printStackTrace();
-//                }
-//                runningHTTPRequest--;
-//
-//            }
-//        };
-//        //CountDownTimer adf= new AsyncTaskCancelTimerTask(asyncTask,Integer.parseInt(getString(R.string.hTTPTimeOut)),1000,true,this).start();
-//        asyncTask.execute(getString(R.string.mainurl) + "/testing/todayMoney", param, loginToken);
 
 mBuilder.setNumber(0);
         notifManager.notify(0, mBuilder.build());
@@ -1019,6 +988,7 @@ mBuilder.setNumber(0);
         super.onStop();
         GoogleAnalytics.getInstance(this).reportActivityStop(this);
     }
+
     private void getForcedUpdateDialog(String title, String value)
     {
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(TaskListActivity.this);

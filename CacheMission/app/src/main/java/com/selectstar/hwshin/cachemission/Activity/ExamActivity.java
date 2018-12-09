@@ -42,7 +42,7 @@ public class ExamActivity extends PatherActivity {
     String examFlag="";
     ImageView backButton;
     TextView answerIDtv, taskUserIDtv;
-    Context mContext=this;
+    Context mContext =  this;
 
     protected void showDescription(Context context)
     {
