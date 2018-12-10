@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3ea6525f-f7df-444b-8763-ade803dd1595" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/CacheMission/.idea/caches/build_file_checksums.ser" afterPath="$PROJECT_DIR$/CacheMission/.idea/caches/build_file_checksums.ser" />
-      <change beforePath="$PROJECT_DIR$/CacheMission/.idea/gradle.xml" afterPath="$PROJECT_DIR$/CacheMission/.idea/gradle.xml" />
-      <change beforePath="$PROJECT_DIR$/CacheMission/.idea/misc.xml" afterPath="$PROJECT_DIR$/CacheMission/.idea/misc.xml" />
-      <change beforePath="$PROJECT_DIR$/CacheMission/.idea/runConfigurations.xml" afterPath="$PROJECT_DIR$/CacheMission/.idea/runConfigurations.xml" />
-      <change beforePath="$PROJECT_DIR$/CacheMission/app/src/main/java/com/selectstar/hwshin/cachemission/Activity/ExamActivity.java" afterPath="$PROJECT_DIR$/CacheMission/app/src/main/java/com/selectstar/hwshin/cachemission/Activity/ExamActivity.java" />
-      <change beforePath="$PROJECT_DIR$/CacheMission/app/src/main/java/com/selectstar/hwshin/cachemission/Activity/LoginActivity.java" afterPath="$PROJECT_DIR$/CacheMission/app/src/main/java/com/selectstar/hwshin/cachemission/Activity/LoginActivity.java" />
-      <change beforePath="$PROJECT_DIR$/CacheMission/app/src/main/java/com/selectstar/hwshin/cachemission/Activity/TaskListActivity.java" afterPath="$PROJECT_DIR$/CacheMission/app/src/main/java/com/selectstar/hwshin/cachemission/Activity/TaskListActivity.java" />
-      <change beforePath="$PROJECT_DIR$/CacheMission/app/src/main/java/com/selectstar/hwshin/cachemission/Adapter/ListviewAdapter.java" afterPath="$PROJECT_DIR$/CacheMission/app/src/main/java/com/selectstar/hwshin/cachemission/Adapter/ListviewAdapter.java" />
-      <change beforePath="$PROJECT_DIR$/CacheMission/app/src/main/res/layout/activity_login.xml" afterPath="$PROJECT_DIR$/CacheMission/app/src/main/res/layout/activity_login.xml" />
-      <change beforePath="$PROJECT_DIR$/CacheMission/app/src/main/res/layout/activity_tasklist.xml" afterPath="$PROJECT_DIR$/CacheMission/app/src/main/res/layout/activity_tasklist.xml" />
-    </list>
+    <list default="true" id="3ea6525f-f7df-444b-8763-ade803dd1595" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -29,9 +18,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="y" value="3" />
-    <option name="width" value="1926" />
-    <option name="height" value="1299" />
+    <option name="x" value="-1928" />
+    <option name="y" value="-8" />
+    <option name="width" value="1552" />
+    <option name="height" value="840" />
   </component>
   <component name="ProjectView">
     <navigator currentView="AndroidView" proportions="" version="1">
@@ -48,7 +38,17 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="cachemission" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cachemission" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="Scratches" />
       <pane id="AndroidView" />
       <pane id="Scope" />
@@ -58,7 +58,7 @@
   <component name="PropertiesComponent">
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="settings.editor.selected.configurable" value="android.sdk-updates" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/CacheMission" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -177,7 +177,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-1928" y="-8" width="1552" height="840" extended-state="6" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295583" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -189,7 +189,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295583" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2081138" sideWeight="0.5" order="4" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2608983" sideWeight="0.5" order="4" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.06002265" sideWeight="0.8464017" order="9" side_tool="false" content_ui="tabs" />

@@ -115,6 +115,9 @@ public class TaskListActivity extends AppCompatActivity {
         setVersion();
         setDrawer();
 
+        //검수자들에게 푸쉬를 보낼겁니다!! 지금은 일단 더럽게 해놓는다.
+        FirebaseMessaging.getInstance().unsubscribeFromTopic("ValidationUserPush");
+
         myPage=findViewById(R.id.mypage);
         myPage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,7 +158,6 @@ public class TaskListActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_VIEW,uri);
         startActivity(intent);
     }
-
 
     //네트워크에 연결되어 있는지(모바일 데이터, 와이파이) 확인한다.
     public static boolean isNetworkConnected(Context context){
@@ -535,7 +537,6 @@ runningHTTPRequest++;
             FirebaseMessaging.getInstance().subscribeToTopic("RetentionPush");
 
 
-
         // 테스트할때만 쓰이는 Topic임으로 unsubscribe가 default
         //FirebaseMessaging.getInstance().subscribeToTopic("testPush");
         FirebaseMessaging.getInstance().unsubscribeFromTopic("testPush");
@@ -670,7 +671,7 @@ runningHTTPRequest++;
             param.put("taskID", mTaskList.get(i).get("id"));
             param.put("version",version);
             Log.d("버전",version);
-            String taskType = mTaskList.get(i).get("taskType").toString();
+            final String taskType = mTaskList.get(i).get("taskType").toString();
             int examType = (int) mTaskList.get(i).get("examType");
             if(taskType.contains("EXAM")){
                 param.put("examType", examType);
@@ -696,6 +697,8 @@ runningHTTPRequest++;
                         System.out.println("안녕 결과야 : "+result);
                         if(resultTemp.get("success").toString().equals("true")) {
                             if (isNew) {
+                                if(taskType.contains("EXAM"))
+                                    FirebaseMessaging.getInstance().subscribeToTopic("ValidationUserPush");
                                 mTaskList.get(i).put("questList",resultTemp.get("questList"));
                                 adapter.addItem(mTaskList.get(i));
                                 clearItem();
@@ -932,9 +935,6 @@ mBuilder.setNumber(0);
         notifManager.notify(0, mBuilder.build());
 
     }
-
-
-
 
     private void setUserRankImage(ImageView userRank, TextView userLevel, int rank) {
 

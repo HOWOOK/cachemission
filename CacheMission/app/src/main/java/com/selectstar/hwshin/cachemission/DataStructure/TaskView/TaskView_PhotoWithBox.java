@@ -131,9 +131,9 @@ public class TaskView_PhotoWithBox extends TaskView {
         if(isExamFlag == true)
             expandFlag = false;
 
-        //박스 친곳에 또 치려고하면 막아야한다. 프리프로세싱은 조금더 엄격하다.
-        if(parentActivity.getPartNum() == 2)
-            iouValue = 0.3f;
+        //박스 친곳에 또 치려고하면 막아야한다. 프리프로세싱은 아예 박스가 겹치면 안된다.
+        if(parentActivity.getPartNum() == 102)
+            iouValue = 0.0f;
         else
             iouValue = 0.5f;
 
