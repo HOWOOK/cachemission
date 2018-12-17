@@ -65,6 +65,7 @@ public class TaskActivity extends PatherActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        if(getString(R.string.mainurl).equals("https://www.selectstar.co.kr"))
         GoogleAnalytics.getInstance(this).reportActivityStart(this);
         setQuestList(intent.getStringExtra("questList"));
 
@@ -73,9 +74,11 @@ public class TaskActivity extends PatherActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Tracker t = ((GlobalApplication)getApplication()).getTracker(GlobalApplication.TrackerName.APP_TRACKER);
-        t.setScreenName(taskType+"TaskActivity");
-        t.send(new HitBuilders.AppViewBuilder().build());
+        if(getString(R.string.mainurl).equals("https://www.selectstar.co.kr")) {
+            Tracker t = ((GlobalApplication) getApplication()).getTracker(GlobalApplication.TrackerName.APP_TRACKER);
+            t.setScreenName(taskType + "TaskActivity");
+            t.send(new HitBuilders.AppViewBuilder().build());
+        }
         setContentView(R.layout.activity_task);
 
         //캡쳐방지
@@ -341,6 +344,7 @@ public class TaskActivity extends PatherActivity {
     @Override
     protected void onStop(){
         super.onStop();
+        if(getString(R.string.mainurl).equals("https://www.selectstar.co.kr"))
         GoogleAnalytics.getInstance(this).reportActivityStop(this);
     }
     @Override

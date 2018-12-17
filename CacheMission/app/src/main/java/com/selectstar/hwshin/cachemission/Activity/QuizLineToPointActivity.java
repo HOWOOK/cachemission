@@ -61,9 +61,12 @@ public class QuizLineToPointActivity extends PatherActivity {
         System.out.println("shishishi");
 
         super.onCreate(savedInstanceState);
-        Tracker t = ((GlobalApplication)getApplication()).getTracker(GlobalApplication.TrackerName.APP_TRACKER);
-        t.setScreenName("QuizLineToPointActivity");
-        t.send(new HitBuilders.AppViewBuilder().build());
+        if(getString(R.string.mainurl).equals("https://www.selectstar.co.kr")) {
+            Tracker t = ((GlobalApplication) getApplication()).getTracker(GlobalApplication.TrackerName.APP_TRACKER);
+            t.setScreenName("QuizLineToPointActivity");
+            t.send(new HitBuilders.AppViewBuilder().build());
+        }
+
         setContentView(R.layout.activity_quiz_line_to_point);
         //캡쳐방지
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
@@ -228,10 +231,18 @@ public class QuizLineToPointActivity extends PatherActivity {
             }
         });
     }
+    @Override
+    protected void onStart(){
+        super.onStart();
+        if(getString(R.string.mainurl).equals("https://www.selectstar.co.kr"))
+            GoogleAnalytics.getInstance(this).reportActivityStart(this);
 
+
+    }
     @Override
     protected void onStop(){
         super.onStop();
+        if(getString(R.string.mainurl).equals("https://www.selectstar.co.kr"))
         GoogleAnalytics.getInstance(this).reportActivityStop(this);
     }
 //    @Override

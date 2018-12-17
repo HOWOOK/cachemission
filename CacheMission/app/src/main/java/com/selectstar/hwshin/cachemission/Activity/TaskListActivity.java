@@ -81,9 +81,11 @@ public class TaskListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // initiateListInfo();
-        Tracker t = ((GlobalApplication)getApplication()).getTracker(GlobalApplication.TrackerName.APP_TRACKER);
-        t.setScreenName("TaskListActivity");
-        t.send(new HitBuilders.AppViewBuilder().build());
+        if(getString(R.string.mainurl).equals("https://www.selectstar.co.kr")) {
+            Tracker t = ((GlobalApplication) getApplication()).getTracker(GlobalApplication.TrackerName.APP_TRACKER);
+            t.setScreenName("TaskListActivity");
+            t.send(new HitBuilders.AppViewBuilder().build());
+        }
         setContentView(R.layout.activity_tasklist);
 
         ConstraintLayout drawerCL = findViewById(R.id.drawerCL);
@@ -129,6 +131,7 @@ public class TaskListActivity extends AppCompatActivity {
     protected void onStart()
     {
         super.onStart();
+        if(getString(R.string.mainurl).equals("https://www.selectstar.co.kr"))
         GoogleAnalytics.getInstance(this).reportActivityStart(this);
         SharedPreferences token = getSharedPreferences("token",MODE_PRIVATE);
         final String loginToken = token.getString("loginToken","");
@@ -1017,6 +1020,7 @@ mBuilder.setNumber(0);
     @Override
     protected void onStop(){
         super.onStop();
+        if(getString(R.string.mainurl).equals("https://www.selectstar.co.kr"))
         GoogleAnalytics.getInstance(this).reportActivityStop(this);
     }
     private void getForcedUpdateDialog(String title, String value)

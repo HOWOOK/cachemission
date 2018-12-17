@@ -46,6 +46,9 @@ public class ExamActivity extends PatherActivity {
 
     protected void showDescription(Context context)
     {
+        if(taskType.equals("BOXCROPEXAM")){
+        return;
+        }
         Intent intent_taskExplain = new Intent(context, TaskExplainActivity.class);
         intent_taskExplain.putExtra("taskType", taskType);
         intent_taskExplain.putExtra("examType", examType);
@@ -156,9 +159,11 @@ public class ExamActivity extends PatherActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Tracker t = ((GlobalApplication)getApplication()).getTracker(GlobalApplication.TrackerName.APP_TRACKER);
-        t.setScreenName("ExamActivity");
-        t.send(new HitBuilders.AppViewBuilder().build());
+        if(getString(R.string.mainurl).equals("https://www.selectstar.co.kr")) {
+            Tracker t = ((GlobalApplication) getApplication()).getTracker(GlobalApplication.TrackerName.APP_TRACKER);
+            t.setScreenName("ExamActivity");
+            t.send(new HitBuilders.AppViewBuilder().build());
+        }
         setContentView(R.layout.activity_exam);
         //캡쳐방지
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
@@ -376,12 +381,31 @@ public class ExamActivity extends PatherActivity {
         if(!(taskToken.getInt(taskType+examType+"taskToken",0) == 100)){
             showDescription(this);
         }
+        //newExplain이 적용된 박스크롭의 경우 기존 설명서 대신 이걸 띄운다.
+//        if(taskType.equals("BOXCROPEXAM")) {
+//            partNum = partType();
+//            forcedShowDescription(String.valueOf(partNum));
+//            SharedPreferences firstTimeExplain = getSharedPreferences("firstTimeExplain", MODE_PRIVATE);
+//            SharedPreferences.Editor editor = firstTimeExplain.edit();
+//            editor.putString(String.valueOf(partNum), "notFirst");
+//            editor.commit();
+//        }
 
         //물음표버튼누르면 설명서 띄워주는것
         ImageView howBtn = findViewById(R.id.howbtn);
         howBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(taskType.equals("BOXCROPEXAM")){
+                    Intent intent_taskExplain;
+                    intent_taskExplain = new Intent(ExamActivity.this, NewExplainActivity.class);
+                    intent_taskExplain.putExtra("part", optionText.getText());
+                    intent_taskExplain.putExtra("partNum", partType());
+                    intent_taskExplain.putExtra("taskID", taskID);
+                    intent_taskExplain.putExtra("loginToken", getLoginToken());
+                    intent_taskExplain.putExtra("taskType", taskType);
+                    startActivity(intent_taskExplain);
+                }
                 showDescription(ExamActivity.this);
             }
         });
@@ -393,12 +417,14 @@ public class ExamActivity extends PatherActivity {
     @Override
     protected void onStart(){
         super.onStart();
+        if(getString(R.string.mainurl).equals("https://www.selectstar.co.kr"))
         GoogleAnalytics.getInstance(this).reportActivityStart(this);
     }
 
     @Override
     protected void onStop(){
         super.onStop();
+        if(getString(R.string.mainurl).equals("https://www.selectstar.co.kr"))
         GoogleAnalytics.getInstance(this).reportActivityStop(this);
     }
 

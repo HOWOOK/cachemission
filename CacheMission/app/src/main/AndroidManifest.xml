@@ -12,7 +12,7 @@
 
     <application
         android:name=".Activity.GlobalApplication"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:hardwareAccelerated="true"
         android:icon="@drawable/cashmissionicon"
         android:label="@string/app_name"

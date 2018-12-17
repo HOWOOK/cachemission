@@ -23,9 +23,11 @@ public class NoticePopUpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Tracker t = ((GlobalApplication)getApplication()).getTracker(GlobalApplication.TrackerName.APP_TRACKER);
-        t.setScreenName("NoticePopUpActivity");
-        t.send(new HitBuilders.AppViewBuilder().build());
+        if(getString(R.string.mainurl).equals("https://www.selectstar.co.kr")) {
+            Tracker t = ((GlobalApplication) getApplication()).getTracker(GlobalApplication.TrackerName.APP_TRACKER);
+            t.setScreenName("NoticePopUpActivity");
+            t.send(new HitBuilders.AppViewBuilder().build());
+        }
         setContentView(R.layout.activity_noticepopup);
         String title = getIntent().getStringExtra("title");
         String date = getIntent().getStringExtra("date");
@@ -45,6 +47,7 @@ public class NoticePopUpActivity extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
+        if(getString(R.string.mainurl).equals("https://www.selectstar.co.kr"))
         GoogleAnalytics.getInstance(this).reportActivityStart(this);
 
 
@@ -52,6 +55,7 @@ public class NoticePopUpActivity extends AppCompatActivity {
     @Override
     protected void onStop(){
         super.onStop();
+        if(getString(R.string.mainurl).equals("https://www.selectstar.co.kr"))
         GoogleAnalytics.getInstance(this).reportActivityStop(this);
     }
 

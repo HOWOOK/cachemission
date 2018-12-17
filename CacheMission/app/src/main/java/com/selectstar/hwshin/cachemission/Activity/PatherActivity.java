@@ -452,7 +452,7 @@ public abstract class PatherActivity extends AppCompatActivity {
         Intent intent_taskExplain;
         TextView partText = findViewById(R.id.optionText);
         Log.d("boxbox",taskType);
-        if(taskType.equals("BOXCROP")){
+        if(taskType.equals("BOXCROP")||taskType.equals("BOXCROPEXAM")){
             intent_taskExplain = new Intent(PatherActivity.this, NewExplainActivity.class);
             intent_taskExplain.putExtra("part", partText.getText());
             intent_taskExplain.putExtra("partNum", partType());
