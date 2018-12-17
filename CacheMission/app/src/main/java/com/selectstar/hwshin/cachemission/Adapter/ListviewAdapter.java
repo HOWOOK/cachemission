@@ -41,7 +41,7 @@ public class ListviewAdapter extends RecyclerView.Adapter<ListviewAdapter.ItemVi
     private Context mContext;
     private boolean userLoaded;
     private ListviewAdapter.ItemViewHolder mHolder;
-    public ListviewAdapter(Context context, int layout, ArrayList<JSONObject> taskList,Context mContext){
+    public ListviewAdapter(Context context, int layout, ArrayList<JSONObject> taskList, Context mContext){
         this.inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.mTaskList=taskList;
         this.layout=layout;

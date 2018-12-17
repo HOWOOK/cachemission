@@ -14,6 +14,7 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.selectstar.hwshin.cachemission.Adapter.Explain.NoticeAdapter;
+import com.selectstar.hwshin.cachemission.Adapter.Explain.SlideAdapter_ExplainTask_Classification;
 import com.selectstar.hwshin.cachemission.Adapter.Explain.SlideAdapter_ExplainTask_Dialect;
 import com.selectstar.hwshin.cachemission.Adapter.Explain.SlideAdapter_ExplainTask_DirectRecord;
 import com.selectstar.hwshin.cachemission.Adapter.Explain.SlideAdapter_ExplainTask_None;
@@ -124,6 +125,8 @@ public class TaskExplainActivity extends AppCompatActivity {
             return new SlideAdapter_ExplainTask_Dialect(this);
         else if (tasktype.equals("PHOTO"))
             return new SlideAdapter_ExplainTask_Photo(this);
+        else if(tasktype.equals("CLASSIFICATION"))
+            return new SlideAdapter_ExplainTask_Classification(this);
         else
             return new SlideAdapter_ExplainTask_None(this);
     }

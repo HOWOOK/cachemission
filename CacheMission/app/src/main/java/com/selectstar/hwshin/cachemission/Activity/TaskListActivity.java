@@ -117,6 +117,9 @@ public class TaskListActivity extends AppCompatActivity {
         setVersion();
         setDrawer();
 
+        //검수자들에게 푸쉬를 보낼겁니다!! 지금은 일단 더럽게 해놓는다.
+        FirebaseMessaging.getInstance().unsubscribeFromTopic("ValidationUserPush");
+
         myPage=findViewById(R.id.mypage);
         myPage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,7 +161,6 @@ public class TaskListActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_VIEW,uri);
         startActivity(intent);
     }
-
 
     //네트워크에 연결되어 있는지(모바일 데이터, 와이파이) 확인한다.
     public static boolean isNetworkConnected(Context context){
@@ -284,7 +286,7 @@ public class TaskListActivity extends AppCompatActivity {
 
 
     }
-//리스트인포 쉐프퍼 내용 전부 비우기
+    //리스트인포 쉐프퍼 내용 전부 비우기
     public void clearItem(){
         SharedPreferences listInfo=getSharedPreferences("listInfo",MODE_PRIVATE);
         SharedPreferences.Editor editor=listInfo.edit();
@@ -538,7 +540,6 @@ runningHTTPRequest++;
             FirebaseMessaging.getInstance().subscribeToTopic("RetentionPush");
 
 
-
         // 테스트할때만 쓰이는 Topic임으로 unsubscribe가 default
         //FirebaseMessaging.getInstance().subscribeToTopic("testPush");
         FirebaseMessaging.getInstance().unsubscribeFromTopic("testPush");
@@ -673,7 +674,7 @@ runningHTTPRequest++;
             param.put("taskID", mTaskList.get(i).get("id"));
             param.put("version",version);
             Log.d("버전",version);
-            String taskType = mTaskList.get(i).get("taskType").toString();
+            final String taskType = mTaskList.get(i).get("taskType").toString();
             int examType = (int) mTaskList.get(i).get("examType");
             if(taskType.contains("EXAM")){
                 param.put("examType", examType);
@@ -699,6 +700,8 @@ runningHTTPRequest++;
                         System.out.println("안녕 결과야 : "+result);
                         if(resultTemp.get("success").toString().equals("true")) {
                             if (isNew) {
+                                if(taskType.contains("EXAM"))
+                                    FirebaseMessaging.getInstance().subscribeToTopic("ValidationUserPush");
                                 mTaskList.get(i).put("questList",resultTemp.get("questList"));
                                 adapter.addItem(mTaskList.get(i));
                                 clearItem();
@@ -930,45 +933,11 @@ runningHTTPRequest++;
             return;
 
         defaultTopBarSetting(updateTodayEarnedMoney());
-//        SharedPreferences token = getSharedPreferences("token",MODE_PRIVATE);
-//        final String loginToken = token.getString("loginToken","");
-//        JSONObject param = new JSONObject();
-//
-//        WaitHttpRequest asyncTask=new WaitHttpRequest(mContext) {
-//            @Override
-//            protected void onPostExecute(Object o) {
-//                super.onPostExecute(o);
-//
-//                try {
-//                    if (result == "")
-//                        return;
-//                    JSONObject resultTemp = new JSONObject(result);
-//                    String todayMoney=resultTemp.get("todayMoney").toString();
-//                    defaultTopBarSetting(todayMoney);
-//
-//
-//
-//
-//
-//                }
-//                catch(JSONException e)
-//                {
-//                    e.printStackTrace();
-//                }
-//                runningHTTPRequest--;
-//
-//            }
-//        };
-//        //CountDownTimer adf= new AsyncTaskCancelTimerTask(asyncTask,Integer.parseInt(getString(R.string.hTTPTimeOut)),1000,true,this).start();
-//        asyncTask.execute(getString(R.string.mainurl) + "/testing/todayMoney", param, loginToken);
 
 mBuilder.setNumber(0);
         notifManager.notify(0, mBuilder.build());
 
     }
-
-
-
 
     private void setUserRankImage(ImageView userRank, TextView userLevel, int rank) {
 
@@ -1023,6 +992,7 @@ mBuilder.setNumber(0);
         if(getString(R.string.mainurl).equals("https://www.selectstar.co.kr"))
         GoogleAnalytics.getInstance(this).reportActivityStop(this);
     }
+
     private void getForcedUpdateDialog(String title, String value)
     {
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(TaskListActivity.this);

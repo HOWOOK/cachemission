@@ -203,6 +203,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.99" />
+
             <Button
                 android:id="@+id/refreshbutton"
                 android:layout_width="180dp"
@@ -233,6 +234,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
             </android.support.v7.widget.RecyclerView>
+
         </android.support.constraint.ConstraintLayout>
 
 
@@ -245,8 +247,6 @@
         android:background="#FFFFFF"
         android:layout_gravity="left"
         >
-
-
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/drawer_usertable"

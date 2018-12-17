@@ -20,6 +20,7 @@ import com.selectstar.hwshin.cachemission.Activity.Quiz2DBoxActivity;
 import com.selectstar.hwshin.cachemission.Activity.TaskActivity;
 import com.selectstar.hwshin.cachemission.DataStructure.HurryHttpRequest;
 import com.selectstar.hwshin.cachemission.DataStructure.ServerMessageParser;
+import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView;
 import com.selectstar.hwshin.cachemission.DataStructure.TaskView.TaskView_PhotoWithBox;
 import com.selectstar.hwshin.cachemission.DataStructure.WaitHttpRequest;
 import com.selectstar.hwshin.cachemission.Photoview.PhotoView;
@@ -41,8 +42,6 @@ public class Controller_2DBox extends Controller {
     private float dpScale;
     private int testCount;
     private int testCountForGraduate=0;
-
-
 
     public Controller_2DBox() {
         controllerID = R.layout.controller_2dbox;
@@ -94,6 +93,7 @@ public class Controller_2DBox extends Controller {
                 sendButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         if (((TaskView_PhotoWithBox) parentActivity.getmTaskView()).expandFlag) {
                             Toast.makeText(parentActivity, "먼저 물체를 찾아주세요", Toast.LENGTH_SHORT).show();
                         } else {
@@ -118,10 +118,35 @@ public class Controller_2DBox extends Controller {
                                  * (x5, y5) = crop box의 scale = 1일 대 우하단 좌표 환산값
                                  *********************************/
                                 float x1, x2, x3, x4, x5, y1, y2, y3, y4, y5;
-                                x1 = centerImage.getX();
-                                x2 = centerImage.getX() + (float) centerImage.getWidth();
-                                y1 = centerImage.getY();
-                                y2 = centerImage.getY() + (float) centerImage.getHeight();
+
+                                if(centerImage.getX() <=
+                                        ((TaskView_PhotoWithBox) parentActivity.getmTaskView()).getPhotoView().getDisplayRect().left +
+                                                ((float) parentActivity.findViewById(R.id.left_line).getWidth()))
+                                    x1 = ((TaskView_PhotoWithBox) parentActivity.getmTaskView()).getPhotoView().getDisplayRect().left;
+                                else
+                                    x1 = centerImage.getX();
+
+                                if(centerImage.getX() + (float) centerImage.getWidth() >=
+                                        ((TaskView_PhotoWithBox) parentActivity.getmTaskView()).getPhotoView().getDisplayRect().right -
+                                                ((float) parentActivity.findViewById(R.id.right_line).getWidth()) - 0.1f)
+                                    x2 = ((TaskView_PhotoWithBox) parentActivity.getmTaskView()).getPhotoView().getDisplayRect().right;
+                                else
+                                    x2 = centerImage.getX() + (float) centerImage.getWidth();
+
+                                if(centerImage.getY() <=
+                                        ((TaskView_PhotoWithBox) parentActivity.getmTaskView()).getPhotoView().getDisplayRect().top +
+                                                ((float) parentActivity.findViewById(R.id.top_line).getHeight()))
+                                    y1 = ((TaskView_PhotoWithBox) parentActivity.getmTaskView()).getPhotoView().getDisplayRect().top;
+                                else
+                                    y1 = centerImage.getY();
+
+                                if(centerImage.getY() + (float) centerImage.getHeight() >=
+                                        ((TaskView_PhotoWithBox) parentActivity.getmTaskView()).getPhotoView().getDisplayRect().bottom -
+                                                ((float) parentActivity.findViewById(R.id.bottom_line).getHeight()) - 0.1f)
+                                    y2 = ((TaskView_PhotoWithBox) parentActivity.getmTaskView()).getPhotoView().getDisplayRect().bottom;
+                                else
+                                    y2 = centerImage.getY() + (float) centerImage.getHeight();
+
                                 originWidth = (photoView.getDisplayRect().right - photoView.getDisplayRect().left) / photoView.getScale();
                                 originHeight = (photoView.getDisplayRect().bottom - photoView.getDisplayRect().top) / photoView.getScale();
                                 originLeftMargin = (widthCL / 2.0f) - (originWidth) / 2.0f;
@@ -141,14 +166,7 @@ public class Controller_2DBox extends Controller {
                                 topPercent = (y4 - originTopMargin) / originHeight;
                                 rightPercent = (x5 - originLeftMargin) / originWidth;
                                 bottomPercent = (y5 - originTopMargin) / originHeight;
-                                if (leftPercent < 0.013f) //박스가 끝에 있을경우 0으로 생각하도록
-                                    leftPercent = 0f;
-                                if (rightPercent > 0.987f) //박스가 끝에 있을경우 1로 생각하도록
-                                    rightPercent = 1f;
-                                if (topPercent < 0.013f) //박스가 끝에 있을경우 0으로 생각하도록
-                                    topPercent = 0f;
-                                if (bottomPercent > 0.987f) //박스가 끝에 있을경우 1로 생각하도록
-                                    bottomPercent = 1f;
+
                                 leftPercentSend = leftPercent;
                                 topPercentSend = topPercent;
                                 rightPercentSend = rightPercent;
@@ -428,6 +446,7 @@ public class Controller_2DBox extends Controller {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                System.out.println("" );
                 if(!pinFlag)
                     return false;
                 ConstraintLayout.LayoutParams mLayoutParams1 = (ConstraintLayout.LayoutParams) top_line.getLayoutParams();
@@ -466,6 +485,7 @@ public class Controller_2DBox extends Controller {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                System.out.println("라인두께 : "+ top_line.getHeight());
                 if(!pinFlag)
                     return false;
                 ConstraintLayout.LayoutParams mLayoutParams1 = (ConstraintLayout.LayoutParams) top_line.getLayoutParams();
